@@ -1,9 +1,16 @@
 import { Routes } from '@angular/router';
-import { LoginPage } from './features/auth/pages/login-page/login-page';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: LoginPage,
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'student',
+    loadChildren: () =>
+      import('./features/student/student-dashboard.module')
+        .then(m => m.StudentDashboardModule)
+  },
+  { path: '', redirectTo: 'auth/choose-account', pathMatch: 'full' }
 ];
