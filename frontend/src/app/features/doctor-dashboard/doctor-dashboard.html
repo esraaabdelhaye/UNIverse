@@ -1,0 +1,504 @@
+<div class="relative flex min-h-screen">
+  <aside
+    class="w-64 shrink-0 bg-card-light dark:bg-card-dark flex flex-col p-4 border-r border-gray-200/60 dark:border-gray-800/60"
+  >
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <span class="material-symbols-outlined text-primary text-3xl">school</span>
+      <h1 class="text-xl font-bold text-text-light dark:text-text-dark">UNIverse</h1>
+    </div>
+    <nav class="flex flex-col gap-2">
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 dark:bg-primary/20"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-primary">dashboard</span>
+        <p class="text-primary text-sm font-semibold leading-normal">Dashboard</p>
+      </a>
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >upload_file</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          Upload Material
+        </p>
+      </a>
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >grade</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          Grade Students
+        </p>
+      </a>
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >assignment</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          View Submissions
+        </p>
+      </a>
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >campaign</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          Course Announcements
+        </p>
+      </a>
+    </nav>
+    <div class="mt-auto flex flex-col gap-2">
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >settings</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          Settings
+        </p>
+      </a>
+      <a
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50"
+        href="#"
+      >
+        <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+          >logout</span
+        >
+        <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">
+          Log Out
+        </p>
+      </a>
+    </div>
+  </aside>
+  <main class="flex-1 p-8 overflow-y-auto">
+    <header
+      class="flex items-center justify-between pb-6 mb-8 border-b border-gray-200/60 dark:border-gray-800/60"
+    >
+      <div>
+        <h2
+          class="text-text-light dark:text-text-dark text-3xl font-bold leading-tight tracking-tight"
+        >
+          Professor Command Center
+        </h2>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800/50">
+          <span class="material-symbols-outlined text-text-muted-light dark:text-text-muted-dark"
+            >notifications</span
+          >
+          <span class="absolute top-1.5 right-1.5 flex h-2 w-2">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"
+            ></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          </span>
+        </button>
+        <div
+          class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+          data-alt="Profile picture of Dr. Vance"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAM0hj8VPghMiq7WMnCosYRbOXNs6i69ULHuWZzbnPbEfCQVlRGYxkwsvgtO4tO_9LyabYchwJZFQKYxh3ltO1s-q1GmdU3JZRhjy1u2PJz2EMtlIMrW9MAxsVHCf4XAQk_n68kUlMoGnfCYLAZCFo6QA69eYMp2xFBJRLxTFgQ6OPUK-a7xrxAdzpV7wdnauuJJ4gX5QrMLs3yt5gyeHcfqjhQ_oy-9UY4SuRhZOjaUHgJtc7HaVpaGNExksmjW-cqNlTeofDrO_I');
+          "
+        ></div>
+      </div>
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div
+        class="bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6 flex flex-col justify-between hover:shadow-card-hover transition-shadow"
+      >
+        <div>
+          <p class="text-xs text-primary font-semibold uppercase">PHIL-301</p>
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark mt-1">
+            Existentialism in Film
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 mt-4 text-text-muted-light dark:text-text-muted-dark">
+          <span class="material-symbols-outlined text-base">group</span>
+          <span class="text-sm font-medium">42 Students</span>
+        </div>
+      </div>
+      <div
+        class="bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6 flex flex-col justify-between hover:shadow-card-hover transition-shadow"
+      >
+        <div>
+          <p class="text-xs text-primary font-semibold uppercase">HIST-212</p>
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark mt-1">
+            Renaissance Art History
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 mt-4 text-text-muted-light dark:text-text-muted-dark">
+          <span class="material-symbols-outlined text-base">group</span>
+          <span class="text-sm font-medium">35 Students</span>
+        </div>
+      </div>
+      <div
+        class="bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6 flex flex-col justify-between hover:shadow-card-hover transition-shadow"
+      >
+        <div>
+          <p class="text-xs text-primary font-semibold uppercase">LIT-405</p>
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark mt-1">
+            Modernist Poetry
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 mt-4 text-text-muted-light dark:text-text-muted-dark">
+          <span class="material-symbols-outlined text-base">group</span>
+          <span class="text-sm font-medium">28 Students</span>
+        </div>
+      </div>
+      <div
+        class="bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6 flex flex-col justify-between hover:shadow-card-hover transition-shadow"
+      >
+        <div>
+          <p class="text-xs text-primary font-semibold uppercase">PHIL-101</p>
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark mt-1">
+            Introduction to Logic
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 mt-4 text-text-muted-light dark:text-text-muted-dark">
+          <span class="material-symbols-outlined text-base">group</span>
+          <span class="text-sm font-medium">112 Students</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      <div class="lg:col-span-1 bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6">
+        <h3 class="text-lg font-bold text-text-light dark:text-text-dark mb-4">
+          Upcoming Deadlines
+        </h3>
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div
+              class="bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent/80 rounded-lg p-3 flex flex-col items-center justify-center w-16"
+            >
+              <span class="text-xs font-bold uppercase">OCT</span>
+              <span class="text-xl font-bold">28</span>
+            </div>
+            <div>
+              <p class="font-semibold text-text-light dark:text-text-dark">
+                Essay 2: The Absurd Hero
+              </p>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
+                PHIL-301 | Due at 11:59 PM
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80 rounded-lg p-3 flex flex-col items-center justify-center w-16"
+            >
+              <span class="text-xs font-bold uppercase">NOV</span>
+              <span class="text-xl font-bold">02</span>
+            </div>
+            <div>
+              <p class="font-semibold text-text-light dark:text-text-dark">
+                Analysis of T.S. Eliot
+              </p>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
+                LIT-405 | Due at 11:59 PM
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80 rounded-lg p-3 flex flex-col items-center justify-center w-16"
+            >
+              <span class="text-xs font-bold uppercase">NOV</span>
+              <span class="text-xl font-bold">05</span>
+            </div>
+            <div>
+              <p class="font-semibold text-text-light dark:text-text-dark">Problem Set 5</p>
+              <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
+                PHIL-101 | Due at 5:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="lg:col-span-2 bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6 flex flex-col"
+      >
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark">Recent Submissions</h3>
+          <div class="flex items-center gap-2">
+            <button
+              class="flex items-center text-sm font-medium text-primary hover:text-primary/80"
+            >
+              <span class="material-symbols-outlined text-base">sort</span>
+              <span>Sort By</span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="overflow-x-auto relative shadow-sm rounded-lg border border-gray-100 dark:border-gray-700/50 max-h-64 lg:max-h-96"
+        >
+          <table class="w-full text-sm text-left text-text-muted-light dark:text-text-muted-dark">
+            <thead
+              class="text-xs text-text-light dark:text-text-dark uppercase bg-gray-50 dark:bg-gray-800 sticky top-0"
+            >
+              <tr>
+                <th class="py-3 px-4" scope="col">Student</th>
+                <th class="py-3 px-4" scope="col">Assignment</th>
+                <th class="py-3 px-4" scope="col">Status</th>
+                <th class="py-3 px-4 text-right" scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Benjamin Carter</p>
+                </td>
+                <td class="px-4 py-3">Essay 2: The Absurd Hero</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-orange-800 bg-orange-100 dark:bg-orange-900/50 dark:text-orange-300 rounded-full"
+                    >Needs Grading</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-primary hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV6yzVMteJS19ASG4J_DtwKeoUipNtzeUJJoy9f82rYawxYRCFED9qluR8d5SH_0IQJYBtCh91baJKiE2Na_gzsNwI9DL2E8CvreIDXOI-0PvWzvzjk99Ur66oURBzFZXA1KQqpmxo5l-rnQGQiRTw4IhVR-vcCGGz8LRnBkMmSxHkb6upasXrZgS15DAxfVjeXnafglVN8FnsT2YHqKJApl_wM16K4HoG8zUOJnxLsNHlEUvsxpn8gAwIGqMcHHD4wka4EDh7QUI"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Liam Goldberg</p>
+                </td>
+                <td class="px-4 py-3">Problem Set 4</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-red-800 bg-red-100 dark:bg-red-900/50 dark:text-red-300 rounded-full"
+                    >Late</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-primary hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwltps4vbrR-atwCewjUWRbUo9ZYMjbQIqws3ih3MbJEKxAGZ76l_GvunLIbipxCeuXJNtPswP264EW8VsZ97H4IIAe5JNEBNeZrxyCanWsMFwRGWbdQf3SVWB0gyV4ZDVuD7-5NyYkmS1I7e7ujSR2LdGebVihOQ-FsMnBmLeNXOCOroC3WaaFONv3opZaoI6gDTfryAXL5gXhAd9QQeKxPx7Aidi_-UiVAVcjAXLjsVE4nWr5LH2AvG_ZTlqkNv-u1VbiTVgnE0"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Sophia Rodriguez</p>
+                </td>
+                <td class="px-4 py-3">Art History Paper</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-green-800 bg-green-100 dark:bg-green-900/50 dark:text-green-300 rounded-full"
+                    >Graded</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-text-muted-light dark:text-text-muted-dark hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">visibility</span> View
+                  </a>
+                </td>
+              </tr>
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWMEd8T8ykVwkpc8LMWHERxrbmLgtHYHzPi9mfj4zDK0kCZGCdG1Pz7CiS0N4I1XmkdmwbgKouM1w6DgWOJh6HaixKJeQ5M4cJHEt3E_LYgtB_2LkHiT20JznbWLh52U8ERBiCIYNAWasWdNuSbtXJdNqBS0wR9TH__QrJPzifNC_VbcVcC0MQUzCWxfgJVcYW_RGzZsjD8h5-KZuFHnAzTi2gEiMkaffctcfZc_x34EfzCjruEcXQo1l0tkafJydm5Rt72nc_GZE"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Olivia Chen</p>
+                </td>
+                <td class="px-4 py-3">Essay 2: The Absurd Hero</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-green-800 bg-green-100 dark:bg-green-900/50 dark:text-green-300 rounded-full"
+                    >Graded</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-text-muted-light dark:text-text-muted-dark hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">visibility</span> View
+                  </a>
+                </td>
+              </tr>
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Ava Miller</p>
+                </td>
+                <td class="px-4 py-3">Critique of Modernism</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-orange-800 bg-orange-100 dark:bg-orange-900/50 dark:text-orange-300 rounded-full"
+                    >Needs Grading</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-primary hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr class="bg-card-light dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-white/5">
+                <td class="flex items-center px-4 py-3 whitespace-nowrap">
+                  <img
+                    alt="Student avatar"
+                    class="size-7 rounded-full mr-2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwltps4vbrR-atwCewjUWRbUo9ZYMjbQIqws3ih3MbJEKxAGZ76l_GvunLIbipxCeuXJNtPswP264EW8VsZ97H4IIAe5JNEBNeZrxyCanWsMFwRGWbdQf3SVWB0gyV4ZDVuD7-5NyYkmS1I7e7ujSR2LdGebVihOQ-FsMnBmLeNXOCOroC3WaaFONv3opZaoI6gDTfryAXL5gXhAd9QQeKxPx7Aidi_-UiVAVcjAXLjsVE4nWr5LH2AvG_ZTlqkNv-u1VbiTVgnE0"
+                  />
+                  <p class="font-semibold text-text-light dark:text-text-dark">Noah Davis</p>
+                </td>
+                <td class="px-4 py-3">Problem Set 5</td>
+                <td class="px-4 py-3">
+                  <span
+                    class="px-2 py-0.5 text-xs font-semibold text-orange-800 bg-orange-100 dark:bg-orange-900/50 dark:text-orange-300 rounded-full"
+                    >Needs Grading</span
+                  >
+                </td>
+                <td class="px-4 py-3 text-right">
+                  <a
+                    class="font-medium text-primary hover:underline flex items-center justify-end gap-1"
+                    href="#"
+                  >
+                    <span class="material-symbols-outlined text-base">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-3 bg-card-light dark:bg-card-dark rounded-xl shadow-card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-text-light dark:text-text-dark">
+            Course Announcement Hub
+          </h3>
+          <button
+            class="flex items-center gap-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors"
+          >
+            <span class="material-symbols-outlined text-base">campaign</span>
+            <span>New Announcement</span>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <div
+            class="border border-gray-200/60 dark:border-gray-800/60 rounded-lg p-4 bg-gray-50 dark:bg-gray-800/50"
+          >
+            <p class="text-xs font-semibold text-primary uppercase mb-1">NEW ANNOUNCEMENT</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="flex-grow">
+                <input
+                  class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark"
+                  placeholder="Announcement Title"
+                  type="text"
+                />
+                <textarea
+                  class="mt-2 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark"
+                  placeholder="Write your announcement here..."
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="flex flex-col justify-between">
+                <select
+                  class="block w-full sm:w-auto px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark"
+                >
+                  <option>Select Course(s)</option>
+                  <option>PHIL-301: Existentialism in Film</option>
+                  <option>HIST-212: Renaissance Art History</option>
+                  <option>LIT-405: Modernist Poetry</option>
+                  <option>PHIL-101: Introduction to Logic</option>
+                </select>
+                <button
+                  class="mt-3 sm:mt-2 w-full sm:w-auto bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors"
+                >
+                  Publish
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-card-light dark:bg-card-dark p-4 rounded-md border border-gray-200/60 dark:border-gray-800/60"
+          >
+            <p class="text-sm font-medium text-text-light dark:text-text-dark">
+              <span class="font-semibold">Reminder:</span> Essay 2 deadline is approaching for
+              PHIL-301. Don't forget to submit by Oct 28.
+            </p>
+            <p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">
+              Published 2 hours ago | PHIL-301
+            </p>
+          </div>
+          <div
+            class="bg-card-light dark:bg-card-dark p-4 rounded-md border border-gray-200/60 dark:border-gray-800/60"
+          >
+            <p class="text-sm font-medium text-text-light dark:text-text-dark">
+              <span class="font-semibold">New Material Uploaded:</span> Supplementary readings for
+              Renaissance Art History (HIST-212) are now available in the 'Materials' section.
+            </p>
+            <p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">
+              Published 1 day ago | HIST-212
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed bottom-8 right-8 flex flex-col items-end gap-4">
+      <button
+        class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 px-5 rounded-full shadow-lg transition-transform hover:scale-105"
+      >
+        <span class="material-symbols-outlined text-base">add</span>
+        <span>Create Assignment</span>
+      </button>
+      <button
+        class="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-semibold py-2.5 px-5 rounded-full shadow-lg transition-transform hover:scale-105"
+      >
+        <span class="material-symbols-outlined text-base">upload_file</span>
+        <span>Upload Material</span>
+      </button>
+    </div>
+  </main>
+</div>
