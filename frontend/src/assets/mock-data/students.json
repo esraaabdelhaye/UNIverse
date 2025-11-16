@@ -1,0 +1,182 @@
+[
+  {
+    "id": "STU001",
+    "age": 20,
+    "name": "Jana Rashed",
+    "gender": "Female",
+    "email": "jana.rashed@example.com",
+    "phone": "+201001112233",
+    "password": "password123"
+  },
+  {
+    "id": "STU002",
+    "age": 21,
+    "name": "Esraa AbdElHay",
+    "gender": "Female",
+    "email": "esraa.ahmed@example.com",
+    "phone": "+201005554433",
+    "password": "password123"
+  },
+  {
+    "id": "STU003",
+    "age": 22,
+    "name": "Omar Khaled",
+    "gender": "Male",
+    "email": "omar.khaled@example.com",
+    "phone": "+201002223344",
+    "password": "password123"
+  },
+  {
+    "id": "STU004",
+    "age": 19,
+    "name": "Mariam Samir",
+    "gender": "Female",
+    "email": "mariam.samir@example.com",
+    "phone": "+201006667788",
+    "password": "password123"
+  },
+  {
+    "id": "STU005",
+    "age": 23,
+    "name": "Youssef Adel",
+    "gender": "Male",
+    "email": "youssef.adel@example.com",
+    "phone": "+201008889900",
+    "password": "password123"
+  },
+  {
+    "id": "STU006",
+    "age": 20,
+    "name": "Farah Tarek",
+    "gender": "Female",
+    "email": "farah.tarek@example.com",
+    "phone": "+201001234567",
+    "password": "password123"
+  },
+  {
+    "id": "STU007",
+    "age": 21,
+    "name": "Kareem Hassan",
+    "gender": "Male",
+    "email": "kareem.hassan@example.com",
+    "phone": "+201004445566",
+    "password": "password123"
+  },
+  {
+    "id": "STU008",
+    "age": 22,
+    "name": "Haneen Mohamed",
+    "gender": "Female",
+    "email": "haneen.mohamed@example.com",
+    "phone": "+201009991122",
+    "password": "password123"
+  },
+  {
+    "id": "STU009",
+    "age": 19,
+    "name": "Mostafa Nabil",
+    "gender": "Male",
+    "email": "mostafa.nabil@example.com",
+    "phone": "+201003330011",
+    "password": "password123"
+  },
+  {
+    "id": "STU010",
+    "age": 24,
+    "name": "Nour Alaa",
+    "gender": "Female",
+    "email": "nour.alaa@example.com",
+    "phone": "+201001119900",
+    "password": "password123"
+  },
+  {
+    "id": "STU011",
+    "age": 20,
+    "name": "Mohamed Ali",
+    "gender": "Male",
+    "email": "mohamed.ali@example.com",
+    "phone": "+201001556677",
+    "password": "password123"
+  },
+  {
+    "id": "STU012",
+    "age": 23,
+    "name": "Sara Mahmoud",
+    "gender": "Female",
+    "email": "sara.mahmoud@example.com",
+    "phone": "+201009944223",
+    "password": "password123"
+  },
+  {
+    "id": "STU013",
+    "age": 22,
+    "name": "Ibrahim Reda",
+    "gender": "Male",
+    "email": "ibrahim.reda@example.com",
+    "phone": "+201005503322",
+    "password": "password123"
+  },
+  {
+    "id": "STU014",
+    "age": 19,
+    "name": "Laila Hassan",
+    "gender": "Female",
+    "email": "laila.hassan@example.com",
+    "phone": "+201001771188",
+    "password": "password123"
+  },
+  {
+    "id": "STU015",
+    "age": 21,
+    "name": "Ahmed Tamer",
+    "gender": "Male",
+    "email": "ahmed.tamer@example.com",
+    "phone": "+201008834455",
+    "password": "password123"
+  },
+  {
+    "id": "STU016",
+    "age": 22,
+    "name": "Dina Lotfy",
+    "gender": "Female",
+    "email": "dina.lotfy@example.com",
+    "phone": "+201003215544",
+    "password": "password123"
+  },
+  {
+    "id": "STU017",
+    "age": 20,
+    "name": "Tarek Yasser",
+    "gender": "Male",
+    "email": "tarek.yasser@example.com",
+    "phone": "+201002992211",
+    "password": "password123"
+  },
+  {
+    "id": "STU018",
+    "age": 23,
+    "name": "Reem Hassan",
+    "gender": "Female",
+    "email": "reem.hassan@example.com",
+    "phone": "+201007744556",
+    "password": "password123"
+  },
+  {
+    "id": "STU019",
+    "age": 21,
+    "name": "Adel Fawzy",
+    "gender": "Male",
+    "email": "adel.fawzy@example.com",
+    "phone": "+201005667788",
+    "password": "password123"
+  },
+  {
+    "id": "STU020",
+    "age": 22,
+    "name": "Hager Atef",
+    "gender": "Female",
+    "email": "hager.atef@example.com",
+    "phone": "+201003449922",
+    "password": "password123"
+  }
+]
