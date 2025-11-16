@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="Student Dash &amp; choose acc updated new format">
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/core/models/student.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/mock-data/students.json" afterDir="false" />
+    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="Added Mock Data (Students)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763232829939</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added Mock Data (Students)">
+      <option name="closed" value="true" />
+      <created>1763311772132</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763311772132</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,7 +129,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Student Dashboard + Choose account" />
-    <option name="LAST_COMMIT_MESSAGE" value="Student Dashboard + Choose account" />
+    <MESSAGE value="Added Mock Data (Students)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Mock Data (Students)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
