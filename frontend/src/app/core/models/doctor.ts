@@ -1,4 +1,9 @@
 export interface Doctor {
-  username: string;
+  id: string;
+  age: number;
+  name: string;
+  gender: string;
+  email: string;
+  phone: string;
   password: string;
 }
