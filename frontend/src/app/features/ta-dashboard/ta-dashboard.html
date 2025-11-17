@@ -1,590 +1,352 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>UNIverse TA Dashboard</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: '#A7C7E7', // Lighter, pastel blue
-              'accent-green': '#C1E1C1', // Pastel Green
-              'accent-orange': '#FFDAB9', // Pastel Orange
-              'background-light': '#F8F9FA',
-              'background-dark': '#101922',
-              'card-light': '#ffffff',
-              'card-dark': '#192734',
-              'text-light': '#101922',
-              'text-dark': '#E2E8F0',
-              'text-muted-light': '#64748B',
-              'text-muted-dark': '#94A3B8',
-              'border-light': '#E2E8F0',
-              'border-dark': '#334155',
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Teaching Assistant Dashboard - UNIverse</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": {
+              light: "#DBEAFE",
+              DEFAULT: "#2563EB",
+              dark: "#1E40AF",
             },
-            fontFamily: {
-              display: ['Manrope', 'sans-serif'],
+            "accent": {
+              light: "#FEF3C7",
+              DEFAULT: "#F59E0B",
+              dark: "#D97706",
             },
-            borderRadius: {
-              DEFAULT: '0.5rem',
-              lg: '0.75rem',
-              xl: '1rem',
-              full: '9999px',
+            "background": {
+              light: "#F8FAFC",
+              dark: "#0F172A"
             },
+            "surface": {
+              light: "#FFFFFF",
+              dark: "#1E293B"
+            },
+            "text": {
+              DEFAULT: "#1E293B",
+              light: "#64748B",
+              dark: "#F1F5F9"
+            }
           },
+          fontFamily: {
+            "sans": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem"
+          },
+          boxShadow: {
+            "card": "0 1px 3px 0 rgb(0 0 0 / 0.1)",
+            "card-hover": "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+          }
         },
-      };
-    </script>
-  </head>
-  <body
-    class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark"
-  >
-    <div class="flex h-screen w-full">
-      <aside
-        class="flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6"
-      >
-        <div class="flex items-center gap-3 mb-8">
-          <div class="size-8 text-primary">
-            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_6_535)">
-                <path
-                  clip-rule="evenodd"
-                  d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                ></path>
-              </g>
-              <defs>
-                <clipPath id="clip0_6_535">
-                  <rect fill="white" height="48" width="48"></rect>
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-          <h2 class="text-xl font-bold tracking-tight text-text-light dark:text-text-dark">
-            UNIverse
-          </h2>
-        </div>
-        <div class="flex flex-col gap-4">
-          <div class="flex gap-4 items-center">
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12"
-              data-alt="Profile picture of John Smith"
-              style="
-                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY');
-              "
-            ></div>
-            <div class="flex flex-col">
-              <h1 class="text-base font-bold text-text-light dark:text-text-dark">John Smith</h1>
-              <p
-                class="text-xs font-medium text-text-muted-light dark:text-text-muted-dark bg-primary/20 text-primary-dark px-2 py-0.5 rounded-full"
-              >
-                Teaching Assistant
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-2 mt-6">
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30"
-              href="#"
-            >
-              <span class="material-symbols-outlined text-xl">dashboard</span>
-              <p class="text-sm font-semibold">Dashboard</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >upload_file</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">
-                Upload Materials
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >edit_square</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">Add Grades</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >assignment</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">Add Assignment</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >forum</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">
-                Answer Questions
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >campaign</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">
-                Manage Announcements
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                >calendar_month</span
-              >
-              <p class="text-sm font-medium text-text-light dark:text-text-dark">Schedule</p>
-            </a>
-          </div>
-        </div>
-        <div class="mt-auto">
-          <a
-            class="flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-            href="#"
-          >
-            <span
-              class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-              >logout</span
-            >
-            <p class="text-sm font-medium text-text-light dark:text-text-dark">Log Out</p>
-          </a>
-        </div>
-      </aside>
-      <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-10"
-        >
-          <div class="flex items-center gap-4">
-            <h1 class="text-3xl font-black tracking-tighter">Welcome, John</h1>
-            <span
-              class="text-sm font-semibold text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full"
-              >TA</span
-            >
-          </div>
-          <div class="flex flex-1 justify-end gap-4">
-            <label class="flex flex-col min-w-40 h-11 max-w-64">
-              <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-                <div
-                  class="text-text-muted-light dark:text-text-muted-dark flex border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark items-center justify-center pl-3.5 rounded-l-lg border-r-0"
-                >
-                  <span class="material-symbols-outlined text-xl">search</span>
-                </div>
-                <input
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary focus:ring-inset border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark h-full placeholder:text-text-muted-light dark:placeholder:text-text-muted-dark px-4 border-l-0 text-sm"
-                  placeholder="Search courses, students..."
-                  value=""
-                />
-              </div>
-            </label>
-            <button
-              class="flex size-11 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
-            >
-              <span class="material-symbols-outlined text-xl">notifications</span>
-            </button>
-          </div>
-        </header>
-        <div class="flex-1 p-10">
-          <div class="grid grid-cols-12 gap-8">
-            <div class="col-span-12 lg:col-span-8 space-y-8">
-              <div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Course Management</h2>
-                <div class="grid grid-cols-1 gap-6">
-                  <div
-                    class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm"
-                  >
-                    <div
-                      class="flex items-center p-5 cursor-pointer"
-                      onclick="this.nextElementSibling.classList.toggle('hidden')"
-                    >
-                      <div
-                        class="w-24 h-16 bg-center bg-no-repeat bg-cover rounded-lg mr-4"
-                        data-alt="Abstract art for Psychology course"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDskPdtKikbuqQ3AFljUx4Tr68EY1W7_5kyKL93pj39Kd4oQ0Sxh-d1Wn-76LRIV0_WDsN9Kuuo-4nD2nwARsZMi5plpk2VAWAGKR2u0BHEIfq8vnM0sFrtuRgL6KhLdf-URs7LB_nV_8cqBwpSPFmr_bAbsi5r6sOOy31Q1TsG7Rr_lKOpA2jRuxP90uIesvjoKPTxyTuAlyM_KfdXdRrdUJMj4lwJD3XE8zGuQLy1bpQ_GljpNkgPBgjAX2qEixpDG9pIoJnpWJM');
-                        "
-                      ></div>
-                      <div class="flex-1">
-                        <p class="text-lg font-bold">Introduction to Psychology</p>
-                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                          Prof. Emily Carter
-                        </p>
-                      </div>
-                      <span
-                        class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                        >expand_more</span
-                      >
-                    </div>
-                    <div class="hidden border-t border-border-light dark:border-border-dark p-5">
-                      <div class="flex flex-wrap gap-2 mb-4">
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >upload_file</span
-                          >Upload Materials
-                        </button>
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >assignment</span
-                          >Add Assignment
-                        </button>
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >campaign</span
-                          >Manage Announcements
-                        </button>
-                      </div>
-                      <div
-                        class="mt-4 space-y-3 text-sm text-text-muted-light dark:text-text-muted-dark"
-                      >
-                        <p>Recent Activity:</p>
-                        <ul class="list-disc pl-5 space-y-1">
-                          <li>Uploaded "Ch. 5 Readings" - 1 day ago</li>
-                          <li>Created "Essay Outline Assignment" - 3 days ago</li>
-                          <li>Posted "Midterm Review Session" announcement - 5 days ago</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm"
-                  >
-                    <div
-                      class="flex items-center p-5 cursor-pointer"
-                      onclick="this.nextElementSibling.classList.toggle('hidden')"
-                    >
-                      <div
-                        class="w-24 h-16 bg-center bg-no-repeat bg-cover rounded-lg mr-4"
-                        data-alt="Abstract art for Calculus course"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDM4C-Bc1Z92jNPlqp-Yz_t7eAJn4AkX_lXPE-nQvvAuacu5UCFDjllQH8QcoanrkTQtif_EML5CIKmz7T-gV4ZNirkZ7bVaVCDq8W3k0GbCEB228bVW88sryXE6AkqFhL4t3gJtbCsGe_c4KR6N0NislcU19z7wUx9So7GqsE99iZJi4aiR9cc0Mtvuq1N-pg8b_46YQKOA5aamEMVP7uKHt2sdQ-diP7a9bU0zUeiVbSAVMYko9nFVc_PqAMY0RUodr1390IwUQA');
-                        "
-                      ></div>
-                      <div class="flex-1">
-                        <p class="text-lg font-bold">Calculus II</p>
-                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                          Prof. Alan Turing
-                        </p>
-                      </div>
-                      <span
-                        class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
-                        >expand_more</span
-                      >
-                    </div>
-                    <div class="hidden border-t border-border-light dark:border-border-dark p-5">
-                      <div class="flex flex-wrap gap-2 mb-4">
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >upload_file</span
-                          >Upload Materials
-                        </button>
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >assignment</span
-                          >Add Assignment
-                        </button>
-                        <button
-                          class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
-                        >
-                          <span class="material-symbols-outlined align-middle text-lg mr-2"
-                            >campaign</span
-                          >Manage Announcements
-                        </button>
-                      </div>
-                      <div
-                        class="mt-4 space-y-3 text-sm text-text-muted-light dark:text-text-muted-dark"
-                      >
-                        <p>Recent Activity:</p>
-                        <ul class="list-disc pl-5 space-y-1">
-                          <li>Uploaded "Calculus II Practice Problems" - 2 days ago</li>
-                          <li>Added "Midterm Exam" - 4 days ago</li>
-                          <li>Managed announcement "Office Hours Update" - 1 week ago</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h2 class="text-2xl font-bold tracking-tight mb-4">Grading Queue</h2>
-                <div
-                  class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6 shadow-sm"
-                >
-                  <div class="flex items-center gap-4 mb-4">
-                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                      Filter by:
-                    </p>
-                    <select
-                      class="form-select text-sm rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary"
-                    >
-                      <option>All Courses</option>
-                      <option>Calculus II</option>
-                      <option>Psychology</option>
-                    </select>
-                    <select
-                      class="form-select text-sm rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary"
-                    >
-                      <option>All Statuses</option>
-                      <option>Pending</option>
-                      <option>Completed</option>
-                    </select>
-                  </div>
-                  <div class="space-y-4">
-                    <div
-                      class="flex items-center justify-between p-3 rounded-lg bg-accent-orange/10 dark:bg-accent-orange/20"
-                    >
-                      <div>
-                        <p class="font-semibold">Calculus II - Problem Set 3</p>
-                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                          Submitted: 2 days ago
-                        </p>
-                      </div>
-                      <div class="flex items-center gap-3">
-                        <span
-                          class="font-bold text-sm text-orange-600 dark:text-accent-orange bg-accent-orange/50 dark:bg-accent-orange/20 px-2.5 py-1 rounded-full"
-                          >12 Pending</span
-                        >
-                        <button
-                          class="px-3 py-1 text-sm font-semibold rounded-md bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/40 transition-colors flex items-center gap-1"
-                        >
-                          <span class="material-symbols-outlined text-base">edit_square</span>Add
-                          Grades
-                        </button>
-                      </div>
-                    </div>
-                    <div
-                      class="flex items-center justify-between p-3 rounded-lg bg-accent-orange/10 dark:bg-accent-orange/20"
-                    >
-                      <div>
-                        <p class="font-semibold">Psychology - Midterm Essays</p>
-                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                          Submitted: 5 days ago
-                        </p>
-                      </div>
-                      <div class="flex items-center gap-3">
-                        <span
-                          class="font-bold text-sm text-orange-600 dark:text-accent-orange bg-accent-orange/50 dark:bg-accent-orange/20 px-2.5 py-1 rounded-full"
-                          >5 Pending</span
-                        >
-                        <button
-                          class="px-3 py-1 text-sm font-semibold rounded-md bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/40 transition-colors flex items-center gap-1"
-                        >
-                          <span class="material-symbols-outlined text-base">edit_square</span>Add
-                          Grades
-                        </button>
-                      </div>
-                    </div>
-                    <div
-                      class="flex items-center justify-between p-3 rounded-lg bg-accent-green/10 dark:bg-accent-green/20"
-                    >
-                      <div>
-                        <p class="font-semibold text-gray-500 dark:text-gray-400">
-                          Calculus II - Problem Set 2
-                        </p>
-                        <p
-                          class="text-sm text-text-muted-light dark:text-text-muted-dark line-through"
-                        >
-                          Graded
-                        </p>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-accent-green"
-                          >check_circle</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-span-12 lg:col-span-4 space-y-8">
-              <div
-                class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6 shadow-sm"
-              >
-                <h3 class="text-xl font-bold mb-4">Student Queries</h3>
-                <div class="flex items-start gap-4 mb-4">
-                  <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Filter by:</p>
-                  <div class="flex flex-col gap-2">
-                        <select
-                            class="form-select text-sm rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary"
-                        >
-                            <option>All Courses</option>
-                            <option>Calculus II</option>
-                            <option>Psychology</option>
-                        </select>
-                        <select
-                            class="form-select text-sm rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary"
-                        >
-                            <option>All Statuses</option>
-                            <option>New</option>
-                            <option>Answered</option>
-                        </select>
-                  </div>
-                </div>
-                <div class="space-y-5">
-                  <div class="flex flex-col gap-3">
-                    <div class="flex items-center gap-3">
-                      <div
-                        class="w-8 h-8 rounded-full bg-cover bg-center"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGN5B73F6JJ6n6FWre5R2o4TYkUIlTF2b_MboGpuXGzcLKmSjHwA4Wd--PTsWE4jl-km610wOeJwRgenQ-hbXznIxB4aBOlRE3R8s9zfEAuvRU2WCvzITDqfqJb8419zGuFK6AGzfrdi-pPuStIYa2QW8XeXApQZHA2DfhIRYmw3MWr_iW3o6sAqsozYay3ZXmOAdkxjA4RYqA0yBWXhXOJurdsQd-B2SCa321FSdLYNf7nJg9B2-UgkBBmUDY712eDEG_xjIbUDM');
-                        "
-                      ></div>
-                      <div>
-                        <p class="font-semibold text-sm">Alice Johnson</p>
-                        <p class="text-xs text-text-muted-light dark:text-text-muted-dark">
-                          Calculus II Forum • 2h ago
-                        </p>
-                      </div>
-                    </div>
-                    <p class="text-sm pl-11">
-                      "Can someone explain question 5 on the latest problem set? I'm really stuck."
-                    </p>
-                    <div class="flex items-center gap-2 pl-11">
-                      <button
-                        class="px-3 py-1 text-xs font-semibold rounded-md bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/40 transition-colors flex items-center gap-1"
-                      >
-                        <span class="material-symbols-outlined text-base">reply</span>Answer
-                        Question
-                      </button>
-                    </div>
-                  </div>
-                  <div class="border-t border-border-light dark:border-border-dark"></div>
-                  <div class="flex flex-col gap-3 pt-5">
-                    <div class="flex items-center gap-3">
-                      <div
-                        class="w-8 h-8 rounded-full bg-cover bg-center"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY');
-                        "
-                      ></div>
-                      <div>
-                        <p class="font-semibold text-sm">Bob Williams</p>
-                        <p class="text-xs text-text-muted-light dark:text-text-muted-dark">
-                          Psychology Discussion • 5h ago
-                        </p>
-                      </div>
-                    </div>
-                    <p class="text-sm pl-11">
-                      "This week's reading on cognitive biases was fascinating! Especially the part
-                      about confirmation bias."
-                    </p>
-                    <div class="flex items-center gap-2 pl-11">
-                      <button
-                        class="px-3 py-1 text-xs font-semibold rounded-md bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/40 transition-colors flex items-center gap-1"
-                      >
-                        <span class="material-symbols-outlined text-base">reply</span>Answer
-                        Question
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark p-6 shadow-sm"
-              >
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="text-xl font-bold">This Week's Schedule</h3>
-                  <div class="flex gap-2">
-                    <button
-                      class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark transition-colors"
-                    >
-                      <span class="material-symbols-outlined">chevron_left</span>
-                    </button>
-                    <button
-                      class="text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark transition-colors"
-                    >
-                      <span class="material-symbols-outlined">chevron_right</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="space-y-4">
-                  <div class="grid grid-cols-[auto,1fr] gap-x-4 items-start">
-                    <div
-                      class="text-right text-sm font-medium text-text-muted-light dark:text-text-muted-dark pt-1"
-                    >
-                      10:00 AM
-                    </div>
-                    <div class="border-l-2 border-primary pl-4">
-                      <p class="font-semibold">Psychology Lab Section A</p>
-                      <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                        Room 301, Science Bldg
-                      </p>
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-[auto,1fr] gap-x-4 items-start">
-                    <div
-                      class="text-right text-sm font-medium text-text-muted-light dark:text-text-muted-dark pt-1"
-                    >
-                      02:00 PM
-                    </div>
-                    <div class="border-l-2 border-accent-orange pl-4">
-                      <p class="font-semibold">Calculus II Tutoring Session</p>
-                      <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                        Library Study Room 4B
-                      </p>
-                    </div>
-                  </div>
-                  <div class="grid grid-cols-[auto,1fr] gap-x-4 items-start">
-                    <div
-                      class="text-right text-sm font-medium text-text-muted-light dark:text-text-muted-dark pt-1"
-                    >
-                      04:00 PM
-                    </div>
-                    <div class="border-l-2 border-primary pl-4">
-                      <p class="font-semibold">Psychology Lab Section B</p>
-                      <p class="text-sm text-text-muted-light dark:text-text-muted-dark">
-                        Room 301, Science Bldg
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-sans bg-background-light dark:bg-background-dark text-text dark:text-text-dark">
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark flex flex-col border-r border-gray-200 dark:border-gray-700">
+    <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+      <span class="material-symbols-outlined text-3xl text-primary">school</span>
+      <h2 class="text-xl font-bold text-primary">UNIverse</h2>
     </div>
-  </body>
+    <nav class="flex flex-col gap-1 p-4">
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-light text-primary-dark font-semibold" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-sm">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span class="text-sm font-medium">Upload Materials</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">edit_square</span>
+        <span class="text-sm font-medium">Add Grades</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">assignment</span>
+        <span class="text-sm font-medium">Add Assignment</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">forum</span>
+        <span class="text-sm font-medium">Answer Questions</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">campaign</span>
+        <span class="text-sm font-medium">Manage Announcements</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="text-sm font-medium">Schedule</span>
+      </a>
+    </nav>
+    <div class="mt-auto flex flex-col gap-1 p-4 border-t border-gray-200 dark:border-gray-700">
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="text-sm font-medium">Settings</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-light hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-sm font-medium">Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header -->
+    <header class="flex items-center justify-end bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700 px-8 py-4">
+      <div class="flex items-center gap-4">
+        <button class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="material-symbols-outlined text-text-light">notifications</span>
+          <span class="absolute top-1 right-1 h-2 w-2 rounded-full bg-accent"></span>
+        </button>
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAM0hj8VPghMiq7WMnCosYRbOXNs6i69ULHuWZzbnPbEfCQVlRGYxkwsvgtO4tO_9LyabYchwJZFQKYxh3ltO1s-q1GmdU3JZRhjy1u2PJz2EMtlIMrW9MAxsVHCf4XAQk_n68kUlMoGnfCYLAZCFo6QA69eYMp2xFBJRLxTFgQ6OPUK-a7xrxAdzpV7wdnauuJJ4gX5QrMLs3yt5gyeHcfqjhQ_oy-9UY4SuRhZOjaUHgJtc7HaVpaGNExksmjW-cqNlTeofDrO_I");'></div>
+        <div>
+          <p class="text-sm font-semibold">Marc Doe</p>
+          <p class="text-xs text-text-light">TA</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-12 gap-8">
+          <!-- Left Column -->
+          <div class="col-span-12 lg:col-span-8 space-y-8">
+            <!-- Course Management -->
+            <div>
+              <h2 class="text-2xl font-bold mb-4">Course Management</h2>
+              <div class="space-y-4">
+                <!-- Course 1 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-lg border border-gray-200 dark:border-gray-700 shadow-card">
+                  <div class="flex items-center p-5 cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <div class="w-24 h-16 rounded-lg bg-cover bg-center mr-4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDskPdtKikbuqQ3AFljUx4Tr68EY1W7_5kyKL93pj39Kd4oQ0Sxh-d1Wn-76LRIV0_WDsN9Kuuo-4nD2nwARsZMi5plpk2VAWAGKR2u0BHEIfq8vnM0sFrtuRgL6KhLdf-URs7LB_nV_8cqBwpSPFmr_bAbsi5r6sOOy31Q1TsG7Rr_lKOpA2jRuxP90uIesvjoKPTxyTuAlyM_KfdXdRrdUJMj4lwJD3XE8zGuQLy1bpQ_GljpNkgPBgjAX2qEixpDG9pIoJnpWJM");'></div>
+                    <div class="flex-1">
+                      <p class="text-lg font-bold">Introduction to Psychology</p>
+                      <p class="text-sm text-text-light">Prof. Emily Carter</p>
+                    </div>
+                    <span class="material-symbols-outlined text-text-light">expand_more</span>
+                  </div>
+                  <div class="hidden border-t border-gray-200 dark:border-gray-700 p-5">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">upload_file</span>Upload Materials
+                      </button>
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">assignment</span>Add Assignment
+                      </button>
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">campaign</span>Manage Announcements
+                      </button>
+                    </div>
+                    <div class="text-sm text-text-light space-y-2">
+                      <p class="font-semibold">Recent Activity:</p>
+                      <ul class="list-disc pl-5 space-y-1">
+                        <li>Uploaded "Ch. 5 Readings" - 1 day ago</li>
+                        <li>Created "Essay Outline Assignment" - 3 days ago</li>
+                        <li>Posted "Midterm Review Session" announcement - 5 days ago</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-lg border border-gray-200 dark:border-gray-700 shadow-card">
+                  <div class="flex items-center p-5 cursor-pointer" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <div class="w-24 h-16 rounded-lg bg-cover bg-center mr-4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDM4C-Bc1Z92jNPlqp-Yz_t7eAJn4AkX_lXPE-nQvvAuacu5UCFDjllQH8QcoanrkTQtif_EML5CIKmz7T-gV4ZNirkZ7bVaVCDq8W3k0GbCEB228bVW88sryXE6AkqFhL4t3gJtbCsGe_c4KR6N0NislcU19z7wUx9So7GqsE99iZJi4aiR9cc0Mtvuq1N-pg8b_46YQKOA5aamEMVP7uKHt2sdQ-diP7a9bU0zUeiVbSAVMYko9nFVc_PqAMY0RUodr1390IwUQA");'></div>
+                    <div class="flex-1">
+                      <p class="text-lg font-bold">Calculus II</p>
+                      <p class="text-sm text-text-light">Prof. Alan Turing</p>
+                    </div>
+                    <span class="material-symbols-outlined text-text-light">expand_more</span>
+                  </div>
+                  <div class="hidden border-t border-gray-200 dark:border-gray-700 p-5">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">upload_file</span>Upload Materials
+                      </button>
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">assignment</span>Add Assignment
+                      </button>
+                      <button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors">
+                        <span class="material-symbols-outlined align-middle text-lg mr-1">campaign</span>Manage Announcements
+                      </button>
+                    </div>
+                    <div class="text-sm text-text-light space-y-2">
+                      <p class="font-semibold">Recent Activity:</p>
+                      <ul class="list-disc pl-5 space-y-1">
+                        <li>Uploaded "Calculus II Practice Problems" - 2 days ago</li>
+                        <li>Added "Midterm Exam" - 4 days ago</li>
+                        <li>Managed announcement "Office Hours Update" - 1 week ago</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grading Queue -->
+            <div>
+              <h2 class="text-2xl font-bold mb-4">Grading Queue</h2>
+              <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-card">
+                <div class="flex items-center gap-4 mb-4">
+                  <p class="text-sm text-text-light">Filter by:</p>
+                  <select class="px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>All Courses</option>
+                    <option>Calculus II</option>
+                    <option>Psychology</option>
+                  </select>
+                  <select class="px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option>All Statuses</option>
+                    <option>Pending</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
+                    <div>
+                      <p class="font-semibold">Calculus II - Problem Set 3</p>
+                      <p class="text-sm text-text-light">Submitted: 2 days ago</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="px-3 py-1 text-sm font-semibold rounded-full bg-orange-200 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300">12 Pending</span>
+                      <button class="px-4 py-2 text-sm font-semibold rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">edit_square</span>Add Grades
+                      </button>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
+                    <div>
+                      <p class="font-semibold">Psychology - Midterm Essays</p>
+                      <p class="text-sm text-text-light">Submitted: 5 days ago</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="px-3 py-1 text-sm font-semibold rounded-full bg-orange-200 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300">5 Pending</span>
+                      <button class="px-4 py-2 text-sm font-semibold rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">edit_square</span>Add Grades
+                      </button>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                    <div>
+                      <p class="font-semibold text-text-light">Calculus II - Problem Set 2</p>
+                      <p class="text-sm text-text-light line-through">Graded</p>
+                    </div>
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-span-12 lg:col-span-4 space-y-8">
+            <!-- Student Queries -->
+            <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-card">
+              <h3 class="text-xl font-bold mb-4">Student Queries</h3>
+              <div class="flex items-center gap-3 mb-4">
+                <select class="flex-1 px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                  <option>All Courses</option>
+                  <option>Calculus II</option>
+                  <option>Psychology</option>
+                </select>
+                <select class="flex-1 px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                  <option>All Statuses</option>
+                  <option>New</option>
+                  <option>Answered</option>
+                </select>
+              </div>
+              <div class="space-y-4">
+                <div class="p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGN5B73F6JJ6n6FWre5R2o4TYkUIlTF2b_MboGpuXGzcLKmSjHwA4Wd--PTsWE4jl-km610wOeJwRgenQ-hbXznIxB4aBOlRE3R8s9zfEAuvRU2WCvzITDqfqJb8419zGuFK6AGzfrdi-pPuStIYa2QW8XeXApQZHA2DfhIRYmw3MWr_iW3o6sAqsozYay3ZXmOAdkxjA4RYqA0yBWXhXOJurdsQd-B2SCa321FSdLYNf7nJg9B2-UgkBBmUDY712eDEG_xjIbUDM");'></div>
+                    <div>
+                      <p class="font-semibold text-sm">Alice Johnson</p>
+                      <p class="text-xs text-text-light">Calculus II Forum • 2h ago</p>
+                    </div>
+                  </div>
+                  <p class="text-sm mb-3">"Can someone explain question 5 on the latest problem set? I'm really stuck."</p>
+                  <button class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-base">reply</span>Answer Question
+                  </button>
+                </div>
+                <div class="p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY");'></div>
+                    <div>
+                      <p class="font-semibold text-sm">Bob Williams</p>
+                      <p class="text-xs text-text-light">Psychology Discussion • 5h ago</p>
+                    </div>
+                  </div>
+                  <p class="text-sm mb-3">"This week's reading on cognitive biases was fascinating! Especially the part about confirmation bias."</p>
+                  <button class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary-light text-primary-dark hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-base">reply</span>Answer Question
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- This Week's Schedule -->
+            <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold">This Week's Schedule</h3>
+                <div class="flex gap-2">
+                  <button class="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="material-symbols-outlined text-text-light">chevron_left</span>
+                  </button>
+                  <button class="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="material-symbols-outlined text-text-light">chevron_right</span>
+                  </button>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="flex gap-4">
+                  <div class="text-sm font-medium text-text-light w-20 pt-1">10:00 AM</div>
+                  <div class="flex-1 border-l-2 border-primary pl-4">
+                    <p class="font-semibold">Psychology Lab Section A</p>
+                    <p class="text-sm text-text-light">Room 301, Science Bldg</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="text-sm font-medium text-text-light w-20 pt-1">02:00 PM</div>
+                  <div class="flex-1 border-l-2 border-accent pl-4">
+                    <p class="font-semibold">Calculus II Tutoring Session</p>
+                    <p class="text-sm text-text-light">Library Study Room 4B</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="text-sm font-medium text-text-light w-20 pt-1">04:00 PM</div>
+                  <div class="flex-1 border-l-2 border-primary pl-4">
+                    <p class="font-semibold">Psychology Lab Section B</p>
+                    <p class="text-sm text-text-light">Room 301, Science Bldg</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
 </html>

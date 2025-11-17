@@ -1,193 +1,175 @@
-<div
-  class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden"
-  style="font-family: Manrope, 'Noto Sans', sans-serif"
->
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>UNIverse Login</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#818cf8",
+            "background-light": "#f8f9fc",
+            "background-dark": "#101922",
+            "supervisor": "#f87171",
+            "staff": "#60a5fa",
+            "student": "#fb923c"
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    .role-card:has(input:checked) {
+      border-color: currentColor;
+      background-color: var(--role-bg-color);
+    }
+    .role-card:has(input:checked) p {
+      color: currentColor;
+    }
+    .role-card:has(input#supervisor-prof:checked) {
+      color: #f87171;
+      --role-bg-color: rgba(248, 113, 113, 0.1);
+    }
+    .role-card:has(input#ta:checked) {
+      color: #60a5fa;
+      --role-bg-color: rgba(96, 165, 250, 0.1);
+    }
+    .role-card:has(input#student:checked) {
+      color: #fb923c;
+      --role-bg-color: rgba(251, 146, 60, 0.1);
+    }
+    .role-card:has(input:checked) .material-symbols-outlined {
+      color: currentColor;
+    }
+
+    /* Default button style */
+    .sign-in-button {
+      background-color: #818cf8;
+      border-color: #818cf8;
+    }
+    .sign-in-button:hover {
+      background-color: #6366f1;
+    }
+
+    /* Role-specific button styles */
+    #supervisor-prof:checked ~ * .sign-in-button {
+      background-color: #f87171;
+      border-color: #f87171;
+    }
+    #supervisor-prof:checked ~ * .sign-in-button:hover {
+      background-color: #ef4444;
+    }
+    #ta:checked ~ * .sign-in-button {
+      background-color: #60a5fa;
+      border-color: #60a5fa;
+    }
+    #ta:checked ~ * .sign-in-button:hover {
+      background-color: #3b82f6;
+    }
+    #student:checked ~ * .sign-in-button {
+      background-color: #fb923c;
+      border-color: #fb923c;
+    }
+    #student:checked ~ * .sign-in-button:hover {
+      background-color: #f97316;
+    }
+  </style>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden" style='font-family: Manrope, "Noto Sans", sans-serif;'>
   <div class="layout-container flex h-full grow flex-col">
     <div class="flex flex-1 w-full">
       <div class="grid w-full grid-cols-1 md:grid-cols-2 min-h-screen">
-        <div
-          class="relative hidden h-full w-full flex-col items-center justify-center bg-[#e0e7ff] md:flex"
-        >
-          <div
-            class="absolute inset-0 bg-center bg-no-repeat bg-cover"
-            data-alt="An abstract illustration of diverse students and professors collaborating with laptops, books, and digital screens, with a university building silhouette in the background."
-            style="
-              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZZeUKwev-GZfciTiA_vJRh2RhoI31x-RPkGUKVjNtBxs2XPH3fF3Dh74cUclEfxNNtzL7AQxJCt6Q2NdQG56ijYHfKr-_1Fd19i-F8ld7Sl_T3YO5zrOSEqZZRWAUiyTldtnL0XUYoQKE7MRLp2ax_giYC2r13ygFZnCW0SN8U-IwpV-CRNV3XfTN7_yek391QPFXLoWgfdqufIFErSQUKTYh6wHpRNSEkvBgbjMY3LM8hzQNdtzOMERYM6v6llgtProYsQ1dU8A');
-              opacity: 0.3;
-            "
-          ></div>
+        <div class="relative hidden h-full w-full flex-col items-center justify-center bg-[#e0e7ff] md:flex">
+          <div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="An abstract illustration of diverse students and professors collaborating with laptops, books, and digital screens, with a university building silhouette in the background." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZZeUKwev-GZfciTiA_vJRh2RhoI31x-RPkGUKVjNtBxs2XPH3fF3Dh74cUclEfxNNtzL7AQxJCt6Q2NdQG56ijYHfKr-_1Fd19i-F8ld7Sl_T3YO5zrOSEqZZRWAUiyTldtnL0XUYoQKE7MRLp2ax_giYC2r13ygFZnCW0SN8U-IwpV-CRNV3XfTN7_yek391QPFXLoWgfdqufIFErSQUKTYh6wHpRNSEkvBgbjMY3LM8hzQNdtzOMERYM6v6llgtProYsQ1dU8A"); opacity: 0.3;'></div>
           <div class="relative z-10 p-12 text-slate-800">
             <h2 class="text-4xl font-bold tracking-tight">Welcome to UNIverse</h2>
-            <p class="mt-4 text-lg text-slate-600">
-              Your unified campus experience starts here. Manage courses, connect with peers, and
-              stay organized.
-            </p>
+            <p class="mt-4 text-lg text-slate-600">Your unified campus experience starts here. Manage courses, connect with peers, and stay organized.</p>
           </div>
         </div>
-        <div
-          class="flex w-full items-center justify-center bg-background-light dark:bg-background-dark p-6 sm:p-8 lg:p-12"
-        >
+        <div class="flex w-full items-center justify-center bg-background-light dark:bg-background-dark p-6 sm:p-8 lg:p-12">
           <div class="layout-content-container flex flex-col max-w-md flex-1 py-10">
             <div class="flex flex-col items-center text-center">
               <div class="flex items-center gap-3 mb-4">
                 <span class="material-symbols-outlined text-4xl text-primary">school</span>
                 <span class="text-3xl font-bold text-[#0d141b] dark:text-slate-200">UNIverse</span>
               </div>
-              <h1
-                class="text-[#0d141b] dark:text-slate-200 tracking-tight text-[32px] font-bold leading-tight"
-              >
-                Welcome Back
-              </h1>
-              <p
-                class="text-slate-600 dark:text-slate-400 text-base font-normal leading-normal mt-1"
-              >
-                Sign in to access your dashboard
-              </p>
+              <h1 class="text-[#0d141b] dark:text-slate-200 tracking-tight text-[32px] font-bold leading-tight">Welcome Back</h1>
+              <p class="text-slate-600 dark:text-slate-400 text-base font-normal leading-normal mt-1">Sign in to access your dashboard</p>
             </div>
             <form class="mt-8 w-full">
-              <h3
-                class="text-[#0d141b] dark:text-slate-200 text-lg font-bold leading-tight tracking-[-0.015em] mb-4 text-center"
-              >
-                Select your role
-              </h3>
+              <h3 class="text-[#0d141b] dark:text-slate-200 text-lg font-bold leading-tight tracking-[-0.015em] mb-4 text-center">Select your role</h3>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-                <label
-                  class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-supervisor/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-supervisor"
-                  for="supervisor-prof"
-                  (click)="selectRole('supervisor-prof')"
+                <label class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-supervisor/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-supervisor" for="supervisor-prof"
+                       (click)="selectRole('supervisor-prof')"
                 >
-                  <input
-                    class="sr-only"
-                    id="supervisor-prof"
-                    name="role"
-                    type="radio"
-                    value="supervisor-prof"
-                    checked
-                  />
-                  <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full bg-supervisor/10 text-supervisor"
-                  >
+                  <input class="sr-only" id="supervisor-prof" name="role" type="radio" value="supervisor-prof" checked/>
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-supervisor/10 text-supervisor">
                     <span class="material-symbols-outlined text-2xl">shield_person</span>
                   </div>
                   <div class="text-center">
-                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">
-                      SUPERVISORS & PROFESSORS
-                    </p>
-                    <p
-                      class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1"
-                    >
-                      Admin & Teaching Staff
-                    </p>
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">SUPERVISORS & PROFESSORS</p>
+                    <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1">Admin & Teaching Staff</p>
                   </div>
                 </label>
-                <label
-                  class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-staff/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-staff"
-                  for="ta"
-                  (click)="selectRole('ta')"
+                <label class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-staff/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-staff" for="ta"
+                       (click)="selectRole('ta')"
                 >
-                  <input class="sr-only" id="ta" name="role" type="radio" value="ta" />
-                  <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full bg-staff/10 text-staff"
-                  >
+                  <input class="sr-only" id="ta" name="role" type="radio" value="ta"/>
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-staff/10 text-staff">
                     <span class="material-symbols-outlined text-2xl">group</span>
                   </div>
                   <div class="text-center">
-                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">
-                      TEACHING ASSISTANTS
-                    </p>
-                    <p
-                      class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1"
-                    >
-                      TAs & Lab Instructors
-                    </p>
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">TEACHING ASSISTANTS</p>
+                    <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1">TAs & Lab Instructors</p>
                   </div>
                 </label>
-                <label
-                  class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-student/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-student"
-                  for="student"
-                  (click)="selectRole('student')"
+                <label class="role-card flex flex-col items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-student/50 cursor-pointer transition-all duration-200 text-slate-500 hover:text-student" for="student"
+                       (click)="selectRole('student')"
                 >
-                  <input class="sr-only" id="student" name="role" type="radio" value="student" />
-                  <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full bg-student/10 text-student"
-                  >
+                  <input class="sr-only" id="student" name="role" type="radio" value="student"/>
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-student/10 text-student">
                     <span class="material-symbols-outlined text-2xl">backpack</span>
                   </div>
                   <div class="text-center">
-                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">
-                      STUDENTS
-                    </p>
-                    <p
-                      class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1"
-                    >
-                      Students & Representatives
-                    </p>
+                    <p class="text-[#0d141b] dark:text-slate-200 text-sm font-bold leading-normal">STUDENTS</p>
+                    <p class="text-[#4c739a] dark:text-slate-400 text-xs font-normal leading-normal mt-1">Students & Representatives</p>
                   </div>
                 </label>
               </div>
               <div class="flex flex-col gap-y-4">
                 <div>
-                  <label
-                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
-                    for="email"
-                    >Email / University ID</label
-                  >
-                  <input
-                    class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary focus:ring-opacity-50"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email or ID"
-                    type="email"
-                  />
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="email">Email / University ID</label>
+                  <input class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary focus:ring-opacity-50" id="email" name="email" placeholder="Enter your email or ID" type="email"/>
                 </div>
                 <div>
-                  <label
-                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
-                    for="password"
-                    >Password</label
-                  >
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="password">Password</label>
                   <div class="relative">
-                    <input
-                      class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary focus:ring-opacity-50 pr-10"
-                      id="password"
-                      name="password"
-                      placeholder="Enter your password"
-                      type="password"
-                    />
-                    <button
-                      class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
-                      type="button"
-                    >
-                      <span class="material-symbols-outlined" data-icon="visibility"
-                        >visibility</span
-                      >
+                    <input class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary focus:ring-opacity-50 pr-10" id="password" name="password" placeholder="Enter your password" type="password"/>
+                    <button class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300" type="button">
+                      <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
                     </button>
                   </div>
                 </div>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center">
-                    <input
-                      class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                    />
-                    <label
-                      class="ml-2 block text-sm text-slate-800 dark:text-slate-300"
-                      for="remember-me"
-                      >Remember me</label
-                    >
+                    <input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" id="remember-me" name="remember-me" type="checkbox"/>
+                    <label class="ml-2 block text-sm text-slate-800 dark:text-slate-300" for="remember-me">Remember me</label>
                   </div>
-                  <a class="text-sm font-medium text-primary hover:text-primary/80" href="#"
-                    >Forgot password?</a
-                  >
+                  <a class="text-sm font-medium text-primary hover:text-primary/80" href="#">Forgot password?</a>
                 </div>
-                <button
-                  class="sign-in-button w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200"
-                  type="button"
-                  (click)="LoginBtnClicked()"
-                >
-                  Sign In
+                <button class="sign-in-button w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200" type="submit"
+                       (click)="LoginBtnClicked()"
+                > Sign In
                 </button>
               </div>
             </form>
@@ -196,10 +178,7 @@
                 <div class="w-full border-t border-slate-300 dark:border-slate-600"></div>
               </div>
               <div class="relative flex justify-center">
-                <span
-                  class="bg-background-light dark:bg-background-dark px-2 text-sm text-slate-500 dark:text-slate-400"
-                  >OR</span
-                >
+                <span class="bg-background-light dark:bg-background-dark px-2 text-sm text-slate-500 dark:text-slate-400">OR</span>
               </div>
             </div>
             <p class="text-center text-sm text-slate-600 dark:text-slate-400">
@@ -212,3 +191,5 @@
     </div>
   </div>
 </div>
+
+</body></html>
