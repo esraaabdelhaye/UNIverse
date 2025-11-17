@@ -1,0 +1,53 @@
+[
+  {
+    "id": "c1",
+    "code": "CS101",
+    "name": "Introduction to Computer Science",
+    "description": "Fundamental concepts of computer science",
+    "credits": 3,
+    "isActive": true,
+    "availableToLevels": [1, 2],
+    "department": "Computer Science"
+  },
+  {
+    "id": "c2",
+    "code": "CS201",
+    "name": "Data Structures",
+    "description": "Study of data structures and algorithms",
+    "credits": 4,
+    "isActive": true,
+    "availableToLevels": [2, 3],
+    "department": "Computer Science"
+  },
+  {
+    "id": "c3",
+    "code": "MATH101",
+    "name": "Calculus I",
+    "description": "Introduction to differential and integral calculus",
+    "credits": 4,
+    "isActive": true,
+    "availableToLevels": [1],
+    "department": "Mathematics"
+  },
+  {
+    "id": "c4",
+    "code": "PHYS201",
+    "name": "Physics for Engineers",
+    "description": "Classical mechanics and thermodynamics",
+    "credits": 3,
+    "isActive": false,
+    "availableToLevels": [2, 3, 4],
+    "department": "Physics"
+  },
+  {
+    "id": "c5",
+    "code": "ENG101",
+    "name": "English Composition",
+    "description": "Writing and communication skills",
+    "credits": 3,
+    "isActive": true,
+    "availableToLevels": [1, 2],
+    "department": "Arts & Humanities"
+  }
+]
+
