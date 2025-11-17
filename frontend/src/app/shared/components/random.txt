@@ -1,0 +1,3 @@
+# This folder is currently empty
+This file exists to prevent the folder from being empty.
+Shared components will be added here later.
