@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--color-gray-light);
+  height: 70px;
+  background-color: var(--color-surface);
+  width: 100%;
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  font-family: var(--font-primary);
+}
+
+h3 > svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--color-primary-dark);
+  fill: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personalData {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.personalData p {
+  margin: 0;
+  line-height: 1.2;
+  font-family: var(--font-primary);
+}
+
+.personalData p:first-child {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+}
+
+.personalData p:last-child {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.profile > svg {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}

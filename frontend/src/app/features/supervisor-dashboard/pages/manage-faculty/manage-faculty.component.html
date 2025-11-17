@@ -1,0 +1,58 @@
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-3xl">group</span> Manage Faculty</h2>
+      
+<div class="mb-6 flex justify-end">
+  <button (click)="addNewMember()" class="flex items-center justify-center gap-2 p-3 px-5 rounded-DEFAULT bg-primary text-white hover:bg-primary-dark transition-colors">
+    <span class="material-symbols-outlined">person_add</span>
+    <span>Add New Member</span>
+  </button>
+</div>
+
+<div class="bg-surface-light dark:bg-surface-dark rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+  @if (faculty$ | async; as faculty) {
+    <table class="w-full divide-y divide-gray-200 dark:divide-gray-800">
+      <thead class="bg-gray-50 dark:bg-gray-700">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-text-light uppercase tracking-wider">Name</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-text-light uppercase tracking-wider">Department</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-text-light uppercase tracking-wider">Status</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-text-light uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+        @for(member of faculty; track member.id) {
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center gap-3">
+                <img class="h-10 w-10 rounded-full" [src]="member.imageUrl" [alt]="member.name">
+                <div>
+                  <div class="text-sm font-semibold">{{ member.name }}</div>
+                  <div class="text-xs text-text-light">{{ member.position }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">{{ member.department }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
+                [class.bg-accent-green/10]="member.status === 'Active'"
+                [class.text-accent-green]="member.status === 'Active'"
+                [class.bg-accent-yellow/10]="member.status === 'On Leave'"
+                [class.text-accent-yellow]="member.status === 'On Leave'">
+                {{ member.status }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <button (click)="editMember(member)" class="text-primary hover:text-primary-dark mr-3">Edit</button>
+              <button (click)="removeMember(member)" class="text-accent-red hover:text-red-700">Remove</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="p-6 text-center text-gray-500">No faculty members found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="p-6 text-center text-gray-500">Loading faculty...</div>
+  }
+</div>

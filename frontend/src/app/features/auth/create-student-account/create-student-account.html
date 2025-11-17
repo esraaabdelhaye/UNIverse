@@ -1,0 +1,360 @@
+<body>
+  <main>
+    <section class="Stage">
+      <h2 class="title">UNIverse</h2>
+      <h1 class="bottom-title">Join as Student</h1>
+      <ul>
+        <li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-user-icon lucide-user active-svg"
+          >
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <div class="step-text active-step">
+            <p class="step">Step 1</p>
+            <p>Personal information</p>
+          </div>
+        </li>
+        <li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-graduation-cap-icon lucide-graduation-cap"
+          >
+            <path
+              d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+            />
+            <path d="M22 10v6" />
+            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+          </svg>
+          <div class="step-text">
+            <p class="step">Step 2</p>
+            <p>Academic information</p>
+          </div>
+        </li>
+
+        <li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-lock-icon lucide-lock"
+          >
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <div class="step-text">
+            <p class="step">Step 3</p>
+            <p>Account Security</p>
+          </div>
+        </li>
+        <li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-user-round-pen-icon lucide-user-round-pen"
+          >
+            <path d="M2 21a8 8 0 0 1 10.821-7.487" />
+            <path
+              d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+            />
+            <circle cx="10" cy="8" r="5" />
+          </svg>
+          <div class="step-text">
+            <p class="step">Step 4</p>
+            <p>Profile Setup</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section class="Data">
+      <header>
+        <button class="headerBut"><span class="back-arrow">⇠</span>Back to login</button>
+        <p class="headText">Student Registration</p>
+      </header>
+
+      <h1>Create Your student account</h1>
+      <h3>Welcome to UNIverse Ready to Start</h3>
+      @switch (currentStage()) { @case (1) {
+      <form [formGroup]="firstStageForm" (ngSubmit)="onSubmit()" class="form">
+        <label>
+          <p>FullName</p>
+          <input
+            type="text"
+            formControlName="FullName"
+            aria-label="FullName"
+            placeholder="Enter your FullName"
+          />
+        </label>
+        <label>
+          <p>Email</p>
+          <input
+            type="text"
+            formControlName="StudentEmail"
+            aria-label="Email"
+            placeholder="name@university.edu"
+          />
+        </label>
+        <label>
+          <p>ID</p>
+
+          <input
+            type="number"
+            formControlName="StudentId"
+            aria-label="ID"
+            placeholder="e.g. 20240014"
+          />
+        </label>
+        <div class="last-inputs">
+          <div class="input-block">
+            <p>Date of birth</p>
+            <input
+              type="date"
+              formControlName="DateOfBirth"
+              aria-label="Date Of Birth"
+              class="last-input"
+            />
+          </div>
+          <div class="input-block">
+            <p>Phone number (Optional)</p>
+            <input
+              type="number"
+              formControlName="PhoneNumber"
+              aria-label="Phone number"
+              class="last-input"
+            />
+          </div>
+        </div>
+        <div class="FormButtons">
+          <button type="button" class="prev-but" (click)="previous()">Previous</button>
+          <button type="button" class="next-but" (click)="next()">
+            Next Step<span class="forward-arrow">⇢</span>
+          </button>
+        </div>
+      </form>
+      } @case (2) {
+      <form [formGroup]="secondStageForm" (ngSubmit)="onSubmit()" class="form">
+        <label>
+          <p>Program</p>
+          <select formControlName="Program" class="full-select">
+            <option value="" disabled selected hidden>Select your program</option>
+            <option value="CSE">CSE</option>
+            <option value="EEC">EEC</option>
+            <option value="CSE">CSE</option>
+            <option value="CSE">CSE</option>
+            <option value="CSE">CSE</option>
+          </select>
+        </label>
+
+        <label>
+          <p>Level</p>
+          <select formControlName="Level" class="full-select">
+            <option value="" disabled selected hidden>Select your Level</option>
+            <option value="zero">Level 0</option>
+            <option value="one">Level 1</option>
+            <option value="two">Level 2</option>
+            <option value="three">Level 3</option>
+            <option value="four">Level 4</option>
+          </select>
+        </label>
+
+        <div class="last-inputs">
+          <div class="input-block">
+            <p>Group</p>
+            <input type="text" formControlName="Group" aria-label="group" placeholder="G4" />
+          </div>
+          <div class="input-block">
+            <p>Expected Graduation Date</p>
+            <input
+              type="date"
+              formControlName="ExpectedGraduationDate"
+              aria-label="Expected Graduation Date"
+              placeholder="28/7/2028"
+            />
+          </div>
+        </div>
+
+        <label>
+          <p>Enrollment Type</p>
+          <select formControlName="EnrollmentType" class="full-select">
+            <option value="" disabled selected hidden>Select your enrollment type</option>
+            <option value="Regular">Regular</option>
+            <option value="Transfer">Transfer</option>
+            <option value="Scholarship">Scholarship</option>
+          </select>
+        </label>
+        <div class="FormButtons">
+          <button type="button" class="prev-but" (click)="previous()">Previous</button>
+          <button type="button" class="next-but" (click)="next()">
+            Next Step<span class="forward-arrow">⇢</span>
+          </button>
+        </div>
+      </form>
+      } @case (3) {
+      <form [formGroup]="thirdStageForm" (ngSubmit)="onSubmit()" class="form">
+        <label>
+          <p>Password</p>
+          <input
+            type="password"
+            formControlName="Password"
+            aria-label="Password"
+            placeholder="Enter your password"
+          />
+        </label>
+        <label>
+          <p>Confirm Password</p>
+          <input
+            type="password"
+            formControlName="ConfirmPassword"
+            aria-label="Confirm Password"
+            placeholder="Re-enter your password"
+          />
+        </label>
+        <label>
+          <p>Security Question</p>
+          <select formControlName="SecurityQuestion" class="full-select">
+            <option value="" disabled selected hidden>Select a security question</option>
+            <option value="mother_maiden_name">What is your mother's maiden name?</option>
+            <option value="first_pet">What was the name of your first pet?</option>
+            <option value="first_school">What was the name of your first school?</option>
+            <option value="favorite_teacher">Who was your favorite teacher?</option>
+          </select>
+        </label>
+        <label>
+          <p>Security Answer</p>
+          <input
+            type="text"
+            formControlName="SecurityAnswer"
+            aria-label="Security Answer"
+            placeholder="Enter your answer"
+          />
+        </label>
+        <!-- <div class="two-factor">
+          <p>Two-Factor Authentication (Optional)</p>
+          <label> <input type="radio" formControlName="TwoFactorAuth" value="none" /> None </label>
+          <label>
+            <input type="radio" formControlName="TwoFactorAuth" value="email" /> Email
+          </label>
+          <label>
+            <input type="radio" formControlName="TwoFactorAuth" value="app" /> Authentication App
+          </label>
+
+          <div class="two-factor-code">
+            <p>Enter verification code (mock)</p>
+            <input type="text" placeholder="123456" />
+          </div>
+        </div> -->
+        <div class="FormButtons">
+          <button type="button" class="prev-but" (click)="previous()">Previous</button>
+          <button type="button" class="next-but" (click)="next()">
+            Next Step<span class="forward-arrow">⇢</span>
+          </button>
+        </div>
+      </form>
+      } @case (4) {
+      <form [formGroup]="fourthStageForm" (ngSubmit)="onSubmit()" class="form">
+        <label>
+          <p>Profile Picture (Optional)</p>
+          <input
+            type="file"
+            formControlName="ProfilePicture"
+            aria-label="Profile Picture"
+            accept="image/*"
+            class="file-input"
+          />
+        </label>
+
+        <label>
+          <p>Address (Optional)</p>
+          <input
+            type="text"
+            formControlName="Address"
+            aria-label="Address"
+            placeholder="Enter your address"
+          />
+        </label>
+
+        <label>
+          <p>Bio (Optional)</p>
+          <textarea
+            formControlName="Bio"
+            aria-label="Bio"
+            placeholder="Tell us about yourself..."
+            rows="4"
+            class="bio-textarea"
+          ></textarea>
+        </label>
+
+        <label>
+          <p>Interests (Optional)</p>
+          <input
+            type="text"
+            formControlName="Interests"
+            aria-label="Interests"
+            placeholder="e.g., Programming, Music, Sports"
+          />
+        </label>
+
+        <label>
+          <p>Preferred Language</p>
+          <select formControlName="PreferredLanguage" class="full-select">
+            <option value="" disabled selected hidden>Select your preferred language</option>
+            <option value="english">English</option>
+            <option value="arabic">Arabic</option>
+            <option value="french">French</option>
+            <option value="spanish">Spanish</option>
+          </select>
+        </label>
+
+        <label>
+          <p>Social Links (Optional)</p>
+          <input
+            type="url"
+            formControlName="SocialLinks"
+            aria-label="Social Links"
+            placeholder="e.g., linkedin.com/in/yourprofile"
+          />
+        </label>
+
+        <div class="FormButtons">
+          <button type="button" class="prev-but" (click)="previous()">Previous</button>
+          <button type="submit" class="next-but">
+            Complete Registration<span class="forward-arrow">✓</span>
+          </button>
+        </div>
+      </form>
+      } }
+      <p class="log-in">Already have an account <a href="#">Log in </a></p>
+    </section>
+  </main>
+</body>

@@ -1,0 +1,19 @@
+svg {
+  fill: var(--color-primary);
+  width: 48px;
+  height: 48px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.post-interactions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
