@@ -1,0 +1,17 @@
+.page { padding: 20px; }
+.upload-box {
+  background: rgba(249, 209, 191, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+button {
+  background: #ea580d;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+}

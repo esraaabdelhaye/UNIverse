@@ -32,4 +32,13 @@ export const routes: Routes = [
         (m) => m.StudentDashboardModule
       ),
   },
+
+  {
+    path: 'ta-dashboard',
+    loadChildren: () =>
+      import('./features/ta-dashboard/ta-dashboard-module').then(
+        (m) => m.TaDashboardModule
+      ),
+  },
+
 ];

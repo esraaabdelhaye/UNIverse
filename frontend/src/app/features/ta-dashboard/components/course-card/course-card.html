@@ -1,0 +1,101 @@
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>UNIverse TA Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#A7C7E7', // Lighter, pastel blue
+              'accent-green': '#C1E1C1', // Pastel Green
+              'accent-orange': '#FFDAB9', // Pastel Orange
+              'background-light': '#F8F9FA',
+              'background-dark': '#101922',
+              'card-light': '#ffffff',
+              'card-dark': '#192734',
+              'text-light': '#101922',
+              'text-dark': '#E2E8F0',
+              'text-muted-light': '#64748B',
+              'text-muted-dark': '#94A3B8',
+              'border-light': '#E2E8F0',
+              'border-dark': '#334155',
+            },
+            fontFamily: {
+              display: ['Manrope', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.5rem',
+              lg: '0.75rem',
+              xl: '1rem',
+              full: '9999px',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+<div
+  class="flex flex-col rounded-xl bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm"
+>
+  <div
+    class="flex items-center p-5 cursor-pointer"
+    onclick="this.nextElementSibling.classList.toggle('hidden')"
+  >
+    <div
+      class="w-24 h-16 bg-center bg-no-repeat bg-cover rounded-lg mr-4"
+      data-alt="Abstract art for Psychology course"
+      style="
+        background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDskPdtKikbuqQ3AFljUx4Tr68EY1W7_5kyKL93pj39Kd4oQ0Sxh-d1Wn-76LRIV0_WDsN9Kuuo-4nD2nwARsZMi5plpk2VAWAGKR2u0BHEIfq8vnM0sFrtuRgL6KhLdf-URs7LB_nV_8cqBwpSPFmr_bAbsi5r6sOOy31Q1TsG7Rr_lKOpA2jRuxP90uIesvjoKPTxyTuAlyM_KfdXdRrdUJMj4lwJD3XE8zGuQLy1bpQ_GljpNkgPBgjAX2qEixpDG9pIoJnpWJM');
+      "
+    ></div>
+    <div class="flex-1">
+      <p class="text-lg font-bold">Introduction to Psychology</p>
+      <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Prof. Emily Carter</p>
+    </div>
+    <span class="material-symbols-outlined text-xl text-text-muted-light dark:text-text-muted-dark"
+      >expand_more</span
+    >
+  </div>
+  <div class="hidden border-t border-border-light dark:border-border-dark p-5">
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button
+        class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
+      >
+        <span class="material-symbols-outlined align-middle text-lg mr-2">upload_file</span>Upload
+        Materials
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
+      >
+        <span class="material-symbols-outlined align-middle text-lg mr-2">assignment</span>Add
+        Assignment
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 text-primary-dark dark:bg-primary/30 hover:bg-primary/30 transition-colors duration-200"
+      >
+        <span class="material-symbols-outlined align-middle text-lg mr-2">campaign</span>Manage
+        Announcements
+      </button>
+    </div>
+    <div class="mt-4 space-y-3 text-sm text-text-muted-light dark:text-text-muted-dark">
+      <p>Recent Activity:</p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li>Uploaded "Ch. 5 Readings" - 1 day ago</li>
+        <li>Created "Essay Outline Assignment" - 3 days ago</li>
+        <li>Posted "Midterm Review Session" announcement - 5 days ago</li>
+      </ul>
+    </div>
+  </div>
+</div>

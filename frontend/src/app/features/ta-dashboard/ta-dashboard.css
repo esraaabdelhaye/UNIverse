@@ -1,0 +1,5 @@
+/* src/styles.css or component CSS */
+.active {
+    background-color: rgb(216,219,226);
+  /* @apply bg-primary/20 text-primary-dark dark:bg-primary/30; */
+}
