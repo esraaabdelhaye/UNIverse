@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, Routes } from '@angular/router';
+import { Router, Routes, RouterLink } from '@angular/router';
 import { ChooseAccount } from '../choose-account/choose-account';
 import { DoctorDashboard } from '../../../doctor-dashboard/doctor-dashboard';
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -22,11 +22,15 @@ export class Login {
         this.router.navigate(['/doctor-dashboard']);
         break;
       case 'ta':
-        this.router.navigate(['/doctor-dashboard']);
+        this.router.navigate(['/ta-dashboard']);
         break;
       case 'student':
         this.router.navigate(['/student-dashboard']);
         break;
     }
+  }
+
+  SignUpClicked() {
+    this.router.navigate(['choose-account']);
   }
 }
