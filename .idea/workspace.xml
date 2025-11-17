@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="Final Pages UI">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/choose-account/choose-account.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/choose-account/choose-account.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-student-account/create-student-account.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-student-account/create-student-account.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-student-account/create-student-account.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-student-account/create-student-account.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/login/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/login/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/login/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/supervisor-registration/supervisor-registration.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/supervisor-registration/supervisor-registration.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/doctor-dashboard/doctor-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/doctor-dashboard/doctor-dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/rep-dash-board/rep-dash-board.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/rep-dash-board/rep-dash-board.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/rep-dash-board/rep-dash-board.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/rep-dash-board/rep-dash-board.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/student-dashboard/student-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/student-dashboard/student-dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/supervisor-dashboard/supervisor-dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/supervisor-dashboard/supervisor-dashboard.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/supervisor-dashboard/supervisor-dashboard.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/supervisor-dashboard/supervisor-dashboard.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/ta-dashboard/ta-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/ta-dashboard/ta-dashboard.html" afterDir="false" />
-    </list>
+    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="Final Pages UI" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,6 +92,7 @@
       <workItem from="1763221764542" duration="6606000" />
       <workItem from="1763233198650" duration="92000" />
       <workItem from="1763386290658" duration="4710000" />
+      <workItem from="1763391164076" duration="85000" />
     </task>
     <task id="LOCAL-00001" summary="Student Dashboard + Choose account">
       <option name="closed" value="true" />
@@ -156,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763386635093</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Final Pages UI">
+      <option name="closed" value="true" />
+      <created>1763391191229</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763391191229</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
