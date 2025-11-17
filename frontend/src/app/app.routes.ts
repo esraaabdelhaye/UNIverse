@@ -17,6 +17,14 @@ export const routes: Routes = [
   },
 
   {
+    path: 'create-ta-account',
+    loadChildren: () =>
+      import('./features/auth/pages/create-ta-account/create-ta-account-module').then(
+        (m) => m.CreateTaAccountModule
+      ),
+  },
+
+  {
     path: 'choose-account',
     loadChildren: () =>
       import('./features/auth/pages/choose-account/choose-account-module').then(
