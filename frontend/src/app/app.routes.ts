@@ -59,5 +59,5 @@ export const routes: Routes = [
       // { path: 'polls-voting', component: PollsVotingComponent },
       // { path: 'events', component: EventsComponent },
     ],
-  }
+  },
 ];
