@@ -1,15 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
 import { ChooseAccount } from './choose-account';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ChooseAccount,
-    children: [],
-  },
+  { path: '', component: ChooseAccount }  // just the sign-up page
 ];
 
 @NgModule({

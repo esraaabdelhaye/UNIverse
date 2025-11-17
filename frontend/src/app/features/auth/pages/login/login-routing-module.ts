@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { Login } from './login';
+
 const routes: Routes = [
   {
     path: '',
-    component: Login,
-    children: [],
+    component: Login
   },
+  {
+    path: 'choose-account',
+    loadChildren: () =>
+      import('./../choose-account/choose-account-routing-module')
+        .then(m => m.ChooseAccountRoutingModule)
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class LoginRoutingModule {}
