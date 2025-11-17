@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/ui/auth/choose-account.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/auth/login.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/auth/student-signup.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/auth/supervisor-signup.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/auth/ta-signup.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/roles/pages/dashboard/doctor-dashboard.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/roles/pages/dashboard/rep-dashboard.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/roles/pages/dashboard/student-dashboard.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/roles/pages/dashboard/supervisor-dashboard.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/ui/roles/pages/dashboard/ta-dashboard.jpg" afterDir="false" />
+    <list default="true" id="7763cf16-d106-42f0-bd2d-08958e343483" name="Changes" comment="Added Assets">
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account-module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account-routing-module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/pages/create-ta-account/create-ta-account.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +62,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Jana",
     "ignore.virus.scanning.warn.message": "true",
@@ -112,6 +107,9 @@
       <workItem from="1763221764542" duration="6606000" />
       <workItem from="1763233198650" duration="92000" />
       <workItem from="1763386290658" duration="4710000" />
+      <workItem from="1763394704574" duration="22000" />
+      <workItem from="1763396922094" duration="125000" />
+      <workItem from="1763397082849" duration="825000" />
     </task>
     <task id="LOCAL-00001" summary="Student Dashboard + Choose account">
       <option name="closed" value="true" />
@@ -161,7 +159,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763386635093</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added Assets">
+      <option name="closed" value="true" />
+      <created>1763394506235</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763394506235</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,7 +189,8 @@
     <MESSAGE value="Added Mock Data (Students)" />
     <MESSAGE value="Edited App Routes" />
     <MESSAGE value="Final Pages UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Final Pages UI" />
+    <MESSAGE value="Added Assets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Assets" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
