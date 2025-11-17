@@ -7,9 +7,13 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./features/auth/pages/login/login-module').then(
-        (m) => m.LoginModule
-      ),
+      import('./features/auth/pages/login/login-module').then((m) => m.LoginModule),
+  },
+
+  {
+    path: 'ta-dashboard',
+    loadChildren: () =>
+      import('./features/ta-dashboard/ta-dashboard-module').then((m) => m.TaDashboardModule),
   },
 
   {

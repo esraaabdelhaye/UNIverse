@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, Routes } from '@angular/router';
-import { ChooseRoleCard } from './components/choose-role-card/choose-role-card';
 import { ChooseAccount } from '../choose-account/choose-account';
 import { DoctorDashboard } from '../../../doctor-dashboard/doctor-dashboard';
 @Component({
