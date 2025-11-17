@@ -5,11 +5,11 @@
 .role-card:has(input:checked) p {
   color: currentColor;
 }
-.role-card:has(input#supervisor:checked) {
+.role-card:has(input#supervisor-prof:checked) {
   color: #f87171;
   --role-bg-color: rgba(248, 113, 113, 0.1);
 }
-.role-card:has(input#staff:checked) {
+.role-card:has(input#ta:checked) {
   color: #60a5fa;
   --role-bg-color: rgba(96, 165, 250, 0.1);
 }
@@ -20,24 +20,35 @@
 .role-card:has(input:checked) .material-symbols-outlined {
   color: currentColor;
 }
-#supervisor:checked ~ .sign-in-button {
+
+/* Default button style */
+.sign-in-button {
+  background-color: #818cf8;
+  border-color: #818cf8;
+}
+.sign-in-button:hover {
+  background-color: #6366f1;
+}
+
+/* Role-specific button styles */
+#supervisor-prof:checked ~ * .sign-in-button {
   background-color: #f87171;
   border-color: #f87171;
 }
-#supervisor:checked ~ .sign-in-button:hover {
+#supervisor-prof:checked ~ * .sign-in-button:hover {
   background-color: #ef4444;
 }
-#staff:checked ~ .sign-in-button {
+#ta:checked ~ * .sign-in-button {
   background-color: #60a5fa;
   border-color: #60a5fa;
 }
-#staff:checked ~ .sign-in-button:hover {
+#ta:checked ~ * .sign-in-button:hover {
   background-color: #3b82f6;
 }
-#student:checked ~ .sign-in-button {
+#student:checked ~ * .sign-in-button {
   background-color: #fb923c;
   border-color: #fb923c;
 }
-#student:checked ~ .sign-in-button:hover {
+#student:checked ~ * .sign-in-button:hover {
   background-color: #f97316;
 }

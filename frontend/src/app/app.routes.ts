@@ -1,12 +1,19 @@
 import { Routes } from '@angular/router';
+import { RepDashBoard } from './features/rep-dash-board/rep-dash-board';
+import { DashBoard } from './features/rep-dash-board/Views/dash-board/dash-board';
+import { ManageStudentGroups } from './features/rep-dash-board/Views/manage-student-groups/manage-student-groups';
 
 export const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./features/auth/pages/login/login-module').then(
-        (m) => m.LoginModule
-      ),
+      import('./features/auth/pages/login/login-module').then((m) => m.LoginModule),
+  },
+
+  {
+    path: 'ta-dashboard',
+    loadChildren: () =>
+      import('./features/ta-dashboard/ta-dashboard-module').then((m) => m.TaDashboardModule),
   },
 
   {
