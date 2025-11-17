@@ -6,11 +6,33 @@ import { ManageStudentGroups } from './features/rep-dash-board/Views/manage-stud
 export const routes: Routes = [
   {
     path: '',
-    component: RepDashBoard,
-    children: [
-      { path: '', component: DashBoard },
-      { path: 'dashboard', component: DashBoard },
-      { path: 'manage-student-groups', component: ManageStudentGroups },
-    ]
-  }
+    loadChildren: () =>
+      import('./features/auth/pages/login/login-module').then(
+        (m) => m.LoginModule
+      ),
+  },
+
+  {
+    path: 'choose-account',
+    loadChildren: () =>
+      import('./features/auth/pages/choose-account/choose-account-module').then(
+        (m) => m.ChooseAccountModule
+      ),
+  },
+
+  {
+    path: 'doctor-dashboard',
+    loadChildren: () =>
+      import('./features/doctor-dashboard/doctor-dashboard-module').then(
+        (m) => m.DoctorDashboardModule
+      ),
+  },
+
+  {
+    path: 'student-dashboard',
+    loadChildren: () =>
+      import('./features/student-dashboard/student-dashboard-module').then(
+        (m) => m.StudentDashboardModule
+      ),
+  },
 ];

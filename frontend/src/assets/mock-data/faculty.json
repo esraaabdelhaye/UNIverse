@@ -1,0 +1,34 @@
+[
+    {
+      "id": "f1",
+      "name": "Dr. Alice Johnson",
+      "position": "Senior Lecturer",
+      "department": "Computer Science",
+      "imageUrl": "https://placehold.co/100x100/E3F2FD/4A90E2?text=AJ",
+      "status": "Active"
+    },
+    {
+      "id": "f2",
+      "name": "Dr. Jane Smith",
+      "position": "Professor",
+      "department": "History",
+      "imageUrl": "https://placehold.co/100x100/E3F2FD/4A90E2?text=JS",
+      "status": "Active"
+    },
+    {
+      "id": "f3",
+      "name": "Mr. Robert Brown",
+      "position": "Teaching Assistant",
+      "department": "Computer Science",
+      "imageUrl": "https://placehold.co/100x100/E3F2FD/4A90E2?text=RB",
+      "status": "On Leave"
+    },
+    {
+      "id": "f4",
+      "name": "Dr. Michael Davis",
+      "position": "Head of Department",
+      "department": "Physics",
+      "imageUrl": "https://placehold.co/100x100/E3F2FD/4A90E2?text=MD",
+      "status": "Active"
+    }
+  ]
