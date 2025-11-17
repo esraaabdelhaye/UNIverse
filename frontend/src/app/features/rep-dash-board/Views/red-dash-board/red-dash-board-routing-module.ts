@@ -4,7 +4,7 @@ import { ManageStudentGroups } from '../manage-student-groups/manage-student-gro
 import { DashBoard } from '../dash-board/dash-board';
 import { RepDashBoard } from '../../rep-dash-board';
 
-const routes: Routes = [
+export const routesRep: Routes = [
   {
     path: '',
     component: RepDashBoard,
@@ -20,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild( routesRep)],
   exports: [RouterModule],
 })
 export class RedDashBoardRoutingModule {}
