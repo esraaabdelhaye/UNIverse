@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { ChooseAccountRoutingModule } from '../auth/pages/choose-account/choose-account-routing-module';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [],
+  imports: [ChooseAccountRoutingModule],
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',
 })
-export class StudentDashboard {
-
-}
+export class StudentDashboard {}

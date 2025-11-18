@@ -123,6 +123,7 @@
               <!-- Role Cards -->
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div
+                  (click)="createAccount('sup-prof')"
                   class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-supervisor hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div
@@ -141,6 +142,7 @@
                 </div>
 
                 <div
+                  (click)="createAccount('ta')"
                   class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-staff hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div
@@ -159,6 +161,7 @@
                 </div>
 
                 <div
+                  (click)="createAccount('student')"
                   class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-student hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div
