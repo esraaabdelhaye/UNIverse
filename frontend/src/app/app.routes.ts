@@ -47,4 +47,23 @@ export const routes: Routes = [
         (m) => m.StudentDashboardModule
       ),
   },
+
+  {
+    path: 'rep-dashboard',
+    component: RepDashBoard,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashBoard },
+      { path: 'manage-student-groups', component: ManageStudentGroups },
+      // { path: 'live-feed', component: LiveFeedComponent },
+      // { path: 'polls-voting', component: PollsVotingComponent },
+      // { path: 'events', component: EventsComponent },
+    ],
+  }
+  ,
+  {
+    path: 'create-student-account',
+    loadComponent: () => import('./features/auth/pages/create-student-account/create-student-account')
+      .then(m => m.CreateStudentAccount)
+  }
 ];
