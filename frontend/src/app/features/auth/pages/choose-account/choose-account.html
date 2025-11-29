@@ -1,185 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Create Your Account - UNIverse</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: '#818cf8',
-              'background-light': '#f8f9fc',
-              'background-dark': '#101922',
-              supervisor: '#f87171',
-              staff: '#60a5fa',
-              student: '#fb923c',
-            },
-            fontFamily: {
-              display: ['Manrope', 'sans-serif'],
-            },
-            borderRadius: {
-              DEFAULT: '0.5rem',
-              lg: '1rem',
-              xl: '1.5rem',
-              full: '9999px',
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-    </style>
-  </head>
-  <body
-    class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200"
-  >
-    <div class="relative flex min-h-screen w-full flex-col">
-      <div class="flex h-full min-h-screen">
-        <div class="px-4 py-8 sm:px-8 md:px-20 lg:px-40 flex flex-1 justify-center w-full">
-          <div class="flex flex-col w-full max-w-[960px]">
-            <!-- Header -->
-            <header
-              class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-10 py-5 mb-8"
-            >
-              <div class="flex items-center gap-4 text-slate-900 dark:text-slate-50">
-                <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined text-4xl text-primary">school</span>
-                  <div>
-                    <h1 class="text-2xl font-bold">UNIverse</h1>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">
-                      where knowledge meets gravity
-                    </p>
-                  </div>
-                </div>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Create Your Account - UNIverse</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="choose-account.css" />
+</head>
+<body>
+<div class="container">
+  <div class="main-wrapper">
+    <div class="content-container">
+      <div class="inner-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="logo-section">
+            <div class="logo-group">
+              <span class="material-symbols-outlined icon-large">school</span>
+              <div>
+                <h1 class="logo-title">UNIverse</h1>
+                <p class="logo-subtitle">where knowledge meets gravity</p>
               </div>
-              <p class="text-slate-600 dark:text-slate-400 text-sm">
-                Already have an account?
-                <a
-                  routerLink=""
-                  class="font-medium text-primary hover:underline"
-                  href="javascript:void(0)"
-                  >Sign in</a
-                >
-              </p>
-            </header>
-
-            <!-- Main Content -->
-            <main class="flex flex-col gap-10 px-4">
-              <div class="flex flex-col gap-2 text-center">
-                <h2 class="text-slate-900 dark:text-slate-50 text-4xl font-bold">
-                  Create Your Account
-                </h2>
-                <p class="text-slate-600 dark:text-slate-400 text-lg">First, tell us who you are</p>
-              </div>
-
-              <!-- Progress Indicator -->
-              <div class="flex flex-col items-center gap-2">
-                <div class="flex items-center gap-8">
-                  <div class="flex flex-col items-center gap-2">
-                    <div class="size-4 rounded-full bg-primary"></div>
-                    <p class="text-primary text-sm font-semibold">Role</p>
-                  </div>
-                  <div class="flex flex-col items-center gap-2">
-                    <div class="size-4 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-                    <p class="text-slate-400 dark:text-slate-500 text-sm font-medium">
-                      Information
-                    </p>
-                  </div>
-                  <div class="flex flex-col items-center gap-2">
-                    <div class="size-4 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-                    <p class="text-slate-400 dark:text-slate-500 text-sm font-medium">Security</p>
-                  </div>
-                  <div class="flex flex-col items-center gap-2">
-                    <div class="size-4 rounded-full bg-slate-300 dark:bg-slate-700"></div>
-                    <p class="text-slate-400 dark:text-slate-500 text-sm font-medium">
-                      Verification
-                    </p>
-                  </div>
-                </div>
-                <div class="flex items-center text-sm font-medium text-slate-500 mt-2">
-                  <span class="text-slate-800 dark:text-slate-200 font-bold">●</span>
-                  <span class="text-slate-400 dark:text-slate-600">○</span>
-                  <span class="text-slate-400 dark:text-slate-600">○</span>
-                  <span class="text-slate-400 dark:text-slate-600">○</span>
-                  <span class="ml-2">Step 1 of 4</span>
-                </div>
-              </div>
-
-              <!-- Role Cards -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div
-                  class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-supervisor hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div
-                    class="flex items-center justify-center size-16 bg-supervisor/10 rounded-full text-supervisor"
-                  >
-                    <span class="material-symbols-outlined text-4xl">shield_person</span>
-                  </div>
-                  <div>
-                    <p class="text-slate-900 dark:text-slate-50 text-lg font-bold text-center">
-                      Supervisors & Professors
-                    </p>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm text-center mt-1">
-                      Admin & Teaching Staff
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-staff hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div
-                    class="flex items-center justify-center size-16 bg-staff/10 rounded-full text-staff"
-                  >
-                    <span class="material-symbols-outlined text-4xl">group</span>
-                  </div>
-                  <div>
-                    <p class="text-slate-900 dark:text-slate-50 text-lg font-bold text-center">
-                      Teaching Assistants
-                    </p>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm text-center mt-1">
-                      TAs & Lab Instructors
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  class="group flex flex-col items-center gap-4 p-6 bg-white dark:bg-slate-800/50 border-2 border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:border-student hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div
-                    class="flex items-center justify-center size-16 bg-student/10 rounded-full text-student"
-                  >
-                    <span class="material-symbols-outlined text-4xl">backpack</span>
-                  </div>
-                  <div>
-                    <p class="text-slate-900 dark:text-slate-50 text-lg font-bold text-center">
-                      Students
-                    </p>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm text-center mt-1">
-                      Students & Representatives
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </main>
+            </div>
           </div>
-        </div>
+          <p class="signin-text">
+            Already have an account?
+            <a href="javascript:void(0)">Sign in</a>
+          </p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <div class="title-section">
+            <h2 class="main-title">Create Your Account</h2>
+            <p class="main-subtitle">First, tell us who you are</p>
+          </div>
+
+          <!-- Progress Indicator -->
+          <div class="progress-container">
+            <div class="progress-steps">
+              <div class="progress-step">
+                <div class="step-circle active"></div>
+                <p class="step-text active">Role</p>
+              </div>
+              <div class="progress-step">
+                <div class="step-circle"></div>
+                <p class="step-text">Information</p>
+              </div>
+              <div class="progress-step">
+                <div class="step-circle"></div>
+                <p class="step-text">Security</p>
+              </div>
+              <div class="progress-step">
+                <div class="step-circle"></div>
+                <p class="step-text">Verification</p>
+              </div>
+            </div>
+            <div class="progress-dots">
+              <span class="dot filled">●</span>
+              <span class="dot">○</span>
+              <span class="dot">○</span>
+              <span class="dot">○</span>
+              <span class="step-counter">Step 1 of 4</span>
+            </div>
+          </div>
+
+          <!-- Role Cards -->
+          <div class="role-grid">
+            <div class="role-card supervisor">
+              <div class="role-icon">
+                <span class="material-symbols-outlined">shield_person</span>
+              </div>
+              <div>
+                <p class="role-name">Supervisors & Professors</p>
+                <p class="role-description">Admin & Teaching Staff</p>
+              </div>
+            </div>
+
+            <div class="role-card staff">
+              <div class="role-icon">
+                <span class="material-symbols-outlined">group</span>
+              </div>
+              <div>
+                <p class="role-name">Teaching Assistants</p>
+                <p class="role-description">TAs & Lab Instructors</p>
+              </div>
+            </div>
+
+            <div class="role-card student">
+              <div class="role-icon">
+                <span class="material-symbols-outlined">backpack</span>
+              </div>
+              <div>
+                <p class="role-name">Students</p>
+                <p class="role-description">Students & Representatives</p>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

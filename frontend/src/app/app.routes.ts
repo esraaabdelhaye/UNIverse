@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: 'ta-dashboard',
     loadChildren: () =>
-      import('./features/ta-dashboard/ta-dashboard-module').then((m) => m.TaDashboardModule),
+      import('./features/ta-pages/ta-dashboard/ta-dashboard-module').then((m) => m.TaDashboardModule),
   },
 
   {
@@ -35,7 +35,7 @@ export const routes: Routes = [
   {
     path: 'doctor-dashboard',
     loadChildren: () =>
-      import('./features/doctor-dashboard/doctor-dashboard-module').then(
+      import('./features/doctor-pages/doctor-dashboard/doctor-dashboard-module').then(
         (m) => m.DoctorDashboardModule
       ),
   },
@@ -43,7 +43,7 @@ export const routes: Routes = [
   {
     path: 'student-dashboard',
     loadChildren: () =>
-      import('./features/student-dashboard/student-dashboard-module').then(
+      import('./features/student-pages/student-dashboard/student-dashboard-module').then(
         (m) => m.StudentDashboardModule
       ),
   },
