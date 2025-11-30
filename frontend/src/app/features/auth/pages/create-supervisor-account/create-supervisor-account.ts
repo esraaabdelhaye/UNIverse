@@ -1,10 +1,11 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, signal, WritableSignal, ChangeDetectionStrategy, AfterViewInit, OnDestroy } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-supervisor-account',
   standalone: true,
-  imports: [CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './create-supervisor-account.html',
   styleUrls: ['./create-supervisor-account.css']
 })
