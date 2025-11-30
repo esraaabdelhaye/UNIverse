@@ -1,3 +1,0 @@
-# This folder is currently empty
-This file exists to prevent the folder from being empty.
-Services will be added here later.
