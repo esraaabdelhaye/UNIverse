@@ -102,24 +102,10 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   background-color: #FFFFFF;
   border-bottom: 1px solid #E2E8F0;
   padding: 16px 32px;
-}
-
-.back-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #64748B;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.back-link:hover {
-  color: #1E293B;
 }
 
 .header-actions {

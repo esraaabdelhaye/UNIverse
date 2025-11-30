@@ -102,15 +102,10 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   background-color: #FFFFFF;
   border-bottom: 1px solid #E2E8F0;
   padding: 16px 32px;
-}
-
-.header-title {
-  font-size: 24px;
-  font-weight: 700;
 }
 
 .header-actions {

@@ -114,17 +114,12 @@ body {
   gap: 16px;
 }
 
-.header-title {
-  font-size: 24px;
-  font-weight: 700;
-}
-
 .inbox-badge {
   font-size: 14px;
   font-weight: 600;
-  color: #64748B;
-  background-color: #E2E8F0;
-  padding: 4px 12px;
+  color: #1E293B;
+  background-color: #F1F5F9;
+  padding: 6px 16px;
   border-radius: 9999px;
 }
 
