@@ -1,11 +1,9 @@
 import { Component, signal, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ChooseAccountRoutingModule } from '../choose-account/choose-account-routing-module';
-import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-create-student-account',
-  imports: [ReactiveFormsModule, CommonModule, ChooseAccountRoutingModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './create-student-account.html',
   styleUrl: './create-student-account.css',
 })
@@ -17,7 +15,7 @@ export class CreateStudentAccount {
     StudentEmail: new FormControl('', [Validators.required, Validators.email]),
     StudentId: new FormControl('', Validators.required),
     DateOfBirth: new FormControl('', Validators.required),
-    PhoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)]),
+    PhoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)])
   });
 
   // ---------------- Stage 2: Academic Info ----------------
@@ -26,7 +24,7 @@ export class CreateStudentAccount {
     Level: new FormControl('', Validators.required),
     Group: new FormControl(''),
     ExpectedGraduationDate: new FormControl('', Validators.required),
-    EnrollmentType: new FormControl('', Validators.required),
+    EnrollmentType: new FormControl('', Validators.required)
   });
 
   // ---------------- Stage 3: Security ----------------
@@ -45,12 +43,12 @@ export class CreateStudentAccount {
     Bio: new FormControl(''),
     Interests: new FormControl([]),
     PreferredLanguage: new FormControl(''),
-    SocialLinks: new FormControl([]),
+    SocialLinks: new FormControl([])
   });
 
   // ToDo -> implement submission
   onSubmit() {
-    console.log('Form Submitted');
+    console.log("Form Submitted");
   }
 
   next() {
@@ -63,17 +61,17 @@ export class CreateStudentAccount {
   }
 
   updateActiveStage(stage: number) {
-    const activeText = document.querySelector<HTMLElement>('.Stage ul li .active-step');
-    const activeSVG = document.querySelector<HTMLElement>('.Stage ul li .active-svg');
+    const activeText = document.querySelector<HTMLElement>(".Stage ul li .active-step");
+    const activeSVG = document.querySelector<HTMLElement>(".Stage ul li .active-svg");
     if (activeText && activeSVG) {
-      activeText.classList.remove('active-step');
-      activeSVG.classList.remove('active-svg');
+      activeText.classList.remove("active-step");
+      activeSVG.classList.remove("active-svg");
     }
     const newActiveText = document.querySelector(`.Stage ul li:nth-child(${stage}) .step-text`);
     const newActiveSVG = document.querySelector(`.Stage ul li:nth-child(${stage}) svg`);
     if (newActiveText && newActiveSVG) {
-      newActiveText.classList.add('active-step');
-      newActiveSVG.classList.add('active-svg');
+      newActiveText.classList.add("active-step");
+      newActiveSVG.classList.add("active-svg");
     }
   }
 }

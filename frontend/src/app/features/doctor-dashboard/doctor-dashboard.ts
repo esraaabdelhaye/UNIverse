@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { ChooseAccountRoutingModule } from '../auth/pages/choose-account/choose-account-routing-module';
 
 @Component({
   selector: 'app-doctor-dashboard',
-  imports: [ChooseAccountRoutingModule],
+  imports: [],
   templateUrl: './doctor-dashboard.html',
   styleUrl: './doctor-dashboard.css',
 })
-export class DoctorDashboard {}
+export class DoctorDashboard {
+
+}

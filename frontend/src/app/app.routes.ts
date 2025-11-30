@@ -17,6 +17,22 @@ export const routes: Routes = [
   },
 
   {
+    path: 'create-ta-account',
+    loadChildren: () =>
+      import('./features/auth/pages/create-ta-account/create-ta-account-module').then(
+        (m) => m.CreateTaAccountModule
+      ),
+  },
+
+  {
+    path: 'choose-account',
+    loadChildren: () =>
+      import('./features/auth/pages/choose-account/choose-account-module').then(
+        (m) => m.ChooseAccountModule
+      ),
+  },
+
+  {
     path: 'doctor-dashboard',
     loadChildren: () =>
       import('./features/doctor-dashboard/doctor-dashboard-module').then(
@@ -43,27 +59,11 @@ export const routes: Routes = [
       // { path: 'polls-voting', component: PollsVotingComponent },
       // { path: 'events', component: EventsComponent },
     ],
-  },
-  {
-    path: 'choose-account',
-    loadChildren: () =>
-      import('./features/auth/pages/choose-account/choose-account-module').then(
-        (m) => m.ChooseAccountModule
-      ),
-  },
-  {
-    path: 'create-ta-account',
-    loadChildren: () =>
-      import('./features/auth/pages/create-ta-account/create-ta-account-module').then(
-        (m) => m.CreateTaAccountModule
-      ),
-  },
-
+  }
+  ,
   {
     path: 'create-student-account',
-    loadComponent: () =>
-      import('./features/auth/pages/create-student-account/create-student-account').then(
-        (m) => m.CreateStudentAccount
-      ),
-  },
+    loadComponent: () => import('./features/auth/pages/create-student-account/create-student-account')
+      .then(m => m.CreateStudentAccount)
+  }
 ];
