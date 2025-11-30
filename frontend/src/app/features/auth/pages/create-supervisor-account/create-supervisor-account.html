@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>UNIverse - Supervisor Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="create-supervisor-account.css" rel="stylesheet"/>
+</head>
+<body class="supervisor-theme">
+<div class="registration-container">
+  <div class="registration-layout">
+    <!-- Left Side -->
+    <div class="registration-left supervisor-gradient">
+      <div class="left-content-bottom">
+        <h1 class="left-title">Join as Supervisor or Professor</h1>
+        <p class="left-subtitle">Lead, inspire, and shape the future</p>
+      </div>
+      <div class="steps-wrapper">
+        <ol class="steps-list">
+          <li class="step-item">
+            <div class="step-circle completed">
+              <span class="material-symbols-outlined">check</span>
+            </div>
+            <span class="step-label">Personal Information</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle">
+              <span class="step-number">2</span>
+            </div>
+            <span class="step-label inactive">Professional Details</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle">
+              <span class="step-number">3</span>
+            </div>
+            <span class="step-label inactive">Authorization</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle">
+              <span class="step-number">4</span>
+            </div>
+            <span class="step-label inactive">Account Security</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle">
+              <span class="step-number">5</span>
+            </div>
+            <span class="step-label inactive">Profile</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="registration-right">
+      <div class="registration-form-wrapper">
+        <div class="form-header">
+          <div class="header-top">
+            <div class="logo-section">
+              <span class="material-symbols-outlined logo-icon">school</span>
+              <p class="logo-text">UNIverse</p>
+            </div>
+            <a class="back-link" href="#">← Back to Login</a>
+          </div>
+          <div class="header-content">
+            <div class="badge supervisor-badge">Supervisor Registration</div>
+            <h1 class="page-title">Create Supervisor Account</h1>
+            <p class="page-description">Administrative access requires approval</p>
+          </div>
+        </div>
+
+        <form class="registration-form">
+          <!-- Step 1 -->
+          <div class="form-step active" id="step-1">
+            <h2 class="section-title">Personal Information</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="full-name">Full Name<span class="required">*</span></label>
+                <input class="form-input" id="full-name" placeholder="e.g. Dr. Jane Doe" required type="text"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="official-email">Official Email<span class="required">*</span></label>
+                <input class="form-input" id="official-email" placeholder="jane.doe@university.edu" required type="email"/>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="employee-id">Employee ID<span class="required">*</span></label>
+                  <input class="form-input" id="employee-id" placeholder="UNIV12345" required type="text"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone-number">Phone Number</label>
+                  <input class="form-input" id="phone-number" placeholder="(123) 456-7890" type="tel"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="form-step" id="step-2">
+            <h2 class="section-title">Professional Details</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="department">Department<span class="required">*</span></label>
+                <select class="form-input" id="department" required>
+                  <option>Computer Science</option>
+                  <option>Electrical Engineering</option>
+                  <option>Arts & Humanities</option>
+                  <option>Business Administration</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="position">Position/Title<span class="required">*</span></label>
+                  <input class="form-input" id="position" placeholder="Head of Department" required type="text"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="office-location">Office Location</label>
+                  <input class="form-input" id="office-location" placeholder="Building A, Room 101" type="text"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="form-step" id="step-3">
+            <h2 class="section-title authorization-title">
+              <span class="material-symbols-outlined">lock</span> Authorization
+            </h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="auth-code">Authorization Code<span class="required">*</span></label>
+                <input class="form-input" id="auth-code" placeholder="Enter code" required type="text"/>
+                <p class="field-hint">Request this code from existing supervisors. Your account requires admin approval.</p>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="security-question">Security Question<span class="required">*</span></label>
+                  <select class="form-input" id="security-question" required>
+                    <option>What was your first pet's name?</option>
+                    <option>In what city were you born?</option>
+                    <option>What is your mother's maiden name?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="security-answer">Security Answer<span class="required">*</span></label>
+                  <input class="form-input" id="security-answer" placeholder="Your answer" required type="text"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="form-step" id="step-4">
+            <h2 class="section-title">Account Security</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="password">Create Password<span class="required">*</span></label>
+                <input class="form-input" id="password" required type="password"/>
+                <div class="password-strength">
+                  <div class="strength-bar">
+                    <div class="strength-fill" style="width: 25%"></div>
+                  </div>
+                  <span class="strength-text">Weak</span>
+                </div>
+                <ul class="password-requirements">
+                  <li>At least 8 characters</li>
+                  <li>One uppercase letter</li>
+                  <li>One number</li>
+                  <li>One special character</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="confirm-password">Confirm Password<span class="required">*</span></label>
+                <input class="form-input" id="confirm-password" required type="password"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="form-step" id="step-5">
+            <h2 class="section-title">Optional Profile</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="profile-picture">Profile Picture</label>
+                <div class="file-upload">
+                  <span class="material-symbols-outlined upload-icon">cloud_upload</span>
+                  <div class="upload-text">
+                    <label class="upload-label" for="file-upload">
+                      <span>Upload a file</span>
+                      <input class="file-input" id="file-upload" type="file"/>
+                    </label>
+                    <p>or drag and drop</p>
+                  </div>
+                  <p class="upload-info">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </div>
+              <div class="checkbox-group">
+                <input class="checkbox-input" id="terms" type="checkbox"/>
+                <label class="checkbox-label" for="terms">
+                  I agree to the <a class="link" href="#">Terms & Conditions</a> and <a class="link" href="#">Privacy Policy</a><span class="required">*</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="form-navigation">
+            <div class="nav-buttons">
+              <button class="btn btn-secondary" disabled id="prev-button" type="button">
+                ← Previous
+              </button>
+              <button class="btn btn-primary" id="next-button" type="button">
+                Next →
+              </button>
+            </div>
+            <button class="btn btn-primary btn-submit" id="submit-button" type="submit">
+              Create Supervisor Account
+            </button>
+            <p class="sign-in-text">
+              <span class="text-muted">Already have an account?</span>
+              <a class="link" href="#">Sign In</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="registration-script.js"></script>
+</body>
+</html>

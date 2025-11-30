@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-create-student-account',
+  standalone: true,
   imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './create-student-account.html',
   styleUrl: './create-student-account.css',

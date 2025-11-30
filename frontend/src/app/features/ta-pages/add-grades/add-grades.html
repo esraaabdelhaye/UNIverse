@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>UNIverse TA - Add Grades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="add-grades.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">dashboard</span><span class="nav-text">Dashboard</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">upload_file</span><span class="nav-text">Upload Materials</span></a>
+      <a class="nav-item active" href="#"><span class="material-symbols-outlined">edit_square</span><span class="nav-text">Add Grades</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">assignment</span><span class="nav-text">Add Assignment</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">forum</span><span class="nav-text">Answer Questions</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">campaign</span><span class="nav-text">Manage Announcements</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="nav-text">Schedule</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">settings</span><span class="nav-text">Settings</span></a>
+      <a class="nav-item" href="#"><span class="material-symbols-outlined">logout</span><span class="nav-text">Logout</span></a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="header">
+      <h1 class="header-title">Add Grades</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary">
+          <span class="material-symbols-outlined">draft</span>Save Draft
+        </button>
+        <button class="btn btn-primary">
+          <span class="material-symbols-outlined">check_circle</span>Submit Grades
+        </button>
+        <button class="icon-button">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-dot"></span>
+        </button>
+        <div class="user-avatar"></div>
+        <div class="user-info">
+          <p class="user-name">John Smith</p>
+          <p class="user-role">TA</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="card filter-card">
+        <div class="filter-grid">
+          <div class="form-group">
+            <label class="form-label">Select Course</label>
+            <select class="form-select">
+              <option>Introduction to Psychology</option>
+              <option selected>Calculus II</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Select Assignment</label>
+            <select class="form-select">
+              <option>Problem Set 1 (Graded)</option>
+              <option>Problem Set 2 (Graded)</option>
+              <option selected>Problem Set 3 (12 Pending)</option>
+              <option>Midterm Exam (5 Pending)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <div class="table-header">
+          <h2 class="section-title">Student Submissions</h2>
+          <div class="table-controls">
+            <label class="search-box">
+              <span class="material-symbols-outlined search-icon">search</span>
+              <input class="search-input" placeholder="Filter students..." type="text"/>
+            </label>
+            <button class="sort-button">
+              <span class="material-symbols-outlined">swap_vert</span>Sort
+            </button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="grades-table">
+            <thead>
+            <tr>
+              <th>Student Name</th>
+              <th class="grade-col">Grade (/100)</th>
+              <th>Feedback</th>
+              <th class="status-col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th class="student-cell">
+                <div class="student-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGN5B73F6JJ6n6FWre5R2o4TYkUIlTF2b_MboGpuXGzcLKmSjHwA4Wd--PTsWE4jl-km610wOeJwRgenQ-hbXznIxB4aBOlRE3R8s9zfEAuvRU2WCvzITDqfqJb8419zGuFK6AGzfrdi-pPuStIYa2QW8XeXApQZHA2DfhIRYmw3MWr_iW3o6sAqsozYay3ZXmOAdkxjA4RYqA0yBWXhXOJurdsQd-B2SCa321FSdLYNf7nJg9B2-UgkBBmUDY712eDEG_xjIbUDM");'></div>
+                Alice Johnson
+              </th>
+              <td><input class="grade-input" placeholder="--" type="number"/></td>
+              <td><textarea class="feedback-input" placeholder="Add individual feedback..." rows="1"></textarea></td>
+              <td class="status-cell"><span class="badge badge-pending">Pending</span></td>
+            </tr>
+            <tr>
+              <th class="student-cell">
+                <div class="student-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY");'></div>
+                Bob Williams
+              </th>
+              <td><input class="grade-input" placeholder="--" type="number"/></td>
+              <td><textarea class="feedback-input" placeholder="Add individual feedback..." rows="1"></textarea></td>
+              <td class="status-cell"><span class="badge badge-pending">Pending</span></td>
+            </tr>
+            <tr>
+              <th class="student-cell">
+                <div class="student-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY");'></div>
+                Charles Davis
+              </th>
+              <td><input class="grade-input graded" type="number" value="88"/></td>
+              <td><textarea class="feedback-input" rows="1">Good work on the derivations, but be careful with your final calculations.</textarea></td>
+              <td class="status-cell"><span class="badge badge-graded">Graded</span></td>
+            </tr>
+            <tr>
+              <th class="student-cell">
+                <div class="student-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDskPdtKikbuqQ3AFljUx4Tr68EY1W7_5kyKL93pj39Kd4oQ0Sxh-d1Wn-76LRIV0_WDsN9Kuuo-4nD2nwARsZMi5plpk2VAWAGKR2u0BHEIfq8vnM0sFrtuRgL6KhLdf-URs7LB_nV_8cqBwpSPFmr_bAbsi5r6sOOy31Q1TsG7Rr_lKOpA2jRuxP90uIesvjoKPTxyTuAlyM_KfdXdRrdUJMj4lwJD3XE8zGuQLy1bpQ_GljpNkgPBgjAX2qEixpDG9pIoJnpWJM");'></div>
+                Diana Miller
+              </th>
+              <td><input class="grade-input" placeholder="--" type="number"/></td>
+              <td><textarea class="feedback-input" placeholder="Add individual feedback..." rows="1"></textarea></td>
+              <td class="status-cell"><span class="badge badge-pending">Pending</span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>
+<p>add-grades works!</p>

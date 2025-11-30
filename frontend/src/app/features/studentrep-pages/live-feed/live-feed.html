@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Live Feed - UNIverse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="live-feed.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="nav-text">Dashboard</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">group</span>
+        <span class="nav-text">Manage Student Groups</span>
+      </a>
+      <a class="nav-link active" href="#">
+        <span class="material-symbols-outlined">campaign</span>
+        <span class="nav-text">Live Feed</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">poll</span>
+        <span class="nav-text">Polls / Voting</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">event</span>
+        <span class="nav-text">Events</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="nav-text">Settings</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="nav-text">Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <div class="profile-image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+        <div>
+          <p class="profile-name">Alex Chen</p>
+          <p class="profile-role">Class Representative</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1 class="page-title">Live Feed</h1>
+          <p class="page-subtitle">Stay connected with your community's latest updates.</p>
+        </div>
+
+        <div class="feed-layout">
+          <!-- Main Feed Column -->
+          <div class="feed-column">
+            <!-- Create Post -->
+            <div class="create-post-card">
+              <h3 class="card-title">Create New Post</h3>
+              <div class="post-creator">
+                <div class="creator-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'></div>
+                <div class="creator-input-wrapper">
+                  <textarea class="post-textarea" rows="4" placeholder="Share an update, question, or idea with your community..."></textarea>
+                  <div class="post-actions">
+                    <div class="post-tools">
+                      <button class="tool-btn">
+                        <span class="material-symbols-outlined">image</span>
+                      </button>
+                      <button class="tool-btn">
+                        <span class="material-symbols-outlined">attach_file</span>
+                      </button>
+                      <button class="tool-btn">
+                        <span class="material-symbols-outlined">poll</span>
+                      </button>
+                    </div>
+                    <button class="btn-post">Post</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pinned Post -->
+            <div class="post-card pinned-post">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+                  <div>
+                    <div class="author-info">
+                      <p class="author-name">Alex Chen</p>
+                      <span class="author-badge">Student Rep</span>
+                    </div>
+                    <p class="post-time">2 hours ago</p>
+                  </div>
+                </div>
+                <div class="pinned-label">
+                  <span class="material-symbols-outlined">push_pin</span>
+                  <span class="pinned-text">Pinned</span>
+                </div>
+              </div>
+              <p class="post-content">
+                📢 <strong>Important Announcement: Upcoming Study Session!</strong> 📢
+                <br/><br/>
+                Hey everyone! Just a reminder that our pre-exam study session for "Advanced Algorithms" is scheduled for this Friday at 3 PM in Library Room 301. We'll be going over key concepts and doing some practice problems. Snacks and coffee will be provided! Don't miss out!
+                <br/><br/>
+                <span class="post-hashtags">#StudyHard #Algorithms #ExamPrep</span>
+              </p>
+              <div class="post-engagement">
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span>24 Likes</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">comment</span>
+                  <span>7 Comments</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">share</span>
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Poll Post -->
+            <div class="post-card">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+                  <div>
+                    <div class="author-info">
+                      <p class="author-name">Sarah Jenkins</p>
+                      <span class="author-badge badge-green">Debate Society</span>
+                    </div>
+                    <p class="post-time">4 hours ago</p>
+                  </div>
+                </div>
+              </div>
+              <p class="post-question">What kind of social event would you prefer for the end of the semester?</p>
+              <div class="poll-options">
+                <div class="poll-option poll-winner">
+                  <div class="poll-bar" style="width: 65%"></div>
+                  <div class="poll-content">
+                    <span class="poll-label">Pizza Party!</span>
+                    <span class="poll-percentage">65%</span>
+                  </div>
+                </div>
+                <div class="poll-option">
+                  <div class="poll-bar" style="width: 20%"></div>
+                  <div class="poll-content">
+                    <span class="poll-label">Game Night</span>
+                    <span class="poll-percentage">20%</span>
+                  </div>
+                </div>
+                <div class="poll-option">
+                  <div class="poll-bar" style="width: 15%"></div>
+                  <div class="poll-content">
+                    <span class="poll-label">Movie Marathon</span>
+                    <span class="poll-percentage">15%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="post-engagement">
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">how_to_vote</span>
+                  <span>45 Votes</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">comment</span>
+                  <span>12 Comments</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">share</span>
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Image Post -->
+            <div class="post-card">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'></div>
+                  <div>
+                    <p class="author-name">AI & Robotics Club</p>
+                    <p class="post-time">Yesterday at 5:30 PM</p>
+                  </div>
+                </div>
+              </div>
+              <p class="post-content">Our new drone just arrived! 🚀 Huge thanks to the student council for approving the budget. We'll be doing a live demo next week. Stay tuned for details!</p>
+              <img alt="New club drone" class="post-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuwzp7f2n6D4uIqEG6D_PC3Y_ojaoCfR3FzDvjzfAZq6r2aIfBMi2nK-xVQ_hJ_7xYbbrU9a-sF4wUdF6QhdGvzrgwKyvX42tdtDEkah5ek8eQGFa8fIQJLp_FpV639yjrcQTiLmWM_ZoITnHnjlUaNG9Bp6pCXK8GDNTAzUQdTCED_ogIm0N-KwndLSFqms_AoDmtwqUu9Y0Yr3g-NelVIyhz6r_2VRpjCA51epreRBMYhCnSt_bVynCx8ZKXHgl-RJPEOc3nyvg"/>
+              <div class="post-engagement">
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">favorite</span>
+                  <span>58 Likes</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">comment</span>
+                  <span>19 Comments</span>
+                </button>
+                <button class="engagement-btn">
+                  <span class="material-symbols-outlined">share</span>
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="sidebar-column">
+            <!-- Student Groups -->
+            <div class="sidebar-card">
+              <h3 class="sidebar-title">Student Groups & Clubs</h3>
+              <div class="groups-list">
+                <div class="group-item">
+                  <div class="group-info">
+                    <div class="group-avatar bg-blue">A</div>
+                    <div>
+                      <p class="group-name">AI & Robotics Club</p>
+                      <p class="group-stats">54 Members • Active</p>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined status-icon-green">trending_up</span>
+                </div>
+                <div class="group-item">
+                  <div class="group-info">
+                    <div class="group-avatar bg-green">S</div>
+                    <div>
+                      <p class="group-name">Sustainable Campus</p>
+                      <p class="group-stats">30 Members • High Engagement</p>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined status-icon-amber">local_fire_department</span>
+                </div>
+                <div class="group-item">
+                  <div class="group-info">
+                    <div class="group-avatar bg-yellow">D</div>
+                    <div>
+                      <p class="group-name">Debate Society</p>
+                      <p class="group-stats">20 Members • Recent Discussion</p>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined status-icon-gray">chat_bubble</span>
+                </div>
+              </div>
+              <button class="view-all-btn">+ View All Groups</button>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="sidebar-card">
+              <h3 class="sidebar-title">Upcoming Events</h3>
+              <div class="events-list">
+                <div class="event-item event-primary">
+                  <div class="event-date">
+                    <span class="event-month">OCT</span>
+                    <span class="event-day">28</span>
+                  </div>
+                  <div>
+                    <p class="event-name">Alumni Networking Night</p>
+                    <p class="event-details">6:00 PM - Main Hall</p>
+                  </div>
+                </div>
+                <div class="event-item event-accent">
+                  <div class="event-date date-accent">
+                    <span class="event-month">NOV</span>
+                    <span class="event-day">05</span>
+                  </div>
+                  <div>
+                    <p class="event-name">Hackathon Kick-off</p>
+                    <p class="event-details">9:00 AM - Tech Building</p>
+                  </div>
+                </div>
+                <div class="event-item event-green">
+                  <div class="event-date date-green">
+                    <span class="event-month">NOV</span>
+                    <span class="event-day">12</span>
+                  </div>
+                  <div>
+                    <p class="event-name">Fall Music Fest</p>
+                    <p class="event-details">2:00 PM - University Green</p>
+                  </div>
+                </div>
+              </div>
+              <button class="view-all-btn">View Full Calendar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>
