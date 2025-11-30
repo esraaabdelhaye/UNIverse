@@ -1,6 +1,9 @@
 package com.example.backend.repository;
 
-public interface StudentRepresentativeRepo {
+import com.example.backend.entity.StudentRepresentative;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentRepresentativeRepo extends JpaRepository<StudentRepresentative, Integer> {
 
     // TODO: Implement repository logic (JPA/Hibernate/etc.)
 
