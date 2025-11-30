@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Campus Connect Dashboard - UNIverse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="student-dashboard.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link active" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">school</span>
+        <span>My Courses</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">assignment</span>
+        <span>Submit Assignments</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>View Schedule</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Settings</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge accent"></span>
+        </button>
+        <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC-LETa4BflVlQ-Ke4L1wK7jtSz5aP99ABOzLi0704ZljGf5FDMgfp5f-jIvQ1BtVkL0GlLxVHAvU0XTllE38dKcebfTPb7utJ8-cAWaPGS9T27juHXLKrFw1LTJP8NOx59KeIBXL7Qkt-g60iKue6ZC44Wl-FbKOwh7oSGGYVOPzJOoTtEjZhYn3CHNWbHK4tkdoAz4uskjwlIoMIoFoe4B46z1CHJsKKPQIY1gswCW_1j7WoHfNUICaoxhoDT9NlPLKLRsqoo");'></div>
+        <div class="user-info">
+          <p class="user-name">Alex Johnson</p>
+          <p class="user-role">Student</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1>Hello, Alex!</h1>
+          <p>Welcome to your Campus Connect Dashboard!</p>
+        </div>
+
+        <div class="main-grid">
+          <div class="main-column">
+            <div class="community-hub">
+              <h2 class="section-title">
+                <span class="material-symbols-outlined">groups</span> Community Hub
+              </h2>
+
+              <div class="ask-question">
+                <h3 class="subsection-title">
+                  <span class="material-symbols-outlined">question_mark</span> Ask a Question
+                </h3>
+                <textarea class="question-input" rows="3" placeholder="What's on your mind? Get help from peers or faculty..."></textarea>
+                <button class="btn-primary">Post Question</button>
+              </div>
+
+              <div class="polls-section">
+                <h3 class="subsection-title">
+                  <span class="material-symbols-outlined">how_to_vote</span> Representative Polls
+                </h3>
+                <div class="polls-list">
+                  <div class="poll-card blue">
+                    <p class="poll-question">Should the library extend its weekend hours?</p>
+                    <div class="poll-options">
+                      <button class="poll-option">Yes (45%)</button>
+                      <button class="poll-option">No (30%)</button>
+                      <button class="poll-option">Undecided (25%)</button>
+                    </div>
+                  </div>
+                  <div class="poll-card green">
+                    <p class="poll-question">Vote for the next campus event theme!</p>
+                    <div class="poll-options">
+                      <button class="poll-option">Spring Fest (60%)</button>
+                      <button class="poll-option">Global Gala (40%)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-column">
+            <div class="card">
+              <h2 class="card-title">Upcoming Deadlines</h2>
+              <div class="deadlines-list">
+                <div class="deadline-item red">
+                  <span class="deadline-date">Today</span>
+                  <p>CS101 - Assignment 1</p>
+                </div>
+                <div class="deadline-item orange">
+                  <span class="deadline-date">In 3 days</span>
+                  <p>CS202 - Lab Report</p>
+                </div>
+                <div class="deadline-item blue">
+                  <span class="deadline-date">Oct 28</span>
+                  <p>DS310 - Project Proposal</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card-title">Recent Grades</h2>
+              <div class="grades-list">
+                <div class="grade-item">
+                  <p>CS101 - Quiz 1</p>
+                  <span class="grade green">95%</span>
+                </div>
+                <div class="grade-item">
+                  <p>DS310 - Homework 2</p>
+                  <span class="grade amber">82%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card-title">View Schedule</h2>
+              <div class="calendar-header">
+                <span>October 2024</span>
+              </div>
+              <div class="calendar">
+                <div class="calendar-day-labels">
+                  <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="calendar-dates">
+                  <span class="inactive">29</span><span class="inactive">30</span>
+                  <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                  <span>6</span><span>7</span><span>8</span><span>9</span><span class="highlighted blue">10</span><span>11</span><span>12</span>
+                  <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                  <span>20</span><span class="highlighted red">21</span><span>22</span><span>23</span><span class="highlighted amber">24</span><span>25</span><span>26</span>
+                  <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="courses-section">
+          <h2 class="section-title-large">My Courses</h2>
+          <div class="courses-grid">
+            <div class="course-card">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
+              <h3>CS101: Intro to Programming</h3>
+              <p class="professor">Prof. Alan Turing</p>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+              <a class="course-forum-btn blue" href="#">
+                <span class="material-symbols-outlined">forum</span> Course Forum
+              </a>
+            </div>
+
+            <div class="course-card">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6_PB_q1WmQT6Pv5PoVkhgUPvWQq5wb1gPsZENjDu7IeUrx5Szee5FAd1PicWO9XaFssXNoAiQx3gj9u3D0co1fL9QLbFShEr8Jnd_XVQeXfypQwjHLmDR8Ho76syQR6ODfE2jBObHkgXyLZBezf3jcf3P-8JcOrTpJBC7ujLdfj9ydiVQU86N4GfiIYHoKjzagUpUGijeZ0MibjU0gRmTe-ZwF4vCCE8_7NiFV83UVAjF4t2Xzoh97j8LmdiC14dO_HB4oFnPEjY"/>
+              <h3>CS202: Data Structures</h3>
+              <p class="professor">Prof. Ada Lovelace</p>
+              <div class="progress-bar">
+                <div class="progress-fill green" style="width: 45%"></div>
+              </div>
+              <a class="course-forum-btn green" href="#">
+                <span class="material-symbols-outlined">forum</span> Course Forum
+              </a>
+            </div>
+
+            <div class="course-card">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1qcodMjywwIZEc52Tb7QvvIQbVMMCdhxnwVapKz9bwbLVJkVaFc6zL2mjvKFdGJ_gMHdOQ7JIaasJ0mhrbcjLjPPf99mJbPqqsUSVjsyUFgejXmoWr1QZwAG0MExv78BpFdhBCKuFE5x2WJnsSGpavRKWEgUpKmmrj6Qw8Gw4AKANCVxeV1_tuZlbKdPmzT5rfvIM3C1P56Dh8EJ5en4Z70dczstS_IUumU8L_S8QEJof3bcOx2084zOGn0FgcrA2-vyGAecd5fk"/>
+              <h3>DS310: Web Development</h3>
+              <p class="professor">Prof. Tim Berners-Lee</p>
+              <div class="progress-bar">
+                <div class="progress-fill pink" style="width: 60%"></div>
+              </div>
+              <a class="course-forum-btn pink" href="#">
+                <span class="material-symbols-outlined">forum</span> Course Forum
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

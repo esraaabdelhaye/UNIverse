@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Teaching Assistant Dashboard - UNIverse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="ta-dashboard.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link active" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span>Upload Materials</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">edit_square</span>
+        <span>Add Grades</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">assignment</span>
+        <span>Add Assignment</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">forum</span>
+        <span>Answer Questions</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Manage Announcements</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>Schedule</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Settings</span>
+      </a>
+      <a class="nav-link" href="#">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge"></span>
+        </button>
+        <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAM0hj8VPghMiq7WMnCosYRbOXNs6i69ULHuWZzbnPbEfCQVlRGYxkwsvgtO4tO_9LyabYchwJZFQKYxh3ltO1s-q1GmdU3JZRhjy1u2PJz2EMtlIMrW9MAxsVHCf4XAQk_n68kUlMoGnfCYLAZCFo6QA69eYMp2xFBJRLxTFgQ6OPUK-a7xrxAdzpV7wdnauuJJ4gX5QrMLs3yt5gyeHcfqjhQ_oy-9UY4SuRhZOjaUHgJtc7HaVpaGNExksmjW-cqNlTeofDrO_I");'></div>
+        <div class="user-info">
+          <p class="user-name">Marc Doe</p>
+          <p class="user-role">TA</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="main-grid">
+          <div class="left-column">
+            <div class="section">
+              <h2 class="section-title">Course Management</h2>
+              <div class="course-list">
+                <div class="course-item">
+                  <div class="course-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <div class="course-thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDskPdtKikbuqQ3AFljUx4Tr68EY1W7_5kyKL93pj39Kd4oQ0Sxh-d1Wn-76LRIV0_WDsN9Kuuo-4nD2nwARsZMi5plpk2VAWAGKR2u0BHEIfq8vnM0sFrtuRgL6KhLdf-URs7LB_nV_8cqBwpSPFmr_bAbsi5r6sOOy31Q1TsG7Rr_lKOpA2jRuxP90uIesvjoKPTxyTuAlyM_KfdXdRrdUJMj4lwJD3XE8zGuQLy1bpQ_GljpNkgPBgjAX2qEixpDG9pIoJnpWJM");'></div>
+                    <div class="course-info">
+                      <p class="course-title">Introduction to Psychology</p>
+                      <p class="course-professor">Prof. Emily Carter</p>
+                    </div>
+                    <span class="material-symbols-outlined expand-icon">expand_more</span>
+                  </div>
+                  <div class="course-details hidden">
+                    <div class="course-actions">
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">upload_file</span>Upload Materials
+                      </button>
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">assignment</span>Add Assignment
+                      </button>
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">campaign</span>Manage Announcements
+                      </button>
+                    </div>
+                    <div class="recent-activity">
+                      <p class="activity-label">Recent Activity:</p>
+                      <ul>
+                        <li>Uploaded "Ch. 5 Readings" - 1 day ago</li>
+                        <li>Created "Essay Outline Assignment" - 3 days ago</li>
+                        <li>Posted "Midterm Review Session" announcement - 5 days ago</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="course-item">
+                  <div class="course-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <div class="course-thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDM4C-Bc1Z92jNPlqp-Yz_t7eAJn4AkX_lXPE-nQvvAuacu5UCFDjllQH8QcoanrkTQtif_EML5CIKmz7T-gV4ZNirkZ7bVaVCDq8W3k0GbCEB228bVW88sryXE6AkqFhL4t3gJtbCsGe_c4KR6N0NislcU19z7wUx9So7GqsE99iZJi4aiR9cc0Mtvuq1N-pg8b_46YQKOA5aamEMVP7uKHt2sdQ-diP7a9bU0zUeiVbSAVMYko9nFVc_PqAMY0RUodr1390IwUQA");'></div>
+                    <div class="course-info">
+                      <p class="course-title">Calculus II</p>
+                      <p class="course-professor">Prof. Alan Turing</p>
+                    </div>
+                    <span class="material-symbols-outlined expand-icon">expand_more</span>
+                  </div>
+                  <div class="course-details hidden">
+                    <div class="course-actions">
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">upload_file</span>Upload Materials
+                      </button>
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">assignment</span>Add Assignment
+                      </button>
+                      <button class="action-btn">
+                        <span class="material-symbols-outlined">campaign</span>Manage Announcements
+                      </button>
+                    </div>
+                    <div class="recent-activity">
+                      <p class="activity-label">Recent Activity:</p>
+                      <ul>
+                        <li>Uploaded "Calculus II Practice Problems" - 2 days ago</li>
+                        <li>Added "Midterm Exam" - 4 days ago</li>
+                        <li>Managed announcement "Office Hours Update" - 1 week ago</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h2 class="section-title">Grading Queue</h2>
+              <div class="card">
+                <div class="filter-bar">
+                  <p class="filter-label">Filter by:</p>
+                  <select class="filter-select">
+                    <option>All Courses</option>
+                    <option>Calculus II</option>
+                    <option>Psychology</option>
+                  </select>
+                  <select class="filter-select">
+                    <option>All Statuses</option>
+                    <option>Pending</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+                <div class="grading-list">
+                  <div class="grading-item pending">
+                    <div class="grading-info">
+                      <p class="grading-title">Calculus II - Problem Set 3</p>
+                      <p class="grading-date">Submitted: 2 days ago</p>
+                    </div>
+                    <div class="grading-actions">
+                      <span class="status-badge orange">12 Pending</span>
+                      <button class="grade-btn">
+                        <span class="material-symbols-outlined">edit_square</span>Add Grades
+                      </button>
+                    </div>
+                  </div>
+                  <div class="grading-item pending">
+                    <div class="grading-info">
+                      <p class="grading-title">Psychology - Midterm Essays</p>
+                      <p class="grading-date">Submitted: 5 days ago</p>
+                    </div>
+                    <div class="grading-actions">
+                      <span class="status-badge orange">5 Pending</span>
+                      <button class="grade-btn">
+                        <span class="material-symbols-outlined">edit_square</span>Add Grades
+                      </button>
+                    </div>
+                  </div>
+                  <div class="grading-item completed">
+                    <div class="grading-info">
+                      <p class="grading-title-done">Calculus II - Problem Set 2</p>
+                      <p class="grading-date-done">Graded</p>
+                    </div>
+                    <span class="material-symbols-outlined check-icon">check_circle</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-column">
+            <div class="card">
+              <h3 class="card-title">Student Queries</h3>
+              <div class="query-filters">
+                <select class="filter-select">
+                  <option>All Courses</option>
+                  <option>Calculus II</option>
+                  <option>Psychology</option>
+                </select>
+                <select class="filter-select">
+                  <option>All Statuses</option>
+                  <option>New</option>
+                  <option>Answered</option>
+                </select>
+              </div>
+              <div class="queries-list">
+                <div class="query-item">
+                  <div class="query-header">
+                    <div class="query-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGN5B73F6JJ6n6FWre5R2o4TYkUIlTF2b_MboGpuXGzcLKmSjHwA4Wd--PTsWE4jl-km610wOeJwRgenQ-hbXznIxB4aBOlRE3R8s9zfEAuvRU2WCvzITDqfqJb8419zGuFK6AGzfrdi-pPuStIYa2QW8XeXApQZHA2DfhIRYmw3MWr_iW3o6sAqsozYay3ZXmOAdkxjA4RYqA0yBWXhXOJurdsQd-B2SCa321FSdLYNf7nJg9B2-UgkBBmUDY712eDEG_xjIbUDM");'></div>
+                    <div class="query-user-info">
+                      <p class="query-user-name">Alice Johnson</p>
+                      <p class="query-meta">Calculus II Forum • 2h ago</p>
+                    </div>
+                  </div>
+                  <p class="query-text">"Can someone explain question 5 on the latest problem set? I'm really stuck."</p>
+                  <button class="answer-btn">
+                    <span class="material-symbols-outlined">reply</span>Answer Question
+                  </button>
+                </div>
+                <div class="query-item">
+                  <div class="query-header">
+                    <div class="query-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZFfAkTMEpDmnmmrGayJ0CyvuScE7s-mmYMFaBfXajZTwelTEOxg8TXGJod9IxMhs1lpYXEXW3r2KZ7T-M-z0iKGMPim2xyi6m721TbDRSRcsAooSBNy9CU0Re8vcs_aPBBRAB5nTXZPfmt-XFXhjwwRIb4mg4vbGuqqJfiO5nDxxTZxQZWepWnxlJkTm3ko2SxTwnhiVG49PYwf7c74U0aTJs1Hj7lXE9DSEByb3257X3Xs81cYMt6qobO_ZKUK5xUw5v_rIFmVY");'></div>
+                    <div class="query-user-info">
+                      <p class="query-user-name">Bob Williams</p>
+                      <p class="query-meta">Psychology Discussion • 5h ago</p>
+                    </div>
+                  </div>
+                  <p class="query-text">"This week's reading on cognitive biases was fascinating! Especially the part about confirmation bias."</p>
+                  <button class="answer-btn">
+                    <span class="material-symbols-outlined">reply</span>Answer Question
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="schedule-header">
+                <h3 class="card-title">This Week's Schedule</h3>
+                <div class="schedule-nav">
+                  <button class="nav-btn">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                  </button>
+                  <button class="nav-btn">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                  </button>
+                </div>
+              </div>
+              <div class="schedule-list">
+                <div class="schedule-item">
+                  <div class="schedule-time">10:00 AM</div>
+                  <div class="schedule-event primary">
+                    <p class="event-title">Psychology Lab Section A</p>
+                    <p class="event-location">Room 301, Science Bldg</p>
+                  </div>
+                </div>
+                <div class="schedule-item">
+                  <div class="schedule-time">02:00 PM</div>
+                  <div class="schedule-event accent">
+                    <p class="event-title">Calculus II Tutoring Session</p>
+                    <p class="event-location">Library Study Room 4B</p>
+                  </div>
+                </div>
+                <div class="schedule-item">
+                  <div class="schedule-time">04:00 PM</div>
+                  <div class="schedule-event primary">
+                    <p class="event-title">Psychology Lab Section B</p>
+                    <p class="event-location">Room 301, Science Bldg</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

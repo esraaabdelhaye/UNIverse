@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Generate Timetable - UNIverse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="generate-timetable.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">group</span><span>Manage Faculty</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">event_available</span><span>Course Availability</span></a>
+      <a class="nav-link active" href="#"><span class="material-symbols-outlined">calendar_month</span><span>Generate Timetable</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">trending_up</span><span>Review Performance</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
+    </div>
+  </aside>
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge"></span>
+        </button>
+        <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'></div>
+        <div class="user-info">
+          <p class="user-name">Alex Hartman</p>
+          <p class="user-role">Supervisor</p>
+        </div>
+      </div>
+    </header>
+    <main class="main-content">
+      <div class="timetable-grid">
+        <div class="constraints-panel">
+          <div class="card">
+            <h2 class="card-title">
+              <span class="material-symbols-outlined">tune</span> Timetable Constraints
+            </h2>
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <select class="form-input">
+                <option>Fall 2024</option>
+                <option>Spring 2025</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Courses to Include</label>
+              <input class="form-input" placeholder="e.g., CS101, MATH203" type="text"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Instructor Availability</label>
+              <input class="form-input" placeholder="e.g., Dr. Evans, Prof. Lee" type="text"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Room Capacity & Type</label>
+              <input class="form-input" placeholder="e.g., Hall A (>100), Lab 301 (Comp)" type="text"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Additional Rules</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input checked type="checkbox"/>
+                  <span>Avoid back-to-back classes for instructors</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox"/>
+                  <span>Prioritize morning slots for core courses</span>
+                </label>
+              </div>
+            </div>
+            <button class="btn-primary" style="width: 100%; margin-top: 24px; justify-content: center;">
+              <span class="material-symbols-outlined">auto_awesome</span>
+              <span>Generate Timetable</span>
+            </button>
+          </div>
+        </div>
+        <div class="timetable-view">
+          <div class="card">
+            <div class="timetable-header">
+              <h2 class="card-title">
+                <span class="material-symbols-outlined">grid_view</span> Generated Timetable (Fall 2024)
+              </h2>
+              <div class="timetable-actions">
+                <button class="btn-warning">
+                  <span class="material-symbols-outlined">report</span>
+                  <span>Review Conflicts (2)</span>
+                </button>
+                <button class="btn-secondary">
+                  <span class="material-symbols-outlined">edit</span>
+                  <span>Manually Adjust</span>
+                </button>
+                <button class="btn-success">
+                  <span class="material-symbols-outlined">publish</span>
+                  <span>Publish</span>
+                </button>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table class="timetable-table">
+                <thead>
+                <tr>
+                  <th class="time-cell">Time</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="time-cell">09:00 - 10:00</td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">MATH201</p>
+                      <p class="class-details">Dr. Abel / Room 101</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">MATH201</p>
+                      <p class="class-details">Dr. Abel / Room 101</p>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="time-cell">10:00 - 11:00</td>
+                  <td>
+                    <div class="class-slot conflict">
+                      <span class="material-symbols-outlined">error</span>
+                      <p class="class-title">CS101</p>
+                      <p class="class-details">Dr. Evans / Hall A</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">CS101</p>
+                      <p class="class-details">Dr. Evans / Hall A</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">CS101</p>
+                      <p class="class-details">Dr. Evans / Hall A</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="time-cell">11:00 - 12:00</td>
+                  <td>
+                    <div class="class-slot conflict">
+                      <span class="material-symbols-outlined">group</span>
+                      <p class="class-title">ENG203</p>
+                      <p class="class-details">Dr. Evans / Room 204</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="class-slot accent">
+                      <p class="class-title">PHY310 Lab</p>
+                      <p class="class-details">Dr. Curie / Lab 3</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot accent">
+                      <p class="class-title">PHY310 Lab</p>
+                      <p class="class-details">Dr. Curie / Lab 3</p>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="time-cell">12:00 - 13:00</td>
+                  <td colspan="5" class="lunch-break">Lunch Break</td>
+                </tr>
+                <tr>
+                  <td class="time-cell">13:00 - 14:00</td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">HIS450</p>
+                      <p class="class-details">Dr. Smith / Room 204</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td>
+                    <div class="class-slot primary">
+                      <p class="class-title">HIS450</p>
+                      <p class="class-details">Dr. Smith / Room 204</p>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body>
+</html>

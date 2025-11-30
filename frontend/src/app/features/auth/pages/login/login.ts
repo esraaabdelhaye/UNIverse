@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, Routes, RouterLink } from '@angular/router';
 import { ChooseAccount } from '../choose-account/choose-account';
-import { DoctorDashboard } from '../../../doctor-dashboard/doctor-dashboard';
+import { DoctorDashboard } from '../../../doctor-pages/doctor-dashboard/doctor-dashboard';
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
