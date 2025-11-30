@@ -1,4 +1,4 @@
 package com.example.backend.repository;
 
-public class ScheduleRepo {
+public interface ScheduleRepo {
 }

@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public class CourseRepo {
+public interface CourseRepo {
+
+    // TODO: Implement repository logic (JPA/Hibernate/etc.)
+
 }

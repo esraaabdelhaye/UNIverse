@@ -1,4 +1,4 @@
 package com.example.backend.repository;
 
-public class GradeRepo {
+public interface GradeRepo {
 }

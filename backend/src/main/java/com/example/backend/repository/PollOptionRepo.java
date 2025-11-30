@@ -1,4 +1,4 @@
 package com.example.backend.repository;
 
-public class PollOptionRepo {
+public interface PollOptionRepo {
 }
