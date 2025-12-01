@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public interface AnnouncementRepo {
+import com.example.backend.entity.Announcement;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AnnouncementRepo extends JpaRepository<Announcement,Long> {
 }

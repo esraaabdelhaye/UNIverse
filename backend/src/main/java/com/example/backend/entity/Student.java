@@ -21,6 +21,9 @@ public class Student {
     @Column(name = "academic_id", nullable = false , unique = true)
     private long academicId ;
 
+    @Column(name = "hashed_password", nullable = false , length = 100)
+    private String hashedPassword ;
+
     // Relation with courses via linking table
     @OneToMany(mappedBy = "student")
     private Set<CourseEnrollment> enrollments = new HashSet<>();
@@ -33,6 +36,9 @@ public class Student {
     // Relation with Assignments
     @OneToMany(mappedBy = "student")
     private Set<AssignmentSubmission> submissions = new HashSet<>();
+
+    @ManyToMany(mappedBy = "students")
+    private Set<StudentGroup> groups = new HashSet<>();
 
     public Student() {
 
@@ -98,6 +104,22 @@ public class Student {
         return submissions;
     }
 
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public Set<StudentGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<StudentGroup> groups) {
+        this.groups = groups;
+    }
+
     public void addEnrollment(CourseEnrollment enrollment) {
         enrollments.add(enrollment);
         enrollment.setStudent(this);
@@ -116,6 +138,14 @@ public class Student {
     public void removeSubmission(AssignmentSubmission submission) {
         submissions.remove(submission);
         submission.setStudent(null);
+    }
+
+    public void addGroup(StudentGroup group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(StudentGroup group) {
+        groups.remove(group);
     }
 
     // Add any helper methods needed

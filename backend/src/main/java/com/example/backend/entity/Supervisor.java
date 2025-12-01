@@ -3,7 +3,9 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,10 +40,18 @@ public class Supervisor extends Doctor {
     @OneToOne(mappedBy = "coordinator")
     private Department CoordinatedDepartment;
 
+    // Relation with announcement
+    @OneToMany(mappedBy = "supervisorAuthor")
+    private List<Announcement> announcements = new ArrayList<>();
+
+    // Relation with Events
+    @OneToMany(mappedBy = "supervisor")
+    private List<Event> events = new ArrayList<>();
+
     public Supervisor() {
     }
 
-    // You can remove option fields
+    // You can remove optional fields
     public Supervisor(Long id, String name, String email, Department department, String phoneNumber, String officeLocation,
                       String title, String expertise, String supervisorRole, Department coordinatedDepartment,
                       String managedProgram, LocalDate startDate, LocalDate endDate, String status)
@@ -114,5 +124,15 @@ public class Supervisor extends Doctor {
     public void addCoordinatedCourse(Course course) {
         coordinatedCourses.add(course);
         course.addCoordinator(this);
+    }
+
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+        announcement.setSupervisorAuthor(this);
+    }
+
+    public void addEvent(Event event) {
+        this.events.add(event);
+        event.setSupervisor(this);
     }
 }

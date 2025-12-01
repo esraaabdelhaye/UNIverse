@@ -2,7 +2,9 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +37,9 @@ public class Doctor {
     @Column(length = 500)
     private String expertise;
 
+    @Column(name = "hashed_password", nullable = false , length = 100)
+    private String hashedPassword ;
+
     // Linking tables
     // Link to courses (simple relation for now)
     @ManyToMany
@@ -53,6 +58,16 @@ public class Doctor {
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(mappedBy = "doctorAuthor")
+    private List<Announcement> announcements = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Event> events = new ArrayList<>();
+
+    @OneToMany(mappedBy = "doctorUploader")
+    private List<Material> materials = new ArrayList<>();
 
     public Doctor() {}
 
@@ -145,6 +160,38 @@ public class Doctor {
         this.posts = posts;
     }
 
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public List<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Announcement> announcements) {
+        this.announcements = announcements;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
+    }
+
     public void addPost(Post post) {
         this.posts.add(post);
         post.addDoctor(this);
@@ -153,6 +200,16 @@ public class Doctor {
     public void addCourse(Course course) {
         this.courses.add(course);
         course.addDoctor(this);
+    }
+
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+        announcement.setDoctorAuthor(this);
+    }
+
+    public void addEvent(Event event) {
+        this.events.add(event);
+        event.setDoctor(this);
     }
 
 }
