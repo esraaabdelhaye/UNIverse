@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public interface StudentGroupRepo {
+import com.example.backend.entity.StudentGroup;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentGroupRepo extends JpaRepository<StudentGroup,Long> {
 }

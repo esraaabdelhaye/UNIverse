@@ -2,7 +2,9 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +32,9 @@ public class TeachingAssistant {
     @Column(length = 500)
     private String expertise;
 
+    @Column(name = "hashed_password", nullable = false , length = 100)
+    private String hashedPassword ;
+
     //Relation with department
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -52,6 +57,17 @@ public class TeachingAssistant {
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private Set<Post> posts = new HashSet<>();
+
+    // Relation with announcements
+    @OneToMany(mappedBy = "taAuthor")
+    private List<Announcement> announcements = new ArrayList<>();
+
+    // Relation with Events
+    @OneToMany(mappedBy = "ta")
+    private List<Event> events = new ArrayList<>();
+
+    @OneToMany(mappedBy = "taUploader")
+    private List<Material> materials = new ArrayList<>();
 
     public TeachingAssistant(long id, String name, String email, String phoneNumber,
                              String officeLocation, String title, String expertise,
@@ -147,6 +163,38 @@ public class TeachingAssistant {
         this.posts = posts;
     }
 
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public List<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Announcement> announcements) {
+        this.announcements = announcements;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
+    }
+
     public void addPost(Post post) {
         this.posts.add(post);
         post.addTeachingAssistant(this);
@@ -157,5 +205,19 @@ public class TeachingAssistant {
 
     }
 
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+        announcement.setTaAuthor(this);
+    }
+
+    public void addEvent(Event event) {
+        this.events.add(event);
+        event.setTa(this);
+    }
+
+    public void addMaterial(Material material) {
+        material.setTaUploader(this);
+        this.materials.add(material);
+    }
 
 }

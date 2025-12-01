@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public interface EventRepo {
+import com.example.backend.entity.Event;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EventRepo extends JpaRepository<Event,Long> {
 }

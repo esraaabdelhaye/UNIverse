@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public interface PollRepo {
+import com.example.backend.entity.Poll;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PollRepo extends JpaRepository<Poll,Long> {
 }

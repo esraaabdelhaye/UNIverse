@@ -1,4 +1,7 @@
 package com.example.backend.repository;
 
-public interface QuestionRepo {
+import com.example.backend.entity.Question;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuestionRepo extends JpaRepository<Question,Long> {
 }

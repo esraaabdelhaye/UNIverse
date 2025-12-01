@@ -3,7 +3,9 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +34,10 @@ public class StudentRepresentative extends Student {
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private Set<Post> posts = new HashSet<>();
+
+    //Relation with announcement
+    @OneToMany(mappedBy = "studentRepAuthor")
+    private List<Announcement> announcements = new ArrayList<>();
 
 
     public StudentRepresentative() {
@@ -100,6 +106,11 @@ public class StudentRepresentative extends Student {
     public void addPost(Post post) {
         this.posts.add(post);
         post.addStudentRep(this);
+    }
+
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+        announcement.setStudentRepAuthor(this);
     }
 
 
