@@ -1,11 +1,16 @@
 export interface Course {
-  id: string;
-  code: string;
-  name: string;
-  description?: string;
+  courseCode: string;
+  courseTitle: string;
+  department: string;
+  instructorId: string;
+  instructorName: string;
+  courseDescription?: string;
+  capacity: number;
+  enrolled: number;
   credits: number;
-  isActive: boolean;
-  availableToLevels: number[];
-  department?: string;
+  semester: string;
+  status: 'OPEN' | 'FULL' | 'CLOSED';
+  createdDate: string;
+  updatedDate: string;
 }
 

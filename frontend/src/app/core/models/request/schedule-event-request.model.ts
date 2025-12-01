@@ -1,9 +1,8 @@
-export interface Schedule {
-  eventId: string;
+export interface ScheduleEventRequest {
+  courseCode: string;
   eventTitle: string;
   startTime: string;
   endTime: string;
   location: string;
-  courseCode: string;
   eventType: string;
 }

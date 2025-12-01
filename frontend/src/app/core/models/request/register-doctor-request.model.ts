@@ -1,12 +1,9 @@
-export interface Doctor {
-  doctorId: string;
+export interface RegisterDoctorRequest {
   fullName: string;
   email: string;
+  employeeId: string;
   phoneNumber: string;
   specialization: string;
   department: string;
   officeLocation: string;
-  qualifications: string;
-  availableForConsultation: boolean;
-  startDate: string;
 }
