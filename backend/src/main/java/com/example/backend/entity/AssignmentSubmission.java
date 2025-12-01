@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.example.backend.enums.SubmissionStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,8 +33,9 @@ public class AssignmentSubmission {
     @Column(name = "grade")
     private String grade;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 50)
-    private String status; // e.g., submitted, pending, late, graded
+    private SubmissionStatus status; // e.g., submitted, pending, late, graded
 
     @Column(name = "feedback", length = 500)
     private String feedback;
@@ -41,10 +43,13 @@ public class AssignmentSubmission {
     @Column(name = "submission_file", length = 500)
     private String submissionFile; // file path or URL
 
+
+
+
     public AssignmentSubmission() {}
 
     public AssignmentSubmission(long id, Student student, Course course, Assignment assignment,
-                                LocalDate submissionDate, String grade, String status,
+                                LocalDate submissionDate, String grade, SubmissionStatus status,
                                 String feedback, String submissionFile)
     {
         this.id = id;
@@ -82,7 +87,7 @@ public class AssignmentSubmission {
         return grade;
     }
 
-    public String getStatus() {
+    public SubmissionStatus getStatus() {
         return status;
     }
 
@@ -114,7 +119,7 @@ public class AssignmentSubmission {
         this.grade = grade;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(SubmissionStatus status) {
         this.status = status;
     }
 

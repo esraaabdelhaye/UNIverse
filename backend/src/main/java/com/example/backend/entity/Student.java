@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 import jakarta.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,9 +31,14 @@ public class Student {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @OneToMany(mappedBy = "student")
+    private List<Question> questionsAsked;
+
     // Relation with Assignments
     @OneToMany(mappedBy = "student")
     private Set<AssignmentSubmission> submissions = new HashSet<>();
+
+
 
     public Student() {
 

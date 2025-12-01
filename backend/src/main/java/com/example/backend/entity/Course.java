@@ -4,6 +4,7 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,6 +58,9 @@ public class Course {
     //Relation with coordinator
     @ManyToMany(mappedBy = "coordinatedCourses")
     private Set<Supervisor> coordinators = new HashSet<>();
+
+    @OneToMany(mappedBy = "course")
+    private List<Question> questions;
 
 
     public Course(Long id, String courseCode, String name, Integer credits,

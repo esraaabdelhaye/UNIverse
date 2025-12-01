@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CourseRepo extends JpaRepository<Course,Integer> {
 
-    List<CourseDTO> getCourseByInstructorID(String instructorID);
     // TODO: Implement repository logic (JPA/Hibernate/etc.)
 
 }
