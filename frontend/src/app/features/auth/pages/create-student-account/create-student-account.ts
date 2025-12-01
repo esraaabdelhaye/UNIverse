@@ -1,11 +1,12 @@
 import { Component, signal, WritableSignal, ChangeDetectionStrategy, AfterViewInit, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {RouterLink, Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-student-account',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './create-student-account.html',
   styleUrl: './create-student-account.css',
 })
