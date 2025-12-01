@@ -8,7 +8,7 @@ public class CourseDTO {
     private String department;
     private String instructorId;
     private String instructorName;
-    private String courseDescription;
+    private String description;
     private Integer capacity;
     private Integer enrolled;
     private Integer credits;
@@ -20,14 +20,14 @@ public class CourseDTO {
     public CourseDTO() {}
 
     public CourseDTO(String courseCode, String courseTitle, String department, String instructorId,
-                     String instructorName, String courseDescription, Integer capacity, Integer enrolled,
+                     String instructorName, String description, Integer capacity, Integer enrolled,
                      Integer credits, String semester, String status, LocalDateTime createdDate, LocalDateTime updatedDate) {
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
         this.department = department;
         this.instructorId = instructorId;
         this.instructorName = instructorName;
-        this.courseDescription = courseDescription;
+        this.description = description;
         this.capacity = capacity;
         this.enrolled = enrolled;
         this.credits = credits;
@@ -52,8 +52,8 @@ public class CourseDTO {
     public String getInstructorName() { return instructorName; }
     public void setInstructorName(String instructorName) { this.instructorName = instructorName; }
 
-    public String getCourseDescription() { return courseDescription; }
-    public void setCourseDescription(String courseDescription) { this.courseDescription = courseDescription; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }

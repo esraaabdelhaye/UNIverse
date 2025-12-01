@@ -1,8 +1,6 @@
 package com.example.backend.entity;
 
-
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,9 +57,16 @@ public class Course {
     private Set<Supervisor> coordinators = new HashSet<>();
 
     //Relation with materials
-    @OneToMany(mappedBy = "coruse")
+    @OneToMany(mappedBy = "course")
     private Set<Material> materials = new HashSet<>();
 
+    // Relation with assignments
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Assignment> assignments = new HashSet<>();
+
+    // Relation with assignment submissions
+    @OneToMany(mappedBy = "course")
+    private Set<AssignmentSubmission> submissions = new HashSet<>();
 
     public Course(Long id, String courseCode, String name, Integer credits,
                   String semester, String description, Department department)
@@ -76,7 +81,6 @@ public class Course {
     }
 
     public Course() {
-
     }
 
     public Long getId() {
@@ -179,6 +183,30 @@ public class Course {
         this.dependentCourses = dependentCourses;
     }
 
+    public Set<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(Set<Material> materials) {
+        this.materials = materials;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<Assignment> assignments) {
+        this.assignments = assignments;
+    }
+
+    public Set<AssignmentSubmission> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(Set<AssignmentSubmission> submissions) {
+        this.submissions = submissions;
+    }
+
     public void addDoctor(Doctor doctor) {
         doctors.add(doctor);
         doctor.getCourses().add(this);
@@ -220,7 +248,7 @@ public class Course {
     }
 
     public void addCoordinator(Supervisor coordinator) {
-        this.coordinators.add(coordinator) ;
+        this.coordinators.add(coordinator);
     }
 
     public void addMaterial(Material material) {
@@ -228,4 +256,13 @@ public class Course {
         material.setCourse(this);
     }
 
+    public void addAssignment(Assignment assignment) {
+        this.assignments.add(assignment);
+        assignment.setCourse(this);
+    }
+
+    public void removeAssignment(Assignment assignment) {
+        this.assignments.remove(assignment);
+        assignment.setCourse(null);
+    }
 }
