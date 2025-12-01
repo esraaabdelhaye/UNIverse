@@ -1,5 +1,7 @@
 package com.example.backend.entity;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +25,15 @@ public class Student {
 
     @Column(name = "hashed_password", nullable = false , length = 100)
     private String hashedPassword ;
+
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     // Relation with courses via linking table
     @OneToMany(mappedBy = "student")
@@ -120,6 +131,22 @@ public class Student {
         this.groups = groups;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void addEnrollment(CourseEnrollment enrollment) {
         enrollments.add(enrollment);
         enrollment.setStudent(this);
@@ -147,6 +174,15 @@ public class Student {
     public void removeGroup(StudentGroup group) {
         groups.remove(group);
     }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 
     // Add any helper methods needed
 }

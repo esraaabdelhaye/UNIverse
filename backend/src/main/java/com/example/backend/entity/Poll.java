@@ -39,6 +39,10 @@ public class Poll {
     @JoinColumn(name = "ta_id")
     private TeachingAssistant taCreator;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studentrep_id")
+    private StudentRepresentative studentRepresentative;
+
     // One-to-many relation to options (owning side is PollOption)
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PollOption> options = new ArrayList<>();
@@ -118,6 +122,14 @@ public class Poll {
 
     public void setVoters(List<Student> voters) {
         this.voters = voters;
+    }
+
+    public StudentRepresentative getStudentRepresentative() {
+        return studentRepresentative;
+    }
+
+    public void setStudentRepresentative(StudentRepresentative studentRepresentative) {
+        this.studentRepresentative = studentRepresentative;
     }
 
     public void addOption(PollOption option) {
