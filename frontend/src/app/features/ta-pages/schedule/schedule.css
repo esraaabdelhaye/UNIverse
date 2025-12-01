@@ -43,7 +43,7 @@
   padding: 16px;
 }
 
-.nav-item {
+.nav-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -56,11 +56,11 @@
   font-weight: 500;
 }
 
-.nav-item:hover {
+.nav-link:hover {
   background-color: #F1F5F9;
 }
 
-.nav-item.active {
+.nav-link.active {
   background-color: #DBEAFE;
   color: #1E40AF;
   font-weight: 600;

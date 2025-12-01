@@ -5,23 +5,23 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="nav-text">Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
         <span class="nav-text">Upload Material</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span class="nav-text">Grade Students</span>
       </a>
-      <a class="nav-item active" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span class="nav-text">View Submissions</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span class="nav-text">Course Announcements</span>
       </a>

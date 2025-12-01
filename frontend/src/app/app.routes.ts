@@ -181,31 +181,31 @@ export const routes: Routes = [
 
   // ---------------- STUDENT REP ----------------
   {
-    path: 'rep-dashboard',
+    path: 'studentrep-dashboard',
     loadComponent: () =>
       import('./features/studentrep-pages/studentrep-dashboard/studentrep-dashboard')
         .then(m => m.StudentrepDashboard),
   },
   {
-    path: 'rep-dashboard/events',
+    path: 'studentrep-dashboard/events',
     loadComponent: () =>
       import('./features/studentrep-pages/events/events')
         .then(m => m.Events),
   },
   {
-    path: 'rep-dashboard/live-feed',
+    path: 'studentrep-dashboard/live-feed',
     loadComponent: () =>
       import('./features/studentrep-pages/live-feed/live-feed')
         .then(m => m.LiveFeed),
   },
   {
-    path: 'rep-dashboard/manage-student-grps',
+    path: 'studentrep-dashboard/manage-student-grps',
     loadComponent: () =>
       import('./features/studentrep-pages/manage-student-grps/manage-student-grps')
         .then(m => m.ManageStudentGrps),
   },
   {
-    path: 'rep-dashboard/polls-voting',
+    path: 'studentrep-dashboard/polls-voting',
     loadComponent: () =>
       import('./features/studentrep-pages/polls-voting/polls-voting')
         .then(m => m.PollsVoting),

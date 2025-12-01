@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-manage-faculty',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './manage-faculty.html',
   styleUrl: './manage-faculty.css',
 })

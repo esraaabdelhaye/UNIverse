@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-add-grades',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './add-grades.html',
   styleUrl: './add-grades.css',
 })

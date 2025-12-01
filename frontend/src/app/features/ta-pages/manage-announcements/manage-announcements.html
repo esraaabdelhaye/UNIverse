@@ -5,17 +5,38 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">dashboard</span><span class="nav-text">Dashboard</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">upload_file</span><span class="nav-text">Upload Materials</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">edit_square</span><span class="nav-text">Add Grades</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">assignment</span><span class="nav-text">Add Assignment</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">forum</span><span class="nav-text">Answer Questions</span></a>
-      <a class="nav-item active" href="#"><span class="material-symbols-outlined">campaign</span><span class="nav-text">Manage Announcements</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">calendar_month</span><span class="nav-text">Schedule</span></a>
+      <a class="nav-link active" routerLink="/ta-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/add-assignment" routerLinkActive="active">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Add Assignment</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/add-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>Add Grades</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/answer-questions" routerLinkActive="active">
+        <span class="material-symbols-outlined">question_answer</span>
+        <span>Answer Questions</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/manage-announcements" routerLinkActive="active">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Manage Announcements</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">schedule</span>
+        <span>Schedule</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/upload-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span>Upload Materials</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">settings</span><span class="nav-text">Settings</span></a>
-      <a class="nav-item" href="#"><span class="material-symbols-outlined">logout</span><span class="nav-text">Logout</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span><span class="nav-text">Settings</span></a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">logout</span><span class="nav-text">Logout</span></a>
     </div>
   </aside>
 

@@ -5,25 +5,29 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link active" href="#">
+      <a class="nav-link active" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">group</span>
-        <span>Manage Student Groups</span>
+      <a class="nav-link" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
+        <span>My Courses</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">campaign</span>
-        <span>Live Feed</span>
+      <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Submit Assignments</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">poll</span>
-        <span>Polls / Voting</span>
+      <a class="nav-link" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">event</span>
-        <span>Events</span>
+      <a class="nav-link" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>View Schedule</span>
       </a>
     </nav>
     <div class="sidebar-footer">
