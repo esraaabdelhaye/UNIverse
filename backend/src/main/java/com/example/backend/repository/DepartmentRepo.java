@@ -3,8 +3,11 @@ package com.example.backend.repository;
 import com.example.backend.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DepartmentRepo extends JpaRepository<Department, Long> {
+import java.util.Optional;
+
+public interface DepartmentRepo extends JpaRepository<Department,Long> {
 
     // TODO: Implement repository logic (JPA/Hibernate/etc.)
+    Optional<Department> findByName(String name);
 
 }

@@ -3,6 +3,8 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Announcement {
@@ -22,6 +24,12 @@ public class Announcement {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "visibility")
+    private String visibility;
+
+    @Column(name = "attachements")
+    private List<String> attachments = new ArrayList<>();
+
     // Relation with authors
     // These fields may be null
     @ManyToOne
@@ -39,6 +47,10 @@ public class Announcement {
     @ManyToOne
     @JoinColumn(name = "studentrep_id")
     private StudentRepresentative studentRepAuthor;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Announcement(Long id, String title, LocalDateTime updatedAt, LocalDateTime createdAt, String content, Doctor doctorAuthor,
                         TeachingAssistant taAuthor, Supervisor supervisorAuthor, StudentRepresentative studentRepAuthor) {
@@ -122,5 +134,37 @@ public class Announcement {
 
     public void setStudentRepAuthor(StudentRepresentative studentRepAuthor) {
         this.studentRepAuthor = studentRepAuthor;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public List<String> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<String> attachments) {
+        this.attachments = attachments;
+    }
+
+    public void addAttachment(String attachment) {
+        this.attachments.add(attachment);
+    }
+
+    public void removeAttachment(String attachment) {
+        this.attachments.remove(attachment);
     }
 }

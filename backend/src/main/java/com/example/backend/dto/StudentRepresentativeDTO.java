@@ -15,6 +15,7 @@ public class StudentRepresentativeDTO {
     private LocalDate endDate;
     private String status;
     private Integer constituentsCount;
+    private String role ;
 
     public StudentRepresentativeDTO() {}
 
@@ -70,4 +71,12 @@ public class StudentRepresentativeDTO {
 
     public Integer getConstituentsCount() { return constituentsCount; }
     public void setConstituentsCount(Integer constituentsCount) { this.constituentsCount = constituentsCount; }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
