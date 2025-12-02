@@ -42,11 +42,11 @@ public class Supervisor extends Doctor {
 
     // Relation with announcement
     @OneToMany(mappedBy = "supervisorAuthor")
-    private List<Announcement> announcements = new ArrayList<>();
+    private final List<Announcement> announcements = new ArrayList<>();
 
     // Relation with Events
     @OneToMany(mappedBy = "supervisor")
-    private List<Event> events = new ArrayList<>();
+    private final List<Event> events = new ArrayList<>();
 
     public Supervisor() {
     }
@@ -131,6 +131,7 @@ public class Supervisor extends Doctor {
         announcement.setSupervisorAuthor(this);
     }
 
+    @Override
     public void addEvent(Event event) {
         this.events.add(event);
         event.setSupervisor(this);

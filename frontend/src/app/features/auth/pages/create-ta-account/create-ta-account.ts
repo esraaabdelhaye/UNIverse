@@ -1,11 +1,10 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-create-ta-account',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './create-ta-account.html',
   styleUrls: ['./create-ta-account.css']
 })

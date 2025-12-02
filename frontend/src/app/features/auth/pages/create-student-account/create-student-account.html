@@ -58,32 +58,33 @@
               </div>
             </div>
 
-            <form class="registration-form">
+            <form class="registration-form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
               <!-- Step 1: Personal Information -->
               <div class="form-step active" id="step-1">
                 <h2 class="step-title">Personal Information</h2>
                 <div class="form-fields">
                   <div class="form-group">
                     <label for="full-name">Full Name<span class="required">*</span></label>
-                    <input type="text" id="full-name" placeholder="e.g. Jane Doe" required />
+                    <input type="text" id="full-name" placeholder="e.g. Jane Doe" formControlName="fullName" />
                   </div>
                   <div class="form-group">
                     <label for="student-email">Student Email<span class="required">*</span></label>
-                    <input type="email" id="student-email" placeholder="jane.doe@university.edu" required />
+                    <input type="email" id="student-email" placeholder="jane.doe@university.edu"
+                      formControlName="email" />
                   </div>
                   <div class="form-row">
                     <div class="form-group">
                       <label for="student-id">Student ID<span class="required">*</span></label>
-                      <input type="text" id="student-id" placeholder="202412345" required />
+                      <input type="text" id="student-id" placeholder="202412345" formControlName="academicId" />
                     </div>
                     <div class="form-group">
                       <label for="dob">Date of Birth</label>
-                      <input type="date" id="dob" />
+                      <input type="date" id="dob" formControlName="dob" />
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="phone-number">Phone Number</label>
-                    <input type="tel" id="phone-number" placeholder="(123) 456-7890" />
+                    <input type="tel" id="phone-number" placeholder="(123) 456-7890" formControlName="phoneNumber" />
                   </div>
                 </div>
               </div>
@@ -94,7 +95,7 @@
                 <div class="form-fields">
                   <div class="form-group">
                     <label for="program">Program/Major<span class="required">*</span></label>
-                    <select id="program" required>
+                    <select id="program" formControlName="program">
                       <option>Computer Science</option>
                       <option>Electrical Engineering</option>
                       <option>Business Administration</option>
@@ -105,7 +106,7 @@
                   <div class="form-row">
                     <div class="form-group">
                       <label for="year">Year of Study<span class="required">*</span></label>
-                      <select id="year" required>
+                      <select id="year" formControlName="year">
                         <option>Freshman</option>
                         <option>Sophomore</option>
                         <option>Junior</option>
@@ -114,7 +115,7 @@
                     </div>
                     <div class="form-group">
                       <label for="enrollment-date">Enrollment Date<span class="required">*</span></label>
-                      <input type="date" id="enrollment-date" required />
+                      <input type="date" id="enrollment-date" formControlName="enrollmentDate" />
                     </div>
                   </div>
                 </div>
@@ -126,7 +127,7 @@
                 <div class="form-fields">
                   <div class="form-group">
                     <label for="password">Create Password<span class="required">*</span></label>
-                    <input type="password" id="password" required />
+                    <input type="password" id="password" formControlName="password" />
                     <div class="password-strength">
                       <div class="strength-bar">
                         <div class="strength-fill"></div>
@@ -142,7 +143,7 @@
                   </div>
                   <div class="form-group">
                     <label for="confirm-password">Confirm Password<span class="required">*</span></label>
-                    <input type="password" id="confirm-password" required />
+                    <input type="password" id="confirm-password" formControlName="confirmPassword" />
                   </div>
                 </div>
               </div>
@@ -169,10 +170,11 @@
                   </div>
                   <div class="checkbox-group">
                     <div class="checkbox-wrapper">
-                      <input type="checkbox" id="terms" />
+                      <input type="checkbox" id="terms" formControlName="terms" />
                     </div>
                     <div class="checkbox-label">
-                      <label for="terms">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a><span class="required">*</span></label>
+                      <label for="terms">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy
+                          Policy</a><span class="required">*</span></label>
                     </div>
                   </div>
                 </div>

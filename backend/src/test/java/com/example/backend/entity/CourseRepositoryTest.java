@@ -40,7 +40,7 @@ public class CourseRepositoryTest {
         courseRepository.save(course);
 
         assertThat(course.getId()).isNotNull();
-        assertThat(courseRepository.findById(Math.toIntExact(course.getId()))).isPresent();
+        assertThat(courseRepository.findById(course.getId())).isPresent();
     }
 
     @Test

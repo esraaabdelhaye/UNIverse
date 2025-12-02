@@ -8,7 +8,6 @@ import com.example.backend.dto.request.RegisterStudentRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,6 @@ public class StudentService {
     private final CourseEnrollmentRepo enrollmentRepo;
     private final AssignmentSubmissionRepo submissionRepo;
 
-    @Autowired
     public StudentService(
             StudentRepo studentRepo,
             CourseRepo courseRepo,
