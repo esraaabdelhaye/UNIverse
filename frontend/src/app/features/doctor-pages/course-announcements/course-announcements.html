@@ -5,23 +5,24 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="nav-text">Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
         <span class="nav-text">Upload Material</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span class="nav-text">Grade Students</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span class="nav-text">View Submissions</span>
       </a>
-      <a class="nav-item active" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span class="nav-text">Course Announcements</span>
       </a>
@@ -31,7 +32,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span class="nav-text">Settings</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span class="nav-text">Log Out</span>
       </a>
@@ -64,7 +65,7 @@
         <p class="card-subtitle">Draft and schedule announcements for one or more courses.</p>
         <div class="create-grid">
           <div class="create-main">
-            <input class="form-input" placeholder="Announcement Title" type="text"/>
+            <input class="form-input" placeholder="Announcement Title" type="text" />
             <textarea class="form-textarea" placeholder="Write your announcement here..." rows="4"></textarea>
           </div>
           <div class="create-sidebar">
@@ -73,7 +74,7 @@
               <option>PHIL-301: Existentialism in Film</option>
               <option>HIST-212: Renaissance Art History</option>
             </select>
-            <input class="form-input" type="datetime-local"/>
+            <input class="form-input" type="datetime-local" />
             <div class="button-group">
               <button class="btn btn-schedule">
                 <span class="material-symbols-outlined">schedule</span>
@@ -104,117 +105,117 @@
         <div class="table-wrapper">
           <table class="announcements-table">
             <thead>
-            <tr>
-              <th>Title & Course</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th class="text-right">Actions</th>
-            </tr>
+              <tr>
+                <th>Title & Course</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th class="text-right">Actions</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>
-                <p class="announcement-title">Reminder: Essay 2 deadline</p>
-                <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-              </td>
-              <td>
+              <tr>
+                <td>
+                  <p class="announcement-title">Reminder: Essay 2 deadline</p>
+                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
+                </td>
+                <td>
                   <span class="status-badge status-published">
                     <span class="status-dot"></span> Published
                   </span>
-              </td>
-              <td>Oct 26, 2023</td>
-              <td class="actions-cell">
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p class="announcement-title">New Material Uploaded</p>
-                <p class="announcement-course">HIST-212: Renaissance Art History</p>
-              </td>
-              <td>
+                </td>
+                <td>Oct 26, 2023</td>
+                <td class="actions-cell">
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="announcement-title">New Material Uploaded</p>
+                  <p class="announcement-course">HIST-212: Renaissance Art History</p>
+                </td>
+                <td>
                   <span class="status-badge status-published">
                     <span class="status-dot"></span> Published
                   </span>
-              </td>
-              <td>Oct 25, 2023</td>
-              <td class="actions-cell">
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p class="announcement-title">Mid-term Exam Schedule</p>
-                <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-              </td>
-              <td>
+                </td>
+                <td>Oct 25, 2023</td>
+                <td class="actions-cell">
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="announcement-title">Mid-term Exam Schedule</p>
+                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
+                </td>
+                <td>
                   <span class="status-badge status-scheduled">
                     <span class="status-dot"></span> Scheduled
                   </span>
-              </td>
-              <td>For Oct 30, 2023</td>
-              <td class="actions-cell">
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">visibility</span>
-                </button>
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p class="announcement-title">Office hours update</p>
-                <p class="announcement-course">HIST-212: Renaissance Art History</p>
-              </td>
-              <td>
+                </td>
+                <td>For Oct 30, 2023</td>
+                <td class="actions-cell">
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">visibility</span>
+                  </button>
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="announcement-title">Office hours update</p>
+                  <p class="announcement-course">HIST-212: Renaissance Art History</p>
+                </td>
+                <td>
                   <span class="status-badge status-draft">
                     <span class="status-dot"></span> Draft
                   </span>
-              </td>
-              <td>Oct 23, 2023</td>
-              <td class="actions-cell">
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p class="announcement-title">Clarification on Rubric</p>
-                <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-              </td>
-              <td>
+                </td>
+                <td>Oct 23, 2023</td>
+                <td class="actions-cell">
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p class="announcement-title">Clarification on Rubric</p>
+                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
+                </td>
+                <td>
                   <span class="status-badge status-awaiting">
                     <span class="status-dot"></span> Awaiting Approval
                   </span>
-              </td>
-              <td>Oct 20, 2023</td>
-              <td class="actions-cell">
-                <button class="action-btn">
-                  <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="action-btn delete-btn">
-                  <span class="material-symbols-outlined">delete</span>
-                </button>
-              </td>
-            </tr>
+                </td>
+                <td>Oct 20, 2023</td>
+                <td class="actions-cell">
+                  <button class="action-btn">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button class="action-btn delete-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

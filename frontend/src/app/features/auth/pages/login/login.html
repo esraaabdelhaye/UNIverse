@@ -25,39 +25,33 @@
             <form class="login-form">
               <h3 class="role-title">Select your role</h3>
               <div class="role-cards">
-                <label class="role-card role-supervisor" for="supervisor-prof" (click)="selectRole('supervisor-prof')">
-                  <input
-                    type="radio"
-                    id="supervisor-prof"
-                    name="role"
-                    value="supervisor-prof"
-                    checked
-                  />
+                <label class="role-card role-supervisor" for="supervisor" (click)="selectRole('supervisor')">
+                  <input type="radio" id="supervisor" name="role" value="supervisor" [checked]="selectedRole === 'supervisor'" />
                   <div class="role-icon supervisor-icon">
                     <span class="material-symbols-outlined">shield_person</span>
                   </div>
                   <div class="role-text">
-                    <p class="role-name">SUPERVISORS & PROFESSORS</p>
-                    <p class="role-desc">Admin & Teaching Staff</p>
+                    <p class="role-name">Supervisor</p>
+                    <p class="role-desc">Supervisor</p>
                   </div>
                 </label>
-                <label class="role-card role-staff" for="ta" (click)="selectRole('ta')">
-                  <input type="radio" id="ta" name="role" value="ta" />
+                <label class="role-card role-staff" for="staff" (click)="selectRole('staff')">
+                  <input type="radio" id="staff" name="role" value="staff" [checked]="selectedRole === 'staff'" />
                   <div class="role-icon staff-icon">
-                    <span class="material-symbols-outlined">group</span>
+                    <span class="material-symbols-outlined">groups</span>
                   </div>
                   <div class="role-text">
-                    <p class="role-name">TEACHING ASSISTANTS</p>
-                    <p class="role-desc">TAs & Lab Instructors</p>
+                    <p class="role-name">Staff</p>
+                    <p class="role-desc">Doctors & TAs</p>
                   </div>
                 </label>
                 <label class="role-card role-student" for="student" (click)="selectRole('student')">
-                  <input type="radio" id="student" name="role" value="student" />
+                  <input type="radio" id="student" name="role" value="student" [checked]="selectedRole === 'student'" />
                   <div class="role-icon student-icon">
                     <span class="material-symbols-outlined">backpack</span>
                   </div>
                   <div class="role-text">
-                    <p class="role-name">STUDENTS</p>
+                    <p class="role-name">Students</p>
                     <p class="role-desc">Students & Representatives</p>
                   </div>
                 </label>
@@ -70,21 +64,26 @@
                     id="email"
                     name="email"
                     placeholder="Enter your email or ID"
+                    [(ngModel)]="email"
                   />
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
                   <div class="password-wrapper">
                     <input
-                      type="password"
+                      [type]="showPassword ? 'text' : 'password'"
                       id="password"
                       name="password"
                       placeholder="Enter your password"
+                      [(ngModel)]="password"
                     />
-                    <button type="button" class="toggle-password">
-                      <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                    <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                      <span class="material-symbols-outlined">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
                     </button>
                   </div>
+                </div>
+                <div class="error-message" *ngIf="errorMessage" style="color: red; margin-bottom: 10px;">
+                  {{ errorMessage }}
                 </div>
                 <div class="form-options">
                   <div class="remember-me">
@@ -102,7 +101,7 @@
             </div>
             <p class="signup-text">
               Don't have an account?
-              <a routerLink="choose-account" href="javascript:void(0)">Sign Up</a>
+              <a href="javascript:void(0)" (click)="SignUpClicked()">Sign Up</a>
             </p>
           </div>
         </div>

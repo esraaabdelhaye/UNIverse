@@ -5,33 +5,33 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link active" href="#">
+      <a class="nav-link active" routerLink="/ta-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">upload_file</span>
-        <span>Upload Materials</span>
-      </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">edit_square</span>
-        <span>Add Grades</span>
-      </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">assignment</span>
+      <a class="nav-link" routerLink="/ta-dashboard/add-assignment" routerLinkActive="active">
+        <span class="material-symbols-outlined">add_circle</span>
         <span>Add Assignment</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">forum</span>
+      <a class="nav-link" routerLink="/ta-dashboard/add-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>Add Grades</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/answer-questions" routerLinkActive="active">
+        <span class="material-symbols-outlined">question_answer</span>
         <span>Answer Questions</span>
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" routerLink="/ta-dashboard/manage-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span>Manage Announcements</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">calendar_month</span>
+      <a class="nav-link" routerLink="/ta-dashboard/schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">schedule</span>
         <span>Schedule</span>
+      </a>
+      <a class="nav-link" routerLink="/ta-dashboard/upload-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span>Upload Materials</span>
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -39,7 +39,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span>Settings</span>
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span>Logout</span>
       </a>

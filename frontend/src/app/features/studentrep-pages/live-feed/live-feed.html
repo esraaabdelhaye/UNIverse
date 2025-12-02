@@ -6,25 +6,30 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" href="#">
+      <a class="nav-link active" routerLink="/student-dashboard" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
-        <span class="nav-text">Dashboard</span>
+        <span>Dashboard</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">group</span>
-        <span class="nav-text">Manage Student Groups</span>
+      <a class="nav-link" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
+        <span>My Courses</span>
       </a>
-      <a class="nav-link active" href="#">
-        <span class="material-symbols-outlined">campaign</span>
-        <span class="nav-text">Live Feed</span>
+      <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Submit Assignments</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">poll</span>
-        <span class="nav-text">Polls / Voting</span>
+      <a class="nav-link" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
       </a>
-      <a class="nav-link" href="#">
-        <span class="material-symbols-outlined">event</span>
-        <span class="nav-text">Events</span>
+      <a class="nav-link" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>View Schedule</span>
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -32,7 +37,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span class="nav-text">Settings</span>
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span class="nav-text">Logout</span>
       </a>
@@ -47,7 +52,9 @@
         <button class="notification-btn">
           <span class="material-symbols-outlined">notifications</span>
         </button>
-        <div class="profile-image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+        <div class="profile-image"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'>
+        </div>
         <div>
           <p class="profile-name">Alex Chen</p>
           <p class="profile-role">Class Representative</p>
@@ -70,9 +77,12 @@
             <div class="create-post-card">
               <h3 class="card-title">Create New Post</h3>
               <div class="post-creator">
-                <div class="creator-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'></div>
+                <div class="creator-avatar"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'>
+                </div>
                 <div class="creator-input-wrapper">
-                  <textarea class="post-textarea" rows="4" placeholder="Share an update, question, or idea with your community..."></textarea>
+                  <textarea class="post-textarea" rows="4"
+                    placeholder="Share an update, question, or idea with your community..."></textarea>
                   <div class="post-actions">
                     <div class="post-tools">
                       <button class="tool-btn">
@@ -95,7 +105,9 @@
             <div class="post-card pinned-post">
               <div class="post-header">
                 <div class="post-author">
-                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+                  <div class="author-avatar"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'>
+                  </div>
                   <div>
                     <div class="author-info">
                       <p class="author-name">Alex Chen</p>
@@ -111,9 +123,11 @@
               </div>
               <p class="post-content">
                 📢 <strong>Important Announcement: Upcoming Study Session!</strong> 📢
-                <br/><br/>
-                Hey everyone! Just a reminder that our pre-exam study session for "Advanced Algorithms" is scheduled for this Friday at 3 PM in Library Room 301. We'll be going over key concepts and doing some practice problems. Snacks and coffee will be provided! Don't miss out!
-                <br/><br/>
+                <br /><br />
+                Hey everyone! Just a reminder that our pre-exam study session for "Advanced Algorithms" is scheduled for
+                this Friday at 3 PM in Library Room 301. We'll be going over key concepts and doing some practice
+                problems. Snacks and coffee will be provided! Don't miss out!
+                <br /><br />
                 <span class="post-hashtags">#StudyHard #Algorithms #ExamPrep</span>
               </p>
               <div class="post-engagement">
@@ -136,7 +150,9 @@
             <div class="post-card">
               <div class="post-header">
                 <div class="post-author">
-                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'></div>
+                  <div class="author-avatar"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyb7hvwZZpqoF1KcS28ZKD-uoI_nK7_6_iyMos2M2ECg5k1GaYyFqENSDeH-U0WftiKhbn59TmF61z3Cthxv6_axbZhMkXAHZ5LmZlI6pKaJTAFApbRrfGMoolSdu_twK3TH8EXsxT-XsXpFQE8hOC43Thr_OkfANTN2LEYdqeWAocIGZk2B6Ep_vxdsqADBEHt3_8Ezyiqz9K7T9KunNSbNJ_LA_-YGbl1cBvZ7pkL85qDVNK5uHbRNoQmO2GdhLOHOTtPFnRE_o");'>
+                  </div>
                   <div>
                     <div class="author-info">
                       <p class="author-name">Sarah Jenkins</p>
@@ -190,15 +206,19 @@
             <div class="post-card">
               <div class="post-header">
                 <div class="post-author">
-                  <div class="author-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'></div>
+                  <div class="author-avatar"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFnl-J8AEEgeLy5bhXr3Q5zxW3NjkL182GtV6M-HiXIx1L73tyfgvBjdo-unfVXtoO63atgOrcr9svR1o7qENkr6Hrw_A8oVrIC8InoC3dQwkiO2INNmMOEoWGW_Dax6BBf_m0EJntX4RZmcWQCoiTEzskPvaG-6VHLSLA3buikFonlDanaYTlc-ANOXxypEvXIrbIQXhX726AB7fjnXwMtaAm_8K4D9IAWlm207SiqfLwVDkwNBjx_BWkKKwrZUOttk8fstbeJlU");'>
+                  </div>
                   <div>
                     <p class="author-name">AI & Robotics Club</p>
                     <p class="post-time">Yesterday at 5:30 PM</p>
                   </div>
                 </div>
               </div>
-              <p class="post-content">Our new drone just arrived! 🚀 Huge thanks to the student council for approving the budget. We'll be doing a live demo next week. Stay tuned for details!</p>
-              <img alt="New club drone" class="post-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuwzp7f2n6D4uIqEG6D_PC3Y_ojaoCfR3FzDvjzfAZq6r2aIfBMi2nK-xVQ_hJ_7xYbbrU9a-sF4wUdF6QhdGvzrgwKyvX42tdtDEkah5ek8eQGFa8fIQJLp_FpV639yjrcQTiLmWM_ZoITnHnjlUaNG9Bp6pCXK8GDNTAzUQdTCED_ogIm0N-KwndLSFqms_AoDmtwqUu9Y0Yr3g-NelVIyhz6r_2VRpjCA51epreRBMYhCnSt_bVynCx8ZKXHgl-RJPEOc3nyvg"/>
+              <p class="post-content">Our new drone just arrived! 🚀 Huge thanks to the student council for approving
+                the budget. We'll be doing a live demo next week. Stay tuned for details!</p>
+              <img alt="New club drone" class="post-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuwzp7f2n6D4uIqEG6D_PC3Y_ojaoCfR3FzDvjzfAZq6r2aIfBMi2nK-xVQ_hJ_7xYbbrU9a-sF4wUdF6QhdGvzrgwKyvX42tdtDEkah5ek8eQGFa8fIQJLp_FpV639yjrcQTiLmWM_ZoITnHnjlUaNG9Bp6pCXK8GDNTAzUQdTCED_ogIm0N-KwndLSFqms_AoDmtwqUu9Y0Yr3g-NelVIyhz6r_2VRpjCA51epreRBMYhCnSt_bVynCx8ZKXHgl-RJPEOc3nyvg" />
               <div class="post-engagement">
                 <button class="engagement-btn">
                   <span class="material-symbols-outlined">favorite</span>

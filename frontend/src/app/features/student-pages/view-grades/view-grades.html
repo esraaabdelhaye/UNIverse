@@ -6,29 +6,29 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item active" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">school</span>
+      <a class="nav-item" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">assignment</span>
+      <a class="nav-item" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
-      <a class="nav-item active" href="#">
+      <a class="nav-item" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
-      </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
+      </a>
+      <a class="nav-item" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>View Schedule</span>
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -36,7 +36,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span>Settings</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span>Logout</span>
       </a>

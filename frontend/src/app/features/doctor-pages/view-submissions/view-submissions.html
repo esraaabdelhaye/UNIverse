@@ -5,23 +5,24 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="nav-text">Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
         <span class="nav-text">Upload Material</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span class="nav-text">Grade Students</span>
       </a>
-      <a class="nav-item active" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span class="nav-text">View Submissions</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span class="nav-text">Course Announcements</span>
       </a>
@@ -31,7 +32,7 @@
         <span class="material-symbols-outlined">settings</span>
         <span class="nav-text">Settings</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span class="nav-text">Log Out</span>
       </a>
@@ -74,7 +75,7 @@
             <label class="form-label" for="student-search">Search Student</label>
             <div class="search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" id="student-search" placeholder="Filter by student name..." type="text"/>
+              <input class="search-input" id="student-search" placeholder="Filter by student name..." type="text" />
             </div>
           </div>
         </div>
@@ -84,94 +85,99 @@
         <div class="table-wrapper">
           <table class="submissions-table">
             <thead>
-            <tr>
-              <th>Student Name</th>
-              <th>Submission Date</th>
-              <th>Status</th>
-              <th class="text-right">Actions</th>
-            </tr>
+              <tr>
+                <th>Student Name</th>
+                <th>Submission Date</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td class="student-cell">
-                <img alt="Student avatar" class="student-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns"/>
-                <p class="student-name">Benjamin Carter</p>
-              </td>
-              <td>Oct 28, 2023, 10:15 PM</td>
-              <td><span class="badge badge-submitted">Submitted</span></td>
-              <td class="actions-cell">
-                <a class="link-action" href="#">
-                  <span class="material-symbols-outlined">visibility</span> View Details
-                </a>
-                <a class="btn-grade" href="#">
-                  <span class="material-symbols-outlined">edit_note</span> Grade
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="student-cell">
-                <img alt="Student avatar" class="student-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWMEd8T8ykVwkpc8LMWHERxrbmLgtHYHzPi9mfj4zDK0kCZGCdG1Pz7CiS0N4I1XmkdmwbgKouM1w6DgWOJh6HaixKJeQ5M4cJHEt3E_LYgtB_2LkHiT20JznbWLh52U8ERBiCIYNAWasWdNuSbtXJdNqBS0wR9TH__QrJPzifNC_VbcVcC0MQUzCWxfgJVcYW_RGzZsjD8h5-KZuFHnAzTi2gEiMkaffctcfZc_x34EfzCjruEcXQo1l0tkafJydm5Rt72nc_GZE"/>
-                <p class="student-name">Olivia Chen</p>
-              </td>
-              <td>Oct 26, 2023, 8:45 PM</td>
-              <td><span class="badge badge-graded">Graded</span></td>
-              <td class="actions-cell">
-                <a class="link-action" href="#">
-                  <span class="material-symbols-outlined">visibility</span> View Details
-                </a>
-                <a class="btn-grade" href="#">
-                  <span class="material-symbols-outlined">edit_note</span> Re-Grade
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="student-cell">
-                <img alt="Student avatar" class="student-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns"/>
-                <p class="student-name">Ava Miller</p>
-              </td>
-              <td>Oct 29, 2023, 01:20 AM</td>
-              <td><span class="badge badge-late">Late</span></td>
-              <td class="actions-cell">
-                <a class="link-action" href="#">
-                  <span class="material-symbols-outlined">visibility</span> View Details
-                </a>
-                <a class="btn-grade" href="#">
-                  <span class="material-symbols-outlined">edit_note</span> Grade
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="student-cell">
-                <img alt="Student avatar" class="student-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwltps4vbrR-atwCewjUWRbUo9ZYMjbQIqws3ih3MbJEKxAGZ76l_GvunLIbipxCeuXJNtPswP264EW8VsZ97H4IIAe5JNEBNeZrxyCanWsMFwRGWbdQf3SVWB0gyV4ZDVuD7-5NyYkmS1I7e7ujSR2LdGebVihOQ-FsMnBmLeNXOCOroC3WaaFONv3opZaoI6gDTfryAXL5gXhAd9QQeKxPx7Aidi_-UiVAVcjAXLjsVE4nWr5LH2AvG_ZTlqkNv-u1VbiTVgnE0"/>
-                <p class="student-name">Sophia Rodriguez</p>
-              </td>
-              <td>Oct 27, 2023, 11:58 PM</td>
-              <td><span class="badge badge-submitted">Submitted</span></td>
-              <td class="actions-cell">
-                <a class="link-action" href="#">
-                  <span class="material-symbols-outlined">visibility</span> View Details
-                </a>
-                <a class="btn-grade" href="#">
-                  <span class="material-symbols-outlined">edit_note</span> Grade
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td class="student-cell">
-                <img alt="Student avatar" class="student-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV6yzVMteJS19ASG4J_DtwKeoUipNtzeUJJoy9f82rYawxYRCFED9qluR8d5SH_0IQJYBtCh91baJKiE2Na_gzsNwI9DL2E8CvreIDXOI-0PvWzvzjk99Ur66oURBzFZXA1KQqpmxo5l-rnQGQiRTw4IhVR-vcCGGz8LRnBkMmSxHkb6upasXrZgS15DAxfVjeXnafglVN8FnsT2YHqKJApl_wM16K4HoG8zUOJnxLsNHlEUvsxpn8gAwIGqMcHHD4wka4EDh7QUI"/>
-                <p class="student-name">Liam Goldberg</p>
-              </td>
-              <td>Oct 25, 2023, 09:00 AM</td>
-              <td><span class="badge badge-graded">Graded</span></td>
-              <td class="actions-cell">
-                <a class="link-action" href="#">
-                  <span class="material-symbols-outlined">visibility</span> View Details
-                </a>
-                <a class="btn-grade" href="#">
-                  <span class="material-symbols-outlined">edit_note</span> Re-Grade
-                </a>
-              </td>
-            </tr>
+              <tr>
+                <td class="student-cell">
+                  <img alt="Student avatar" class="student-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns" />
+                  <p class="student-name">Benjamin Carter</p>
+                </td>
+                <td>Oct 28, 2023, 10:15 PM</td>
+                <td><span class="badge badge-submitted">Submitted</span></td>
+                <td class="actions-cell">
+                  <a class="link-action" href="#">
+                    <span class="material-symbols-outlined">visibility</span> View Details
+                  </a>
+                  <a class="btn-grade" href="#">
+                    <span class="material-symbols-outlined">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="student-cell">
+                  <img alt="Student avatar" class="student-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWMEd8T8ykVwkpc8LMWHERxrbmLgtHYHzPi9mfj4zDK0kCZGCdG1Pz7CiS0N4I1XmkdmwbgKouM1w6DgWOJh6HaixKJeQ5M4cJHEt3E_LYgtB_2LkHiT20JznbWLh52U8ERBiCIYNAWasWdNuSbtXJdNqBS0wR9TH__QrJPzifNC_VbcVcC0MQUzCWxfgJVcYW_RGzZsjD8h5-KZuFHnAzTi2gEiMkaffctcfZc_x34EfzCjruEcXQo1l0tkafJydm5Rt72nc_GZE" />
+                  <p class="student-name">Olivia Chen</p>
+                </td>
+                <td>Oct 26, 2023, 8:45 PM</td>
+                <td><span class="badge badge-graded">Graded</span></td>
+                <td class="actions-cell">
+                  <a class="link-action" href="#">
+                    <span class="material-symbols-outlined">visibility</span> View Details
+                  </a>
+                  <a class="btn-grade" href="#">
+                    <span class="material-symbols-outlined">edit_note</span> Re-Grade
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="student-cell">
+                  <img alt="Student avatar" class="student-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAJiu44JcYXgI90ZwKVFShkRo1DTXKY6-B4TNMvgT1UbeEabzLmY9jhhBe_wMqJ8kEG9CEAptgRO9s6eX9S8aj72mvlNOFw-KevCz5HSvjNkDAQdWPWBmQPhreeMJ03MJN46eXqtkjaP7dB__XPbjC534lSVMiKkb-3i0126Fa_DE-IOdZfnSbid257KbiEaHypHhdGxc4he5fgb4CAGetRn6x1mi15Po5-ZDJilUe0bTeT6Io3K5LWc78P1Y3NQ7r-hNLmAI4ns" />
+                  <p class="student-name">Ava Miller</p>
+                </td>
+                <td>Oct 29, 2023, 01:20 AM</td>
+                <td><span class="badge badge-late">Late</span></td>
+                <td class="actions-cell">
+                  <a class="link-action" href="#">
+                    <span class="material-symbols-outlined">visibility</span> View Details
+                  </a>
+                  <a class="btn-grade" href="#">
+                    <span class="material-symbols-outlined">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="student-cell">
+                  <img alt="Student avatar" class="student-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwltps4vbrR-atwCewjUWRbUo9ZYMjbQIqws3ih3MbJEKxAGZ76l_GvunLIbipxCeuXJNtPswP264EW8VsZ97H4IIAe5JNEBNeZrxyCanWsMFwRGWbdQf3SVWB0gyV4ZDVuD7-5NyYkmS1I7e7ujSR2LdGebVihOQ-FsMnBmLeNXOCOroC3WaaFONv3opZaoI6gDTfryAXL5gXhAd9QQeKxPx7Aidi_-UiVAVcjAXLjsVE4nWr5LH2AvG_ZTlqkNv-u1VbiTVgnE0" />
+                  <p class="student-name">Sophia Rodriguez</p>
+                </td>
+                <td>Oct 27, 2023, 11:58 PM</td>
+                <td><span class="badge badge-submitted">Submitted</span></td>
+                <td class="actions-cell">
+                  <a class="link-action" href="#">
+                    <span class="material-symbols-outlined">visibility</span> View Details
+                  </a>
+                  <a class="btn-grade" href="#">
+                    <span class="material-symbols-outlined">edit_note</span> Grade
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td class="student-cell">
+                  <img alt="Student avatar" class="student-avatar"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV6yzVMteJS19ASG4J_DtwKeoUipNtzeUJJoy9f82rYawxYRCFED9qluR8d5SH_0IQJYBtCh91baJKiE2Na_gzsNwI9DL2E8CvreIDXOI-0PvWzvzjk99Ur66oURBzFZXA1KQqpmxo5l-rnQGQiRTw4IhVR-vcCGGz8LRnBkMmSxHkb6upasXrZgS15DAxfVjeXnafglVN8FnsT2YHqKJApl_wM16K4HoG8zUOJnxLsNHlEUvsxpn8gAwIGqMcHHD4wka4EDh7QUI" />
+                  <p class="student-name">Liam Goldberg</p>
+                </td>
+                <td>Oct 25, 2023, 09:00 AM</td>
+                <td><span class="badge badge-graded">Graded</span></td>
+                <td class="actions-cell">
+                  <a class="link-action" href="#">
+                    <span class="material-symbols-outlined">visibility</span> View Details
+                  </a>
+                  <a class="btn-grade" href="#">
+                    <span class="material-symbols-outlined">edit_note</span> Re-Grade
+                  </a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

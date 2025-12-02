@@ -41,7 +41,7 @@ public class StudentRepositoryTest {
         studentRepository.save(student);
 
         assertThat(student.getId()).isNotNull();
-        assertThat(studentRepository.findById((int) student.getId())).isPresent();
+        assertThat(studentRepository.findById(student.getId())).isPresent();
     }
 
     @Test

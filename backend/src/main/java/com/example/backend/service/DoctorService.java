@@ -1,75 +1,230 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.request.CreateAnnouncementRequest;
-import com.example.backend.dto.request.CreatePollRequest;
-import com.example.backend.dto.request.CreatePostRequest;
+import com.example.backend.dto.DoctorDTO;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class DoctorService {
+
     private final DoctorRepo doctorRepo;
-    private final AnnouncementRepo announcementRepo;
     private final CourseRepo courseRepo;
-    private final PostRepo postRepo;
-    private final PollRepo pollRepo;
 
-    public DoctorService(DoctorRepo doctorRepo, AnnouncementRepo announcementRepo, CourseRepo courseRepo, PostRepo postRepo, PollRepo pollRepo) {
+    public DoctorService(
+            DoctorRepo doctorRepo,
+            CourseRepo courseRepo
+    ) {
         this.doctorRepo = doctorRepo;
-        this.announcementRepo = announcementRepo;
         this.courseRepo = courseRepo;
-        this.postRepo = postRepo;
-        this.pollRepo = pollRepo;
     }
 
-    public Announcement createAnnouncement(Doctor doctor, CreateAnnouncementRequest request) {
-        Course course = courseRepo.findByCourseCode(request.getCourseCode())
-                .orElseThrow(() -> new IllegalArgumentException("Course not found: " + request.getCourseCode()));
+    // Get all doctors
+    public ApiResponse<Page<DoctorDTO>> getAllDoctors(Pageable pageable) {
+        try {
+            Page<Doctor> doctors = doctorRepo.findAll(pageable);
+            Page<DoctorDTO> doctorDTOs = doctors.map(this::convertToDTO);
 
-        Announcement announcement = new Announcement();
-        announcement.setCourse(course);
-        announcement.setTitle(request.getTitle());
-        announcement.setContent(request.getContent());
-        announcement.setCreatedAt(request.getPublishDate());
-        announcement.setVisibility(request.getVisibility());
-        announcement.setAttachments(List.of(request.getAttachments()));
-        announcement.setDoctorAuthor(doctor); // Author is now doctor
-        return announcementRepo.save(announcement);
+            return ApiResponse.success(doctorDTOs);
 
-    }
-
-    public Poll createPoll(Doctor doctor, CreatePollRequest request) {
-        Poll poll = new Poll();
-        poll.setTitle(request.getPollQuestion());
-        poll.setStartTime(LocalDateTime.now());
-        poll.setEndTime(request.getEndDate());
-        poll.setDoctorCreator(doctor);
-
-        if (request.getOptions() != null) {
-            for (String optionText : request.getOptions()) {
-                PollOption option = new PollOption();
-                option.setText(optionText);
-                option.setVoteCount(0);
-                poll.addOption(option);
-            }
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching doctors: " + e.getMessage());
         }
-
-        return pollRepo.save(poll);
     }
 
-    public Post createPost(Doctor doctor, CreatePostRequest request) {
-        Post post = new Post();
-        post.setTitle(request.getPostContent().length() > 50
-                ? request.getPostContent().substring(0, 50)
-                : request.getPostContent());
-        post.setContent(request.getPostContent());
-        post.setStatus(request.getPostType());
-        LocalDateTime now = LocalDateTime.now();
-        post.setCreatedAt(now);
-        post.setUpdatedAt(now);
-        post.addDoctor(doctor);
-        return postRepo.save(post);
+    // Get doctor by ID
+    public ApiResponse<DoctorDTO> getDoctorById(Long id) {
+        try {
+            Optional<Doctor> doctorOpt = doctorRepo.findById(id);
+
+            if (doctorOpt.isEmpty()) {
+                return ApiResponse.notFound("Doctor not found with ID: " + id);
+            }
+
+            DoctorDTO dto = convertToDTO(doctorOpt.get());
+            return ApiResponse.success(dto);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching doctor: " + e.getMessage());
+        }
+    }
+
+    // Get doctor by email
+    public ApiResponse<DoctorDTO> getDoctorByEmail(String email) {
+        try {
+            Optional<Doctor> doctorOpt = doctorRepo.findByEmail(email);
+
+            if (doctorOpt.isEmpty()) {
+                return ApiResponse.notFound("Doctor not found with email: " + email);
+            }
+
+            DoctorDTO dto = convertToDTO(doctorOpt.get());
+            return ApiResponse.success(dto);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching doctor: " + e.getMessage());
+        }
+    }
+
+    // Register new doctor
+    public ApiResponse<DoctorDTO> registerDoctor(DoctorDTO request) {
+        try {
+            if (doctorRepo.findByEmail(request.getEmail()).isPresent()) {
+                return ApiResponse.conflict("Doctor with this email already exists");
+            }
+
+            Doctor doctor = new Doctor();
+            doctor.setName(request.getFullName());
+            doctor.setEmail(request.getEmail());
+            doctor.setPhoneNumber(request.getPhoneNumber());
+            doctor.setOfficeLocation(request.getOfficeLocation());
+            doctor.setTitle(request.getSpecialization());
+            doctor.setExpertise(request.getQualifications());
+
+            Doctor savedDoctor = doctorRepo.save(doctor);
+
+            return ApiResponse.created("Doctor registered successfully", convertToDTO(savedDoctor));
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error registering doctor: " + e.getMessage());
+        }
+    }
+
+    // Update doctor
+    public ApiResponse<DoctorDTO> updateDoctor(Long id, DoctorDTO doctorDTO) {
+        try {
+            Optional<Doctor> doctorOpt = doctorRepo.findById(id);
+
+            if (doctorOpt.isEmpty()) {
+                return ApiResponse.notFound("Doctor not found with ID: " + id);
+            }
+
+            Doctor doctor = doctorOpt.get();
+
+            if (doctorDTO.getFullName() != null) {
+                doctor.setName(doctorDTO.getFullName());
+            }
+            if (doctorDTO.getEmail() != null) {
+                doctor.setEmail(doctorDTO.getEmail());
+            }
+            if (doctorDTO.getPhoneNumber() != null) {
+                doctor.setPhoneNumber(doctorDTO.getPhoneNumber());
+            }
+            if (doctorDTO.getOfficeLocation() != null) {
+                doctor.setOfficeLocation(doctorDTO.getOfficeLocation());
+            }
+            if (doctorDTO.getSpecialization() != null) {
+                doctor.setTitle(doctorDTO.getSpecialization());
+            }
+
+            Doctor updatedDoctor = doctorRepo.save(doctor);
+            DoctorDTO dto = convertToDTO(updatedDoctor);
+
+            return ApiResponse.success("Doctor updated successfully", dto);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error updating doctor: " + e.getMessage());
+        }
+    }
+
+    // Delete doctor
+    public ApiResponse<Void> deleteDoctor(Long id) {
+        try {
+            if (!doctorRepo.existsById(id)) {
+                return ApiResponse.notFound("Doctor not found with ID: " + id);
+            }
+
+            doctorRepo.deleteById(id);
+            return ApiResponse.success("Doctor deleted successfully", null);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error deleting doctor: " + e.getMessage());
+        }
+    }
+
+    // Get doctor's courses
+    public ApiResponse<List<CourseDTO>> getDoctorCourses(Long doctorId) {
+        try {
+            Optional<Doctor> doctorOpt = doctorRepo.findById(doctorId);
+
+            if (doctorOpt.isEmpty()) {
+                return ApiResponse.notFound("Doctor not found");
+            }
+
+            List<CourseDTO> courseDTOs = doctorOpt.get().getCourses().stream()
+                    .map(this::convertCourseToDTO)
+                    .collect(Collectors.toList());
+
+            return ApiResponse.success(courseDTOs);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching doctor courses: " + e.getMessage());
+        }
+    }
+
+    // Assign course to doctor
+    public ApiResponse<String> assignCourseToDOctor(Long doctorId, Long courseId) {
+        try {
+            Optional<Doctor> doctorOpt = doctorRepo.findById(doctorId);
+            Optional<Course> courseOpt = courseRepo.findById(courseId);
+
+            if (doctorOpt.isEmpty()) {
+                return ApiResponse.notFound("Doctor not found");
+            }
+            if (courseOpt.isEmpty()) {
+                return ApiResponse.notFound("Course not found");
+            }
+
+            Doctor doctor = doctorOpt.get();
+            Course course = courseOpt.get();
+
+            doctor.addCourse(course);
+            doctorRepo.save(doctor);
+
+            return ApiResponse.success("Course assigned to doctor successfully", null);
+
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error assigning course: " + e.getMessage());
+        }
+    }
+
+    // Helper methods
+    private DoctorDTO convertToDTO(Doctor doctor) {
+        DoctorDTO dto = new DoctorDTO();
+        dto.setDoctorId(String.valueOf(doctor.getId()));
+        dto.setFullName(doctor.getName());
+        dto.setEmail(doctor.getEmail());
+        dto.setPhoneNumber(doctor.getPhoneNumber());
+        dto.setSpecialization(doctor.getTitle());
+        dto.setOfficeLocation(doctor.getOfficeLocation());
+        dto.setQualifications(doctor.getExpertise());
+        dto.setAvailableForConsultation(true);
+        return dto;
+    }
+
+    private CourseDTO convertCourseToDTO(Course course) {
+        CourseDTO dto = new CourseDTO();
+        dto.setCourseCode(course.getCourseCode());
+        dto.setCourseTitle(course.getName());
+        dto.setDescription(course.getDescription());
+        dto.setCapacity(course.getEnrollments().size());
+        dto.setEnrolled(course.getEnrollments().size());
+        dto.setCredits(course.getCredits());
+        dto.setSemester(course.getSemester());
+        if (course.getDepartment() != null) {
+            dto.setDepartment(course.getDepartment().getName());
+        }
+        return dto;
     }
 }

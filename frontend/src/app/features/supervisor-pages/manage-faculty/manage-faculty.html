@@ -5,15 +5,32 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
-      <a class="nav-link active" href="#"><span class="material-symbols-outlined">group</span><span>Manage Faculty</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">event_available</span><span>Course Availability</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">calendar_month</span><span>Generate Timetable</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">trending_up</span><span>Review Performance</span></a>
+      <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/course-availability" routerLinkActive="active">
+        <span class="material-symbols-outlined">event_available</span>
+        <span>Course Availability</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/generate-timetable" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>Generate Timetable</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/manage-faculty" routerLinkActive="active">
+        <span class="material-symbols-outlined">groups</span>
+        <span>Manage Faculty</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/review-performance" routerLinkActive="active">
+        <span class="material-symbols-outlined">assessment</span>
+        <span>Review Performance</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
       <a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span
+          class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -23,7 +40,9 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'></div>
+        <div class="user-avatar"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
+        </div>
         <div class="user-info">
           <p class="user-name">Alex Hartman</p>
           <p class="user-role">Supervisor</p>
@@ -36,7 +55,7 @@
           <div class="toolbar">
             <div class="search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" placeholder="Search by name or ID..." type="text"/>
+              <input class="search-input" placeholder="Search by name or ID..." type="text" />
             </div>
             <div class="filters">
               <select class="filter-select">
@@ -61,122 +80,132 @@
           <div class="table-wrapper">
             <table class="data-table">
               <thead>
-              <tr>
-                <th>Name</th>
-                <th>Employee ID</th>
-                <th>Department</th>
-                <th>Position</th>
-                <th>Courses</th>
-                <th>Status</th>
-                <th class="text-center">Actions</th>
-              </tr>
+                <tr>
+                  <th>Name</th>
+                  <th>Employee ID</th>
+                  <th>Department</th>
+                  <th>Position</th>
+                  <th>Courses</th>
+                  <th>Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjNVIwYogETpglvkEd7kd4IK1K9-HPRNlkOroRXJaVZAv_Oxkr_flu4Oukr96laOwcdk0IardreU7Nw0DRGA4hyFZqrw2oklKovs9QaMzczv58zvToVUEkJR-BLly6VCWvf6XdifTblP-cki6h9MeI4IhtaKAapwoUL2mg4XHPX8L8OOrpKpUz_Rui88Te6_WWBWKph57tSD8S80N27dMPl1XkCzR5QruN3VqnEqVlMTHL-oBBCuyop1DFVx_vXZLpqS21JdDCXhU')"></div>
-                    <div>
-                      <p class="faculty-name">Dr. Jane Smith</p>
-                      <p class="faculty-email">jsmith@universe.edu</p>
+                <tr>
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjNVIwYogETpglvkEd7kd4IK1K9-HPRNlkOroRXJaVZAv_Oxkr_flu4Oukr96laOwcdk0IardreU7Nw0DRGA4hyFZqrw2oklKovs9QaMzczv58zvToVUEkJR-BLly6VCWvf6XdifTblP-cki6h9MeI4IhtaKAapwoUL2mg4XHPX8L8OOrpKpUz_Rui88Te6_WWBWKph57tSD8S80N27dMPl1XkCzR5QruN3VqnEqVlMTHL-oBBCuyop1DFVx_vXZLpqS21JdDCXhU')">
+                      </div>
+                      <div>
+                        <p class="faculty-name">Dr. Jane Smith</p>
+                        <p class="faculty-email">jsmith@universe.edu</p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>EMP45678</td>
-                <td>History</td>
-                <td>Professor</td>
-                <td>3</td>
-                <td><span class="badge green">Active</span></td>
-                <td class="text-center">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3YHbEbU8SfmFn-oiqCV9_9rifN3FvAKK74-w9szwjG03WDWaZxLHLEt5ulxW4Iw6geddE7lDpg_wOUw0ZqPZMC8eFGLDRa5nl6Z8By1PyDy4uW6VtUGsrxQIwn6JHVgczTcJFMVjA13g56JGKU0xnwLHSCCekH3RagiV_GWlkWSSvE8DD86sOKb_Mtgf21I_RFzDelsA-LFCJMvNq0LRhANlqvShCpm3ofkCw66SFJjx0eZB13uoUgPad_7TmrkZ36pL4B8oG_wc')"></div>
-                    <div>
-                      <p class="faculty-name">Dr. Robert Downy</p>
-                      <p class="faculty-email">rdowny@universe.edu</p>
+                  </td>
+                  <td>EMP45678</td>
+                  <td>History</td>
+                  <td>Professor</td>
+                  <td>3</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="text-center">
+                    <button class="action-btn">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3YHbEbU8SfmFn-oiqCV9_9rifN3FvAKK74-w9szwjG03WDWaZxLHLEt5ulxW4Iw6geddE7lDpg_wOUw0ZqPZMC8eFGLDRa5nl6Z8By1PyDy4uW6VtUGsrxQIwn6JHVgczTcJFMVjA13g56JGKU0xnwLHSCCekH3RagiV_GWlkWSSvE8DD86sOKb_Mtgf21I_RFzDelsA-LFCJMvNq0LRhANlqvShCpm3ofkCw66SFJjx0eZB13uoUgPad_7TmrkZ36pL4B8oG_wc')">
+                      </div>
+                      <div>
+                        <p class="faculty-name">Dr. Robert Downy</p>
+                        <p class="faculty-email">rdowny@universe.edu</p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>EMP12345</td>
-                <td>Computer Science</td>
-                <td>Associate Professor</td>
-                <td>4</td>
-                <td><span class="badge green">Active</span></td>
-                <td class="text-center">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQYnUQkkLVgRasdG2jShDmaGSmxmKaZxWaODLOORMmJad27MJI2eznDU_8goc9ENNT07WfQQLhfOoJz78EfsRexVhZVwofkLVthNvUDPsY0UGJ_Zd-sKG0z_Iz30OFTO2tXa6wXGbvyb3U2ow8Vg7BjGLhmB9oJiYNelkDIowVBze473F68tXd1-HcWxcmLPuXt_WyvGEawSh-URY-Mne1RptdSJnibxb6Ke4CYpb73LRtCIKzGQ-nHykjK-vLbNq0TwwEagb7_LQ')"></div>
-                    <div>
-                      <p class="faculty-name">Alice Johnson</p>
-                      <p class="faculty-email">ajohnson@universe.edu</p>
+                  </td>
+                  <td>EMP12345</td>
+                  <td>Computer Science</td>
+                  <td>Associate Professor</td>
+                  <td>4</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="text-center">
+                    <button class="action-btn">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQYnUQkkLVgRasdG2jShDmaGSmxmKaZxWaODLOORMmJad27MJI2eznDU_8goc9ENNT07WfQQLhfOoJz78EfsRexVhZVwofkLVthNvUDPsY0UGJ_Zd-sKG0z_Iz30OFTO2tXa6wXGbvyb3U2ow8Vg7BjGLhmB9oJiYNelkDIowVBze473F68tXd1-HcWxcmLPuXt_WyvGEawSh-URY-Mne1RptdSJnibxb6Ke4CYpb73LRtCIKzGQ-nHykjK-vLbNq0TwwEagb7_LQ')">
+                      </div>
+                      <div>
+                        <p class="faculty-name">Alice Johnson</p>
+                        <p class="faculty-email">ajohnson@universe.edu</p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>EMP91011</td>
-                <td>Mathematics</td>
-                <td>Lecturer</td>
-                <td>2</td>
-                <td><span class="badge red">Inactive</span></td>
-                <td class="text-center">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACKLE-qZUd1bqas4x8BUBex-goyY-X4PVm5dlYvjACscg4DFj3Ads23iuo8vu_XATO-0mx8dydToMsaLhN8nLw6uFGpWaJ5p_HdRc5yZLd8s1OAYIusAMHU42bxp9_TXhCzbVfXxknjVyBDC7Xt38xIUA0H2vYSFIIcbPCkp1-ycTY_Y-ibtHktY9TJS_pdJY37TeStiaLBpaX0EnAIh5MflM7rYZzkrNaP-Z-JzD7ABZO47xpghDCE_PK1Zd2RMapCvVpoLnTTaU')"></div>
-                    <div>
-                      <p class="faculty-name">Michael Chen</p>
-                      <p class="faculty-email">mchen@universe.edu</p>
+                  </td>
+                  <td>EMP91011</td>
+                  <td>Mathematics</td>
+                  <td>Lecturer</td>
+                  <td>2</td>
+                  <td><span class="badge red">Inactive</span></td>
+                  <td class="text-center">
+                    <button class="action-btn">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACKLE-qZUd1bqas4x8BUBex-goyY-X4PVm5dlYvjACscg4DFj3Ads23iuo8vu_XATO-0mx8dydToMsaLhN8nLw6uFGpWaJ5p_HdRc5yZLd8s1OAYIusAMHU42bxp9_TXhCzbVfXxknjVyBDC7Xt38xIUA0H2vYSFIIcbPCkp1-ycTY_Y-ibtHktY9TJS_pdJY37TeStiaLBpaX0EnAIh5MflM7rYZzkrNaP-Z-JzD7ABZO47xpghDCE_PK1Zd2RMapCvVpoLnTTaU')">
+                      </div>
+                      <div>
+                        <p class="faculty-name">Michael Chen</p>
+                        <p class="faculty-email">mchen@universe.edu</p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>EMP12131</td>
-                <td>Computer Science</td>
-                <td>Teaching Assistant</td>
-                <td>5</td>
-                <td><span class="badge green">Active</span></td>
-                <td class="text-center">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3O896A0bUMf3i4mDiLfIQZsbfm1BhFmIKAhLBgtkiKuhVyfZEJat_BAtxOG1OLtN_BiRp65KHrrRnG5S1EvlAoW_Fe6PC2tvV88azn2ARi6YzaKK6D3BX8GmdVzxas10NAatkHJGM4GkaL3x8tBCs-epMKmwMU5xyJAlp6VVby0vK7wNwlI4BP5wpiLWKBY5PW0a1mAEFRphetl3A0Io0alLSWBFfOXqi3p6uCpMENmw_TU3pWqT5PUCAxoY3Iz21Ozb1QOqG9sU')"></div>
-                    <div>
-                      <p class="faculty-name">Dr. Emily White</p>
-                      <p class="faculty-email">ewhite@universe.edu</p>
+                  </td>
+                  <td>EMP12131</td>
+                  <td>Computer Science</td>
+                  <td>Teaching Assistant</td>
+                  <td>5</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="text-center">
+                    <button class="action-btn">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3O896A0bUMf3i4mDiLfIQZsbfm1BhFmIKAhLBgtkiKuhVyfZEJat_BAtxOG1OLtN_BiRp65KHrrRnG5S1EvlAoW_Fe6PC2tvV88azn2ARi6YzaKK6D3BX8GmdVzxas10NAatkHJGM4GkaL3x8tBCs-epMKmwMU5xyJAlp6VVby0vK7wNwlI4BP5wpiLWKBY5PW0a1mAEFRphetl3A0Io0alLSWBFfOXqi3p6uCpMENmw_TU3pWqT5PUCAxoY3Iz21Ozb1QOqG9sU')">
+                      </div>
+                      <div>
+                        <p class="faculty-name">Dr. Emily White</p>
+                        <p class="faculty-email">ewhite@universe.edu</p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>EMP41516</td>
-                <td>History</td>
-                <td>Senior Lecturer</td>
-                <td>3</td>
-                <td><span class="badge yellow">On Leave</span></td>
-                <td class="text-center">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
+                  </td>
+                  <td>EMP41516</td>
+                  <td>History</td>
+                  <td>Senior Lecturer</td>
+                  <td>3</td>
+                  <td><span class="badge yellow">On Leave</span></td>
+                  <td class="text-center">
+                    <button class="action-btn">
+                      <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
