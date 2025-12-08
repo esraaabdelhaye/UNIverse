@@ -37,7 +37,7 @@ public class StudentRepresentative extends Student {
 
     //Relation with announcement
     @OneToMany(mappedBy = "studentRepAuthor")
-    private List<Announcement> announcements = new ArrayList<>();
+    private final List<Announcement> announcements = new ArrayList<>();
 
 
     public StudentRepresentative() {

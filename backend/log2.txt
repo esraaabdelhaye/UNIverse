@@ -1,0 +1,1486 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/home/hebo/.m2/wrapper/dists/apache-maven-3.9.11/a2d47e15/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.example:backend >-------------------------
+[INFO] Building backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ backend ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ backend ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ backend ---
+[INFO] skip non existing resourceDirectory /home/hebo/Desktop/courses/UNIverse/backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ backend ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ backend ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-12-02T05:22:11.670+02:00  INFO 45631 --- [backend] [           main] com.example.backend.BackendApplication   : Starting BackendApplication using Java 25.0.1 with PID 45631 (/home/hebo/Desktop/courses/UNIverse/backend/target/classes started by hebo in /home/hebo/Desktop/courses/UNIverse/backend)
+2025-12-02T05:22:11.671+02:00 DEBUG 45631 --- [backend] [           main] com.example.backend.BackendApplication   : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-02T05:22:11.671+02:00  INFO 45631 --- [backend] [           main] com.example.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-12-02T05:22:11.908+02:00  INFO 45631 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-02T05:22:11.945+02:00  INFO 45631 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 20 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/home/hebo/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.16/tomcat-embed-core-10.1.16.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2025-12-02T05:22:12.172+02:00  INFO 45631 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-02T05:22:12.176+02:00  INFO 45631 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-02T05:22:12.176+02:00  INFO 45631 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-12-02T05:22:12.194+02:00  INFO 45631 --- [backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-12-02T05:22:12.194+02:00  INFO 45631 --- [backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 504 ms
+2025-12-02T05:22:12.208+02:00  INFO 45631 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-02T05:22:12.284+02:00  INFO 45631 --- [backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-02T05:22:12.284+02:00  INFO 45631 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-02T05:22:12.290+02:00  INFO 45631 --- [backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-02T05:22:12.351+02:00  INFO 45631 --- [backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-02T05:22:12.368+02:00  INFO 45631 --- [backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-02T05:22:12.380+02:00  INFO 45631 --- [backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-02T05:22:12.468+02:00  INFO 45631 --- [backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-02T05:22:12.485+02:00  WARN 45631 --- [backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-02T05:22:12.951+02:00  INFO 45631 --- [backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-02T05:22:12.957+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists announcement cascade 
+Hibernate: 
+    drop table if exists announcement cascade 
+2025-12-02T05:22:12.959+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment cascade 
+Hibernate: 
+    drop table if exists assignment cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment_submission cascade 
+Hibernate: 
+    drop table if exists assignment_submission cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course cascade 
+Hibernate: 
+    drop table if exists course cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_prerequisite cascade 
+Hibernate: 
+    drop table if exists course_prerequisite cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_enrollment cascade 
+Hibernate: 
+    drop table if exists course_enrollment cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists department cascade 
+Hibernate: 
+    drop table if exists department cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor cascade 
+Hibernate: 
+    drop table if exists doctor cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_course cascade 
+Hibernate: 
+    drop table if exists doctor_course cascade 
+2025-12-02T05:22:12.960+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_posts cascade 
+Hibernate: 
+    drop table if exists doctor_posts cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists event cascade 
+Hibernate: 
+    drop table if exists event cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists material cascade 
+Hibernate: 
+    drop table if exists material cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification cascade 
+Hibernate: 
+    drop table if exists notification cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification_students cascade 
+Hibernate: 
+    drop table if exists notification_students cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll cascade 
+Hibernate: 
+    drop table if exists poll cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_votes cascade 
+Hibernate: 
+    drop table if exists poll_votes cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_option cascade 
+Hibernate: 
+    drop table if exists poll_option cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists post cascade 
+Hibernate: 
+    drop table if exists post cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists question cascade 
+Hibernate: 
+    drop table if exists question cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester cascade 
+Hibernate: 
+    drop table if exists semester cascade 
+2025-12-02T05:22:12.961+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester_courses cascade 
+Hibernate: 
+    drop table if exists semester_courses cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group_members cascade 
+Hibernate: 
+    drop table if exists student_group_members cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group cascade 
+Hibernate: 
+    drop table if exists student_group cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists studentrep_posts cascade 
+Hibernate: 
+    drop table if exists studentrep_posts cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists students cascade 
+Hibernate: 
+    drop table if exists students cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists supervisor_course cascade 
+Hibernate: 
+    drop table if exists supervisor_course cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_course cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_course cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_post cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_post cascade 
+2025-12-02T05:22:12.962+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant cascade 
+Hibernate: 
+    drop table if exists teaching_assistant cascade 
+2025-12-02T05:22:12.964+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table announcement (
+        created_at timestamp(6) not null,
+        doctor_id bigint,
+        id bigint generated by default as identity,
+        studentrep_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        updated_at timestamp(6),
+        title varchar(200) not null,
+        content TEXT not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table announcement (
+        created_at timestamp(6) not null,
+        doctor_id bigint,
+        id bigint generated by default as identity,
+        studentrep_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        updated_at timestamp(6),
+        title varchar(200) not null,
+        content TEXT not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.969+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table assignment (
+        assignment_id integer generated by default as identity,
+        max_score integer,
+        course_id bigint not null,
+        due_date timestamp(6) not null,
+        title varchar(150) not null,
+        description TEXT,
+        primary key (assignment_id)
+    )
+Hibernate: 
+    create table assignment (
+        assignment_id integer generated by default as identity,
+        max_score integer,
+        course_id bigint not null,
+        due_date timestamp(6) not null,
+        title varchar(150) not null,
+        description TEXT,
+        primary key (assignment_id)
+    )
+2025-12-02T05:22:12.969+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table assignment_submission (
+        assignment_id integer not null,
+        submission_date date,
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        student_id bigint not null,
+        status varchar(50),
+        feedback varchar(500),
+        submission_file varchar(500),
+        grade varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table assignment_submission (
+        assignment_id integer not null,
+        submission_date date,
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        student_id bigint not null,
+        status varchar(50),
+        feedback varchar(500),
+        submission_file varchar(500),
+        grade varchar(255),
+        primary key (id)
+    )
+2025-12-02T05:22:12.970+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course (
+        credits integer not null,
+        department_id bigint not null,
+        id bigint generated by default as identity,
+        course_code varchar(20) not null unique,
+        semester varchar(20),
+        course_name varchar(100) not null,
+        description TEXT,
+        primary key (id)
+    )
+Hibernate: 
+    create table course (
+        credits integer not null,
+        department_id bigint not null,
+        id bigint generated by default as identity,
+        course_code varchar(20) not null unique,
+        semester varchar(20),
+        course_name varchar(100) not null,
+        description TEXT,
+        primary key (id)
+    )
+2025-12-02T05:22:12.972+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course_prerequisite (
+        course_id bigint not null,
+        prerequisite_id bigint not null,
+        primary key (course_id, prerequisite_id)
+    )
+Hibernate: 
+    create table course_prerequisite (
+        course_id bigint not null,
+        prerequisite_id bigint not null,
+        primary key (course_id, prerequisite_id)
+    )
+2025-12-02T05:22:12.972+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course_enrollment (
+        enrollment_date date,
+        course_id bigint,
+        id bigint generated by default as identity,
+        student_id bigint,
+        grade varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table course_enrollment (
+        enrollment_date date,
+        course_id bigint,
+        id bigint generated by default as identity,
+        student_id bigint,
+        grade varchar(255),
+        primary key (id)
+    )
+2025-12-02T05:22:12.973+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table department (
+        coordinator_id bigint not null unique,
+        id bigint generated by default as identity,
+        department_name varchar(100) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table department (
+        coordinator_id bigint not null unique,
+        id bigint generated by default as identity,
+        department_name varchar(100) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.974+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor (
+        end_date date,
+        start_date date,
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        doctor_type varchar(31) not null,
+        status varchar(50),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        managed_program varchar(100),
+        name varchar(100) not null,
+        office_location varchar(100),
+        supervisor_role varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+Hibernate: 
+    create table doctor (
+        end_date date,
+        start_date date,
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        doctor_type varchar(31) not null,
+        status varchar(50),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        managed_program varchar(100),
+        name varchar(100) not null,
+        office_location varchar(100),
+        supervisor_role varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+2025-12-02T05:22:12.974+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor_course (
+        course_id bigint not null,
+        doctor_id bigint not null,
+        primary key (course_id, doctor_id)
+    )
+Hibernate: 
+    create table doctor_course (
+        course_id bigint not null,
+        doctor_id bigint not null,
+        primary key (course_id, doctor_id)
+    )
+2025-12-02T05:22:12.975+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor_posts (
+        doctor_id bigint not null,
+        post_id bigint not null,
+        primary key (doctor_id, post_id)
+    )
+Hibernate: 
+    create table doctor_posts (
+        doctor_id bigint not null,
+        post_id bigint not null,
+        primary key (doctor_id, post_id)
+    )
+2025-12-02T05:22:12.976+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table event (
+        doctor_id bigint,
+        end_time timestamp(6) not null,
+        id bigint generated by default as identity,
+        start_time timestamp(6) not null,
+        supervisor_id bigint,
+        ta_id bigint,
+        description TEXT,
+        location varchar(255),
+        title varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table event (
+        doctor_id bigint,
+        end_time timestamp(6) not null,
+        id bigint generated by default as identity,
+        start_time timestamp(6) not null,
+        supervisor_id bigint,
+        ta_id bigint,
+        description TEXT,
+        location varchar(255),
+        title varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.977+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table material (
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        ta_id bigint,
+        upload_date timestamp(6) not null,
+        url varchar(1024),
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('TEXTBOOK','PDF','VIDEO','RECORDING','OTHER')),
+        primary key (id)
+    )
+Hibernate: 
+    create table material (
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        ta_id bigint,
+        upload_date timestamp(6) not null,
+        url varchar(1024),
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('TEXTBOOK','PDF','VIDEO','RECORDING','OTHER')),
+        primary key (id)
+    )
+2025-12-02T05:22:12.980+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table notification (
+        id bigint generated by default as identity,
+        professor_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        message varchar(255) not null,
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('ASSIGNMENT','POLL','EVENT','EXAM','OTHER')),
+        primary key (id)
+    )
+Hibernate: 
+    create table notification (
+        id bigint generated by default as identity,
+        professor_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        message varchar(255) not null,
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('ASSIGNMENT','POLL','EVENT','EXAM','OTHER')),
+        primary key (id)
+    )
+2025-12-02T05:22:12.980+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table notification_students (
+        notification_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table notification_students (
+        notification_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T05:22:12.981+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll (
+        end_time timestamp(6),
+        id bigint generated by default as identity,
+        professor_id bigint,
+        start_time timestamp(6),
+        supervisor_id bigint,
+        ta_id bigint,
+        title varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table poll (
+        end_time timestamp(6),
+        id bigint generated by default as identity,
+        professor_id bigint,
+        start_time timestamp(6),
+        supervisor_id bigint,
+        ta_id bigint,
+        title varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.981+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll_votes (
+        poll_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table poll_votes (
+        poll_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T05:22:12.982+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll_option (
+        vote_count integer not null,
+        id bigint generated by default as identity,
+        poll_id bigint not null,
+        text varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table poll_option (
+        vote_count integer not null,
+        id bigint generated by default as identity,
+        poll_id bigint not null,
+        text varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.983+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table post (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        updated_at timestamp(6),
+        status varchar(50) not null,
+        title varchar(200) not null,
+        content varchar(2000) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table post (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        updated_at timestamp(6),
+        status varchar(50) not null,
+        title varchar(200) not null,
+        content varchar(2000) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.983+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table question (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        student_id bigint not null,
+        ta_id bigint,
+        content varchar(1000) not null,
+        answer varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table question (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        student_id bigint not null,
+        ta_id bigint,
+        content varchar(1000) not null,
+        answer varchar(255),
+        primary key (id)
+    )
+2025-12-02T05:22:12.984+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table semester (
+        active boolean,
+        end_date date not null,
+        start_date date not null,
+        id bigint generated by default as identity,
+        name varchar(50) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table semester (
+        active boolean,
+        end_date date not null,
+        start_date date not null,
+        id bigint generated by default as identity,
+        name varchar(50) not null,
+        primary key (id)
+    )
+2025-12-02T05:22:12.984+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table semester_courses (
+        course_id bigint not null,
+        semester_id bigint not null
+    )
+Hibernate: 
+    create table semester_courses (
+        course_id bigint not null,
+        semester_id bigint not null
+    )
+2025-12-02T05:22:12.984+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table student_group_members (
+        group_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table student_group_members (
+        group_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T05:22:12.985+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table student_group (
+        id bigint generated by default as identity,
+        name varchar(100) not null,
+        activity varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table student_group (
+        id bigint generated by default as identity,
+        name varchar(100) not null,
+        activity varchar(255),
+        primary key (id)
+    )
+2025-12-02T05:22:12.985+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table studentrep_posts (
+        post_id bigint not null,
+        studetrep_id bigint not null,
+        primary key (post_id, studetrep_id)
+    )
+Hibernate: 
+    create table studentrep_posts (
+        post_id bigint not null,
+        studetrep_id bigint not null,
+        primary key (post_id, studetrep_id)
+    )
+2025-12-02T05:22:12.986+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table students (
+        end_date date,
+        start_date date,
+        academic_id bigint not null unique,
+        department_id bigint,
+        id bigint generated by default as identity,
+        student_type varchar(31) not null,
+        role varchar(50),
+        status varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        responsibilities varchar(1000),
+        primary key (id)
+    )
+Hibernate: 
+    create table students (
+        end_date date,
+        start_date date,
+        academic_id bigint not null unique,
+        department_id bigint,
+        id bigint generated by default as identity,
+        student_type varchar(31) not null,
+        role varchar(50),
+        status varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        responsibilities varchar(1000),
+        primary key (id)
+    )
+2025-12-02T05:22:12.987+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table supervisor_course (
+        course_id bigint not null,
+        supervisor_id bigint not null,
+        primary key (course_id, supervisor_id)
+    )
+Hibernate: 
+    create table supervisor_course (
+        course_id bigint not null,
+        supervisor_id bigint not null,
+        primary key (course_id, supervisor_id)
+    )
+2025-12-02T05:22:12.987+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant_course (
+        course_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (course_id, teaching_assistant_id)
+    )
+Hibernate: 
+    create table teaching_assistant_course (
+        course_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (course_id, teaching_assistant_id)
+    )
+2025-12-02T05:22:12.988+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant_post (
+        post_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (post_id, teaching_assistant_id)
+    )
+Hibernate: 
+    create table teaching_assistant_post (
+        post_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (post_id, teaching_assistant_id)
+    )
+2025-12-02T05:22:12.988+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant (
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        office_location varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+Hibernate: 
+    create table teaching_assistant (
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        office_location varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+2025-12-02T05:22:12.989+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKsyi1520yyqrdkvyycto8catug 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKsyi1520yyqrdkvyycto8catug 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T05:22:12.995+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKhw5milcsq3r56xhl40tbme4tf 
+       foreign key (studentrep_id) 
+       references students
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKhw5milcsq3r56xhl40tbme4tf 
+       foreign key (studentrep_id) 
+       references students
+2025-12-02T05:22:12.995+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKn17cgl5dss3fxvg5g9u9ieo30 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKn17cgl5dss3fxvg5g9u9ieo30 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T05:22:12.996+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKn6b5tdb0oh7tdwajtxu6lp8vo 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKn6b5tdb0oh7tdwajtxu6lp8vo 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:12.997+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment 
+       add constraint FKrop26uwnbkstbtfha3ormxp85 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists assignment 
+       add constraint FKrop26uwnbkstbtfha3ormxp85 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:12.997+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKi9tdkyaqlb4j7qm7y2k74jd7o 
+       foreign key (assignment_id) 
+       references assignment
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKi9tdkyaqlb4j7qm7y2k74jd7o 
+       foreign key (assignment_id) 
+       references assignment
+2025-12-02T05:22:12.998+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKfs7p2q56hnutkfw3bpfll9h15 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKfs7p2q56hnutkfw3bpfll9h15 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:12.999+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKh4ce68nlo1qgp6ipju56ks1by 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKh4ce68nlo1qgp6ipju56ks1by 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:12.999+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course 
+       add constraint FKi1btm7ma8n3gaj6afdno300wm 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists course 
+       add constraint FKi1btm7ma8n3gaj6afdno300wm 
+       foreign key (department_id) 
+       references department
+2025-12-02T05:22:13.000+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_prerequisite 
+       add constraint FK7ymu65b28wpw2opjmrx7hsbxl 
+       foreign key (prerequisite_id) 
+       references course
+Hibernate: 
+    alter table if exists course_prerequisite 
+       add constraint FK7ymu65b28wpw2opjmrx7hsbxl 
+       foreign key (prerequisite_id) 
+       references course
+2025-12-02T05:22:13.000+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_prerequisite 
+       add constraint FK45vm6hef5h141uiu8qeod3wcg 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists course_prerequisite 
+       add constraint FK45vm6hef5h141uiu8qeod3wcg 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.001+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_enrollment 
+       add constraint FKmdu3eh7r8fvaemtwyps4dtqoh 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists course_enrollment 
+       add constraint FKmdu3eh7r8fvaemtwyps4dtqoh 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.002+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_enrollment 
+       add constraint FK8ri3uw0nufgd90ui516wkh77d 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists course_enrollment 
+       add constraint FK8ri3uw0nufgd90ui516wkh77d 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:13.003+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists department 
+       add constraint FK3bpua2ro3ux7lu4bljj4lyqra 
+       foreign key (coordinator_id) 
+       references doctor
+Hibernate: 
+    alter table if exists department 
+       add constraint FK3bpua2ro3ux7lu4bljj4lyqra 
+       foreign key (coordinator_id) 
+       references doctor
+2025-12-02T05:22:13.004+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor 
+       add constraint FK75x47tyyeco3xj4cmlhj8v6ta 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists doctor 
+       add constraint FK75x47tyyeco3xj4cmlhj8v6ta 
+       foreign key (department_id) 
+       references department
+2025-12-02T05:22:13.005+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_course 
+       add constraint FKnx33rmvakj4wixiia7ab5r70c 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists doctor_course 
+       add constraint FKnx33rmvakj4wixiia7ab5r70c 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.005+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_course 
+       add constraint FKp29yr2yarjvpa7voq9huy3s4x 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists doctor_course 
+       add constraint FKp29yr2yarjvpa7voq9huy3s4x 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T05:22:13.006+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_posts 
+       add constraint FKto4p95jr9al6eksvrj9v54b2g 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists doctor_posts 
+       add constraint FKto4p95jr9al6eksvrj9v54b2g 
+       foreign key (post_id) 
+       references post
+2025-12-02T05:22:13.006+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_posts 
+       add constraint FKaolcpie1iexaf9sgg5615re39 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists doctor_posts 
+       add constraint FKaolcpie1iexaf9sgg5615re39 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T05:22:13.007+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FKkft3gmp0io521plyxvu00cr1e 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists event 
+       add constraint FKkft3gmp0io521plyxvu00cr1e 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T05:22:13.008+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FK5ufj4rd026i2imyti8c0d2xty 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists event 
+       add constraint FK5ufj4rd026i2imyti8c0d2xty 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T05:22:13.008+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FKnm84uidv5p7wecfh6nocjhc5t 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists event 
+       add constraint FKnm84uidv5p7wecfh6nocjhc5t 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.009+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKgwu2j6q988nwuqpo6p32uflmv 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists material 
+       add constraint FKgwu2j6q988nwuqpo6p32uflmv 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.009+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKpi7dx3x9ff0q8copwvc3vmfy 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists material 
+       add constraint FKpi7dx3x9ff0q8copwvc3vmfy 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T05:22:13.009+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKox4p9cdr0kbkbdhl3jqwybq1r 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists material 
+       add constraint FKox4p9cdr0kbkbdhl3jqwybq1r 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.010+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FK9bt3axnvhqb1jwtkv6ysm4oi9 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists notification 
+       add constraint FK9bt3axnvhqb1jwtkv6ysm4oi9 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T05:22:13.011+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FKb1jdyeldkxh3ilswrlvbf0nyd 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists notification 
+       add constraint FKb1jdyeldkxh3ilswrlvbf0nyd 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T05:22:13.011+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FK8n85x1kimkunxxfnggsgyep5 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists notification 
+       add constraint FK8n85x1kimkunxxfnggsgyep5 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.012+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification_students 
+       add constraint FK4pc9y5dy25qa3lovdp52p9tl7 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists notification_students 
+       add constraint FK4pc9y5dy25qa3lovdp52p9tl7 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:13.012+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification_students 
+       add constraint FKntt1smbpaif658s3jhnawxicc 
+       foreign key (notification_id) 
+       references notification
+Hibernate: 
+    alter table if exists notification_students 
+       add constraint FKntt1smbpaif658s3jhnawxicc 
+       foreign key (notification_id) 
+       references notification
+2025-12-02T05:22:13.013+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKsop0b0i3y96n4jbdp6oj9mpfs 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKsop0b0i3y96n4jbdp6oj9mpfs 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T05:22:13.013+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKaq7pdby8h39r56ptutrdcahow 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKaq7pdby8h39r56ptutrdcahow 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T05:22:13.014+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKeoclrp0idbi1xgw7jeea09pe3 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKeoclrp0idbi1xgw7jeea09pe3 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.014+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_votes 
+       add constraint FKedum6c73emo9ta5vqs4d9mco3 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists poll_votes 
+       add constraint FKedum6c73emo9ta5vqs4d9mco3 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:13.015+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_votes 
+       add constraint FKopc311eh6l2dnspei6lc5w9wh 
+       foreign key (poll_id) 
+       references poll
+Hibernate: 
+    alter table if exists poll_votes 
+       add constraint FKopc311eh6l2dnspei6lc5w9wh 
+       foreign key (poll_id) 
+       references poll
+2025-12-02T05:22:13.015+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_option 
+       add constraint FK81hniv4vvdii51krao5f84hen 
+       foreign key (poll_id) 
+       references poll
+Hibernate: 
+    alter table if exists poll_option 
+       add constraint FK81hniv4vvdii51krao5f84hen 
+       foreign key (poll_id) 
+       references poll
+2025-12-02T05:22:13.016+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKdfkysti2omo4fhop6sqffbcwy 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists question 
+       add constraint FKdfkysti2omo4fhop6sqffbcwy 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:13.016+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKn7ftcdu2ck22vje831cp8yei2 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists question 
+       add constraint FKn7ftcdu2ck22vje831cp8yei2 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T05:22:13.017+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKjr42xxdu74xe6lcm309asch9o 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists question 
+       add constraint FKjr42xxdu74xe6lcm309asch9o 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.017+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists semester_courses 
+       add constraint FKdodmt3oy3hfloxn0hsg11sv1t 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists semester_courses 
+       add constraint FKdodmt3oy3hfloxn0hsg11sv1t 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.018+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists semester_courses 
+       add constraint FKoq7j8bnx5edi5mr338sl8umcm 
+       foreign key (semester_id) 
+       references semester
+Hibernate: 
+    alter table if exists semester_courses 
+       add constraint FKoq7j8bnx5edi5mr338sl8umcm 
+       foreign key (semester_id) 
+       references semester
+2025-12-02T05:22:13.018+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists student_group_members 
+       add constraint FKq0yad34qywc882u6n58xu4h0j 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists student_group_members 
+       add constraint FKq0yad34qywc882u6n58xu4h0j 
+       foreign key (student_id) 
+       references students
+2025-12-02T05:22:13.019+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists student_group_members 
+       add constraint FKel5c7togox0vbo88g7wjxkrxs 
+       foreign key (group_id) 
+       references student_group
+Hibernate: 
+    alter table if exists student_group_members 
+       add constraint FKel5c7togox0vbo88g7wjxkrxs 
+       foreign key (group_id) 
+       references student_group
+2025-12-02T05:22:13.019+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists studentrep_posts 
+       add constraint FKes45yhib3c0ax8i16i0s53frl 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists studentrep_posts 
+       add constraint FKes45yhib3c0ax8i16i0s53frl 
+       foreign key (post_id) 
+       references post
+2025-12-02T05:22:13.020+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists studentrep_posts 
+       add constraint FK7dbkil26gfl83eu7qt0lufx2d 
+       foreign key (studetrep_id) 
+       references students
+Hibernate: 
+    alter table if exists studentrep_posts 
+       add constraint FK7dbkil26gfl83eu7qt0lufx2d 
+       foreign key (studetrep_id) 
+       references students
+2025-12-02T05:22:13.020+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists students 
+       add constraint FK1a0ypdf0sro0imfw243hyn5s4 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists students 
+       add constraint FK1a0ypdf0sro0imfw243hyn5s4 
+       foreign key (department_id) 
+       references department
+2025-12-02T05:22:13.021+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists supervisor_course 
+       add constraint FKnen1fe5m77yog3hpd5g1i5va1 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists supervisor_course 
+       add constraint FKnen1fe5m77yog3hpd5g1i5va1 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.021+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists supervisor_course 
+       add constraint FKiymqld2f4e36rp7jeu96p0t4d 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists supervisor_course 
+       add constraint FKiymqld2f4e36rp7jeu96p0t4d 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T05:22:13.022+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_course 
+       add constraint FK7ty5b0gui99j60antq9j6yl9m 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists teaching_assistant_course 
+       add constraint FK7ty5b0gui99j60antq9j6yl9m 
+       foreign key (course_id) 
+       references course
+2025-12-02T05:22:13.023+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_course 
+       add constraint FKt9lwv4n5dmderwff8dwu7dl8d 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists teaching_assistant_course 
+       add constraint FKt9lwv4n5dmderwff8dwu7dl8d 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.024+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_post 
+       add constraint FK8hsqor3kdk9er1th3xosfu36s 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists teaching_assistant_post 
+       add constraint FK8hsqor3kdk9er1th3xosfu36s 
+       foreign key (post_id) 
+       references post
+2025-12-02T05:22:13.024+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_post 
+       add constraint FK14ysqsxdh2mjfctccbt6ok8eu 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists teaching_assistant_post 
+       add constraint FK14ysqsxdh2mjfctccbt6ok8eu 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+2025-12-02T05:22:13.025+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant 
+       add constraint FKjrk3ommk760dfp3g10owdema2 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists teaching_assistant 
+       add constraint FKjrk3ommk760dfp3g10owdema2 
+       foreign key (department_id) 
+       references department
+2025-12-02T05:22:13.028+02:00  INFO 45631 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-02T05:22:13.256+02:00  INFO 45631 --- [backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-02T05:22:13.483+02:00  WARN 45631 --- [backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-02T05:22:13.690+02:00  WARN 45631 --- [backend] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 5d9d5221-01ef-48bc-89db-26963bcb74a3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-12-02T05:22:13.740+02:00  INFO 45631 --- [backend] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@eb7d4ba, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@699794d, org.springframework.security.web.context.SecurityContextHolderFilter@68a06914, org.springframework.security.web.header.HeaderWriterFilter@5fc3bf09, org.springframework.web.filter.CorsFilter@ad7cc49, org.springframework.security.web.csrf.CsrfFilter@6587c92f, org.springframework.security.web.authentication.logout.LogoutFilter@52a9c251, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6ae247b7, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@f758e05, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@1f94e1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3237522b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@43baf0b9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@653e79fc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30bd925c, org.springframework.security.web.access.ExceptionTranslationFilter@61bbe16d, org.springframework.security.web.access.intercept.AuthorizationFilter@4c255e8]
+2025-12-02T05:22:13.765+02:00  INFO 45631 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2025-12-02T05:22:13.768+02:00  INFO 45631 --- [backend] [           main] com.example.backend.BackendApplication   : Started BackendApplication in 2.242 seconds (process running for 2.351)
+2025-12-02T05:22:13.801+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* select
+        count(*) 
+    from
+        Department x */ select
+            count(*) 
+        from
+            department d1_0
+Hibernate: 
+    /* select
+        count(*) 
+    from
+        Department x */ select
+            count(*) 
+        from
+            department d1_0
+2025-12-02T05:22:13.825+02:00  INFO 45631 --- [backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-02T05:22:13.830+02:00 ERROR 45631 --- [backend] [           main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: Failed to execute CommandLineRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:789) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:770) ~[spring-boot-3.2.0.jar:3.2.0]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:571) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:765) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.example.backend.BackendApplication.main(BackendApplication.java:10) ~[classes/:na]
+Caused by: org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : com.example.backend.entity.Supervisor.hashedPassword
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:307) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:550) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:335) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:152) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:164) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:249) ~[spring-aop-6.1.1.jar:6.1.1]
+	at jdk.proxy2/jdk.proxy2.$Proxy126.save(Unknown Source) ~[na:na]
+	at com.example.backend.config.DataLoader.run(DataLoader.java:81) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:786) ~[spring-boot-3.2.0.jar:3.2.0]
+	... 14 common frames omitted
+Caused by: org.hibernate.PropertyValueException: not-null property references a null or transient value : com.example.backend.entity.Supervisor.hashedPassword
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.action.internal.AbstractEntityInsertAction.nullifyTransientReferencesIfNotAlready(AbstractEntityInsertAction.java:124) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.action.internal.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:69) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.spi.ActionQueue.execute(ActionQueue.java:667) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:290) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:271) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:321) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:386) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:300) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:219) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:134) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:175) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.persist(DefaultPersistEventListener.java:93) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:77) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:54) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:766) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:750) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:311) ~[spring-orm-6.1.1.jar:6.1.1]
+	at jdk.proxy2/jdk.proxy2.$Proxy121.persist(Unknown Source) ~[na:na]
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:618) ~[spring-data-jpa-3.2.0.jar:3.2.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:352) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:516) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:285) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:628) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:168) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:143) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:70) ~[spring-data-commons-3.2.0.jar:3.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:385) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.1.1.jar:6.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.1.jar:6.1.1]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137) ~[spring-tx-6.1.1.jar:6.1.1]
+	... 23 common frames omitted
+
+2025-12-02T05:22:13.838+02:00  INFO 45631 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-02T05:22:13.838+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists announcement cascade 
+Hibernate: 
+    drop table if exists announcement cascade 
+2025-12-02T05:22:13.839+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment cascade 
+Hibernate: 
+    drop table if exists assignment cascade 
+2025-12-02T05:22:13.840+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment_submission cascade 
+Hibernate: 
+    drop table if exists assignment_submission cascade 
+2025-12-02T05:22:13.840+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course cascade 
+Hibernate: 
+    drop table if exists course cascade 
+2025-12-02T05:22:13.840+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_prerequisite cascade 
+Hibernate: 
+    drop table if exists course_prerequisite cascade 
+2025-12-02T05:22:13.840+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_enrollment cascade 
+Hibernate: 
+    drop table if exists course_enrollment cascade 
+2025-12-02T05:22:13.841+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists department cascade 
+Hibernate: 
+    drop table if exists department cascade 
+2025-12-02T05:22:13.841+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor cascade 
+Hibernate: 
+    drop table if exists doctor cascade 
+2025-12-02T05:22:13.842+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_course cascade 
+Hibernate: 
+    drop table if exists doctor_course cascade 
+2025-12-02T05:22:13.842+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_posts cascade 
+Hibernate: 
+    drop table if exists doctor_posts cascade 
+2025-12-02T05:22:13.842+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists event cascade 
+Hibernate: 
+    drop table if exists event cascade 
+2025-12-02T05:22:13.842+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists material cascade 
+Hibernate: 
+    drop table if exists material cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification cascade 
+Hibernate: 
+    drop table if exists notification cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification_students cascade 
+Hibernate: 
+    drop table if exists notification_students cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll cascade 
+Hibernate: 
+    drop table if exists poll cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_votes cascade 
+Hibernate: 
+    drop table if exists poll_votes cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_option cascade 
+Hibernate: 
+    drop table if exists poll_option cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists post cascade 
+Hibernate: 
+    drop table if exists post cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists question cascade 
+Hibernate: 
+    drop table if exists question cascade 
+2025-12-02T05:22:13.843+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester cascade 
+Hibernate: 
+    drop table if exists semester cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester_courses cascade 
+Hibernate: 
+    drop table if exists semester_courses cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group_members cascade 
+Hibernate: 
+    drop table if exists student_group_members cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group cascade 
+Hibernate: 
+    drop table if exists student_group cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists studentrep_posts cascade 
+Hibernate: 
+    drop table if exists studentrep_posts cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists students cascade 
+Hibernate: 
+    drop table if exists students cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists supervisor_course cascade 
+Hibernate: 
+    drop table if exists supervisor_course cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_course cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_course cascade 
+2025-12-02T05:22:13.844+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_post cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_post cascade 
+2025-12-02T05:22:13.845+02:00 DEBUG 45631 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant cascade 
+Hibernate: 
+    drop table if exists teaching_assistant cascade 
+2025-12-02T05:22:13.845+02:00  INFO 45631 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-02T05:22:13.847+02:00  INFO 45631 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.924 s
+[INFO] Finished at: 2025-12-02T05:22:13+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project backend: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

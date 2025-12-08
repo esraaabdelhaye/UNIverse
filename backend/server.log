@@ -1,0 +1,2983 @@
+nohup: ignoring input
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2025-12-02T06:43:39.126+02:00  INFO 78651 --- [backend] [           main] com.example.backend.BackendApplication   : Starting BackendApplication v0.0.1-SNAPSHOT using Java 25.0.1 with PID 78651 (/home/hebo/Desktop/courses/UNIverse/backend/target/backend-0.0.1-SNAPSHOT.jar started by hebo in /home/hebo/Desktop/courses/UNIverse/backend)
+2025-12-02T06:43:39.128+02:00 DEBUG 78651 --- [backend] [           main] com.example.backend.BackendApplication   : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-12-02T06:43:39.128+02:00  INFO 78651 --- [backend] [           main] com.example.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-12-02T06:43:39.537+02:00  INFO 78651 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-02T06:43:39.598+02:00  INFO 78651 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 20 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (jar:nested:/home/hebo/Desktop/courses/UNIverse/backend/target/backend-0.0.1-SNAPSHOT.jar/!BOOT-INF/lib/tomcat-embed-core-10.1.16.jar!/)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2025-12-02T06:43:39.923+02:00  INFO 78651 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-02T06:43:39.928+02:00  INFO 78651 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-02T06:43:39.929+02:00  INFO 78651 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-12-02T06:43:39.950+02:00  INFO 78651 --- [backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-02T06:43:39.950+02:00  INFO 78651 --- [backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 791 ms
+2025-12-02T06:43:39.967+02:00  INFO 78651 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-02T06:43:40.101+02:00  INFO 78651 --- [backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-02T06:43:40.102+02:00  INFO 78651 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-02T06:43:40.109+02:00  INFO 78651 --- [backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-02T06:43:40.134+02:00 DEBUG 78651 --- [backend] [           main] c.e.backend.config.RequestLoggingFilter  : Filter 'requestLoggingFilter' configured for use
+2025-12-02T06:43:40.187+02:00  INFO 78651 --- [backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-02T06:43:40.226+02:00  INFO 78651 --- [backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-12-02T06:43:40.248+02:00  INFO 78651 --- [backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-02T06:43:40.403+02:00  INFO 78651 --- [backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-02T06:43:40.429+02:00  WARN 78651 --- [backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-02T06:43:41.065+02:00  INFO 78651 --- [backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-02T06:43:41.073+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists announcement cascade 
+Hibernate: 
+    drop table if exists announcement cascade 
+2025-12-02T06:43:41.075+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment cascade 
+Hibernate: 
+    drop table if exists assignment cascade 
+2025-12-02T06:43:41.075+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists assignment_submission cascade 
+Hibernate: 
+    drop table if exists assignment_submission cascade 
+2025-12-02T06:43:41.075+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course cascade 
+Hibernate: 
+    drop table if exists course cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_prerequisite cascade 
+Hibernate: 
+    drop table if exists course_prerequisite cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists course_enrollment cascade 
+Hibernate: 
+    drop table if exists course_enrollment cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists department cascade 
+Hibernate: 
+    drop table if exists department cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor cascade 
+Hibernate: 
+    drop table if exists doctor cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_course cascade 
+Hibernate: 
+    drop table if exists doctor_course cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists doctor_posts cascade 
+Hibernate: 
+    drop table if exists doctor_posts cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists event cascade 
+Hibernate: 
+    drop table if exists event cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists material cascade 
+Hibernate: 
+    drop table if exists material cascade 
+2025-12-02T06:43:41.076+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification cascade 
+Hibernate: 
+    drop table if exists notification cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists notification_students cascade 
+Hibernate: 
+    drop table if exists notification_students cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll cascade 
+Hibernate: 
+    drop table if exists poll cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_votes cascade 
+Hibernate: 
+    drop table if exists poll_votes cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists poll_option cascade 
+Hibernate: 
+    drop table if exists poll_option cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists post cascade 
+Hibernate: 
+    drop table if exists post cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists question cascade 
+Hibernate: 
+    drop table if exists question cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester cascade 
+Hibernate: 
+    drop table if exists semester cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists semester_courses cascade 
+Hibernate: 
+    drop table if exists semester_courses cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group_members cascade 
+Hibernate: 
+    drop table if exists student_group_members cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists student_group cascade 
+Hibernate: 
+    drop table if exists student_group cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists studentrep_posts cascade 
+Hibernate: 
+    drop table if exists studentrep_posts cascade 
+2025-12-02T06:43:41.077+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists students cascade 
+Hibernate: 
+    drop table if exists students cascade 
+2025-12-02T06:43:41.078+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists supervisor_course cascade 
+Hibernate: 
+    drop table if exists supervisor_course cascade 
+2025-12-02T06:43:41.078+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_course cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_course cascade 
+2025-12-02T06:43:41.078+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant_post cascade 
+Hibernate: 
+    drop table if exists teaching_assistant_post cascade 
+2025-12-02T06:43:41.078+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    drop table if exists teaching_assistant cascade 
+Hibernate: 
+    drop table if exists teaching_assistant cascade 
+2025-12-02T06:43:41.081+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table announcement (
+        created_at timestamp(6) not null,
+        doctor_id bigint,
+        id bigint generated by default as identity,
+        studentrep_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        updated_at timestamp(6),
+        title varchar(200) not null,
+        content TEXT not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table announcement (
+        created_at timestamp(6) not null,
+        doctor_id bigint,
+        id bigint generated by default as identity,
+        studentrep_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        updated_at timestamp(6),
+        title varchar(200) not null,
+        content TEXT not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.085+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table assignment (
+        assignment_id integer generated by default as identity,
+        max_score integer,
+        course_id bigint not null,
+        due_date timestamp(6) not null,
+        title varchar(150) not null,
+        description TEXT,
+        primary key (assignment_id)
+    )
+Hibernate: 
+    create table assignment (
+        assignment_id integer generated by default as identity,
+        max_score integer,
+        course_id bigint not null,
+        due_date timestamp(6) not null,
+        title varchar(150) not null,
+        description TEXT,
+        primary key (assignment_id)
+    )
+2025-12-02T06:43:41.086+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table assignment_submission (
+        assignment_id integer not null,
+        submission_date date,
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        student_id bigint not null,
+        status varchar(50),
+        feedback varchar(500),
+        submission_file varchar(500),
+        grade varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table assignment_submission (
+        assignment_id integer not null,
+        submission_date date,
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        student_id bigint not null,
+        status varchar(50),
+        feedback varchar(500),
+        submission_file varchar(500),
+        grade varchar(255),
+        primary key (id)
+    )
+2025-12-02T06:43:41.087+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course (
+        credits integer not null,
+        department_id bigint not null,
+        id bigint generated by default as identity,
+        course_code varchar(20) not null unique,
+        semester varchar(20),
+        course_name varchar(100) not null,
+        description TEXT,
+        primary key (id)
+    )
+Hibernate: 
+    create table course (
+        credits integer not null,
+        department_id bigint not null,
+        id bigint generated by default as identity,
+        course_code varchar(20) not null unique,
+        semester varchar(20),
+        course_name varchar(100) not null,
+        description TEXT,
+        primary key (id)
+    )
+2025-12-02T06:43:41.088+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course_prerequisite (
+        course_id bigint not null,
+        prerequisite_id bigint not null,
+        primary key (course_id, prerequisite_id)
+    )
+Hibernate: 
+    create table course_prerequisite (
+        course_id bigint not null,
+        prerequisite_id bigint not null,
+        primary key (course_id, prerequisite_id)
+    )
+2025-12-02T06:43:41.089+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table course_enrollment (
+        enrollment_date date,
+        course_id bigint,
+        id bigint generated by default as identity,
+        student_id bigint,
+        grade varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table course_enrollment (
+        enrollment_date date,
+        course_id bigint,
+        id bigint generated by default as identity,
+        student_id bigint,
+        grade varchar(255),
+        primary key (id)
+    )
+2025-12-02T06:43:41.090+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table department (
+        coordinator_id bigint not null unique,
+        id bigint generated by default as identity,
+        department_name varchar(100) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table department (
+        coordinator_id bigint not null unique,
+        id bigint generated by default as identity,
+        department_name varchar(100) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.090+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor (
+        end_date date,
+        start_date date,
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        doctor_type varchar(31) not null,
+        status varchar(50),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        managed_program varchar(100),
+        name varchar(100) not null,
+        office_location varchar(100),
+        supervisor_role varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+Hibernate: 
+    create table doctor (
+        end_date date,
+        start_date date,
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        doctor_type varchar(31) not null,
+        status varchar(50),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        managed_program varchar(100),
+        name varchar(100) not null,
+        office_location varchar(100),
+        supervisor_role varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+2025-12-02T06:43:41.091+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor_course (
+        course_id bigint not null,
+        doctor_id bigint not null,
+        primary key (course_id, doctor_id)
+    )
+Hibernate: 
+    create table doctor_course (
+        course_id bigint not null,
+        doctor_id bigint not null,
+        primary key (course_id, doctor_id)
+    )
+2025-12-02T06:43:41.091+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table doctor_posts (
+        doctor_id bigint not null,
+        post_id bigint not null,
+        primary key (doctor_id, post_id)
+    )
+Hibernate: 
+    create table doctor_posts (
+        doctor_id bigint not null,
+        post_id bigint not null,
+        primary key (doctor_id, post_id)
+    )
+2025-12-02T06:43:41.093+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table event (
+        doctor_id bigint,
+        end_time timestamp(6) not null,
+        id bigint generated by default as identity,
+        start_time timestamp(6) not null,
+        supervisor_id bigint,
+        ta_id bigint,
+        description TEXT,
+        location varchar(255),
+        title varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table event (
+        doctor_id bigint,
+        end_time timestamp(6) not null,
+        id bigint generated by default as identity,
+        start_time timestamp(6) not null,
+        supervisor_id bigint,
+        ta_id bigint,
+        description TEXT,
+        location varchar(255),
+        title varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.093+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table material (
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        ta_id bigint,
+        upload_date timestamp(6) not null,
+        url varchar(1024),
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('TEXTBOOK','PDF','VIDEO','RECORDING','OTHER')),
+        primary key (id)
+    )
+Hibernate: 
+    create table material (
+        course_id bigint not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        ta_id bigint,
+        upload_date timestamp(6) not null,
+        url varchar(1024),
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('TEXTBOOK','PDF','VIDEO','RECORDING','OTHER')),
+        primary key (id)
+    )
+2025-12-02T06:43:41.096+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table notification (
+        id bigint generated by default as identity,
+        professor_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        message varchar(255) not null,
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('ASSIGNMENT','POLL','EVENT','EXAM','OTHER')),
+        primary key (id)
+    )
+Hibernate: 
+    create table notification (
+        id bigint generated by default as identity,
+        professor_id bigint,
+        supervisor_id bigint,
+        ta_id bigint,
+        message varchar(255) not null,
+        title varchar(255) not null,
+        type varchar(255) not null check (type in ('ASSIGNMENT','POLL','EVENT','EXAM','OTHER')),
+        primary key (id)
+    )
+2025-12-02T06:43:41.097+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table notification_students (
+        notification_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table notification_students (
+        notification_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T06:43:41.097+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll (
+        end_time timestamp(6),
+        id bigint generated by default as identity,
+        professor_id bigint,
+        start_time timestamp(6),
+        supervisor_id bigint,
+        ta_id bigint,
+        title varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table poll (
+        end_time timestamp(6),
+        id bigint generated by default as identity,
+        professor_id bigint,
+        start_time timestamp(6),
+        supervisor_id bigint,
+        ta_id bigint,
+        title varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.098+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll_votes (
+        poll_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table poll_votes (
+        poll_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T06:43:41.098+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table poll_option (
+        vote_count integer not null,
+        id bigint generated by default as identity,
+        poll_id bigint not null,
+        text varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table poll_option (
+        vote_count integer not null,
+        id bigint generated by default as identity,
+        poll_id bigint not null,
+        text varchar(255) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.099+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table post (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        updated_at timestamp(6),
+        status varchar(50) not null,
+        title varchar(200) not null,
+        content varchar(2000) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table post (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        updated_at timestamp(6),
+        status varchar(50) not null,
+        title varchar(200) not null,
+        content varchar(2000) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.099+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table question (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        student_id bigint not null,
+        ta_id bigint,
+        content varchar(1000) not null,
+        answer varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table question (
+        created_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        professor_id bigint,
+        student_id bigint not null,
+        ta_id bigint,
+        content varchar(1000) not null,
+        answer varchar(255),
+        primary key (id)
+    )
+2025-12-02T06:43:41.100+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table semester (
+        active boolean,
+        end_date date not null,
+        start_date date not null,
+        id bigint generated by default as identity,
+        name varchar(50) not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table semester (
+        active boolean,
+        end_date date not null,
+        start_date date not null,
+        id bigint generated by default as identity,
+        name varchar(50) not null,
+        primary key (id)
+    )
+2025-12-02T06:43:41.100+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table semester_courses (
+        course_id bigint not null,
+        semester_id bigint not null
+    )
+Hibernate: 
+    create table semester_courses (
+        course_id bigint not null,
+        semester_id bigint not null
+    )
+2025-12-02T06:43:41.100+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table student_group_members (
+        group_id bigint not null,
+        student_id bigint not null
+    )
+Hibernate: 
+    create table student_group_members (
+        group_id bigint not null,
+        student_id bigint not null
+    )
+2025-12-02T06:43:41.101+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table student_group (
+        id bigint generated by default as identity,
+        name varchar(100) not null,
+        activity varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table student_group (
+        id bigint generated by default as identity,
+        name varchar(100) not null,
+        activity varchar(255),
+        primary key (id)
+    )
+2025-12-02T06:43:41.101+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table studentrep_posts (
+        post_id bigint not null,
+        studetrep_id bigint not null,
+        primary key (post_id, studetrep_id)
+    )
+Hibernate: 
+    create table studentrep_posts (
+        post_id bigint not null,
+        studetrep_id bigint not null,
+        primary key (post_id, studetrep_id)
+    )
+2025-12-02T06:43:41.102+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table students (
+        end_date date,
+        start_date date,
+        academic_id bigint not null unique,
+        department_id bigint,
+        id bigint generated by default as identity,
+        student_type varchar(31) not null,
+        role varchar(50),
+        status varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        responsibilities varchar(1000),
+        primary key (id)
+    )
+Hibernate: 
+    create table students (
+        end_date date,
+        start_date date,
+        academic_id bigint not null unique,
+        department_id bigint,
+        id bigint generated by default as identity,
+        student_type varchar(31) not null,
+        role varchar(50),
+        status varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        responsibilities varchar(1000),
+        primary key (id)
+    )
+2025-12-02T06:43:41.103+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table supervisor_course (
+        course_id bigint not null,
+        supervisor_id bigint not null,
+        primary key (course_id, supervisor_id)
+    )
+Hibernate: 
+    create table supervisor_course (
+        course_id bigint not null,
+        supervisor_id bigint not null,
+        primary key (course_id, supervisor_id)
+    )
+2025-12-02T06:43:41.103+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant_course (
+        course_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (course_id, teaching_assistant_id)
+    )
+Hibernate: 
+    create table teaching_assistant_course (
+        course_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (course_id, teaching_assistant_id)
+    )
+2025-12-02T06:43:41.104+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant_post (
+        post_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (post_id, teaching_assistant_id)
+    )
+Hibernate: 
+    create table teaching_assistant_post (
+        post_id bigint not null,
+        teaching_assistant_id bigint not null,
+        primary key (post_id, teaching_assistant_id)
+    )
+2025-12-02T06:43:41.104+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    create table teaching_assistant (
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        office_location varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+Hibernate: 
+    create table teaching_assistant (
+        department_id bigint,
+        id bigint generated by default as identity,
+        phone_number varchar(20),
+        title varchar(50),
+        email varchar(100) not null unique,
+        hashed_password varchar(100) not null,
+        name varchar(100) not null,
+        office_location varchar(100),
+        expertise varchar(500),
+        primary key (id)
+    )
+2025-12-02T06:43:41.105+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKsyi1520yyqrdkvyycto8catug 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKsyi1520yyqrdkvyycto8catug 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T06:43:41.110+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKhw5milcsq3r56xhl40tbme4tf 
+       foreign key (studentrep_id) 
+       references students
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKhw5milcsq3r56xhl40tbme4tf 
+       foreign key (studentrep_id) 
+       references students
+2025-12-02T06:43:41.111+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKn17cgl5dss3fxvg5g9u9ieo30 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKn17cgl5dss3fxvg5g9u9ieo30 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T06:43:41.112+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists announcement 
+       add constraint FKn6b5tdb0oh7tdwajtxu6lp8vo 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists announcement 
+       add constraint FKn6b5tdb0oh7tdwajtxu6lp8vo 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.112+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment 
+       add constraint FKrop26uwnbkstbtfha3ormxp85 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists assignment 
+       add constraint FKrop26uwnbkstbtfha3ormxp85 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.113+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKi9tdkyaqlb4j7qm7y2k74jd7o 
+       foreign key (assignment_id) 
+       references assignment
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKi9tdkyaqlb4j7qm7y2k74jd7o 
+       foreign key (assignment_id) 
+       references assignment
+2025-12-02T06:43:41.113+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKfs7p2q56hnutkfw3bpfll9h15 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKfs7p2q56hnutkfw3bpfll9h15 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.114+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists assignment_submission 
+       add constraint FKh4ce68nlo1qgp6ipju56ks1by 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists assignment_submission 
+       add constraint FKh4ce68nlo1qgp6ipju56ks1by 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.115+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course 
+       add constraint FKi1btm7ma8n3gaj6afdno300wm 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists course 
+       add constraint FKi1btm7ma8n3gaj6afdno300wm 
+       foreign key (department_id) 
+       references department
+2025-12-02T06:43:41.115+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_prerequisite 
+       add constraint FK7ymu65b28wpw2opjmrx7hsbxl 
+       foreign key (prerequisite_id) 
+       references course
+Hibernate: 
+    alter table if exists course_prerequisite 
+       add constraint FK7ymu65b28wpw2opjmrx7hsbxl 
+       foreign key (prerequisite_id) 
+       references course
+2025-12-02T06:43:41.116+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_prerequisite 
+       add constraint FK45vm6hef5h141uiu8qeod3wcg 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists course_prerequisite 
+       add constraint FK45vm6hef5h141uiu8qeod3wcg 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.116+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_enrollment 
+       add constraint FKmdu3eh7r8fvaemtwyps4dtqoh 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists course_enrollment 
+       add constraint FKmdu3eh7r8fvaemtwyps4dtqoh 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.117+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists course_enrollment 
+       add constraint FK8ri3uw0nufgd90ui516wkh77d 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists course_enrollment 
+       add constraint FK8ri3uw0nufgd90ui516wkh77d 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.117+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists department 
+       add constraint FK3bpua2ro3ux7lu4bljj4lyqra 
+       foreign key (coordinator_id) 
+       references doctor
+Hibernate: 
+    alter table if exists department 
+       add constraint FK3bpua2ro3ux7lu4bljj4lyqra 
+       foreign key (coordinator_id) 
+       references doctor
+2025-12-02T06:43:41.118+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor 
+       add constraint FK75x47tyyeco3xj4cmlhj8v6ta 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists doctor 
+       add constraint FK75x47tyyeco3xj4cmlhj8v6ta 
+       foreign key (department_id) 
+       references department
+2025-12-02T06:43:41.118+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_course 
+       add constraint FKnx33rmvakj4wixiia7ab5r70c 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists doctor_course 
+       add constraint FKnx33rmvakj4wixiia7ab5r70c 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.119+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_course 
+       add constraint FKp29yr2yarjvpa7voq9huy3s4x 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists doctor_course 
+       add constraint FKp29yr2yarjvpa7voq9huy3s4x 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T06:43:41.120+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_posts 
+       add constraint FKto4p95jr9al6eksvrj9v54b2g 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists doctor_posts 
+       add constraint FKto4p95jr9al6eksvrj9v54b2g 
+       foreign key (post_id) 
+       references post
+2025-12-02T06:43:41.120+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists doctor_posts 
+       add constraint FKaolcpie1iexaf9sgg5615re39 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists doctor_posts 
+       add constraint FKaolcpie1iexaf9sgg5615re39 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T06:43:41.121+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FKkft3gmp0io521plyxvu00cr1e 
+       foreign key (doctor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists event 
+       add constraint FKkft3gmp0io521plyxvu00cr1e 
+       foreign key (doctor_id) 
+       references doctor
+2025-12-02T06:43:41.121+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FK5ufj4rd026i2imyti8c0d2xty 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists event 
+       add constraint FK5ufj4rd026i2imyti8c0d2xty 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T06:43:41.122+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists event 
+       add constraint FKnm84uidv5p7wecfh6nocjhc5t 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists event 
+       add constraint FKnm84uidv5p7wecfh6nocjhc5t 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.122+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKgwu2j6q988nwuqpo6p32uflmv 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists material 
+       add constraint FKgwu2j6q988nwuqpo6p32uflmv 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.123+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKpi7dx3x9ff0q8copwvc3vmfy 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists material 
+       add constraint FKpi7dx3x9ff0q8copwvc3vmfy 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T06:43:41.124+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists material 
+       add constraint FKox4p9cdr0kbkbdhl3jqwybq1r 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists material 
+       add constraint FKox4p9cdr0kbkbdhl3jqwybq1r 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.124+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FK9bt3axnvhqb1jwtkv6ysm4oi9 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists notification 
+       add constraint FK9bt3axnvhqb1jwtkv6ysm4oi9 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T06:43:41.125+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FKb1jdyeldkxh3ilswrlvbf0nyd 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists notification 
+       add constraint FKb1jdyeldkxh3ilswrlvbf0nyd 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T06:43:41.125+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification 
+       add constraint FK8n85x1kimkunxxfnggsgyep5 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists notification 
+       add constraint FK8n85x1kimkunxxfnggsgyep5 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.126+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification_students 
+       add constraint FK4pc9y5dy25qa3lovdp52p9tl7 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists notification_students 
+       add constraint FK4pc9y5dy25qa3lovdp52p9tl7 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.126+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists notification_students 
+       add constraint FKntt1smbpaif658s3jhnawxicc 
+       foreign key (notification_id) 
+       references notification
+Hibernate: 
+    alter table if exists notification_students 
+       add constraint FKntt1smbpaif658s3jhnawxicc 
+       foreign key (notification_id) 
+       references notification
+2025-12-02T06:43:41.127+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKsop0b0i3y96n4jbdp6oj9mpfs 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKsop0b0i3y96n4jbdp6oj9mpfs 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T06:43:41.127+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKaq7pdby8h39r56ptutrdcahow 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKaq7pdby8h39r56ptutrdcahow 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T06:43:41.128+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll 
+       add constraint FKeoclrp0idbi1xgw7jeea09pe3 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists poll 
+       add constraint FKeoclrp0idbi1xgw7jeea09pe3 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.128+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_votes 
+       add constraint FKedum6c73emo9ta5vqs4d9mco3 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists poll_votes 
+       add constraint FKedum6c73emo9ta5vqs4d9mco3 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.129+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_votes 
+       add constraint FKopc311eh6l2dnspei6lc5w9wh 
+       foreign key (poll_id) 
+       references poll
+Hibernate: 
+    alter table if exists poll_votes 
+       add constraint FKopc311eh6l2dnspei6lc5w9wh 
+       foreign key (poll_id) 
+       references poll
+2025-12-02T06:43:41.129+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists poll_option 
+       add constraint FK81hniv4vvdii51krao5f84hen 
+       foreign key (poll_id) 
+       references poll
+Hibernate: 
+    alter table if exists poll_option 
+       add constraint FK81hniv4vvdii51krao5f84hen 
+       foreign key (poll_id) 
+       references poll
+2025-12-02T06:43:41.130+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKdfkysti2omo4fhop6sqffbcwy 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists question 
+       add constraint FKdfkysti2omo4fhop6sqffbcwy 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.130+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKn7ftcdu2ck22vje831cp8yei2 
+       foreign key (professor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists question 
+       add constraint FKn7ftcdu2ck22vje831cp8yei2 
+       foreign key (professor_id) 
+       references doctor
+2025-12-02T06:43:41.131+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists question 
+       add constraint FKjr42xxdu74xe6lcm309asch9o 
+       foreign key (ta_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists question 
+       add constraint FKjr42xxdu74xe6lcm309asch9o 
+       foreign key (ta_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.131+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists semester_courses 
+       add constraint FKdodmt3oy3hfloxn0hsg11sv1t 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists semester_courses 
+       add constraint FKdodmt3oy3hfloxn0hsg11sv1t 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.132+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists semester_courses 
+       add constraint FKoq7j8bnx5edi5mr338sl8umcm 
+       foreign key (semester_id) 
+       references semester
+Hibernate: 
+    alter table if exists semester_courses 
+       add constraint FKoq7j8bnx5edi5mr338sl8umcm 
+       foreign key (semester_id) 
+       references semester
+2025-12-02T06:43:41.132+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists student_group_members 
+       add constraint FKq0yad34qywc882u6n58xu4h0j 
+       foreign key (student_id) 
+       references students
+Hibernate: 
+    alter table if exists student_group_members 
+       add constraint FKq0yad34qywc882u6n58xu4h0j 
+       foreign key (student_id) 
+       references students
+2025-12-02T06:43:41.132+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists student_group_members 
+       add constraint FKel5c7togox0vbo88g7wjxkrxs 
+       foreign key (group_id) 
+       references student_group
+Hibernate: 
+    alter table if exists student_group_members 
+       add constraint FKel5c7togox0vbo88g7wjxkrxs 
+       foreign key (group_id) 
+       references student_group
+2025-12-02T06:43:41.133+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists studentrep_posts 
+       add constraint FKes45yhib3c0ax8i16i0s53frl 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists studentrep_posts 
+       add constraint FKes45yhib3c0ax8i16i0s53frl 
+       foreign key (post_id) 
+       references post
+2025-12-02T06:43:41.133+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists studentrep_posts 
+       add constraint FK7dbkil26gfl83eu7qt0lufx2d 
+       foreign key (studetrep_id) 
+       references students
+Hibernate: 
+    alter table if exists studentrep_posts 
+       add constraint FK7dbkil26gfl83eu7qt0lufx2d 
+       foreign key (studetrep_id) 
+       references students
+2025-12-02T06:43:41.134+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists students 
+       add constraint FK1a0ypdf0sro0imfw243hyn5s4 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists students 
+       add constraint FK1a0ypdf0sro0imfw243hyn5s4 
+       foreign key (department_id) 
+       references department
+2025-12-02T06:43:41.134+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists supervisor_course 
+       add constraint FKnen1fe5m77yog3hpd5g1i5va1 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists supervisor_course 
+       add constraint FKnen1fe5m77yog3hpd5g1i5va1 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.135+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists supervisor_course 
+       add constraint FKiymqld2f4e36rp7jeu96p0t4d 
+       foreign key (supervisor_id) 
+       references doctor
+Hibernate: 
+    alter table if exists supervisor_course 
+       add constraint FKiymqld2f4e36rp7jeu96p0t4d 
+       foreign key (supervisor_id) 
+       references doctor
+2025-12-02T06:43:41.135+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_course 
+       add constraint FK7ty5b0gui99j60antq9j6yl9m 
+       foreign key (course_id) 
+       references course
+Hibernate: 
+    alter table if exists teaching_assistant_course 
+       add constraint FK7ty5b0gui99j60antq9j6yl9m 
+       foreign key (course_id) 
+       references course
+2025-12-02T06:43:41.136+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_course 
+       add constraint FKt9lwv4n5dmderwff8dwu7dl8d 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists teaching_assistant_course 
+       add constraint FKt9lwv4n5dmderwff8dwu7dl8d 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.136+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_post 
+       add constraint FK8hsqor3kdk9er1th3xosfu36s 
+       foreign key (post_id) 
+       references post
+Hibernate: 
+    alter table if exists teaching_assistant_post 
+       add constraint FK8hsqor3kdk9er1th3xosfu36s 
+       foreign key (post_id) 
+       references post
+2025-12-02T06:43:41.137+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant_post 
+       add constraint FK14ysqsxdh2mjfctccbt6ok8eu 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+Hibernate: 
+    alter table if exists teaching_assistant_post 
+       add constraint FK14ysqsxdh2mjfctccbt6ok8eu 
+       foreign key (teaching_assistant_id) 
+       references teaching_assistant
+2025-12-02T06:43:41.137+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    alter table if exists teaching_assistant 
+       add constraint FKjrk3ommk760dfp3g10owdema2 
+       foreign key (department_id) 
+       references department
+Hibernate: 
+    alter table if exists teaching_assistant 
+       add constraint FKjrk3ommk760dfp3g10owdema2 
+       foreign key (department_id) 
+       references department
+2025-12-02T06:43:41.141+02:00  INFO 78651 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-02T06:43:41.360+02:00  INFO 78651 --- [backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-02T06:43:41.716+02:00  WARN 78651 --- [backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-02T06:43:41.731+02:00  WARN 78651 --- [backend] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: bd83d42f-0892-49c3-bf5e-c098fa3268ef
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-12-02T06:43:41.866+02:00  INFO 78651 --- [backend] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@8e0b048, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@71b38b11, org.springframework.security.web.context.SecurityContextHolderFilter@467f97e, org.springframework.security.web.header.HeaderWriterFilter@2fad470b, org.springframework.web.filter.CorsFilter@1a2d8488, org.springframework.security.web.authentication.logout.LogoutFilter@65a86de0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@23644367, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@27959c4e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a120e41, org.springframework.security.web.access.ExceptionTranslationFilter@25767bd9, org.springframework.security.web.access.intercept.AuthorizationFilter@38682845]
+2025-12-02T06:43:41.997+02:00  INFO 78651 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-12-02T06:43:42.006+02:00  INFO 78651 --- [backend] [           main] com.example.backend.BackendApplication   : Started BackendApplication in 3.134 seconds (process running for 3.435)
+2025-12-02T06:43:42.047+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* select
+        count(*) 
+    from
+        Department x */ select
+            count(*) 
+        from
+            department d1_0
+Hibernate: 
+    /* select
+        count(*) 
+    from
+        Department x */ select
+            count(*) 
+        from
+            department d1_0
+2025-12-02T06:43:42.169+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Supervisor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, end_date, managed_program, start_date, status, supervisor_role, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SUPERVISOR', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Supervisor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, end_date, managed_program, start_date, status, supervisor_role, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SUPERVISOR', default)
+2025-12-02T06:43:42.183+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Supervisor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, end_date, managed_program, start_date, status, supervisor_role, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SUPERVISOR', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Supervisor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, end_date, managed_program, start_date, status, supervisor_role, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SUPERVISOR', default)
+2025-12-02T06:43:42.184+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Department */insert 
+    into
+        department (coordinator_id, department_name, id) 
+    values
+        (?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Department */insert 
+    into
+        department (coordinator_id, department_name, id) 
+    values
+        (?, ?, default)
+2025-12-02T06:43:42.185+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Department */insert 
+    into
+        department (coordinator_id, department_name, id) 
+    values
+        (?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Department */insert 
+    into
+        department (coordinator_id, department_name, id) 
+    values
+        (?, ?, default)
+2025-12-02T06:43:42.196+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        s1_0.id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        c1_0.department_id,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        s1_0.email,
+        s1_0.expertise,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.office_location,
+        s1_0.phone_number,
+        s1_0.title,
+        cd1_0.id,
+        cd1_0.coordinator_id,
+        cd1_0.department_name,
+        s1_0.end_date,
+        s1_0.managed_program,
+        s1_0.start_date,
+        s1_0.status,
+        s1_0.supervisor_role 
+    from
+        doctor s1_0 
+    left join
+        department d1_0 
+            on d1_0.id=s1_0.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department cd1_0 
+            on s1_0.id=cd1_0.coordinator_id 
+    where
+        s1_0.doctor_type='SUPERVISOR' 
+        and s1_0.id=?
+Hibernate: 
+    select
+        s1_0.id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        c1_0.department_id,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        s1_0.email,
+        s1_0.expertise,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.office_location,
+        s1_0.phone_number,
+        s1_0.title,
+        cd1_0.id,
+        cd1_0.coordinator_id,
+        cd1_0.department_name,
+        s1_0.end_date,
+        s1_0.managed_program,
+        s1_0.start_date,
+        s1_0.status,
+        s1_0.supervisor_role 
+    from
+        doctor s1_0 
+    left join
+        department d1_0 
+            on d1_0.id=s1_0.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department cd1_0 
+            on s1_0.id=cd1_0.coordinator_id 
+    where
+        s1_0.doctor_type='SUPERVISOR' 
+        and s1_0.id=?
+2025-12-02T06:43:42.201+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        c1_0.doctor_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.credits,
+        c1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c2_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c2_0.email,
+        c2_0.expertise,
+        c2_0.hashed_password,
+        c2_0.name,
+        c2_0.office_location,
+        c2_0.phone_number,
+        c2_0.title,
+        c2_0.end_date,
+        c2_0.managed_program,
+        c2_0.start_date,
+        c2_0.status,
+        c2_0.supervisor_role,
+        d1_0.department_name,
+        c1_1.description,
+        c1_1.course_name,
+        c1_1.semester 
+    from
+        doctor_course c1_0 
+    join
+        course c1_1 
+            on c1_1.id=c1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=c1_1.department_id 
+    left join
+        doctor c2_0 
+            on c2_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c2_0.department_id 
+    where
+        c1_0.doctor_id=?
+Hibernate: 
+    select
+        c1_0.doctor_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.credits,
+        c1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c2_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c2_0.email,
+        c2_0.expertise,
+        c2_0.hashed_password,
+        c2_0.name,
+        c2_0.office_location,
+        c2_0.phone_number,
+        c2_0.title,
+        c2_0.end_date,
+        c2_0.managed_program,
+        c2_0.start_date,
+        c2_0.status,
+        c2_0.supervisor_role,
+        d1_0.department_name,
+        c1_1.description,
+        c1_1.course_name,
+        c1_1.semester 
+    from
+        doctor_course c1_0 
+    join
+        course c1_1 
+            on c1_1.id=c1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=c1_1.department_id 
+    left join
+        doctor c2_0 
+            on c2_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c2_0.department_id 
+    where
+        c1_0.doctor_id=?
+2025-12-02T06:43:42.202+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        p1_0.doctor_id,
+        p1_1.id,
+        p1_1.content,
+        p1_1.created_at,
+        p1_1.status,
+        p1_1.title,
+        p1_1.updated_at 
+    from
+        doctor_posts p1_0 
+    join
+        post p1_1 
+            on p1_1.id=p1_0.post_id 
+    where
+        p1_0.doctor_id=?
+Hibernate: 
+    select
+        p1_0.doctor_id,
+        p1_1.id,
+        p1_1.content,
+        p1_1.created_at,
+        p1_1.status,
+        p1_1.title,
+        p1_1.updated_at 
+    from
+        doctor_posts p1_0 
+    join
+        post p1_1 
+            on p1_1.id=p1_0.post_id 
+    where
+        p1_0.doctor_id=?
+2025-12-02T06:43:42.203+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        cc1_0.supervisor_id,
+        cc1_1.id,
+        cc1_1.course_code,
+        cc1_1.credits,
+        cc1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        cc1_1.description,
+        cc1_1.course_name,
+        cc1_1.semester 
+    from
+        supervisor_course cc1_0 
+    join
+        course cc1_1 
+            on cc1_1.id=cc1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=cc1_1.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        cc1_0.supervisor_id=?
+Hibernate: 
+    select
+        cc1_0.supervisor_id,
+        cc1_1.id,
+        cc1_1.course_code,
+        cc1_1.credits,
+        cc1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        cc1_1.description,
+        cc1_1.course_name,
+        cc1_1.semester 
+    from
+        supervisor_course cc1_0 
+    join
+        course cc1_1 
+            on cc1_1.id=cc1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=cc1_1.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        cc1_0.supervisor_id=?
+2025-12-02T06:43:42.206+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* update
+        for com.example.backend.entity.Supervisor */update doctor 
+    set
+        department_id=?,
+        email=?,
+        expertise=?,
+        hashed_password=?,
+        name=?,
+        office_location=?,
+        phone_number=?,
+        title=?,
+        end_date=?,
+        managed_program=?,
+        start_date=?,
+        status=?,
+        supervisor_role=? 
+    where
+        id=?
+Hibernate: 
+    /* update
+        for com.example.backend.entity.Supervisor */update doctor 
+    set
+        department_id=?,
+        email=?,
+        expertise=?,
+        hashed_password=?,
+        name=?,
+        office_location=?,
+        phone_number=?,
+        title=?,
+        end_date=?,
+        managed_program=?,
+        start_date=?,
+        status=?,
+        supervisor_role=? 
+    where
+        id=?
+2025-12-02T06:43:42.209+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        s1_0.id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        c1_0.department_id,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        s1_0.email,
+        s1_0.expertise,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.office_location,
+        s1_0.phone_number,
+        s1_0.title,
+        cd1_0.id,
+        cd1_0.coordinator_id,
+        cd1_0.department_name,
+        s1_0.end_date,
+        s1_0.managed_program,
+        s1_0.start_date,
+        s1_0.status,
+        s1_0.supervisor_role 
+    from
+        doctor s1_0 
+    left join
+        department d1_0 
+            on d1_0.id=s1_0.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department cd1_0 
+            on s1_0.id=cd1_0.coordinator_id 
+    where
+        s1_0.doctor_type='SUPERVISOR' 
+        and s1_0.id=?
+Hibernate: 
+    select
+        s1_0.id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        c1_0.department_id,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        s1_0.email,
+        s1_0.expertise,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.office_location,
+        s1_0.phone_number,
+        s1_0.title,
+        cd1_0.id,
+        cd1_0.coordinator_id,
+        cd1_0.department_name,
+        s1_0.end_date,
+        s1_0.managed_program,
+        s1_0.start_date,
+        s1_0.status,
+        s1_0.supervisor_role 
+    from
+        doctor s1_0 
+    left join
+        department d1_0 
+            on d1_0.id=s1_0.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department cd1_0 
+            on s1_0.id=cd1_0.coordinator_id 
+    where
+        s1_0.doctor_type='SUPERVISOR' 
+        and s1_0.id=?
+2025-12-02T06:43:42.210+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        c1_0.doctor_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.credits,
+        c1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c2_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c2_0.email,
+        c2_0.expertise,
+        c2_0.hashed_password,
+        c2_0.name,
+        c2_0.office_location,
+        c2_0.phone_number,
+        c2_0.title,
+        c2_0.end_date,
+        c2_0.managed_program,
+        c2_0.start_date,
+        c2_0.status,
+        c2_0.supervisor_role,
+        d1_0.department_name,
+        c1_1.description,
+        c1_1.course_name,
+        c1_1.semester 
+    from
+        doctor_course c1_0 
+    join
+        course c1_1 
+            on c1_1.id=c1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=c1_1.department_id 
+    left join
+        doctor c2_0 
+            on c2_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c2_0.department_id 
+    where
+        c1_0.doctor_id=?
+Hibernate: 
+    select
+        c1_0.doctor_id,
+        c1_1.id,
+        c1_1.course_code,
+        c1_1.credits,
+        c1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c2_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c2_0.email,
+        c2_0.expertise,
+        c2_0.hashed_password,
+        c2_0.name,
+        c2_0.office_location,
+        c2_0.phone_number,
+        c2_0.title,
+        c2_0.end_date,
+        c2_0.managed_program,
+        c2_0.start_date,
+        c2_0.status,
+        c2_0.supervisor_role,
+        d1_0.department_name,
+        c1_1.description,
+        c1_1.course_name,
+        c1_1.semester 
+    from
+        doctor_course c1_0 
+    join
+        course c1_1 
+            on c1_1.id=c1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=c1_1.department_id 
+    left join
+        doctor c2_0 
+            on c2_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c2_0.department_id 
+    where
+        c1_0.doctor_id=?
+2025-12-02T06:43:42.210+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        p1_0.doctor_id,
+        p1_1.id,
+        p1_1.content,
+        p1_1.created_at,
+        p1_1.status,
+        p1_1.title,
+        p1_1.updated_at 
+    from
+        doctor_posts p1_0 
+    join
+        post p1_1 
+            on p1_1.id=p1_0.post_id 
+    where
+        p1_0.doctor_id=?
+Hibernate: 
+    select
+        p1_0.doctor_id,
+        p1_1.id,
+        p1_1.content,
+        p1_1.created_at,
+        p1_1.status,
+        p1_1.title,
+        p1_1.updated_at 
+    from
+        doctor_posts p1_0 
+    join
+        post p1_1 
+            on p1_1.id=p1_0.post_id 
+    where
+        p1_0.doctor_id=?
+2025-12-02T06:43:42.211+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    select
+        cc1_0.supervisor_id,
+        cc1_1.id,
+        cc1_1.course_code,
+        cc1_1.credits,
+        cc1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        cc1_1.description,
+        cc1_1.course_name,
+        cc1_1.semester 
+    from
+        supervisor_course cc1_0 
+    join
+        course cc1_1 
+            on cc1_1.id=cc1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=cc1_1.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        cc1_0.supervisor_id=?
+Hibernate: 
+    select
+        cc1_0.supervisor_id,
+        cc1_1.id,
+        cc1_1.course_code,
+        cc1_1.credits,
+        cc1_1.department_id,
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name,
+        cc1_1.description,
+        cc1_1.course_name,
+        cc1_1.semester 
+    from
+        supervisor_course cc1_0 
+    join
+        course cc1_1 
+            on cc1_1.id=cc1_0.course_id 
+    left join
+        department d1_0 
+            on d1_0.id=cc1_1.department_id 
+    left join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        cc1_0.supervisor_id=?
+2025-12-02T06:43:42.211+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* update
+        for com.example.backend.entity.Supervisor */update doctor 
+    set
+        department_id=?,
+        email=?,
+        expertise=?,
+        hashed_password=?,
+        name=?,
+        office_location=?,
+        phone_number=?,
+        title=?,
+        end_date=?,
+        managed_program=?,
+        start_date=?,
+        status=?,
+        supervisor_role=? 
+    where
+        id=?
+Hibernate: 
+    /* update
+        for com.example.backend.entity.Supervisor */update doctor 
+    set
+        department_id=?,
+        email=?,
+        expertise=?,
+        hashed_password=?,
+        name=?,
+        office_location=?,
+        phone_number=?,
+        title=?,
+        end_date=?,
+        managed_program=?,
+        start_date=?,
+        status=?,
+        supervisor_role=? 
+    where
+        id=?
+2025-12-02T06:43:42.307+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Doctor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, 'Doctor', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Doctor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, 'Doctor', default)
+2025-12-02T06:43:42.309+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Doctor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, 'Doctor', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Doctor */insert 
+    into
+        doctor (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, doctor_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, 'Doctor', default)
+2025-12-02T06:43:42.405+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.TeachingAssistant */insert 
+    into
+        teaching_assistant (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.TeachingAssistant */insert 
+    into
+        teaching_assistant (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.407+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.TeachingAssistant */insert 
+    into
+        teaching_assistant (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.TeachingAssistant */insert 
+    into
+        teaching_assistant (department_id, email, expertise, hashed_password, name, office_location, phone_number, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.551+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+2025-12-02T06:43:42.552+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+2025-12-02T06:43:42.553+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Student */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, 'Student', default)
+2025-12-02T06:43:42.650+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.StudentRepresentative */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, end_date, responsibilities, role, start_date, status, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'REPRESENTATIVE', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.StudentRepresentative */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, end_date, responsibilities, role, start_date, status, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'REPRESENTATIVE', default)
+2025-12-02T06:43:42.652+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.StudentRepresentative */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, end_date, responsibilities, role, start_date, status, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'REPRESENTATIVE', default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.StudentRepresentative */insert 
+    into
+        students (academic_id, department_id, email, hashed_password, name, end_date, responsibilities, role, start_date, status, student_type, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'REPRESENTATIVE', default)
+2025-12-02T06:43:42.653+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.654+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.655+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Course */insert 
+    into
+        course (course_code, credits, department_id, description, course_name, semester, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.656+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+2025-12-02T06:43:42.656+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+2025-12-02T06:43:42.657+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.CourseEnrollment */insert 
+    into
+        course_enrollment (course_id, enrollment_date, grade, student_id, id) 
+    values
+        (?, ?, ?, ?, default)
+2025-12-02T06:43:42.658+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Assignment */insert 
+    into
+        assignment (course_id, description, due_date, max_score, title, assignment_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Assignment */insert 
+    into
+        assignment (course_id, description, due_date, max_score, title, assignment_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.659+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Assignment */insert 
+    into
+        assignment (course_id, description, due_date, max_score, title, assignment_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Assignment */insert 
+    into
+        assignment (course_id, description, due_date, max_score, title, assignment_id) 
+    values
+        (?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.659+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Material */insert 
+    into
+        material (course_id, professor_id, ta_id, title, type, upload_date, url, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Material */insert 
+    into
+        material (course_id, professor_id, ta_id, title, type, upload_date, url, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.660+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Material */insert 
+    into
+        material (course_id, professor_id, ta_id, title, type, upload_date, url, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Material */insert 
+    into
+        material (course_id, professor_id, ta_id, title, type, upload_date, url, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.661+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Announcement */insert 
+    into
+        announcement (content, created_at, doctor_id, studentrep_id, supervisor_id, ta_id, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Announcement */insert 
+    into
+        announcement (content, created_at, doctor_id, studentrep_id, supervisor_id, ta_id, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.661+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Announcement */insert 
+    into
+        announcement (content, created_at, doctor_id, studentrep_id, supervisor_id, ta_id, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Announcement */insert 
+    into
+        announcement (content, created_at, doctor_id, studentrep_id, supervisor_id, ta_id, title, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.662+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Event */insert 
+    into
+        event (description, doctor_id, end_time, location, start_time, supervisor_id, ta_id, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Event */insert 
+    into
+        event (description, doctor_id, end_time, location, start_time, supervisor_id, ta_id, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2025-12-02T06:43:42.663+02:00 DEBUG 78651 --- [backend] [           main] org.hibernate.SQL                        : 
+    /* insert for
+        com.example.backend.entity.Event */insert 
+    into
+        event (description, doctor_id, end_time, location, start_time, supervisor_id, ta_id, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    /* insert for
+        com.example.backend.entity.Event */insert 
+    into
+        event (description, doctor_id, end_time, location, start_time, supervisor_id, ta_id, title, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Let's inspect the beans provided by Spring Boot:
+authController
+basicErrorController
+courseController
+doctorController
+pingController
+preserveErrorControllerTargetClassPostProcessor
+simpleControllerHandlerAdapter
+studentController
+supervisorController
+teachingAssistantController
+viewControllerHandlerMapping
+2025-12-02T06:44:38.183+02:00  INFO 78651 --- [backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-02T06:44:38.183+02:00  INFO 78651 --- [backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-02T06:44:38.184+02:00  INFO 78651 --- [backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-12-02T06:44:38.209+02:00  WARN 78651 --- [backend] [nio-8080-exec-2] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+Incoming Request: POST /api/auth/login
+Incoming Request: GET /students
+2025-12-02T06:45:47.848+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+Hibernate: 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-02T06:45:47.849+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Incoming Request: GET /favicon.ico
+Incoming Request: GET /doctors
+2025-12-02T06:46:09.243+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        d1_0.id,
+        d1_0.doctor_type,
+        d1_0.department_id,
+        d1_0.email,
+        d1_0.expertise,
+        d1_0.hashed_password,
+        d1_0.name,
+        d1_0.office_location,
+        d1_0.phone_number,
+        d1_0.title,
+        d1_0.end_date,
+        d1_0.managed_program,
+        d1_0.start_date,
+        d1_0.status,
+        d1_0.supervisor_role 
+    from
+        doctor d1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+Hibernate: 
+    /* <criteria> */ select
+        d1_0.id,
+        d1_0.doctor_type,
+        d1_0.department_id,
+        d1_0.email,
+        d1_0.expertise,
+        d1_0.hashed_password,
+        d1_0.name,
+        d1_0.office_location,
+        d1_0.phone_number,
+        d1_0.title,
+        d1_0.end_date,
+        d1_0.managed_program,
+        d1_0.start_date,
+        d1_0.status,
+        d1_0.supervisor_role 
+    from
+        doctor d1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-02T06:46:09.244+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+2025-12-02T06:46:09.248+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.coordinator_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.coordinator_id=?
+2025-12-02T06:46:09.249+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+2025-12-02T06:46:09.249+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.coordinator_id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.coordinator_id=?
+Incoming Request: GET /favicon.ico
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: POST /api/auth/login
+Incoming Request: GET /students
+2025-12-02T07:01:10.910+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-7] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+Hibernate: 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-12-02T07:01:10.912+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Incoming Request: POST /auth/login
+AuthController: Login attempt for email: student1@university.edu with role: student
+2025-12-02T07:01:21.683+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-9] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    where
+        s1_0.email=?
+Hibernate: 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    where
+        s1_0.email=?
+Incoming Request: POST /auth/login
+AuthController: Login attempt for email: ahmed.m@student.edu with role: student
+2025-12-02T07:01:28.818+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    where
+        s1_0.email=?
+Hibernate: 
+    /* <criteria> */ select
+        s1_0.id,
+        s1_0.student_type,
+        s1_0.academic_id,
+        s1_0.department_id,
+        s1_0.email,
+        s1_0.hashed_password,
+        s1_0.name,
+        s1_0.end_date,
+        s1_0.responsibilities,
+        s1_0.role,
+        s1_0.start_date,
+        s1_0.status 
+    from
+        students s1_0 
+    where
+        s1_0.email=?
+2025-12-02T07:01:28.818+02:00 DEBUG 78651 --- [backend] [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?
+Hibernate: 
+    select
+        d1_0.id,
+        d1_0.coordinator_id,
+        c1_0.id,
+        d2_0.id,
+        d2_0.coordinator_id,
+        d2_0.department_name,
+        c1_0.email,
+        c1_0.expertise,
+        c1_0.hashed_password,
+        c1_0.name,
+        c1_0.office_location,
+        c1_0.phone_number,
+        c1_0.title,
+        c1_0.end_date,
+        c1_0.managed_program,
+        c1_0.start_date,
+        c1_0.status,
+        c1_0.supervisor_role,
+        d1_0.department_name 
+    from
+        department d1_0 
+    join
+        doctor c1_0 
+            on c1_0.id=d1_0.coordinator_id 
+    left join
+        department d2_0 
+            on d2_0.id=c1_0.department_id 
+    where
+        d1_0.id=?

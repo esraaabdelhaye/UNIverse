@@ -1,12 +1,11 @@
 import { Component, signal, WritableSignal, ChangeDetectionStrategy, AfterViewInit, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-create-supervisor-account',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './create-supervisor-account.html',
   styleUrls: ['./create-supervisor-account.css']
 })
