@@ -179,38 +179,6 @@ export const routes: Routes = [
         .then(m => m.ReviewPerformance),
   },
 
-  // ---------------- STUDENT REP ----------------
-  {
-    path: 'studentrep-dashboard',
-    loadComponent: () =>
-      import('./features/studentrep-pages/studentrep-dashboard/studentrep-dashboard')
-        .then(m => m.StudentrepDashboard),
-  },
-  {
-    path: 'studentrep-dashboard/events',
-    loadComponent: () =>
-      import('./features/studentrep-pages/events/events')
-        .then(m => m.Events),
-  },
-  {
-    path: 'studentrep-dashboard/live-feed',
-    loadComponent: () =>
-      import('./features/studentrep-pages/live-feed/live-feed')
-        .then(m => m.LiveFeed),
-  },
-  {
-    path: 'studentrep-dashboard/manage-student-grps',
-    loadComponent: () =>
-      import('./features/studentrep-pages/manage-student-grps/manage-student-grps')
-        .then(m => m.ManageStudentGrps),
-  },
-  {
-    path: 'studentrep-dashboard/polls-voting',
-    loadComponent: () =>
-      import('./features/studentrep-pages/polls-voting/polls-voting')
-        .then(m => m.PollsVoting),
-  },
-
   // ---------------- 404 ----------------
   {
     path: '**',
