@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
@@ -27,7 +26,7 @@ export class Navbar implements OnInit {
 
   notificationCount: number = 3;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit() {
     if (!this.userName) {

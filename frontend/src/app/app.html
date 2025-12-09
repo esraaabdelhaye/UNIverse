@@ -12,7 +12,7 @@
     <!-- Sidebar (collapsible) -->
     <app-sidebar
       [isOpen]="sidebarOpen"
-      [currentPage]="currentPage"
+      [currentPage]="''"
       [userRole]="userRole"
       (navigate)="navigateTo($event)">
     </app-sidebar>
@@ -24,48 +24,14 @@
         <div class="spinner"></div>
       </div>
 
-      <!-- Page Container -->
-      <div class="page-container" [class.hidden]="isLoading">
-        <!-- STUDENT PAGES -->
-        <ng-container *ngIf="userRole === 'student'">
-          <app-student-dashboard *ngIf="currentPage === 'dashboard'"></app-student-dashboard>
-          <app-student-courses *ngIf="currentPage === 'courses'"></app-student-courses>
-          <app-student-assignments *ngIf="currentPage === 'assignments'"></app-student-assignments>
-          <app-student-submit *ngIf="currentPage === 'submit'"></app-student-submit>
-          <app-student-materials *ngIf="currentPage === 'materials'"></app-student-materials>
-        </ng-container>
-
-        <!-- PROFESSOR PAGES -->
-        <ng-container *ngIf="userRole === 'professor'">
-          <app-professor-dashboard *ngIf="currentPage === 'dashboard'"></app-professor-dashboard>
-          <app-professor-courses *ngIf="currentPage === 'courses'"></app-professor-courses>
-          <app-professor-grade *ngIf="currentPage === 'grade'"></app-professor-grade>
-          <app-professor-materials *ngIf="currentPage === 'materials'"></app-professor-materials>
-          <app-professor-assignment *ngIf="currentPage === 'assignment'"></app-professor-assignment>
-        </ng-container>
-
-        <!-- ADMIN PAGES -->
-        <ng-container *ngIf="userRole === 'admin'">
-          <app-admin-dashboard *ngIf="currentPage === 'dashboard'"></app-admin-dashboard>
-          <app-admin-courses *ngIf="currentPage === 'courses'"></app-admin-courses>
-          <app-admin-faculty *ngIf="currentPage === 'faculty'"></app-admin-faculty>
-          <app-admin-timetable *ngIf="currentPage === 'timetable'"></app-admin-timetable>
-        </ng-container>
-
-        <!-- TA PAGES -->
-        <ng-container *ngIf="userRole === 'ta'">
-          <app-ta-dashboard *ngIf="currentPage === 'dashboard'"></app-ta-dashboard>
-          <app-ta-queries *ngIf="currentPage === 'queries'"></app-ta-queries>
-          <app-ta-add-grades *ngIf="currentPage === 'addgrades'"></app-ta-add-grades>
-          <app-ta-submissions *ngIf="currentPage === 'submissions'"></app-ta-submissions>
-        </ng-container>
-      </div>
+      <!-- Router Outlet - All pages render here -->
+      <router-outlet></router-outlet>
     </main>
   </div>
 
   <!-- Footer (optional) -->
   <footer class="app-footer">
-    <p>&copy; 2024 UNiverse Management System. All rights reserved.</p>
+    <p>&copy; 2024 UNIverse Management System. All rights reserved.</p>
   </footer>
 
   <!-- Development: Role Switcher (remove in production) -->

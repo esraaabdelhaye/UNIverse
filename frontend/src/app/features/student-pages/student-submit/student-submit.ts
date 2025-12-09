@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface SubmissionItem {
   id: number;
@@ -16,7 +17,7 @@ interface SubmissionItem {
 @Component({
   selector: 'app-student-submit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './student-submit.html',
   styleUrls: ['./student-submit.css']
 })

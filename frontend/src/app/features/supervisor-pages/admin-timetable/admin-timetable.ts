@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
 
 interface TimeSlot {
   time: string;
@@ -10,7 +11,7 @@ interface TimeSlot {
 @Component({
   selector: 'app-admin-timetable',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './admin-timetable.html',
   styleUrls: ['./admin-timetable.css']
 })

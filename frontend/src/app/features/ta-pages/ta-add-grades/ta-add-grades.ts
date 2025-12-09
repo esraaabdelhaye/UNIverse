@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface StudentGrade {
   id: number;
@@ -13,7 +14,7 @@ interface StudentGrade {
 @Component({
   selector: 'app-ta-add-grades',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './ta-add-grades.html',
   styleUrls: ['./ta-add-grades.css']
 })

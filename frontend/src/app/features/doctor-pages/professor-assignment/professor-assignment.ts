@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Assignment {
   id: number;
@@ -14,7 +15,7 @@ interface Assignment {
 @Component({
   selector: 'app-professor-assignment',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './professor-assignment.html',
   styleUrls: ['./professor-assignment.css']
 })

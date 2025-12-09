@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Submission {
   id: number;
@@ -14,7 +15,7 @@ interface Submission {
 @Component({
   selector: 'app-ta-submissions',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './ta-submissions.html',
   styleUrls: ['./ta-submissions.css']
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Query {
   id: number;
@@ -17,7 +18,7 @@ interface Query {
 @Component({
   selector: 'app-ta-queries',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './ta-queries.html',
   styleUrls: ['./ta-queries.css']
 })

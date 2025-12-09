@@ -120,4 +120,13 @@ export class ProfessorGradeComponent implements OnInit {
   downloadSubmission(submission: StudentSubmission) {
     console.log('Downloading:', submission.fileName);
   }
+
+  // ========== ADD THESE NEW METHODS ==========
+  getGradedCount(): number {
+    return this.filteredSubmissions.filter(s => s.grade !== undefined).length;
+  }
+
+  getPendingCount(): number {
+    return this.filteredSubmissions.filter(s => s.grade === undefined && s.status !== 'missing').length;
+  }
 }

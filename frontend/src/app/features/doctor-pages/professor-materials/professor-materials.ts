@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Material {
   id: number;
@@ -15,7 +16,7 @@ interface Material {
 @Component({
   selector: 'app-professor-materials',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './professor-materials.html',
   styleUrls: ['./professor-materials.css']
 })
