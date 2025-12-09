@@ -112,4 +112,8 @@ export class TaQueriesComponent implements OnInit {
     };
     return colors[status] || '#BDBDBD';
   }
+
+  getNewCount(): number {
+    return this.queries.filter(q => q.status === 'new').length;
+  }
 }

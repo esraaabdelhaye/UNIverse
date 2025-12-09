@@ -30,11 +30,11 @@
     </div>
     <div class="summary-stat">
       <div class="stat-label">Graded</div>
-      <div class="stat-value">{{ filteredSubmissions.filter(s => s.grade !== undefined).length }}</div>
+      <div class="stat-value">{{ getGradedCount() }}</div>
     </div>
     <div class="summary-stat">
       <div class="stat-label">Pending</div>
-      <div class="stat-value">{{ filteredSubmissions.filter(s => s.grade === undefined && s.status !== 'missing').length }}</div>
+      <div class="stat-value">{{ getPendingCount() }}</div>
     </div>
   </div>
 
@@ -73,8 +73,7 @@
             *ngIf="submission.fileName"
             class="file-link"
             (click)="downloadSubmission(submission)">
-            <mat-icon>download</mat-icon>
-            {{ submission.fileName }}
+            📥 {{ submission.fileName }}
           </button>
           <span *ngIf="!submission.fileName" class="text-gray">-</span>
         </td>
@@ -98,7 +97,7 @@
         </td>
         <td>
           <button class="view-btn" title="View Details">
-            <mat-icon>visibility</mat-icon>
+            👁️
           </button>
         </td>
       </tr>
@@ -109,8 +108,7 @@
   <!-- Submit Button -->
   <div class="action-section">
     <button class="submit-grades-btn" (click)="submitGrades()">
-      <mat-icon>check_circle</mat-icon>
-      Submit All Grades
+      ✓ Submit All Grades
     </button>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 interface StudentSubmission {
   id: number;
@@ -16,7 +17,7 @@ interface StudentSubmission {
 @Component({
   selector: 'app-professor-grade',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './professor-grade.html',
   styleUrls: ['./professor-grade.css']
 })
@@ -94,14 +95,6 @@ export class ProfessorGradeComponent implements OnInit {
     this.selectedAssignment = this.getAssignments()[0] || '';
   }
 
-  onSubmissionGradeChange(submission: StudentSubmission, grade: number) {
-    submission.grade = grade;
-  }
-
-  onSubmissionFeedbackChange(submission: StudentSubmission, feedback: string) {
-    submission.feedback = feedback;
-  }
-
   submitGrades() {
     const gradedSubmissions = this.filteredSubmissions.filter(s => s.grade !== undefined);
     console.log('Submitting grades:', gradedSubmissions);
@@ -121,7 +114,6 @@ export class ProfessorGradeComponent implements OnInit {
     console.log('Downloading:', submission.fileName);
   }
 
-  // ========== ADD THESE NEW METHODS ==========
   getGradedCount(): number {
     return this.filteredSubmissions.filter(s => s.grade !== undefined).length;
   }

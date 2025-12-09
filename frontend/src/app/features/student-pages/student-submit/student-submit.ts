@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon'; // ADD THIS
 
 interface SubmissionItem {
   id: number;
@@ -17,7 +17,7 @@ interface SubmissionItem {
 @Component({
   selector: 'app-student-submit',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule], // ADD MatIconModule
   templateUrl: './student-submit.html',
   styleUrls: ['./student-submit.css']
 })
@@ -26,6 +26,8 @@ export class StudentSubmitComponent implements OnInit {
   selectedAssignment: string = '';
   selectedFile: File | null = null;
   assignmentDetails: any = null;
+  now: Date = new Date(); // ADD THIS PROPERTY
+
   previousSubmissions: SubmissionItem[] = [
     {
       id: 1,

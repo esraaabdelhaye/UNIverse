@@ -35,9 +35,7 @@
     <!-- Course Filter -->
     <select class="course-filter" [(ngModel)]="selectedCourse" (change)="filterAssignments()">
       <option value="all">All Courses</option>
-      <option *ngFor="let course of getUniqueCourses()"
-              [value]="course"
-              *ngIf="course !== 'all'">
+      <option *ngFor="let course of getUniqueCourses()" [value]="course">
         {{ course }}
       </option>
     </select>
@@ -46,15 +44,15 @@
   <!-- Stats Row -->
   <div class="stats-row">
     <div class="stat">
-      <div class="stat-number">{{ assignments.filter(a => a.status === 'pending').length }}</div>
+      <div class="stat-number">{{ getPendingCount() }}</div>
       <div class="stat-label">Pending</div>
     </div>
     <div class="stat">
-      <div class="stat-number">{{ assignments.filter(a => a.status === 'submitted').length }}</div>
+      <div class="stat-number">{{ getSubmittedCount() }}</div>
       <div class="stat-label">Submitted</div>
     </div>
     <div class="stat">
-      <div class="stat-number">{{ assignments.filter(a => a.status === 'graded').length }}</div>
+      <div class="stat-number">{{ getGradedCount() }}</div>
       <div class="stat-label">Graded</div>
     </div>
   </div>
@@ -96,7 +94,7 @@
 
   <!-- Empty State -->
   <div class="empty-state" *ngIf="filteredAssignments.length === 0">
-    <mat-icon>assignment</mat-icon>
+    📋
     <p>No assignments found</p>
   </div>
 </div>

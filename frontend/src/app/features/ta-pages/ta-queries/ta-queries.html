@@ -13,7 +13,7 @@
           All ({{ queries.length }})
         </button>
         <button class="tab" [class.active]="selectedTab === 'new'" (click)="selectTab('new')">
-          New ({{ queries.filter(q => q.status === 'new').length }})
+          New ({{ getNewCount() }})
         </button>
         <button class="tab" [class.active]="selectedTab === 'in-progress'" (click)="selectTab('in-progress')">
           In Progress
@@ -95,11 +95,7 @@
           rows="6"></textarea>
         <div class="form-buttons">
           <button class="btn-send" (click)="sendResponse()" [disabled]="!responseText.trim()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-            Send Response
+            ✈️ Send Response
           </button>
           <button class="btn-resolve" (click)="markResolved()" *ngIf="selectedQuery.status !== 'resolved'">
             Mark as Resolved

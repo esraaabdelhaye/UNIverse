@@ -18,9 +18,11 @@
 
     <select class="filter-select" [(ngModel)]="selectedCourse" (change)="filterMaterials()">
       <option value="all">All Courses</option>
-      <option *ngFor="let course of courses" [value]="course" *ngIf="course !== 'all'">
-        {{ course }}
-      </option>
+      <ng-container *ngFor="let course of courses">
+        <option *ngIf="course !== 'all'" [value]="course">
+          {{ course }}
+        </option>
+      </ng-container>
     </select>
 
     <select class="filter-select" [(ngModel)]="selectedType" (change)="filterMaterials()">
@@ -34,12 +36,8 @@
 
   <!-- Materials List -->
   <div class="materials-list">
-    <div class="material-group" *ngFor="let course of (filteredMaterials | keyvalue: null)">
-      <h3 class="course-group-title" *ngIf="selectedCourse === 'all'">
-        {{ course.key }}
-      </h3>
-
-      <div class="material-item" *ngFor="let material of filteredMaterials | filter: selectedCourse">
+    <ng-container *ngFor="let material of filteredMaterials">
+      <div class="material-item">
         <div class="material-icon">
           <mat-icon>{{ getTypeIcon(material.type) }}</mat-icon>
         </div>
@@ -58,5 +56,12 @@
           Download
         </button>
       </div>
-    </div>
+    </ng-container>
   </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredMaterials.length === 0">
+    <mat-icon>folder_open</mat-icon>
+    <p>No materials found</p>
+  </div>
+</div>

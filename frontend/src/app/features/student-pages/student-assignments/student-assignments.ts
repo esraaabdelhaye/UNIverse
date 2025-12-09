@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 interface AssignmentItem {
   id: number;
@@ -42,11 +42,11 @@ export class StudentAssignmentsComponent implements OnInit {
     let filtered = this.assignments;
 
     if (this.selectedTab !== 'all') {
-      filtered = filtered.filter(a => a.status === this.selectedTab);
+      filtered = filtered.filter(assignment => assignment.status === this.selectedTab);
     }
 
     if (this.selectedCourse !== 'all') {
-      filtered = filtered.filter(a => a.course === this.selectedCourse);
+      filtered = filtered.filter(assignment => assignment.course === this.selectedCourse);
     }
 
     this.filteredAssignments = filtered;
@@ -54,11 +54,6 @@ export class StudentAssignmentsComponent implements OnInit {
 
   selectTab(tab: string) {
     this.selectedTab = tab;
-    this.filterAssignments();
-  }
-
-  selectCourse(course: string) {
-    this.selectedCourse = course;
     this.filterAssignments();
   }
 
@@ -74,5 +69,17 @@ export class StudentAssignmentsComponent implements OnInit {
 
   getUniqueCourses(): string[] {
     return ['all', ...new Set(this.assignments.map(a => a.course))];
+  }
+
+  getPendingCount(): number {
+    return this.assignments.filter(a => a.status === 'pending').length;
+  }
+
+  getSubmittedCount(): number {
+    return this.assignments.filter(a => a.status === 'submitted').length;
+  }
+
+  getGradedCount(): number {
+    return this.assignments.filter(a => a.status === 'graded').length;
   }
 }
