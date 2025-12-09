@@ -13,7 +13,9 @@
       (click)="onNavigate(item.id)"
       [attr.aria-label]="item.label">
 
-      <span class="nav-icon" [innerHTML]="getIconSvg(item.icon)"></span>
+      <span class="nav-icon">
+        <mat-icon>{{ item.icon }}</mat-icon>
+      </span>
 
       <span class="nav-label" *ngIf="isOpen">{{ item.label }}</span>
 

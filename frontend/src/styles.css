@@ -469,3 +469,6 @@ tbody tr:nth-child(even) {
     padding: 0 var(--spacing-sm);
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
