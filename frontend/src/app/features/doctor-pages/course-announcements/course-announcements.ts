@@ -58,7 +58,7 @@ export class Announcements implements OnInit {
         id: 1,
         title: 'Essay 2 Deadline Reminder',
         message: "Don't forget to submit Essay 2 by Oct 28. Late submissions will incur a penalty.",
-        course: 'PHIL-301',
+        course: '1',
         status: 'published',
         createdDate: 'Oct 26, 2023',
       },
@@ -66,7 +66,7 @@ export class Announcements implements OnInit {
         id: 2,
         title: 'New Reading Material Available',
         message: "Check the Materials section for the new supplementary readings on Renaissance Art.",
-        course: 'HIST-212',
+        course: '2',
         status: 'published',
         createdDate: 'Oct 25, 2023',
       },
@@ -74,7 +74,7 @@ export class Announcements implements OnInit {
         id: 3,
         title: 'Office Hours Rescheduled',
         message: "Office hours this week have been moved to Wednesday 2-4 PM. Join via Zoom link in the course page.",
-        course: 'LIT-405',
+        course: '3',
         status: 'draft',
         createdDate: 'Oct 24, 2023',
       },
@@ -161,9 +161,9 @@ export class Announcements implements OnInit {
     this.newMessage = '';
   }
 
-  getCourseCode(course: string): string {
-    const found = this.courses.find(c => c.id === parseInt(course));
-    return found ? found.code : course;
+  getCourseCode(courseId: string): string {
+    const found = this.courses.find(c => c.id.toString() === courseId);
+    return found ? found.code : courseId;
   }
 
   logout() {

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // ---------------- AUTH ----------------
+  // AUTH Routes
   {
     path: '',
     loadComponent: () =>
@@ -33,7 +33,7 @@ export const routes: Routes = [
         .then(m => m.CreateSupervisorAccount),
   },
 
-  // ---------------- DOCTOR ----------------
+  // DOCTOR Routes
   {
     path: 'doctor-dashboard',
     loadComponent: () =>
@@ -59,13 +59,13 @@ export const routes: Routes = [
         .then(m => m.ViewSubmissions),
   },
   {
-    path: 'doctor-dashboard/course-announcements',
+    path: 'doctor-dashboard/announcements',
     loadComponent: () =>
       import('./features/doctor-pages/course-announcements/course-announcements')
         .then(m => m.Announcements),
   },
 
-  // ---------------- STUDENT ----------------
+  // STUDENT Routes
   {
     path: 'student-dashboard',
     loadComponent: () =>
@@ -97,7 +97,7 @@ export const routes: Routes = [
         .then(m => m.ViewMaterials),
   },
 
-  // ---------------- SUPERVISOR ----------------
+  // SUPERVISOR Routes
   {
     path: 'supervisor-dashboard',
     loadComponent: () =>
@@ -123,7 +123,7 @@ export const routes: Routes = [
         .then(m => m.GenerateTimetable),
   },
 
-  // ---------------- 404 ----------------
+  // 404 Fallback
   {
     path: '**',
     redirectTo: '',

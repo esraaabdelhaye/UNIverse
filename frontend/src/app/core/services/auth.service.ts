@@ -45,7 +45,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials)
       .pipe(
         tap(response => {
-          if (response.statusCode === 200 && response.data) {
+          if (response && response.statusCode === 200 && response.data) {
             // Store user info in localStorage
             localStorage.setItem('currentUser', JSON.stringify(response.data));
             this.currentUserSubject.next(response.data);
@@ -83,11 +83,18 @@ export class AuthService {
   }
 
   /**
-   * Get current user from storage
+   * Get current user from storage - with error handling
    */
   private getUserFromStorage(): any {
-    const user = localStorage.getItem('currentUser');
-    return user ? JSON.parse(user) : null;
+    try {
+      const user = localStorage.getItem('currentUser');
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      console.error('Error parsing user from localStorage:', error);
+      // Clear the corrupted data
+      localStorage.removeItem('currentUser');
+      return null;
+    }
   }
 
   /**
