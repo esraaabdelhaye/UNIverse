@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,12 @@ interface Assignment {
   grade?: number;
 }
 
+interface UploadFile {
+  name: string;
+  size: string;
+  type: string;
+}
+
 @Component({
   selector: 'app-submit-assignments',
   standalone: true,
@@ -21,6 +27,8 @@ interface Assignment {
   styleUrl: './submit-assignments.css',
 })
 export class SubmitAssignments implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   private router = inject(Router);
   private authService = inject(AuthService);
 
@@ -28,6 +36,9 @@ export class SubmitAssignments implements OnInit {
   filteredAssignments: Assignment[] = [];
   selectedCourse = '';
   selectedSort = 'duedate';
+  uploadedFiles: UploadFile[] = [];
+  isSubmittingAssignment = false;
+  selectedAssignmentForSubmit: Assignment | null = null;
 
   ngOnInit() {
     this.loadAssignments();
@@ -112,9 +123,106 @@ export class SubmitAssignments implements OnInit {
       return;
     }
 
-    assignment.status = 'submitted';
-    console.log('Submitted:', assignment.title);
-    alert(`Assignment "${assignment.title}" submitted successfully!`);
+    this.selectedAssignmentForSubmit = assignment;
+    this.uploadedFiles = [];
+    this.triggerFileInput();
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const files = event.dataTransfer?.files;
+    if (files) {
+      this.handleFiles(files);
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const files = event.target.files;
+    if (files) {
+      this.handleFiles(files);
+    }
+  }
+
+  handleFiles(files: FileList): void {
+    Array.from(files).forEach((file: any) => {
+      const uploadFile: UploadFile = {
+        name: file.name,
+        size: this.formatFileSize(file.size),
+        type: this.getFileType(file.name),
+      };
+      this.uploadedFiles.push(uploadFile);
+    });
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  }
+
+  getFileType(filename: string): string {
+    if (filename.endsWith('.pdf')) return 'pdf';
+    if (filename.endsWith('.docx') || filename.endsWith('.doc')) return 'doc';
+    if (filename.endsWith('.pptx') || filename.endsWith('.ppt')) return 'ppt';
+    if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return 'xls';
+    if (filename.endsWith('.txt')) return 'doc';
+    if (filename.endsWith('.jpg') || filename.endsWith('.jpeg') || filename.endsWith('.png')) return 'file';
+    return 'file';
+  }
+
+  removeFile(index: number): void {
+    this.uploadedFiles.splice(index, 1);
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  completeSubmission(): void {
+    if (this.uploadedFiles.length === 0) {
+      alert('Please select at least one file to submit');
+      return;
+    }
+
+    if (!this.selectedAssignmentForSubmit) {
+      alert('Error: Assignment not selected');
+      return;
+    }
+
+    this.isSubmittingAssignment = true;
+
+    // Simulate API call
+    setTimeout(() => {
+      this.selectedAssignmentForSubmit!.status = 'submitted';
+      console.log('Assignment submitted:', {
+        assignment: this.selectedAssignmentForSubmit?.title,
+        files: this.uploadedFiles,
+      });
+
+      alert(`Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`);
+      this.resetUploadForm();
+      this.isSubmittingAssignment = false;
+      this.filterAssignments();
+    }, 1500);
+  }
+
+  cancelSubmission(): void {
+    this.selectedAssignmentForSubmit = null;
+    this.uploadedFiles = [];
+  }
+
+  resetUploadForm(): void {
+    this.selectedAssignmentForSubmit = null;
+    this.uploadedFiles = [];
   }
 
   viewSubmission(assignment: Assignment): void {
@@ -125,17 +233,6 @@ export class SubmitAssignments implements OnInit {
 
     console.log('Viewing submission:', assignment.id);
     alert(`Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`);
-  }
-
-  resubmit(assignment: Assignment): void {
-    if (assignment.status !== 'submitted' && assignment.status !== 'graded') {
-      alert('Cannot resubmit this assignment');
-      return;
-    }
-
-    assignment.status = 'submitted';
-    console.log('Resubmitting:', assignment.title);
-    alert(`Resubmitted "${assignment.title}". Please upload your file.`);
   }
 
   viewGrade(assignment: Assignment): void {
