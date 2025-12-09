@@ -101,6 +101,13 @@ export class StudentDashboard implements OnInit {
     alert('Question posted successfully!');
   }
 
+  navigateToCourse(courseCode: string): void {
+    this.router.navigate(['/student-dashboard/my-courses'], {
+      queryParams: { course: courseCode }
+    });
+    console.log('Navigating to course:', courseCode);
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);

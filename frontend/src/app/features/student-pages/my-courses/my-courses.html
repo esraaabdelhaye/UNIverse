@@ -70,10 +70,10 @@
               <span class="course-code" [ngClass]="course.textColor">{{ course.code }}</span>
               <h3 class="course-title">{{ course.name }}</h3>
               <p class="course-professor">{{ course.professor }}</p>
-              <a class="course-btn" [ngClass]="course.buttonColor" href="#" routerLink="/student-dashboard/view-materials" (click)="viewCourse(course)">
+              <button class="course-btn" [ngClass]="course.buttonColor" (click)="viewCourse(course)">
                 <span class="material-symbols-outlined">forum</span>
                 <span>View Materials</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

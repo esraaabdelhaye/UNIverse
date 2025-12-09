@@ -90,14 +90,14 @@
         <div class="courses-section">
           <h2 class="section-title-large">My Courses</h2>
           <div class="courses-grid">
-            <div class="course-card" *ngFor="let course of courses">
+            <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.code)">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
               <h3>{{ course.code }}: {{ course.name }}</h3>
               <p class="professor">{{ course.professor }}</p>
               <div class="progress-bar">
                 <div class="progress-fill" [style.width.%]="course.progress"></div>
               </div>
-              <a class="course-forum-btn blue" href="/student-dashboard/my-courses">
+              <a class="course-forum-btn blue" href="javascript:void(0)" (click)="navigateToCourse(course.code)">
                 <span class="material-symbols-outlined">forum</span> Course Info
               </a>
             </div>

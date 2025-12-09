@@ -104,7 +104,11 @@ export class MyCourses implements OnInit {
   }
 
   viewCourse(course: Course) {
-    console.log('Viewing course:', course);
+    // Navigate to course materials with course code as query param
+    this.router.navigate(['/student-dashboard/view-materials'], {
+      queryParams: { course: course.code }
+    });
+    console.log('Viewing course:', course.code);
   }
 
   logout() {
