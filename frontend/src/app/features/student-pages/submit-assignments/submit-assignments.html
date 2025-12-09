@@ -64,7 +64,7 @@
             <h2>Your Assignments</h2>
             <div class="filters">
               <div class="select-wrapper">
-                <select class="filter-select" (change)="filterByCourse($event)">
+                <select class="filter-select" (change)="filterAssignments()">
                   <option>All Courses</option>
                   <option>CS101: Intro to Programming</option>
                   <option>CS202: Data Structures</option>
@@ -86,40 +86,24 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="assignment-title">Assignment 1: Basic Algorithms</td>
-                <td class="course-code">CS101</td>
-                <td class="due-date urgent">Today, 11:59 PM</td>
-                <td><span class="status-badge status-pending">Pending</span></td>
-                <td class="text-right"><button class="btn btn-primary" (click)="openSubmitModal(1)">Submit</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Lab Report: Linked Lists</td>
-                <td class="course-code">CS202</td>
-                <td class="due-date warning">In 3 days</td>
-                <td><span class="status-badge status-pending">Pending</span></td>
-                <td class="text-right"><button class="btn btn-primary" (click)="openSubmitModal(2)">Submit</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Project Proposal</td>
-                <td class="course-code">DS310</td>
-                <td class="due-date">Oct 28, 2024</td>
-                <td><span class="status-badge status-submitted">Submitted</span></td>
-                <td class="text-right"><button class="btn btn-secondary">View Submission</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Quiz 1: Programming Fundamentals</td>
-                <td class="course-code">CS101</td>
-                <td class="due-date">Oct 15, 2024</td>
-                <td><span class="status-badge status-graded">Graded (95%)</span></td>
-                <td class="text-right"><button class="btn btn-secondary">View Grade</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Homework 2: API Integration</td>
-                <td class="course-code">DS310</td>
-                <td class="due-date">Oct 10, 2024</td>
-                <td><span class="status-badge status-past-due">Past Due</span></td>
-                <td class="text-right"><button class="btn btn-disabled" disabled>Submission Closed</button></td>
+              <tr *ngFor="let assignment of filteredAssignments">
+                <td class="assignment-title">{{ assignment.title }}</td>
+                <td class="course-code">{{ assignment.course }}</td>
+                <td class="due-date" [ngClass]="assignment.status === 'pending' ? 'urgent' : ''">{{ assignment.dueDate }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="'status-' + assignment.status">
+                    <span *ngIf="assignment.status === 'graded'">Graded ({{ assignment.grade }}%)</span>
+                    <span *ngIf="assignment.status === 'pending'">Pending</span>
+                    <span *ngIf="assignment.status === 'submitted'">Submitted</span>
+                    <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
+                  </span>
+                </td>
+                <td class="text-right">
+                  <button *ngIf="assignment.status === 'pending'" class="btn btn-primary" (click)="submitAssignment(assignment)">Submit</button>
+                  <button *ngIf="assignment.status === 'submitted'" class="btn btn-secondary" (click)="viewSubmission(assignment)">View Submission</button>
+                  <button *ngIf="assignment.status === 'graded'" class="btn btn-secondary" (click)="viewGrade(assignment)">View Grade</button>
+                  <button *ngIf="assignment.status === 'pastdue'" class="btn btn-disabled" disabled>Submission Closed</button>
+                </td>
               </tr>
               </tbody>
             </table>

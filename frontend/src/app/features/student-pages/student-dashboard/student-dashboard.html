@@ -60,13 +60,12 @@
           <p>Here's your academic overview</p>
         </div>
 
-        <!-- Quick Stats Section -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
             <span style="font-size: 32px;">📚</span>
             <div>
               <p style="color: #64748B; font-size: 14px; margin: 0;">Active Courses</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">5</p>
+              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ courses.length }}</p>
             </div>
           </div>
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
@@ -80,7 +79,7 @@
             <span style="font-size: 32px;">⏳</span>
             <div>
               <p style="color: #64748B; font-size: 14px; margin: 0;">Pending</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">3</p>
+              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ deadlines.length }}</p>
             </div>
           </div>
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
@@ -92,33 +91,17 @@
           </div>
         </div>
 
-        <!-- My Courses Section -->
         <div class="courses-section">
           <h2 class="section-title-large">My Courses</h2>
           <div class="courses-grid">
-            <div class="course-card">
+            <div class="course-card" *ngFor="let course of courses">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
-              <h3>CS101: Intro to Programming</h3>
-              <p class="professor">Prof. Alan Turing</p>
+              <h3>{{ course.code }}: {{ course.name }}</h3>
+              <p class="professor">{{ course.professor }}</p>
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="course.progress"></div>
+              </div>
               <a class="course-forum-btn blue" href="/student-dashboard/my-courses">
-                <span class="material-symbols-outlined">forum</span> Course Info
-              </a>
-            </div>
-
-            <div class="course-card">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6_PB_q1WmQT6Pv5PoVkhgUPvWQq5wb1gPsZENjDu7IeUrx5Szee5FAd1PicWO9XaFssXNoAiQx3gj9u3D0co1fL9QLbFShEr8Jnd_XVQeXfypQwjHLmDR8Ho76syQR6ODfE2jBObHkgXyLZBezf3jcf3P-8JcOrTpJBC7ujLdfj9ydiVQU86N4GfiIYHoKjzagUpUGijeZ0MibjU0gRmTe-ZwF4vCCE8_7NiFV83UVAjF4t2Xzoh97j8LmdiC14dO_HB4oFnPEjY"/>
-              <h3>CS202: Data Structures</h3>
-              <p class="professor">Prof. Ada Lovelace</p>
-              <a class="course-forum-btn green" href="/student-dashboard/my-courses">
-                <span class="material-symbols-outlined">groups</span> Course Info
-              </a>
-            </div>
-
-            <div class="course-card">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1qcodMjywwIZEc52Tb7QvvIQbVMMCdhxnwVapKz9bwbLVJkVaFc6zL2mjvKFdGJ_gMHdOQ7JIaasJ0mhrbcjLjPPf99mJbPqqsUSVjsyUFgejXmoWr1QZwAG0MExv78BpFdhBCKuFE5x2WJnsSGpavRKWEgUpKmmrj6Qw8Gw4AKANCVxeV1_tuZlbKdPmzT5rfvIM3C1P56Dh8EJ5en4Z70dczstS_IUumU8L_S8QEJof3bcOx2084zOGn0FgcrA2-vyGAecd5fk"/>
-              <h3>DS310: Web Development</h3>
-              <p class="professor">Prof. Tim Berners-Lee</p>
-              <a class="course-forum-btn pink" href="/student-dashboard/my-courses">
                 <span class="material-symbols-outlined">forum</span> Course Info
               </a>
             </div>

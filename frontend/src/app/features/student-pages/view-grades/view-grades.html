@@ -61,98 +61,25 @@
         </div>
 
         <div class="grades-container">
-          <!-- Course Grade Card 1 -->
-          <div class="grade-card">
+          <div class="grade-card" *ngFor="let course of filteredGrades">
             <div class="grade-card-header">
               <div>
-                <h2 class="grade-course-title">CS101: Intro to Programming</h2>
-                <p class="grade-professor">Prof. Alan Turing</p>
+                <h2 class="grade-course-title">{{ course.code }}: {{ course.name }}</h2>
+                <p class="grade-professor">{{ course.professor }}</p>
               </div>
               <div class="overall-grade">
                 <p class="grade-label">Overall Grade</p>
-                <p class="grade-value grade-a">92% (A-)</p>
+                <p class="grade-value" [ngClass]="course.overallGrade >= 90 ? 'grade-a' : course.overallGrade >= 80 ? 'grade-b' : 'grade-c'">{{ course.overallGrade }}% ({{ course.overallGrade >= 90 ? 'A-' : course.overallGrade >= 80 ? 'B' : 'C+' }})</p>
               </div>
             </div>
             <div class="assignments-grid">
-              <div class="assignment-item blue-item">
+              <div class="assignment-item" *ngFor="let assignment of course.assignments; let i = index" [ngClass]="getItemColor(i)">
                 <div class="assignment-header">
-                  <p class="assignment-name">Assignment 1</p>
-                  <span class="assignment-grade grade-high">95%</span>
+                  <p class="assignment-name">{{ assignment.name }}</p>
+                  <span class="assignment-grade" [ngClass]="getGradeColor(assignment.grade)">{{ assignment.grade }}%</span>
                 </div>
-              </div>
-              <div class="assignment-item blue-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Quiz 1</p>
-                  <span class="assignment-grade grade-high">100%</span>
-                </div>
-              </div>
-              <div class="assignment-item blue-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Midterm Exam</p>
-                  <span class="assignment-grade grade-mid">88%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Course Grade Card 2 -->
-          <div class="grade-card">
-            <div class="grade-card-header">
-              <div>
-                <h2 class="grade-course-title">CS202: Data Structures</h2>
-                <p class="grade-professor">Prof. Ada Lovelace</p>
-              </div>
-              <div class="overall-grade">
-                <p class="grade-label">Overall Grade</p>
-                <p class="grade-value grade-b">85% (B)</p>
-              </div>
-            </div>
-            <div class="assignments-grid">
-              <div class="assignment-item green-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Lab Report 1</p>
-                  <span class="assignment-grade grade-mid">82%</span>
-                </div>
-              </div>
-              <div class="assignment-item green-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Homework 1</p>
-                  <span class="assignment-grade grade-high">90%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Course Grade Card 3 -->
-          <div class="grade-card">
-            <div class="grade-card-header">
-              <div>
-                <h2 class="grade-course-title">DS310: Web Development</h2>
-                <p class="grade-professor">Prof. Tim Berners-Lee</p>
-              </div>
-              <div class="overall-grade">
-                <p class="grade-label">Overall Grade</p>
-                <p class="grade-value grade-c">78% (C+)</p>
-              </div>
-            </div>
-            <div class="assignments-grid">
-              <div class="assignment-item purple-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Project Proposal</p>
-                  <span class="assignment-grade grade-high">94%</span>
-                </div>
-              </div>
-              <div class="assignment-item purple-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Assignment 2</p>
-                  <span class="assignment-grade grade-low">75%</span>
-                </div>
-              </div>
-              <div class="assignment-item purple-item">
-                <div class="assignment-header">
-                  <p class="assignment-name">Quiz 2</p>
-                  <span class="assignment-grade grade-low">68%</span>
-                </div>
+                <p class="assignment-feedback" *ngIf="assignment.feedback">{{ assignment.feedback }}</p>
+                <a *ngIf="assignment.feedback" class="feedback-link" href="javascript:void(0)" (click)="viewFeedback(assignment)">View Feedback</a>
               </div>
             </div>
           </div>
