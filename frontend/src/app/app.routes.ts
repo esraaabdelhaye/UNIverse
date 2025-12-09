@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // ---------------- AUTH ----------------
+  // AUTH Routes
   {
     path: '',
     loadComponent: () =>
@@ -33,7 +33,7 @@ export const routes: Routes = [
         .then(m => m.CreateSupervisorAccount),
   },
 
-  // ---------------- DOCTOR ----------------
+  // DOCTOR Routes
   {
     path: 'doctor-dashboard',
     loadComponent: () =>
@@ -59,57 +59,13 @@ export const routes: Routes = [
         .then(m => m.ViewSubmissions),
   },
   {
-    path: 'doctor-dashboard/course-announcements',
+    path: 'doctor-dashboard/announcements',
     loadComponent: () =>
       import('./features/doctor-pages/course-announcements/course-announcements')
-        .then(m => m.CourseAnnouncements),
+        .then(m => m.Announcements),
   },
 
-  // ---------------- TA ----------------
-  {
-    path: 'ta-dashboard',
-    loadComponent: () =>
-      import('./features/ta-pages/ta-dashboard/ta-dashboard')
-        .then(m => m.TaDashboard),
-  },
-  {
-    path: 'ta-dashboard/upload-materials',
-    loadComponent: () =>
-      import('./features/ta-pages/upload-materials/upload-materials')
-        .then(m => m.UploadMaterials),
-  },
-  {
-    path: 'ta-dashboard/add-grades',
-    loadComponent: () =>
-      import('./features/ta-pages/add-grades/add-grades')
-        .then(m => m.AddGrades),
-  },
-  {
-    path: 'ta-dashboard/add-assignment',
-    loadComponent: () =>
-      import('./features/ta-pages/add-assignment/add-assignment')
-        .then(m => m.AddAssignment),
-  },
-  {
-    path: 'ta-dashboard/answer-questions',
-    loadComponent: () =>
-      import('./features/ta-pages/answer-questions/answer-questions')
-        .then(m => m.AnswerQuestions),
-  },
-  {
-    path: 'ta-dashboard/manage-announcements',
-    loadComponent: () =>
-      import('./features/ta-pages/manage-announcements/manage-announcements')
-        .then(m => m.ManageAnnouncements),
-  },
-  {
-    path: 'ta-dashboard/schedule',
-    loadComponent: () =>
-      import('./features/ta-pages/schedule/schedule')
-        .then(m => m.Schedule),
-  },
-
-  // ---------------- STUDENT ----------------
+  // STUDENT Routes
   {
     path: 'student-dashboard',
     loadComponent: () =>
@@ -140,14 +96,8 @@ export const routes: Routes = [
       import('./features/student-pages/view-materials/view-materials')
         .then(m => m.ViewMaterials),
   },
-  {
-    path: 'student-dashboard/view-schedule',
-    loadComponent: () =>
-      import('./features/student-pages/view-schedule/view-schedule')
-        .then(m => m.ViewSchedule),
-  },
 
-  // ---------------- SUPERVISOR ----------------
+  // SUPERVISOR Routes
   {
     path: 'supervisor-dashboard',
     loadComponent: () =>
@@ -172,46 +122,8 @@ export const routes: Routes = [
       import('./features/supervisor-pages/generate-timetable/generate-timetable')
         .then(m => m.GenerateTimetable),
   },
-  {
-    path: 'supervisor-dashboard/review-performance',
-    loadComponent: () =>
-      import('./features/supervisor-pages/review-performance/review-performance')
-        .then(m => m.ReviewPerformance),
-  },
 
-  // ---------------- STUDENT REP ----------------
-  {
-    path: 'rep-dashboard',
-    loadComponent: () =>
-      import('./features/studentrep-pages/studentrep-dashboard/studentrep-dashboard')
-        .then(m => m.StudentrepDashboard),
-  },
-  {
-    path: 'rep-dashboard/events',
-    loadComponent: () =>
-      import('./features/studentrep-pages/events/events')
-        .then(m => m.Events),
-  },
-  {
-    path: 'rep-dashboard/live-feed',
-    loadComponent: () =>
-      import('./features/studentrep-pages/live-feed/live-feed')
-        .then(m => m.LiveFeed),
-  },
-  {
-    path: 'rep-dashboard/manage-student-grps',
-    loadComponent: () =>
-      import('./features/studentrep-pages/manage-student-grps/manage-student-grps')
-        .then(m => m.ManageStudentGrps),
-  },
-  {
-    path: 'rep-dashboard/polls-voting',
-    loadComponent: () =>
-      import('./features/studentrep-pages/polls-voting/polls-voting')
-        .then(m => m.PollsVoting),
-  },
-
-  // ---------------- 404 ----------------
+  // 404 Fallback
   {
     path: '**',
     redirectTo: '',

@@ -5,15 +5,25 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">group</span><span>Manage Faculty</span></a>
-      <a class="nav-link active" href="#"><span class="material-symbols-outlined">event_available</span><span>Course Availability</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">calendar_month</span><span>Generate Timetable</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">trending_up</span><span>Review Performance</span></a>
+      <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/course-availability" routerLinkActive="active">
+        <span class="material-symbols-outlined">event_available</span>
+        <span>Course Availability</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/generate-timetable" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>Generate Timetable</span>
+      </a>
+      <a class="nav-link" routerLink="/supervisor-dashboard/manage-faculty" routerLinkActive="active">
+        <span class="material-symbols-outlined">groups</span>
+        <span>Manage Faculty</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
-      <a class="nav-link" href="#"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -38,7 +48,7 @@
               <h2 class="card-title">Current Course Offerings</h2>
               <p class="subtitle">Manage course availability for the upcoming semesters.</p>
             </div>
-            <button class="btn-primary">
+            <button class="btn-primary" (click)="addNewCourse()">
               <span class="material-symbols-outlined">add</span>
               <span>Add New Course</span>
             </button>
@@ -46,24 +56,16 @@
           <div class="filter-grid">
             <div class="search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" placeholder="Search by course or instructor..." type="text"/>
+              <input class="search-input" placeholder="Search by course or instructor..." type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"/>
             </div>
-            <select class="filter-select">
-              <option>All Departments</option>
-              <option>Computer Science</option>
-              <option>History</option>
-              <option>Mathematics</option>
+            <select class="filter-select" [(ngModel)]="selectedDepartment" (change)="onFilterChange()">
+              <option *ngFor="let dept of departments">{{ dept }}</option>
             </select>
-            <select class="filter-select">
-              <option>All Semesters</option>
-              <option>Fall 2024</option>
-              <option>Spring 2025</option>
+            <select class="filter-select" [(ngModel)]="selectedSemester" (change)="onFilterChange()">
+              <option *ngFor="let sem of semesters">{{ sem }}</option>
             </select>
-            <select class="filter-select">
-              <option>All Statuses</option>
-              <option>Open</option>
-              <option>Closed</option>
-              <option>Full</option>
+            <select class="filter-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+              <option *ngFor="let stat of statuses">{{ stat }}</option>
             </select>
           </div>
           <div class="table-wrapper">
@@ -81,89 +83,23 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="course-code">CS101</td>
-                <td>Introduction to Programming</td>
-                <td>Computer Science</td>
-                <td>Dr. Alice Johnson</td>
-                <td class="text-center">120</td>
-                <td class="text-center">118</td>
-                <td class="text-center"><span class="badge green">Open</span></td>
+              <tr *ngFor="let course of filteredCourses">
+                <td class="course-code">{{ course.code }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.department }}</td>
+                <td>{{ course.instructor }}</td>
+                <td class="text-center">{{ course.capacity }}</td>
+                <td class="text-center">{{ course.enrolled }}</td>
+                <td class="text-center"><span [ngClass]="'badge ' + getStatusBadgeClass(course.status)">{{ course.status }}</span></td>
                 <td class="text-center">
                   <div class="action-buttons">
-                    <button class="icon-btn">
+                    <button class="icon-btn" (click)="editCourse(course)">
                       <span class="material-symbols-outlined">edit</span>
                     </button>
-                    <button class="icon-btn">
+                    <button class="icon-btn" (click)="addStudent(course)">
                       <span class="material-symbols-outlined">person_add</span>
                     </button>
-                    <button class="icon-btn danger">
-                      <span class="material-symbols-outlined">cancel</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="course-code">HIST203</td>
-                <td>Modern World History</td>
-                <td>History</td>
-                <td>Dr. Jane Smith</td>
-                <td class="text-center">80</td>
-                <td class="text-center">80</td>
-                <td class="text-center"><span class="badge yellow">Full</span></td>
-                <td class="text-center">
-                  <div class="action-buttons">
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">person_add</span>
-                    </button>
-                    <button class="icon-btn danger">
-                      <span class="material-symbols-outlined">cancel</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="course-code">MATH201</td>
-                <td>Calculus II</td>
-                <td>Mathematics</td>
-                <td>Dr. Robert Chen</td>
-                <td class="text-center">100</td>
-                <td class="text-center">95</td>
-                <td class="text-center"><span class="badge green">Open</span></td>
-                <td class="text-center">
-                  <div class="action-buttons">
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">person_add</span>
-                    </button>
-                    <button class="icon-btn danger">
-                      <span class="material-symbols-outlined">cancel</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="course-code">PHYS110</td>
-                <td>Introductory Physics</td>
-                <td>Physics</td>
-                <td>Unassigned</td>
-                <td class="text-center">75</td>
-                <td class="text-center">0</td>
-                <td class="text-center"><span class="badge red">Closed</span></td>
-                <td class="text-center">
-                  <div class="action-buttons">
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="icon-btn">
-                      <span class="material-symbols-outlined">person_add</span>
-                    </button>
-                    <button class="icon-btn danger">
+                    <button class="icon-btn danger" (click)="cancelCourse(course)">
                       <span class="material-symbols-outlined">cancel</span>
                     </button>
                   </div>
@@ -173,13 +109,13 @@
             </table>
           </div>
           <div class="pagination">
-            <span class="pagination-info">Showing <span class="font-semibold">1-4</span> of <span class="font-semibold">100</span></span>
+            <span class="pagination-info">Showing <span class="font-semibold">{{ (pagination.currentPage - 1) * pagination.pageSize + 1 }}-{{ Math.min(pagination.currentPage * pagination.pageSize, pagination.totalItems) }}</span> of <span class="font-semibold">{{ pagination.totalItems }}</span></span>
             <div class="pagination-buttons">
-              <a class="page-link first" href="#">Previous</a>
-              <a class="page-link active" href="#">1</a>
-              <a class="page-link" href="#">2</a>
-              <a class="page-link" href="#">3</a>
-              <a class="page-link last" href="#">Next</a>
+              <a class="page-link first" (click)="previousPage()" href="javascript:void(0)">Previous</a>
+              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 1}" (click)="goToPage(1)" href="javascript:void(0)">1</a>
+              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 2}" (click)="goToPage(2)" href="javascript:void(0)">2</a>
+              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 3}" (click)="goToPage(3)" href="javascript:void(0)">3</a>
+              <a class="page-link last" (click)="nextPage()" href="javascript:void(0)">Next</a>
             </div>
           </div>
         </div>

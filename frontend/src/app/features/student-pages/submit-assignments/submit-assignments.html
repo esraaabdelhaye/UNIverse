@@ -1,51 +1,40 @@
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="material-symbols-outlined logo-icon">school</span>
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">school</span>
+      <a class="nav-item" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
-      <a class="nav-item active" href="#">
-        <span class="material-symbols-outlined">assignment</span>
+      <a class="nav-item active" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
-      </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span>Settings</span>
-      </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span>Logout</span>
       </a>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main-wrapper">
-    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <button class="notification-btn">
@@ -60,36 +49,36 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="content-container">
         <div class="page-header">
           <h1>Submit Assignments</h1>
           <p class="page-subtitle">Stay on top of your deadlines and submit your work here.</p>
         </div>
+
         <div class="card">
           <div class="card-header">
             <h2>Your Assignments</h2>
             <div class="filters">
               <div class="select-wrapper">
-                <select class="filter-select">
-                  <option>All Courses</option>
-                  <option>CS101: Intro to Programming</option>
-                  <option>CS202: Data Structures</option>
-                  <option>DS310: Web Development</option>
+                <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+                  <option value="">All Courses</option>
+                  <option value="CS101">CS101: Intro to Programming</option>
+                  <option value="CS202">CS202: Data Structures</option>
+                  <option value="DS310">DS310: Web Development</option>
                 </select>
                 <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
               <div class="select-wrapper">
-                <select class="filter-select">
-                  <option>Sort by Due Date</option>
-                  <option>Sort by Course</option>
-                  <option>Sort by Status</option>
+                <select class="filter-select" [(ngModel)]="selectedSort" (change)="onSortChange()">
+                  <option value="duedate">Sort by Due Date</option>
+                  <option value="course">Sort by Course</option>
                 </select>
                 <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
             </div>
           </div>
+
           <div class="table-wrapper">
             <table class="assignments-table">
               <thead>
@@ -102,51 +91,101 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="assignment-title">Assignment 1: Basic Algorithms</td>
-                <td class="course-code">CS101</td>
-                <td class="due-date urgent">Today, 11:59 PM</td>
-                <td><span class="status-badge status-pending">Pending</span></td>
-                <td class="text-right"><button class="btn btn-primary">Submit</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Lab Report: Linked Lists</td>
-                <td class="course-code">CS202</td>
-                <td class="due-date warning">In 3 days</td>
-                <td><span class="status-badge status-pending">Pending</span></td>
-                <td class="text-right"><button class="btn btn-primary">Submit</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Project Proposal</td>
-                <td class="course-code">DS310</td>
-                <td class="due-date">Oct 28, 2024</td>
-                <td><span class="status-badge status-submitted">Submitted</span></td>
-                <td class="text-right">
-                  <div class="btn-group">
-                    <button class="btn btn-secondary">View Submission</button>
-                    <button class="btn btn-secondary">Resubmit</button>
-                  </div>
+              <tr *ngFor="let assignment of filteredAssignments">
+                <td class="assignment-title">{{ assignment.title }}</td>
+                <td class="course-code">{{ assignment.course }}</td>
+                <td class="due-date" [ngClass]="assignment.status === 'pending' && assignment.dueDate.includes('Today') ? 'urgent' : assignment.status === 'pending' ? 'warning' : ''">
+                  {{ assignment.dueDate }}
                 </td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Quiz 1: Programming Fundamentals</td>
-                <td class="course-code">CS101</td>
-                <td class="due-date">Oct 15, 2024</td>
-                <td><span class="status-badge status-graded">Graded (95%)</span></td>
-                <td class="text-right"><button class="btn btn-secondary">View Grade</button></td>
-              </tr>
-              <tr>
-                <td class="assignment-title">Homework 2: API Integration</td>
-                <td class="course-code">DS310</td>
-                <td class="due-date">Oct 10, 2024</td>
-                <td><span class="status-badge status-past-due">Past Due</span></td>
-                <td class="text-right"><button class="btn btn-disabled" disabled>Submission Closed</button></td>
-              </tr>
+                <td>
+                    <span class="status-badge" [ngClass]="'status-' + assignment.status">
+                      <span *ngIf="assignment.status === 'graded'">Graded ({{ assignment.grade }}%)</span>
+                      <span *ngIf="assignment.status === 'pending'">Pending</span>
+                      <span *ngIf="assignment.status === 'submitted'">Submitted</span>
+                      <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
+                    </span>
+                </td>
+                <td class="text-right">
+                  <button *ngIf="assignment.status === 'pending'" class="btn btn-primary" (click)="submitAssignment(assignment)">
+                    <span class="material-symbols-outlined btn-icon">upload</span>
+                    <span class="btn-text">Submit</span>
+                  </button>
+                  <button *ngIf="assignment.status === 'submitted'" class="btn btn-secondary" (click)="viewSubmission(assignment)">
+                    <span class="material-symbols-outlined btn-icon">visibility</span>
+                    <span class="btn-text">View</span>
+                  </button>
+                  <button *ngIf="assignment.status === 'graded'" class="btn btn-secondary" (click)="viewGrade(assignment)">
+                    <span class="material-symbols-outlined btn-icon">grade</span>
+                    <span class="btn-text">Grade</span>
+                  </button>
+                  <button *ngIf="assignment.status === 'pastdue'" class="btn btn-disabled" disabled>
+                    <span class="material-symbols-outlined btn-icon">lock</span>
+                    <span class="btn-text">Closed</span>
+                  </button>
+                </td>
               </tbody>
             </table>
+          </div>
+
+          <div *ngIf="filteredAssignments.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+            <p>No assignments found</p>
           </div>
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- Upload Modal -->
+  <div *ngIf="selectedAssignmentForSubmit" style="position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+    <div style="background-color: #FFFFFF; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="font-size: 20px; font-weight: 700; margin: 0;">Submit Assignment</h2>
+        <button (click)="cancelSubmission()" style="background: none; border: none; cursor: pointer; font-size: 24px; color: #64748B;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <p style="color: #64748B; margin-bottom: 16px; margin-top: 0;">{{ selectedAssignmentForSubmit?.title }}</p>
+
+      <div style="margin-bottom: 24px;">
+        <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 12px; color: #374151;">Upload Files <span style="color: #EF4444;">*</span></label>
+        <div (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; border: 2px dashed #D1D5DB; border-radius: 8px; background-color: #F9FAFB; cursor: pointer; transition: all 0.2s;">
+          <span class="material-symbols-outlined" style="font-size: 40px; color: #9CA3AF; margin-bottom: 12px;">cloud_upload</span>
+          <p style="font-size: 14px; color: #4b5563; margin: 0; margin-bottom: 4px;">Click to upload or drag and drop</p>
+          <p style="font-size: 12px; color: #9CA3AF; margin: 0;">PDF, DOCX, PPT, XLSX, TXT, Images (max 50MB)</p>
+          <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;"/>
+        </div>
+      </div>
+
+      <div *ngIf="uploadedFiles.length > 0" style="margin-bottom: 24px; padding: 16px; background-color: #F9FAFB; border-radius: 8px; border: 1px solid #E2E8F0;">
+        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0; color: #1E293B;">Selected Files ({{ uploadedFiles.length }})</h4>
+        <div *ngFor="let file of uploadedFiles; let i = index" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #FFFFFF; border-radius: 6px; margin-bottom: 8px; border: 1px solid #E2E8F0;">
+          <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+            <span class="material-symbols-outlined" [ngClass]="file.type === 'pdf' ? '' : file.type === 'doc' ? '' : file.type === 'ppt' ? '' : file.type === 'xls' ? '' : ''" style="color: #2563EB;">
+              {{ file.type === 'pdf' ? 'picture_as_pdf' : file.type === 'doc' ? 'description' : file.type === 'ppt' ? 'slideshow' : file.type === 'xls' ? 'table_chart' : 'insert_drive_file' }}
+            </span>
+            <div>
+              <p style="font-weight: 600; font-size: 14px; margin: 0; color: #1E293B;">{{ file.name }}</p>
+              <p style="font-size: 12px; color: #9CA3AF; margin: 0;">{{ file.size }}</p>
+            </div>
+          </div>
+          <button (click)="removeFile(i)" style="background: none; border: none; cursor: pointer; color: #EF4444; padding: 4px;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: flex-end;">
+        <button (click)="cancelSubmission()" style="padding: 10px 20px; border: 1px solid #D1D5DB; background-color: #FFFFFF; color: #1E293B; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">
+          Cancel
+        </button>
+        <button (click)="completeSubmission()" [disabled]="isSubmittingAssignment || uploadedFiles.length === 0" style="padding: 10px 20px; background-color: #2563EB; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; gap: 8px;" [style.opacity]="isSubmittingAssignment || uploadedFiles.length === 0 ? '0.6' : '1'">
+          <span class="material-symbols-outlined" *ngIf="!isSubmittingAssignment">upload</span>
+          <span>{{ isSubmittingAssignment ? 'Submitting...' : 'Submit Assignment' }}</span>
+        </button>
+      </div>
+
+    </div>
   </div>
 </div>

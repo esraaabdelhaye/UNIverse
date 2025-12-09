@@ -1,8 +1,0 @@
-export interface Supervisor {
-  employeeId: string;
-  fullName: string;
-  email: string;
-  department: string;
-  positionTitle: string;
-  officeLocation: string;
-}

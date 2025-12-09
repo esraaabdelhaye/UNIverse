@@ -57,7 +57,7 @@
 
           <!-- Role Cards -->
           <div class="role-grid">
-            <div class="role-card supervisor">
+            <div class="role-card supervisor" (click)="selectRole('supervisor')">
               <div class="role-icon">
                 <span class="material-symbols-outlined">shield_person</span>
               </div>
@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <div class="role-card staff">
+            <div class="role-card staff" (click)="selectRole('ta')">
               <div class="role-icon">
                 <span class="material-symbols-outlined">group</span>
               </div>
@@ -77,7 +77,7 @@
               </div>
             </div>
 
-            <div class="role-card student">
+            <div class="role-card student" (click)="selectRole('student')">
               <div class="role-icon">
                 <span class="material-symbols-outlined">backpack</span>
               </div>

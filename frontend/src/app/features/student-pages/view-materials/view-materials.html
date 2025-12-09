@@ -1,51 +1,40 @@
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="material-symbols-outlined logo-icon">school</span>
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">school</span>
+      <a class="nav-item" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">assignment</span>
+      <a class="nav-item" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
-      </a>
-      <a class="nav-item active" href="#">
+      <a class="nav-item active" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span>Settings</span>
-      </a>
-      <a class="nav-item" href="#">
+      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span>Logout</span>
       </a>
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main-wrapper">
-    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <button class="notification-btn">
@@ -60,7 +49,6 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="content-container">
         <div class="page-header">
@@ -72,121 +60,32 @@
           <div class="materials-filters">
             <div class="materials-search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="materials-search-input" placeholder="Search for a file, e.g., 'Lecture 3 slides'..." type="text"/>
+              <input class="materials-search-input" placeholder="Search materials..." type="text" [(ngModel)]="searchQuery" (keyup)="onSearchChange()"/>
             </div>
             <div class="materials-selects">
-              <select class="materials-select">
-                <option>All Courses</option>
-                <option>CS101: Intro to Programming</option>
-                <option>CS202: Data Structures</option>
-                <option>DS310: Web Development</option>
-              </select>
-              <select class="materials-select">
-                <option>All Types</option>
-                <option>Lecture</option>
-                <option>Reading</option>
-                <option>Problem Set</option>
-                <option>Syllabus</option>
+              <select class="materials-select" [(ngModel)]="selectedCourse" (change)="onFilterChange()">
+                <option value="">All Courses</option>
+                <option value="CS101">CS101: Intro to Programming</option>
+                <option value="CS202">CS202: Data Structures</option>
+                <option value="DS310">DS310: Web Development</option>
               </select>
             </div>
           </div>
 
           <div class="materials-sections">
-            <!-- Section 1: CS101 -->
-            <div class="materials-section">
-              <h2 class="materials-section-title blue-border">CS101: Intro to Programming</h2>
+            <div class="materials-section" *ngFor="let section of filteredSections">
+              <h2 class="materials-section-title" [ngClass]="section.borderColor">{{ section.courseCode }}: {{ section.courseName }}</h2>
               <div class="materials-list">
-                <div class="material-item">
+                <div class="material-item" *ngFor="let material of section.materials">
                   <div class="material-info">
-                    <span class="material-symbols-outlined material-icon primary-icon">slideshow</span>
+                    <span class="material-symbols-outlined material-icon" [ngClass]="material.iconColor">{{ material.icon }}</span>
                     <div class="material-details">
-                      <p class="material-title">Week 1 - Introduction to Python</p>
-                      <p class="material-type">Lecture Slides</p>
+                      <p class="material-title">{{ material.title }}</p>
+                      <p class="material-type">{{ material.type }}</p>
                     </div>
                   </div>
-                  <span class="material-size">PDF, 2.5 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
-                    <span class="material-symbols-outlined">download</span>
-                    Download
-                  </button>
-                </div>
-
-                <div class="material-item">
-                  <div class="material-info">
-                    <span class="material-symbols-outlined material-icon green-icon">description</span>
-                    <div class="material-details">
-                      <p class="material-title">Reading: Chapter 1 & 2</p>
-                      <p class="material-type">Reading Material</p>
-                    </div>
-                  </div>
-                  <span class="material-size">Online Link</span>
-                  <button class="btn btn-secondary btn-with-icon">
-                    <span class="material-symbols-outlined">visibility</span>
-                    View
-                  </button>
-                </div>
-
-                <div class="material-item">
-                  <div class="material-info">
-                    <span class="material-symbols-outlined material-icon red-icon">quiz</span>
-                    <div class="material-details">
-                      <p class="material-title">Problem Set 1</p>
-                      <p class="material-type">Problem Set</p>
-                    </div>
-                  </div>
-                  <span class="material-size">PDF, 300 KB</span>
-                  <button class="btn btn-primary btn-with-icon">
-                    <span class="material-symbols-outlined">download</span>
-                    Download
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Section 2: DS310 -->
-            <div class="materials-section">
-              <h2 class="materials-section-title pink-border">DS310: Web Development</h2>
-              <div class="materials-list">
-                <div class="material-item">
-                  <div class="material-info">
-                    <span class="material-symbols-outlined material-icon purple-icon">menu_book</span>
-                    <div class="material-details">
-                      <p class="material-title">Course Syllabus</p>
-                      <p class="material-type">Syllabus</p>
-                    </div>
-                  </div>
-                  <span class="material-size">PDF, 1.2 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
-                    <span class="material-symbols-outlined">download</span>
-                    Download
-                  </button>
-                </div>
-
-                <div class="material-item">
-                  <div class="material-info">
-                    <span class="material-symbols-outlined material-icon primary-icon">slideshow</span>
-                    <div class="material-details">
-                      <p class="material-title">Week 5 - React Hooks</p>
-                      <p class="material-type">Lecture Slides</p>
-                    </div>
-                  </div>
-                  <span class="material-size">PPTX, 5.1 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
-                    <span class="material-symbols-outlined">download</span>
-                    Download
-                  </button>
-                </div>
-
-                <div class="material-item">
-                  <div class="material-info">
-                    <span class="material-symbols-outlined material-icon amber-icon">code</span>
-                    <div class="material-details">
-                      <p class="material-title">Project 2 Starter Code</p>
-                      <p class="material-type">Code Files</p>
-                    </div>
-                  </div>
-                  <span class="material-size">ZIP, 850 KB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <span class="material-size">{{ material.size }}</span>
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial(material)">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>

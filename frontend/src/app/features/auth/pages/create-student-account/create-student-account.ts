@@ -1,6 +1,8 @@
 import { Component, signal, WritableSignal, ChangeDetectionStrategy, AfterViewInit, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink, Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-create-student-account',
@@ -12,6 +14,23 @@ import { CommonModule } from '@angular/common';
 export class CreateStudentAccount implements AfterViewInit, OnDestroy {
   private currentStep = 1;
   private totalSteps = 4;
+  studentForm: FormGroup;
+
+  constructor(private router: Router, private authService: AuthService) {
+    this.studentForm = new FormGroup({
+      fullName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      academicId: new FormControl('', Validators.required),
+      dob: new FormControl(''),
+      phoneNumber: new FormControl(''),
+      program: new FormControl('', Validators.required),
+      year: new FormControl('', Validators.required),
+      enrollmentDate: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', Validators.required),
+      terms: new FormControl(false, Validators.requiredTrue)
+    });
+  }
 
   ngAfterViewInit(): void {
     this.setupFormNavigation();
@@ -22,10 +41,12 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
   }
 
   private setupFormNavigation(): void {
+    // Keep the navigation logic for steps, but remove form submit listener
     const nextButton = document.getElementById('next-button') as HTMLButtonElement;
     const prevButton = document.getElementById('prev-button') as HTMLButtonElement;
-    const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
-    const form = document.querySelector('.registration-form') as HTMLFormElement;
+
+    // We will handle submit via ngSubmit in template
+    // const form = document.querySelector('.registration-form') as HTMLFormElement;
 
     if (nextButton) {
       nextButton.addEventListener('click', () => this.nextStep());
@@ -35,10 +56,6 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
       prevButton.addEventListener('click', () => this.prevStep());
     }
 
-    if (form) {
-      form.addEventListener('submit', (e) => this.handleSubmit(e));
-    }
-
     // Update initial button states
     this.updateButtons();
     this.updateStepIndicators();
@@ -46,6 +63,8 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
 
   private nextStep(): void {
     if (this.currentStep < this.totalSteps) {
+      // Basic validation for current step could be added here
+
       // Hide current step
       const currentStepEl = document.getElementById(`step-${this.currentStep}`);
       if (currentStepEl) {
@@ -150,10 +169,38 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
     }
   }
 
-  private handleSubmit(event: Event): void {
-    event.preventDefault();
-    console.log('Form submitted!');
-    // Add your form submission logic here
-    alert('Student account created successfully!');
+  onSubmit(): void {
+    if (this.studentForm.valid) {
+      const formValue = this.studentForm.value;
+
+      if (formValue.password !== formValue.confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      const signupData = {
+        fullName: formValue.fullName,
+        email: formValue.email,
+        password: formValue.password,
+        role: 'student',
+        academicId: formValue.academicId, // Ensure this is parsed as number if backend expects Long
+        // departmentId: ... if needed
+      };
+
+      this.authService.signup(signupData).subscribe({
+        next: (response: any) => {
+          console.log('Signup successful', response);
+          alert('Student account created successfully!');
+          this.router.navigate(['/']);
+        },
+        error: (error: any) => {
+          console.error('Signup failed', error);
+          alert('Signup failed: ' + (error.error?.message || error.message));
+        }
+      });
+    } else {
+      alert('Please fill in all required fields correctly.');
+      this.studentForm.markAllAsTouched();
+    }
   }
 }
