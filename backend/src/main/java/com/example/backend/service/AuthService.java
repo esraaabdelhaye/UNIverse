@@ -5,10 +5,21 @@ import com.example.backend.dto.request.LoginRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +30,7 @@ public class AuthService {
     private final DoctorRepo doctorRepo;
     private final SupervisorRepo supervisorRepo;
     private final TeachingAssistantRepo taRepo ;
+    private final SecurityContextRepository securityContextRepository ;
 
     @Autowired
     public AuthService(PasswordEncoder passwordEncoder,
@@ -26,7 +38,7 @@ public class AuthService {
                        StudentRepresentativeRepo studentRepresentativeRepo,
                        DoctorRepo doctorRepo,
                        SupervisorRepo supervisorRepo,
-                       TeachingAssistantRepo taRepo)
+                       TeachingAssistantRepo taRepo, SecurityContextRepository securityContextRepository)
     {
         this.passwordEncoder = passwordEncoder;
         this.studentRepo = studentRepo;
@@ -34,18 +46,19 @@ public class AuthService {
         this.doctorRepo = doctorRepo;
         this.supervisorRepo = supervisorRepo;
         this.taRepo = taRepo;
+        this.securityContextRepository = securityContextRepository;
     }
 
     // Generic method delegates login request
     // to appropriate helper method
     // Also take care of its downsides
-    public ApiResponse<?> login(LoginRequest loginRequest) {
+    public ApiResponse<?> login(LoginRequest loginRequest , HttpServletRequest request , HttpServletResponse response) {
         return switch (loginRequest.getRole()) {
-            case "student" -> loginStudent(loginRequest);
-            case "studentRep" -> loginStudentRep(loginRequest);
-            case "doctor" -> loginDoctor(loginRequest);
-            case "supervisor" -> loginSupervisor(loginRequest) ;
-            case "ta" -> loginTA(loginRequest);
+            case "student" -> loginStudent(loginRequest ,  request, response);
+            case "studentRep" -> loginStudentRep(loginRequest,request, response);
+            case "doctor" -> loginDoctor(loginRequest,request, response);
+            case "supervisor" -> loginSupervisor(loginRequest,request, response) ;
+            case "ta" -> loginTA(loginRequest,request, response);
             default -> ApiResponse.badRequest("Invalid Role");
         } ;
     }
@@ -54,7 +67,7 @@ public class AuthService {
     // We can change the implementation to use spring security
     // We may also add session management but all that have been mentioned
     // Previously is not required for the project to be functional
-    private ApiResponse<StudentDTO> loginStudent(LoginRequest loginRequest) {
+    private ApiResponse<StudentDTO> loginStudent(LoginRequest loginRequest , HttpServletRequest request , HttpServletResponse response ) {
         try {
 
             Optional<Student> studentOpt = studentRepo.findByEmail(loginRequest.getEmail());
@@ -66,6 +79,20 @@ public class AuthService {
             if (!passwordEncoder.matches(loginRequest.getPassword(),student.getHashedPassword()))
                 return ApiResponse.unauthorized("Invalid email or password");
 
+            //Assigning Authorities to the user such that we can control their access to different services
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENT")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, request, response);
+
             StudentDTO dto = convertToDTO(student);
             return ApiResponse.success("Student logged in successfully",dto);
         }
@@ -74,7 +101,7 @@ public class AuthService {
         }
     }
 
-    private ApiResponse<StudentRepresentativeDTO> loginStudentRep(LoginRequest loginRequest) {
+    private ApiResponse<StudentRepresentativeDTO> loginStudentRep(LoginRequest loginRequest ,HttpServletRequest request , HttpServletResponse response) {
         try {
 
             Optional<StudentRepresentative> studentOpt = studentRepresentativeRepo.findByEmail(loginRequest.getEmail());
@@ -84,6 +111,20 @@ public class AuthService {
             if (!passwordEncoder.matches(loginRequest.getPassword(), student.getHashedPassword()))
                 return ApiResponse.unauthorized("Invalid email or password");
 
+            //Assigning Authorities to the user such that we can control their access to different services
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENTREP")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, request, response);
+
             StudentRepresentativeDTO dto = convertToDTO(student);
             return ApiResponse.success("Student Representative logged in successfully",dto);
         }
@@ -92,7 +133,7 @@ public class AuthService {
         }
     }
 
-    private ApiResponse<DoctorDTO> loginDoctor(LoginRequest loginRequest) {
+    private ApiResponse<DoctorDTO> loginDoctor(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
         try {
 
             Optional<Doctor> doctorOpt = doctorRepo.findByEmail(loginRequest.getEmail());
@@ -102,6 +143,20 @@ public class AuthService {
             if (!passwordEncoder.matches(loginRequest.getPassword(), doctor.getHashedPassword()))
                 return ApiResponse.unauthorized("Invalid email or password");
 
+            //Assigning Authorities to the user such that we can control their access to different services
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_DOCTOR")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, request, response);
+
             DoctorDTO dto = convertToDTO(doctor);
             return ApiResponse.success("Doctor logged in successfully",dto);
         }
@@ -110,7 +165,7 @@ public class AuthService {
         }
     }
 
-    private ApiResponse<SupervisorDTO> loginSupervisor(LoginRequest loginRequest) {
+    private ApiResponse<SupervisorDTO> loginSupervisor(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
         try {
 
             Optional<Supervisor> supervisorOpt = supervisorRepo.findByEmail(loginRequest.getEmail());
@@ -120,6 +175,19 @@ public class AuthService {
             if (!passwordEncoder.matches(loginRequest.getPassword(), supervisor.getHashedPassword()))
                 return ApiResponse.unauthorized("Invalid email or password");
 
+            //Assigning Authorities to the user such that we can control their access to different services
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, request, response);
             SupervisorDTO dto = convertToDTO(supervisor);
             return ApiResponse.success("Supervisor logged in successfully",dto);
         }
@@ -128,7 +196,7 @@ public class AuthService {
         }
     }
 
-    private ApiResponse<TeachingAssistantDTO> loginTA(LoginRequest loginRequest) {
+    private ApiResponse<TeachingAssistantDTO> loginTA(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
         try {
 
             Optional<TeachingAssistant> taOpt = taRepo.findByEmail(loginRequest.getEmail());
@@ -137,6 +205,20 @@ public class AuthService {
             TeachingAssistant ta = taOpt.get();
             if (!passwordEncoder.matches(loginRequest.getPassword(), ta.getHashedPassword()))
                 return ApiResponse.unauthorized("Invalid email or password");
+
+            //Assigning Authorities to the user such that we can control their access to different services
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_TA")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, request, response);
 
             TeachingAssistantDTO dto = convertToDTO(ta);
             return ApiResponse.success("Teaching-Assistant logged in successfully",dto);

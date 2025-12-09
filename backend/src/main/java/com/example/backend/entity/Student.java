@@ -20,7 +20,7 @@ public class Student {
     @Column(name = "email" , nullable = false , length = 100 ,  unique = true)
     private String email;
 
-    @Column(name = "academic_id", nullable = false , unique = true)
+    @Column(name = "academic_id", nullable = true , unique = true)
     private long academicId ;
 
     @Column(name = "hashed_password", nullable = false , length = 100)
