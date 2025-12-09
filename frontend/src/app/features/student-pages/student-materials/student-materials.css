@@ -1,0 +1,163 @@
+.materials-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #757575;
+  margin: 0;
+  font-size: 16px;
+}
+
+.filter-section {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 4px;
+  padding: 0 12px;
+  flex: 1;
+  min-width: 300px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-box mat-icon {
+  color: #757575;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.filter-select {
+  padding: 10px 12px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+}
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.material-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.course-group-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0;
+  padding: 12px 0 8px 0;
+  border-bottom: 2px solid #42A5F5;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.2s;
+}
+
+.material-item:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.material-icon {
+  flex-shrink: 0;
+  color: #1976D2;
+  font-size: 32px;
+}
+
+.material-info {
+  flex: 1;
+}
+
+.material-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 8px;
+}
+
+.material-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.material-type,
+.material-size,
+.material-date {
+  color: #757575;
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #FF9800;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.download-btn:hover {
+  background: #F57C00;
+}
+
+.download-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #757575;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #BDBDBD;
+  margin-bottom: 16px;
+}

@@ -1,0 +1,111 @@
+<div class="queries-container">
+  <div class="page-header">
+    <h1 class="page-title">Student Queries</h1>
+    <p class="page-subtitle">Help and support student questions</p>
+  </div>
+
+  <div class="queries-layout">
+    <!-- Queries List -->
+    <div class="queries-panel">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab" [class.active]="selectedTab === 'all'" (click)="selectTab('all')">
+          All ({{ queries.length }})
+        </button>
+        <button class="tab" [class.active]="selectedTab === 'new'" (click)="selectTab('new')">
+          New ({{ queries.filter(q => q.status === 'new').length }})
+        </button>
+        <button class="tab" [class.active]="selectedTab === 'in-progress'" (click)="selectTab('in-progress')">
+          In Progress
+        </button>
+        <button class="tab" [class.active]="selectedTab === 'resolved'" (click)="selectTab('resolved')">
+          Resolved
+        </button>
+      </div>
+
+      <!-- Queries List -->
+      <div class="queries-list">
+        <div
+          class="query-item"
+          *ngFor="let query of filteredQueries"
+          [class.active]="selectedQuery?.id === query.id"
+          (click)="selectQuery(query)">
+          <div class="query-avatar">{{ query.studentName.charAt(0) }}</div>
+          <div class="query-info">
+            <h4 class="query-name">{{ query.studentName }}</h4>
+            <p class="query-subject">{{ query.subject }}</p>
+            <span class="query-course">{{ query.course }}</span>
+          </div>
+          <span class="query-status-badge" [style.background-color]="getStatusColor(query.status)">
+            {{ query.status | titlecase }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Query Details -->
+    <div class="details-panel" *ngIf="selectedQuery">
+      <div class="details-header">
+        <h2>{{ selectedQuery.subject }}</h2>
+        <span class="status-badge" [style.background-color]="getStatusColor(selectedQuery.status)">
+          {{ selectedQuery.status | titlecase }}
+        </span>
+      </div>
+
+      <div class="student-info">
+        <div class="info-item">
+          <span class="info-label">Student:</span>
+          <span class="info-value">{{ selectedQuery.studentName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Email:</span>
+          <span class="info-value">{{ selectedQuery.studentEmail }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Course:</span>
+          <span class="info-value">{{ selectedQuery.course }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Posted:</span>
+          <span class="info-value">{{ selectedQuery.timestamp | date:'MMM d, h:mm a' }}</span>
+        </div>
+      </div>
+
+      <!-- Query Text -->
+      <div class="query-content">
+        <h3>Question</h3>
+        <p>{{ selectedQuery.queryText }}</p>
+      </div>
+
+      <!-- Responses -->
+      <div class="responses-section" *ngIf="selectedQuery.responses && selectedQuery.responses.length > 0">
+        <h3>Responses</h3>
+        <div class="response-item" *ngFor="let response of selectedQuery.responses">
+          <p>{{ response }}</p>
+        </div>
+      </div>
+
+      <!-- Response Form -->
+      <div class="response-form">
+        <h3>Add Response</h3>
+        <textarea
+          class="response-textarea"
+          [(ngModel)]="responseText"
+          placeholder="Type your response here..."
+          rows="6"></textarea>
+        <div class="form-buttons">
+          <button class="btn-send" (click)="sendResponse()" [disabled]="!responseText.trim()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send Response
+          </button>
+          <button class="btn-resolve" (click)="markResolved()" *ngIf="selectedQuery.status !== 'resolved'">
+            Mark as Resolved
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

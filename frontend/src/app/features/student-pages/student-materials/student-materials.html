@@ -1,0 +1,62 @@
+<div class="materials-container">
+  <div class="page-header">
+    <h1 class="page-title">Course Materials</h1>
+    <p class="page-subtitle">Browse and download learning resources</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search materials..."
+        [(ngModel)]="searchTerm"
+        (input)="filterMaterials()"
+        class="search-input">
+    </div>
+
+    <select class="filter-select" [(ngModel)]="selectedCourse" (change)="filterMaterials()">
+      <option value="all">All Courses</option>
+      <option *ngFor="let course of courses" [value]="course" *ngIf="course !== 'all'">
+        {{ course }}
+      </option>
+    </select>
+
+    <select class="filter-select" [(ngModel)]="selectedType" (change)="filterMaterials()">
+      <option value="all">All Types</option>
+      <option value="lecture">Lecture Slides</option>
+      <option value="reading">Reading Material</option>
+      <option value="problem">Problem Sets</option>
+      <option value="syllabus">Syllabus</option>
+    </select>
+  </div>
+
+  <!-- Materials List -->
+  <div class="materials-list">
+    <div class="material-group" *ngFor="let course of (filteredMaterials | keyvalue: null)">
+      <h3 class="course-group-title" *ngIf="selectedCourse === 'all'">
+        {{ course.key }}
+      </h3>
+
+      <div class="material-item" *ngFor="let material of filteredMaterials | filter: selectedCourse">
+        <div class="material-icon">
+          <mat-icon>{{ getTypeIcon(material.type) }}</mat-icon>
+        </div>
+
+        <div class="material-info">
+          <div class="material-title">{{ material.title }}</div>
+          <div class="material-meta">
+            <span class="material-type">{{ material.type | titlecase }}</span>
+            <span class="material-size">{{ material.size }}</span>
+            <span class="material-date">{{ material.uploadDate | date:'MMM d, yyyy' }}</span>
+          </div>
+        </div>
+
+        <button class="download-btn" (click)="downloadFile(material)">
+          <mat-icon>download</mat-icon>
+          Download
+        </button>
+      </div>
+    </div>
+  </div>

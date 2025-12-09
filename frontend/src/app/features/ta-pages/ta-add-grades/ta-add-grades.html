@@ -1,0 +1,84 @@
+<div class="grades-container">
+  <div class="page-header">
+    <h1 class="page-title">Add Grades</h1>
+    <p class="page-subtitle">Input grades for student submissions</p>
+  </div>
+
+  <!-- Course & Assignment Selection -->
+  <div class="selection-section">
+    <div class="selection-group">
+      <label class="selection-label">Course</label>
+      <select class="selection-select" [(ngModel)]="selectedCourse">
+        <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+      </select>
+    </div>
+
+    <div class="selection-group">
+      <label class="selection-label">Assignment</label>
+      <select class="selection-select" [(ngModel)]="selectedAssignment">
+        <option *ngFor="let assignment of getAssignments()" [value]="assignment">
+          {{ assignment }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Grades Form -->
+  <div class="grades-card">
+    <h2 class="form-title">Grading: {{ selectedAssignment }}</h2>
+    <p class="form-subtitle">Course: {{ selectedCourse }} | Total Submissions: {{ students.length }}</p>
+
+    <div class="grades-table-wrapper">
+      <table class="grades-table">
+        <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Student ID</th>
+          <th>Current Grade</th>
+          <th>New Grade</th>
+          <th>Feedback</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let student of students" [class.graded]="student.currentGrade !== undefined">
+          <td><strong>{{ student.studentName }}</strong></td>
+          <td>{{ student.studentId }}</td>
+          <td class="current-grade">{{ student.currentGrade || '-' }}</td>
+          <td>
+            <input
+              type="number"
+              class="grade-input"
+              [(ngModel)]="student.currentGrade"
+              min="0"
+              max="100"
+              placeholder="0-100">
+          </td>
+          <td>
+              <textarea
+                class="feedback-input"
+                [(ngModel)]="student.feedback"
+                placeholder="Add feedback..."
+                rows="2"></textarea>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn-draft" (click)="saveDraft()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+        </svg>
+        Save as Draft
+      </button>
+      <button class="btn-submit" (click)="submitGrades()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Submit Grades
+      </button>
+    </div>
+  </div>
+</div>

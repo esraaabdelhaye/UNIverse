@@ -1,0 +1,102 @@
+<div class="assignments-container">
+  <div class="page-header">
+    <h1 class="page-title">Assignments & Grades</h1>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-section">
+    <div class="tabs">
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'all'"
+        (click)="selectTab('all')">
+        All
+      </button>
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'pending'"
+        (click)="selectTab('pending')">
+        Pending
+      </button>
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'submitted'"
+        (click)="selectTab('submitted')">
+        Submitted
+      </button>
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'graded'"
+        (click)="selectTab('graded')">
+        Graded
+      </button>
+    </div>
+
+    <!-- Course Filter -->
+    <select class="course-filter" [(ngModel)]="selectedCourse" (change)="filterAssignments()">
+      <option value="all">All Courses</option>
+      <option *ngFor="let course of getUniqueCourses()"
+              [value]="course"
+              *ngIf="course !== 'all'">
+        {{ course }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">{{ assignments.filter(a => a.status === 'pending').length }}</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">{{ assignments.filter(a => a.status === 'submitted').length }}</div>
+      <div class="stat-label">Submitted</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">{{ assignments.filter(a => a.status === 'graded').length }}</div>
+      <div class="stat-label">Graded</div>
+    </div>
+  </div>
+
+  <!-- Assignments Table -->
+  <div class="table-container">
+    <table class="assignments-table">
+      <thead>
+      <tr>
+        <th>Assignment Name</th>
+        <th>Course</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Score</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let assignment of filteredAssignments">
+        <td><strong>{{ assignment.name }}</strong></td>
+        <td>{{ assignment.course }}</td>
+        <td>{{ assignment.dueDate | date:'MMM d, yyyy' }}</td>
+        <td>
+            <span class="badge" [ngClass]="getStatusClass(assignment.status)">
+              {{ assignment.status | titlecase }}
+            </span>
+        </td>
+        <td>
+          <span *ngIf="assignment.score">{{ assignment.score }}/{{ assignment.total }}</span>
+          <span *ngIf="!assignment.score" class="text-gray">-</span>
+        </td>
+        <td>
+          <button class="action-btn">View</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredAssignments.length === 0">
+    <mat-icon>assignment</mat-icon>
+    <p>No assignments found</p>
+  </div>
+</div>

@@ -1,0 +1,210 @@
+.courses-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #757575;
+  margin: 0;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #26A69A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.add-btn:hover {
+  background: #1B8A83;
+}
+
+.filter-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 4px;
+  padding: 0 12px;
+  flex: 1;
+  min-width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-box svg {
+  color: #757575;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.filter-select {
+  padding: 10px 12px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+}
+
+.table-container {
+  background: white;
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.courses-table thead {
+  background-color: #26A69A;
+  color: white;
+}
+
+.courses-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.courses-table td {
+  padding: 16px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.courses-table tbody tr:hover {
+  background-color: #F5F5F5;
+}
+
+.capacity-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.capacity-text {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.capacity-bar {
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+  width: 80px;
+}
+
+.capacity-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #C8E6C9;
+  color: #2E7D32;
+}
+
+.status-full {
+  background: #FFE0B2;
+  color: #E65100;
+}
+
+.status-closed {
+  background: #FFCDD2;
+  color: #C62828;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #BDBDBD;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #26A69A;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: #26A69A;
+  color: white;
+  border-color: #26A69A;
+}
+
+.action-btn.delete-btn {
+  color: #F44336;
+}
+
+.action-btn.delete-btn:hover {
+  background: #F44336;
+  color: white;
+  border-color: #F44336;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #757575;
+}
+
+.empty-state svg {
+  color: #BDBDBD;
+  margin-bottom: 16px;
+}

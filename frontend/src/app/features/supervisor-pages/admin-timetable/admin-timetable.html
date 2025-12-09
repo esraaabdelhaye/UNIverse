@@ -1,0 +1,65 @@
+<div class="timetable-container">
+  <div class="page-header">
+    <h1 class="page-title">University Timetable</h1>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-section">
+    <div class="semester-selector">
+      <label>Semester</label>
+      <select [(ngModel)]="selectedSemester" class="semester-select">
+        <option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</option>
+      </select>
+    </div>
+
+    <div class="week-controls">
+      <button class="nav-btn" (click)="previousWeek()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <span class="week-display">Week {{ selectedWeek }}</span>
+      <button class="nav-btn" (click)="nextWeek()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      <button class="today-btn" (click)="goToToday()">Today</button>
+    </div>
+  </div>
+
+  <!-- Timetable Grid -->
+  <div class="timetable-wrapper">
+    <table class="timetable">
+      <thead>
+      <tr>
+        <th class="time-column">Time</th>
+        <th *ngFor="let day of daysOfWeek" class="day-column">{{ day }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let time of timeSlots">
+        <td class="time-cell">{{ time }}</td>
+        <td *ngFor="let day of daysOfWeek" class="slot-cell">
+          <div class="course-slot" *ngFor="let course of getCourses(day, time)" [style.background-color]="getDeptColor(course.dept)">
+            <div class="course-code">{{ course.course }}</div>
+            <div class="course-instructor">{{ course.instructor }}</div>
+            <div class="course-room">{{ course.room }}</div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <h3>Department Colors</h3>
+    <div class="legend-items">
+      <div class="legend-item" *ngFor="let dept of deptColors | keyvalue">
+        <span class="legend-color" [style.background-color]="dept.value"></span>
+        <span class="legend-label">{{ dept.key }}</span>
+      </div>
+    </div>
+  </div>
+</div>

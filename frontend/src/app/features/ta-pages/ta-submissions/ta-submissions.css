@@ -1,0 +1,257 @@
+.submissions-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #757575;
+  margin: 0 0 24px 0;
+  font-size: 16px;
+}
+
+.selection-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.selection-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.selection-select {
+  padding: 10px 12px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+  background: white;
+  cursor: pointer;
+}
+
+.selection-select:hover {
+  border-color: #FFB74D;
+}
+
+.selection-select:focus {
+  border-color: #FFB74D;
+  box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.1);
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-item {
+  background: white;
+  padding: 16px;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #757575;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #FFB74D;
+}
+
+.table-container {
+  background: white;
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.submissions-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.submissions-table thead {
+  background-color: #FFB74D;
+  color: white;
+}
+
+.submissions-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.submissions-table td {
+  padding: 16px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.submissions-table tbody tr:hover {
+  background-color: #F5F5F5;
+}
+
+.submissions-table tbody tr:nth-child(even) {
+  background-color: #FAFAFA;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+}
+
+.text-gray {
+  color: #BDBDBD;
+  font-size: 13px;
+}
+
+.file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #FFB74D;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.2s;
+  font-weight: 600;
+}
+
+.file-link:hover {
+  color: #FFA726;
+}
+
+.file-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.grade-value {
+  font-weight: 600;
+  color: #FFB74D;
+  font-size: 14px;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #BDBDBD;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFB74D;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.action-btn:hover {
+  background: #FFB74D;
+  color: white;
+  border-color: #FFB74D;
+}
+
+.action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #757575;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state svg {
+  color: #BDBDBD;
+  margin-bottom: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .submissions-container {
+    padding: 16px;
+  }
+
+  .submissions-table {
+    font-size: 13px;
+  }
+
+  .submissions-table th,
+  .submissions-table td {
+    padding: 12px 8px;
+  }
+
+  .stat-item {
+    padding: 12px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .status-badge {
+    min-width: auto;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+}

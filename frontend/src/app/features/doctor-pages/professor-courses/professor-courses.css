@@ -1,0 +1,163 @@
+.courses-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #757575;
+  margin: 0;
+}
+
+.add-course-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #66BB6A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.add-course-btn:hover {
+  background: #4CAF50;
+}
+
+.search-section {
+  margin-bottom: 24px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 4px;
+  padding: 0 16px;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 12px 12px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.table-container {
+  background: white;
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courses-table thead {
+  background-color: #66BB6A;
+  color: white;
+}
+
+.courses-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.courses-table td {
+  padding: 16px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.courses-table tbody tr:hover {
+  background-color: #F5F5F5;
+}
+
+.capacity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.capacity-numbers {
+  font-size: 13px;
+  font-weight: 600;
+  color: #212121;
+}
+
+.capacity-bar {
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+  width: 100px;
+}
+
+.capacity-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #BDBDBD;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66BB6A;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: #66BB6A;
+  color: white;
+  border-color: #66BB6A;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #757575;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #BDBDBD;
+  margin-bottom: 16px;
+}

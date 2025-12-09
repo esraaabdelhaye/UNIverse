@@ -1,0 +1,60 @@
+<div class="courses-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Courses</h1>
+      <p class="page-subtitle">You are enrolled in {{ courses.length }} courses</p>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search courses..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+        class="search-input">
+    </div>
+  </div>
+
+  <!-- Courses Grid -->
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let course of filteredCourses">
+      <div class="course-header" style="background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);">
+        <mat-icon class="course-icon">menu_book</mat-icon>
+      </div>
+
+      <div class="course-body">
+        <div class="course-code">{{ course.code }}</div>
+        <h3 class="course-title">{{ course.title }}</h3>
+        <p class="professor-name">{{ course.professor }}</p>
+
+        <div class="course-meta">
+          <span class="student-count">{{ course.enrolled }} students</span>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-label">
+            <span>Progress</span>
+            <span class="progress-value">{{ course.progress }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="course.progress"></div>
+          </div>
+        </div>
+
+        <button class="view-btn" (click)="viewDetails(course)">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results -->
+  <div class="no-results" *ngIf="filteredCourses.length === 0">
+    <mat-icon>search_off</mat-icon>
+    <p>No courses found matching your search.</p>
+  </div>
+</div>

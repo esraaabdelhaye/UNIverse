@@ -1,0 +1,117 @@
+<div class="courses-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Manage Courses</h1>
+      <p class="page-subtitle">Manage course availability and enrollment</p>
+    </div>
+    <button class="add-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      Add Course
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        type="text"
+        placeholder="Search by code or title..."
+        [(ngModel)]="searchTerm"
+        (input)="filterCourses()"
+        class="search-input">
+    </div>
+
+    <select class="filter-select" [(ngModel)]="selectedDept" (change)="filterCourses()">
+      <option *ngFor="let dept of departments" [value]="dept">
+        {{ dept === 'all' ? 'All Departments' : dept }}
+      </option>
+    </select>
+
+    <select class="filter-select" [(ngModel)]="selectedStatus" (change)="filterCourses()">
+      <option value="all">All Status</option>
+      <option value="open">Open</option>
+      <option value="full">Full</option>
+      <option value="closed">Closed</option>
+    </select>
+  </div>
+
+  <!-- Courses Table -->
+  <div class="table-container">
+    <table class="courses-table">
+      <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Department</th>
+        <th>Instructor</th>
+        <th>Capacity</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let course of filteredCourses">
+        <td><strong>{{ course.code }}</strong></td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.department }}</td>
+        <td>{{ course.instructor }}</td>
+        <td>
+          <div class="capacity-cell">
+            <div class="capacity-text">{{ course.enrolled }}/{{ course.capacity }}</div>
+            <div class="capacity-bar">
+              <div class="capacity-fill" [style.width.%]="(course.enrolled / course.capacity) * 100" [style.background-color]="getCapacityColor(course.enrolled, course.capacity)"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+            <span class="badge" [ngClass]="'status-' + course.status">
+              {{ course.status | titlecase }}
+            </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn" title="View Students" (click)="viewStudents(course)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </button>
+            <button class="action-btn" title="Edit" (click)="editCourse(course)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                <line x1="12" y1="9" x2="12" y2="15"></line>
+                <line x1="9" y1="12" x2="15" y2="12"></line>
+              </svg>
+            </button>
+            <button class="action-btn delete-btn" title="Delete" (click)="deleteCourse(course)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredCourses.length === 0">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </svg>
+    <p>No courses found</p>
+  </div>
+</div>

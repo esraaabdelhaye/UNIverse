@@ -1,0 +1,123 @@
+<div class="submissions-container">
+  <div class="page-header">
+    <h1 class="page-title">View Submissions</h1>
+    <p class="page-subtitle">Review student assignment submissions</p>
+  </div>
+
+  <!-- Selection Section -->
+  <div class="selection-section">
+    <div class="selection-group">
+      <label>Course</label>
+      <select [(ngModel)]="selectedCourse" (change)="filterSubmissions()" class="selection-select">
+        <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+      </select>
+    </div>
+
+    <div class="selection-group">
+      <label>Assignment</label>
+      <select [(ngModel)]="selectedAssignment" (change)="filterSubmissions()" class="selection-select">
+        <option *ngFor="let assignment of getAssignments()" [value]="assignment">
+          {{ assignment }}
+        </option>
+      </select>
+    </div>
+
+    <div class="selection-group">
+      <label>Status</label>
+      <select [(ngModel)]="selectedStatus" (change)="filterSubmissions()" class="selection-select">
+        <option value="all">All Status</option>
+        <option value="submitted">Submitted</option>
+        <option value="late">Late</option>
+        <option value="missing">Missing</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <span class="stat-label">Total</span>
+      <span class="stat-value">{{ getTotalStats().total }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Submitted</span>
+      <span class="stat-value" style="color: #4CAF50;">{{ getTotalStats().submitted }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Late</span>
+      <span class="stat-value" style="color: #FF9800;">{{ getTotalStats().late }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Missing</span>
+      <span class="stat-value" style="color: #F44336;">{{ getTotalStats().missing }}</span>
+    </div>
+  </div>
+
+  <!-- Submissions Table -->
+  <div class="table-container">
+    <table class="submissions-table">
+      <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Submission Date</th>
+        <th>Status</th>
+        <th>File</th>
+        <th>Grade</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let submission of filteredSubmissions">
+        <td><strong>{{ submission.studentName }}</strong></td>
+        <td>
+            <span *ngIf="submission.submissionDate">
+              {{ submission.submissionDate | date:'MMM d, h:mm a' }}
+            </span>
+          <span *ngIf="!submission.submissionDate" class="text-gray">Not submitted</span>
+        </td>
+        <td>
+            <span class="status-badge" [style.background-color]="getStatusColor(submission.status) + '20'" [style.color]="getStatusColor(submission.status)">
+              {{ submission.status | titlecase }}
+            </span>
+        </td>
+        <td>
+          <button
+            *ngIf="submission.fileName"
+            class="file-link"
+            (click)="downloadSubmission(submission)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            {{ submission.fileName }}
+          </button>
+          <span *ngIf="!submission.fileName" class="text-gray">-</span>
+        </td>
+        <td>
+          <span *ngIf="submission.grade" class="grade-value">{{ submission.grade }}/100</span>
+          <span *ngIf="!submission.grade" class="text-gray">-</span>
+        </td>
+        <td>
+          <button class="action-btn" (click)="gradeSubmission(submission)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredSubmissions.length === 0">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+    </svg>
+    <p>No submissions found</p>
+  </div>
+</div>

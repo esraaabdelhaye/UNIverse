@@ -1,9 +1,0 @@
-export interface Schedule {
-  eventId: string;
-  eventTitle: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  courseCode: string;
-  eventType: string;
-}

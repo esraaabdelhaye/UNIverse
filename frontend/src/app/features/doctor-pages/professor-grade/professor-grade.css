@@ -1,0 +1,252 @@
+.grade-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 24px 0;
+}
+
+.selection-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.selection-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 8px;
+}
+
+.selection-select {
+  padding: 10px 12px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.selection-select:focus {
+  border-color: #66BB6A;
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.1);
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.summary-stat {
+  background: white;
+  padding: 16px;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #757575;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #66BB6A;
+}
+
+.table-container {
+  background: white;
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+
+.grading-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+}
+
+.grading-table thead {
+  background-color: #66BB6A;
+  color: white;
+}
+
+.grading-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.grading-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.grading-table tbody tr:hover {
+  background-color: #F5F5F5;
+}
+
+.text-gray {
+  color: #BDBDBD;
+  font-size: 13px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status-warning {
+  background-color: #FF9800;
+  color: white;
+}
+
+.status-error {
+  background-color: #F44336;
+  color: white;
+}
+
+.file-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #1976D2;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.file-link:hover {
+  color: #1565C0;
+}
+
+.file-link mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.grade-input {
+  width: 80px;
+  padding: 6px 8px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.grade-input:focus {
+  outline: none;
+  border-color: #66BB6A;
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.1);
+}
+
+.grade-input:disabled {
+  background: #F5F5F5;
+  cursor: not-allowed;
+}
+
+.feedback-textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: #66BB6A;
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.1);
+}
+
+.feedback-textarea:disabled {
+  background: #F5F5F5;
+  cursor: not-allowed;
+}
+
+.view-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #BDBDBD;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66BB6A;
+  transition: all 0.2s;
+}
+
+.view-btn:hover {
+  background: #66BB6A;
+  color: white;
+  border-color: #66BB6A;
+}
+
+.action-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-grades-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #66BB6A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.submit-grades-btn:hover {
+  background: #4CAF50;
+}
+
+.submit-grades-btn mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}

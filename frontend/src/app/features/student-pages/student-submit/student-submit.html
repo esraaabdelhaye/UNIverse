@@ -1,0 +1,109 @@
+<div class="submit-container">
+  <div class="page-header">
+    <h1 class="page-title">Submit Assignment</h1>
+    <p class="breadcrumb">Dashboard > Assignments > Submit</p>
+  </div>
+
+  <div class="submit-form-card">
+    <!-- Section 1: Selection -->
+    <div class="form-section">
+      <h2 class="section-header">Select Assignment</h2>
+
+      <div class="form-group">
+        <label class="form-label">Course</label>
+        <select class="form-control" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+          <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Assignment</label>
+        <select class="form-control" [(ngModel)]="selectedAssignment" (change)="onAssignmentChange()">
+          <option value="">Select an assignment</option>
+          <option *ngFor="let assignment of getAssignments()" [value]="assignment">
+            {{ assignment }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 2: Assignment Details -->
+    <div class="form-section" *ngIf="assignmentDetails">
+      <h2 class="section-header">Assignment Details</h2>
+      <div class="details-box">
+        <div class="detail-item">
+          <span class="detail-label">Title:</span>
+          <span class="detail-value">{{ assignmentDetails.title }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Description:</span>
+          <span class="detail-value">{{ assignmentDetails.description }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Due Date:</span>
+          <span class="detail-value" [class.overdue]="assignmentDetails.dueDate < now">
+            {{ assignmentDetails.dueDate | date:'MMM d, yyyy h:mm a' }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Points:</span>
+          <span class="detail-value">{{ assignmentDetails.points }}</span>
+        </div>
+        <button class="download-btn">Download Instructions</button>
+      </div>
+    </div>
+
+    <!-- Section 3: File Upload -->
+    <div class="form-section" *ngIf="assignmentDetails">
+      <h2 class="section-header">Upload File</h2>
+
+      <div class="upload-area">
+        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+        <p class="upload-text">Drag and drop your file here</p>
+        <p class="upload-subtext">or</p>
+        <label class="upload-link">
+          click to browse
+          <input type="file" hidden (change)="onFileSelected($event)">
+        </label>
+        <p class="upload-hint">Accepted: PDF, DOC, DOCX (Max 50MB)</p>
+      </div>
+
+      <div class="file-preview" *ngIf="selectedFile">
+        <div class="file-item">
+          <mat-icon>description</mat-icon>
+          <div class="file-info">
+            <div class="file-name">{{ selectedFile.name }}</div>
+            <div class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" [disabled]="!selectedFile" (click)="onSubmit()">
+        Submit Assignment
+      </button>
+    </div>
+
+    <!-- Section 4: Previous Submissions -->
+    <div class="form-section" *ngIf="previousSubmissions.length > 0">
+      <h2 class="section-header">Previous Submissions</h2>
+      <table class="submissions-table">
+        <thead>
+        <tr>
+          <th>Date Submitted</th>
+          <th>File Name</th>
+          <th>Grade</th>
+          <th>Feedback</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let submission of previousSubmissions">
+          <td>{{ submission.submittedDate | date:'MMM d, yyyy' }}</td>
+          <td>{{ submission.fileName }}</td>
+          <td><strong *ngIf="submission.grade">{{ submission.grade }}/100</strong></td>
+          <td>{{ submission.feedback }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

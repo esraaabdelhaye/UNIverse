@@ -1,0 +1,25 @@
+<aside class="sidebar" [class.closed]="!isOpen">
+  <div class="sidebar-header">
+    <div class="role-badge" [style.background-color]="getRoleColor()">
+      {{ getRoleName() | uppercase }}
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <button
+      *ngFor="let item of navItems"
+      class="nav-item"
+      [class.active]="currentPage === item.id"
+      (click)="onNavigate(item.id)"
+      [attr.aria-label]="item.label">
+
+      <span class="nav-icon" [innerHTML]="getIconSvg(item.icon)"></span>
+
+      <span class="nav-label" *ngIf="isOpen">{{ item.label }}</span>
+
+      <span class="nav-badge" *ngIf="item.badge && isOpen">
+        {{ item.badge }}
+      </span>
+    </button>
+  </nav>
+</aside>

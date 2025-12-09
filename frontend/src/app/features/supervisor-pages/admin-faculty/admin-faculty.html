@@ -1,0 +1,110 @@
+<div class="faculty-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Manage Faculty</h1>
+      <p class="page-subtitle">Oversee and support all faculty members</p>
+    </div>
+    <button class="add-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      Add Faculty
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        [(ngModel)]="searchTerm"
+        (input)="filterFaculty()"
+        class="search-input">
+    </div>
+
+    <select class="filter-select" [(ngModel)]="selectedDept" (change)="filterFaculty()">
+      <option *ngFor="let dept of departments" [value]="dept">
+        {{ dept === 'all' ? 'All Departments' : dept }}
+      </option>
+    </select>
+
+    <select class="filter-select" [(ngModel)]="selectedPosition" (change)="filterFaculty()">
+      <option *ngFor="let pos of positions" [value]="pos">
+        {{ pos === 'all' ? 'All Positions' : pos }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Faculty Table -->
+  <div class="table-container">
+    <table class="faculty-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Courses Taught</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let member of filteredFaculty">
+        <td><strong>{{ member.name }}</strong></td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.department }}</td>
+        <td>{{ member.position }}</td>
+        <td class="text-center">{{ member.coursesTaught }}</td>
+        <td>
+            <span class="status-badge" [style.background-color]="getStatusColor(member.status) + '20'" [style.color]="getStatusColor(member.status)">
+              {{ member.status | titlecase }}
+            </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn" title="View Profile" (click)="viewProfile(member)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </button>
+            <button class="action-btn" title="Edit" (click)="editFaculty(member)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                <line x1="12" y1="9" x2="12" y2="15"></line>
+                <line x1="9" y1="12" x2="15" y2="12"></line>
+              </svg>
+            </button>
+            <button class="action-btn delete-btn" title="Delete" (click)="deleteFaculty(member)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredFaculty.length === 0">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </svg>
+    <p>No faculty members found</p>
+  </div>
+</div>

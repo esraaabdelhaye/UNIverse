@@ -1,0 +1,77 @@
+<div class="courses-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Courses</h1>
+      <p class="page-subtitle">Manage your teaching courses</p>
+    </div>
+    <button class="add-course-btn">
+      <mat-icon>add</mat-icon>
+      Add Course
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="search-section">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search courses..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+        class="search-input">
+    </div>
+  </div>
+
+  <!-- Courses Table -->
+  <div class="table-container">
+    <table class="courses-table">
+      <thead>
+      <tr>
+        <th>Course Code</th>
+        <th>Title</th>
+        <th>Department</th>
+        <th>Capacity</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let course of filteredCourses">
+        <td><strong>{{ course.code }}</strong></td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.department }}</td>
+        <td>
+          <div class="capacity-info">
+            <span class="capacity-numbers">{{ course.students }}/{{ course.capacity }}</span>
+            <div class="capacity-bar">
+              <div class="capacity-fill" [style.width.%]="(course.students / course.capacity) * 100" [style.background-color]="getCapacityColor(course.students, course.capacity)"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn" title="View Roster" (click)="viewRoster(course)">
+              <mat-icon>people</mat-icon>
+            </button>
+            <button class="action-btn" title="Create Assignment" (click)="createAssignment(course)">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            <button class="action-btn" title="Upload Material" (click)="uploadMaterial(course)">
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
+            <button class="action-btn" title="View Grades" (click)="viewGrades(course)">
+              <mat-icon>grade</mat-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredCourses.length === 0">
+    <mat-icon>menu_book</mat-icon>
+    <p>No courses found</p>
+  </div>
+</div>

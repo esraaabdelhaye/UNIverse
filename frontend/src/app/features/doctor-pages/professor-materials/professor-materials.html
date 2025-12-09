@@ -1,0 +1,111 @@
+<div class="materials-container">
+  <div class="page-header">
+    <h1 class="page-title">Upload Course Materials</h1>
+  </div>
+
+  <!-- Upload Form -->
+  <div class="upload-card">
+    <h2 class="form-title">Upload New Material</h2>
+
+    <div class="form-grid">
+      <!-- Course Selection -->
+      <div class="form-group">
+        <label class="form-label">Course <span class="required">*</span></label>
+        <select class="form-control" [(ngModel)]="selectedCourse">
+          <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+        </select>
+      </div>
+
+      <!-- Material Type -->
+      <div class="form-group">
+        <label class="form-label">Material Type <span class="required">*</span></label>
+        <select class="form-control" [(ngModel)]="selectedType">
+          <option *ngFor="let type of materialTypes" [value]="type.value">
+            {{ type.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label class="form-label">Material Title <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="materialTitle"
+        placeholder="e.g., Week 5 - Advanced Concepts">
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label class="form-label">Description (Optional)</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="materialDescription"
+        placeholder="Add a brief description of the material..."
+        rows="4"></textarea>
+    </div>
+
+    <!-- File Upload -->
+    <div class="form-group">
+      <label class="form-label">Upload File <span class="required">*</span></label>
+      <div class="upload-area">
+        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+        <p class="upload-text">Drag and drop your file here</p>
+        <p class="upload-subtext">or</p>
+        <label class="upload-link">
+          click to browse
+          <input type="file" hidden (change)="onFileSelected($event)">
+        </label>
+        <p class="upload-hint">Accepted: PDF, PPT, PPTX, DOC, DOCX (Max 100MB)</p>
+      </div>
+
+      <!-- File Preview -->
+      <div class="file-preview" *ngIf="selectedFile">
+        <div class="file-item">
+          <mat-icon>description</mat-icon>
+          <div class="file-info">
+            <div class="file-name">{{ selectedFile.name }}</div>
+            <div class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Button -->
+    <button class="upload-btn" (click)="uploadMaterial()" [disabled]="!selectedFile || !materialTitle">
+      <mat-icon>upload</mat-icon>
+      Upload Material
+    </button>
+  </div>
+
+  <!-- Recent Materials -->
+  <div class="recent-materials">
+    <h2 class="section-title">Recently Uploaded</h2>
+    <div class="materials-list">
+      <div class="material-item" *ngFor="let material of recentMaterials">
+        <div class="material-left">
+          <mat-icon class="material-icon">{{ getMaterialIcon(material.type) }}</mat-icon>
+          <div class="material-info">
+            <div class="material-title">{{ material.title }}</div>
+            <div class="material-meta">
+              <span class="material-course">{{ material.course }}</span>
+              <span class="material-type">{{ material.type | titlecase }}</span>
+              <span class="material-size">{{ material.size }}</span>
+              <span class="material-date">{{ material.uploadDate | date:'MMM d, yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="material-actions">
+          <button class="action-btn" title="Download">
+            <mat-icon>download</mat-icon>
+          </button>
+          <button class="action-btn delete-btn" title="Delete" (click)="deleteMaterial(material)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,244 @@
+.timetable-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 24px 0;
+}
+
+.controls-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.semester-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.semester-selector label {
+  font-weight: 600;
+  color: #212121;
+}
+
+.semester-select {
+  padding: 8px 12px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+}
+
+.week-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #BDBDBD;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #26A69A;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.nav-btn:hover {
+  background: #26A69A;
+  color: white;
+  border-color: #26A69A;
+}
+
+.week-display {
+  font-weight: 600;
+  color: #212121;
+  min-width: 80px;
+  text-align: center;
+}
+
+.today-btn {
+  padding: 8px 16px;
+  background: #26A69A;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.today-btn:hover {
+  background: #1B8A83;
+}
+
+.timetable-wrapper {
+  background: white;
+  border-radius: 4px;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+}
+
+.timetable thead {
+  background-color: #26A69A;
+  color: white;
+}
+
+.timetable th {
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.time-column {
+  width: 80px;
+  text-align: left;
+}
+
+.day-column {
+  min-width: 180px;
+}
+
+.timetable td {
+  border: 1px solid #E0E0E0;
+  padding: 8px;
+  height: 80px;
+  vertical-align: top;
+}
+
+.time-cell {
+  background-color: #F5F5F5;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+  color: #212121;
+}
+
+.slot-cell {
+  position: relative;
+}
+
+.course-slot {
+  color: white;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.course-slot:hover {
+  opacity: 0.8;
+}
+
+.course-code {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.course-instructor {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.course-room {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.legend {
+  background: white;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #212121;
+  margin: 0 0 12px 0;
+}
+
+.legend-items {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.legend-label {
+  font-size: 14px;
+  color: #212121;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .semester-selector,
+  .week-controls {
+    justify-content: space-between;
+  }
+
+  .timetable {
+    font-size: 12px;
+  }
+
+  .timetable th,
+  .timetable td {
+    padding: 8px 4px;
+  }
+
+  .day-column {
+    min-width: 120px;
+  }
+
+  .course-slot {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+}

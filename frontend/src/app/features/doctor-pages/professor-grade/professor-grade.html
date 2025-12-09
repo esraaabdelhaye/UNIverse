@@ -1,0 +1,116 @@
+<div class="grade-container">
+  <div class="page-header">
+    <h1 class="page-title">Grade Submissions</h1>
+  </div>
+
+  <!-- Course & Assignment Selection -->
+  <div class="selection-section">
+    <div class="selection-group">
+      <label class="selection-label">Course</label>
+      <select class="selection-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+        <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+      </select>
+    </div>
+
+    <div class="selection-group">
+      <label class="selection-label">Assignment</label>
+      <select class="selection-select" [(ngModel)]="selectedAssignment">
+        <option *ngFor="let assignment of getAssignments()" [value]="assignment">
+          {{ assignment }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="summary-stats">
+    <div class="summary-stat">
+      <div class="stat-label">Total Submissions</div>
+      <div class="stat-value">{{ filteredSubmissions.length }}</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-label">Graded</div>
+      <div class="stat-value">{{ filteredSubmissions.filter(s => s.grade !== undefined).length }}</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value">{{ filteredSubmissions.filter(s => s.grade === undefined && s.status !== 'missing').length }}</div>
+    </div>
+  </div>
+
+  <!-- Grading Table -->
+  <div class="table-container">
+    <table class="grading-table">
+      <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Email</th>
+        <th>Submission Date</th>
+        <th>Status</th>
+        <th>File</th>
+        <th>Grade</th>
+        <th>Feedback</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let submission of filteredSubmissions">
+        <td><strong>{{ submission.studentName }}</strong></td>
+        <td>{{ submission.studentEmail }}</td>
+        <td>
+            <span *ngIf="submission.submissionDate">
+              {{ submission.submissionDate | date:'MMM d, h:mm a' }}
+            </span>
+          <span *ngIf="!submission.submissionDate" class="text-gray">Not submitted</span>
+        </td>
+        <td>
+            <span class="badge" [ngClass]="getStatusClass(submission.status)">
+              {{ submission.status | titlecase }}
+            </span>
+        </td>
+        <td>
+          <button
+            *ngIf="submission.fileName"
+            class="file-link"
+            (click)="downloadSubmission(submission)">
+            <mat-icon>download</mat-icon>
+            {{ submission.fileName }}
+          </button>
+          <span *ngIf="!submission.fileName" class="text-gray">-</span>
+        </td>
+        <td>
+          <input
+            type="number"
+            class="grade-input"
+            [(ngModel)]="submission.grade"
+            [disabled]="submission.status === 'missing'"
+            min="0"
+            max="100"
+            placeholder="0-100">
+        </td>
+        <td>
+            <textarea
+              class="feedback-textarea"
+              [(ngModel)]="submission.feedback"
+              [disabled]="submission.status === 'missing'"
+              placeholder="Add feedback..."
+              rows="2"></textarea>
+        </td>
+        <td>
+          <button class="view-btn" title="View Details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="action-section">
+    <button class="submit-grades-btn" (click)="submitGrades()">
+      <mat-icon>check_circle</mat-icon>
+      Submit All Grades
+    </button>
+  </div>
+</div>
