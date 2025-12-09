@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-ta-dashboard',
-  templateUrl: './ta-dashboard.component.html',
-  styleUrls: ['./ta-dashboard.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './ta-dashboard.html',
+  styleUrls: ['./ta-dashboard.css']
 })
 export class TaDashboardComponent implements OnInit {
   userName: string = '';

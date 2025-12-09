@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface Assignment {
   id: number;
@@ -11,8 +13,10 @@ interface Assignment {
 
 @Component({
   selector: 'app-professor-assignment',
-  templateUrl: './professor-assignment.component.html',
-  styleUrls: ['./professor-assignment.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './professor-assignment.html',
+  styleUrls: ['./professor-assignment.css']
 })
 export class ProfessorAssignmentComponent implements OnInit {
   // Form fields

@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Navbar } from './shared/components/navbar/navbar';
+import { Sidebar } from './shared/components/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, FormsModule, Navbar, Sidebar],
+  templateUrl: './app.html',
+  styleUrls: ['./app.css']
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
   sidebarOpen: boolean = true;
   currentPage: string = 'dashboard';
-  userRole: string = 'student'; // student | professor | admin | ta
+  userRole: string = 'student';
   userName: string = '';
   isLoading: boolean = false;
 
@@ -20,7 +26,6 @@ export class AppComponent implements OnInit {
   }
 
   loadUserData() {
-    // Get user data from localStorage (set during login)
     this.userRole = localStorage.getItem('userRole') || 'student';
     this.userName = localStorage.getItem('userName') || 'User';
     this.currentPage = 'dashboard';
@@ -33,8 +38,6 @@ export class AppComponent implements OnInit {
   navigateTo(page: string) {
     this.isLoading = true;
     this.currentPage = page;
-
-    // Simulate page load delay
     setTimeout(() => {
       this.isLoading = false;
     }, 300);
@@ -44,10 +47,6 @@ export class AppComponent implements OnInit {
     this.userRole = role;
     this.currentPage = 'dashboard';
     localStorage.setItem('userRole', role);
-  }
-
-  getPageComponent(): string {
-    return `${this.userRole}-${this.currentPage}`;
   }
 
   logout() {

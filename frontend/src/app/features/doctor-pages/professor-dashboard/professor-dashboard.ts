@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-professor-dashboard',
-  templateUrl: './professor-dashboard.component.html',
-  styleUrls: ['./professor-dashboard.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './professor-dashboard.html',
+  styleUrls: ['./professor-dashboard.css']
 })
 export class ProfessorDashboardComponent implements OnInit {
   userName: string = '';

@@ -1,12 +1,16 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './navbar.html',
+  styleUrls: ['./navbar.css']
 })
-export class NavbarComponent implements OnInit {
+export class Navbar implements OnInit {
   @Output() toggleSidebar = new EventEmitter<void>();
 
   userName: string = '';

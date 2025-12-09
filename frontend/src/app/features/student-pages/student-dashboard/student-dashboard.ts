@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface StatCard {
   title: string;
@@ -26,8 +28,10 @@ interface Grade {
 
 @Component({
   selector: 'app-student-dashboard',
-  templateUrl: './student-dashboard.component.html',
-  styleUrls: ['./student-dashboard.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './student-dashboard.html',
+  styleUrls: ['./student-dashboard.css']
 })
 export class StudentDashboardComponent implements OnInit {
   userName: string = '';

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface AssignmentItem {
   id: number;
@@ -12,8 +14,10 @@ interface AssignmentItem {
 
 @Component({
   selector: 'app-student-assignments',
-  templateUrl: './student-assignments.component.html',
-  styleUrls: ['./student-assignments.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './student-assignments.html',
+  styleUrls: ['./student-assignments.css']
 })
 export class StudentAssignmentsComponent implements OnInit {
   selectedTab: string = 'all';

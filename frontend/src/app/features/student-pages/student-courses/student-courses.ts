@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface Course {
   id: number;
@@ -11,8 +13,10 @@ interface Course {
 
 @Component({
   selector: 'app-student-courses',
-  templateUrl: './student-courses.component.html',
-  styleUrls: ['./student-courses.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './student-courses.html',
+  styleUrls: ['./student-courses.css']
 })
 export class StudentCoursesComponent implements OnInit {
   searchTerm: string = '';

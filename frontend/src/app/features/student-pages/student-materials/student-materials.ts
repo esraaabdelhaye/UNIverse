@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface Material {
   id: number;
@@ -11,8 +13,10 @@ interface Material {
 
 @Component({
   selector: 'app-student-materials',
-  templateUrl: './student-materials.component.html',
-  styleUrls: ['./student-materials.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './student-materials.html',
+  styleUrls: ['./student-materials.css']
 })
 export class StudentMaterialsComponent implements OnInit {
   selectedCourse: string = 'all';

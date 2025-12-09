@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface Query {
   id: number;
@@ -14,8 +16,10 @@ interface Query {
 
 @Component({
   selector: 'app-ta-queries',
-  templateUrl: './ta-queries.component.html',
-  styleUrls: ['./ta-queries.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './ta-queries.html',
+  styleUrls: ['./ta-queries.css']
 })
 export class TaQueriesComponent implements OnInit {
   selectedTab: string = 'all';

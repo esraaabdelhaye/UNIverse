@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface StudentSubmission {
   id: number;
   studentName: string;
   studentEmail: string;
-  submissionDate: Date;
+  submissionDate: Date | null;
   status: 'submitted' | 'late' | 'missing';
-  fileName: string;
+  fileName: string | null;
   grade?: number;
   feedback?: string;
 }
 
 @Component({
   selector: 'app-professor-grade',
-  templateUrl: './professor-grade.component.html',
-  styleUrls: ['./professor-grade.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './professor-grade.html',
+  styleUrls: ['./professor-grade.css']
 })
 export class ProfessorGradeComponent implements OnInit {
   selectedCourse: string = 'CS101';
@@ -83,7 +87,7 @@ export class ProfessorGradeComponent implements OnInit {
   }
 
   getAssignments(): string[] {
-    return this.assignmentsByCourse[this.selectedCourse] || [];
+    return this.assignmentsByCourse[this.selectedCourse as keyof typeof this.assignmentsByCourse] || [];
   }
 
   onCourseChange() {

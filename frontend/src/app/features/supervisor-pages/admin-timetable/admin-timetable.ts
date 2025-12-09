@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 interface TimeSlot {
   time: string;
@@ -7,8 +9,10 @@ interface TimeSlot {
 
 @Component({
   selector: 'app-admin-timetable',
-  templateUrl: './admin-timetable.component.html',
-  styleUrls: ['./admin-timetable.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './admin-timetable.html',
+  styleUrls: ['./admin-timetable.css']
 })
 export class AdminTimetableComponent implements OnInit {
   selectedSemester: string = 'Fall 2024';

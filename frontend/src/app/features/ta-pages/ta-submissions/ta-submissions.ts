@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Submission {
   id: number;
   studentName: string;
-  submissionDate: Date;
+  submissionDate: Date | null;
   status: 'submitted' | 'late' | 'missing';
-  fileName: string;
+  fileName: string | null;
   grade?: number;
 }
 
 @Component({
   selector: 'app-ta-submissions',
-  templateUrl: './ta-submissions.component.html',
-  styleUrls: ['./ta-submissions.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './ta-submissions.html',
+  styleUrls: ['./ta-submissions.css']
 })
 export class TaSubmissionsComponent implements OnInit {
   selectedCourse: string = 'CS101';
@@ -41,7 +45,7 @@ export class TaSubmissionsComponent implements OnInit {
   }
 
   getAssignments(): string[] {
-    return this.assignmentsByCourse[this.selectedCourse] || [];
+    return this.assignmentsByCourse[this.selectedCourse as keyof typeof this.assignmentsByCourse] || [];
   }
 
   filterSubmissions() {

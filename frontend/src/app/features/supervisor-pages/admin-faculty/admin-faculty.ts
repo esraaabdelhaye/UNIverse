@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface Faculty {
   id: number;
@@ -12,8 +14,10 @@ interface Faculty {
 
 @Component({
   selector: 'app-admin-faculty',
-  templateUrl: './admin-faculty.component.html',
-  styleUrls: ['./admin-faculty.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './admin-faculty.html',
+  styleUrls: ['./admin-faculty.css']
 })
 export class AdminFacultyComponent implements OnInit {
   searchTerm: string = '';

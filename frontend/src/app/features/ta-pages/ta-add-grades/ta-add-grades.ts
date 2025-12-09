@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 interface StudentGrade {
   id: number;
@@ -10,8 +12,10 @@ interface StudentGrade {
 
 @Component({
   selector: 'app-ta-add-grades',
-  templateUrl: './ta-add-grades.component.html',
-  styleUrls: ['./ta-add-grades.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './ta-add-grades.html',
+  styleUrls: ['./ta-add-grades.css']
 })
 export class TaAddGradesComponent implements OnInit {
   selectedCourse: string = 'CS101';

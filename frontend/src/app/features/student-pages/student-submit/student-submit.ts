@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface SubmissionItem {
   id: number;
@@ -13,8 +15,10 @@ interface SubmissionItem {
 
 @Component({
   selector: 'app-student-submit',
-  templateUrl: './student-submit.component.html',
-  styleUrls: ['./student-submit.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './student-submit.html',
+  styleUrls: ['./student-submit.css']
 })
 export class StudentSubmitComponent implements OnInit {
   selectedCourse: string = 'PHIL-301';
@@ -35,7 +39,7 @@ export class StudentSubmitComponent implements OnInit {
   ];
 
   courses = ['PHIL-301', 'MATH-201', 'CHEM-101'];
-  assignments = {
+  assignments: { [key: string]: string[] } = {
     'PHIL-301': ['Essay 2: The Absurd Hero', 'Final Paper'],
     'MATH-201': ['Problem Set 4', 'Exam'],
     'CHEM-101': ['Lab Report', 'Quiz']
@@ -79,7 +83,6 @@ export class StudentSubmitComponent implements OnInit {
   }
 
   getAssignments(): string[] {
-    return this.assignments[this.selectedCourse] || [];
+    return this.assignments[this.selectedCourse as keyof typeof this.assignments] || [];
   }
 }
-
