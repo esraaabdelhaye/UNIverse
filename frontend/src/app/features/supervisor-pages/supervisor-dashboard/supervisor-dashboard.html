@@ -63,47 +63,14 @@
       <div class="content-wrapper">
         <!-- Stats Cards -->
         <div class="stats-grid">
-          <div class="stat-card">
+          <div *ngFor="let stat of stats" class="stat-card">
             <div class="stat-content">
-              <div class="stat-icon blue">
-                <span class="material-symbols-outlined">group</span>
+              <div [ngClass]="getStatIconClass(stat.color)">
+                <span class="material-symbols-outlined">{{ stat.icon }}</span>
               </div>
               <div class="stat-info">
-                <p class="stat-number">1,254</p>
-                <p class="stat-label">Total Users</p>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-content">
-              <div class="stat-icon green">
-                <span class="material-symbols-outlined">school</span>
-              </div>
-              <div class="stat-info">
-                <p class="stat-number">86</p>
-                <p class="stat-label">Active Courses</p>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-content">
-              <div class="stat-icon yellow">
-                <span class="material-symbols-outlined">pending_actions</span>
-              </div>
-              <div class="stat-info">
-                <p class="stat-number">12</p>
-                <p class="stat-label">Pending Approvals</p>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-content">
-              <div class="stat-icon red">
-                <span class="material-symbols-outlined">error</span>
-              </div>
-              <div class="stat-info">
-                <p class="stat-number">3</p>
-                <p class="stat-label">System Alerts</p>
+                <p class="stat-number">{{ stat.value | number }}</p>
+                <p class="stat-label">{{ stat.label }}</p>
               </div>
             </div>
           </div>
@@ -118,18 +85,13 @@
               Manage Course Availability
             </h2>
             <div class="card-content">
-              <div class="alert alert-blue">
-                <p class="alert-title">Upcoming Course Closures</p>
-                <p class="alert-text">CS400 (Advanced AI) closing for enrollment in 3 days.</p>
-                <a class="alert-link" href="#">Review Details</a>
-              </div>
-              <div class="alert alert-yellow">
-                <p class="alert-title">Course Capacity Alert</p>
-                <p class="alert-text">MATH201 (Calculus II) is 90% full. Consider adding another section.</p>
-                <a class="alert-link" href="#">Adjust Capacity</a>
+              <div *ngFor="let alert of courseAlerts" [ngClass]="getAlertClass(alert.type)">
+                <p class="alert-title">{{ alert.title }}</p>
+                <p class="alert-text">{{ alert.text }}</p>
+                <a class="alert-link" (click)="handleAlertAction(alert)" href="javascript:void(0)">{{ alert.actionText }}</a>
               </div>
             </div>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" (click)="viewAllCourses()">
               <span class="material-symbols-outlined">edit_calendar</span>
               <span>View All Courses</span>
             </button>
@@ -142,18 +104,13 @@
               Generate Timetable
             </h2>
             <div class="card-content">
-              <div class="alert alert-red">
-                <p class="alert-title">Timetable Conflicts (2)</p>
-                <p class="alert-text">CS101 & ENG203 clash on Mon 10 AM. Dr. Evans double-booked.</p>
-                <a class="alert-link" href="#">Resolve Conflicts</a>
-              </div>
-              <div class="alert alert-gray">
-                <p class="alert-title">Last Generated: Oct 26, 2023</p>
-                <p class="alert-text">Current timetable is active for Fall Semester.</p>
-                <a class="alert-link" href="#">View Current Timetable</a>
+              <div *ngFor="let alert of timetableAlerts" [ngClass]="getAlertClass(alert.type)">
+                <p class="alert-title">{{ alert.title }}</p>
+                <p class="alert-text">{{ alert.text }}</p>
+                <a class="alert-link" (click)="handleAlertAction(alert)" href="javascript:void(0)">{{ alert.actionText }}</a>
               </div>
             </div>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" (click)="generateNewTimetable()">
               <span class="material-symbols-outlined">calendar_add_on</span>
               <span>Generate New Timetable</span>
             </button>
@@ -168,24 +125,16 @@
                 Manage Faculty
               </h2>
               <div class="faculty-list">
-                <div class="faculty-item">
-                  <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3YHbEbU8SfmFn-oiqCV9_9rifN3FvAKK74-w9szwjG03WDWaZxLHLEt5ulxW4Iw6geddE7lDpg_wOUw0ZqPZMC8eFGLDRa5nl6Z8By1PyDy4uW6VtUGsrxQIwn6JHVgczTcJFMVjA13g56JGKU0xnwLHSCCekH3RagiV_GWlkWSSvE8DD86sOKb_Mtgf21I_RFzDelsA-LFCJMvNq0LRhANlqvShCpm3ofkCw66SFJjx0eZB13uoUgPad_7TmrkZ36pL4B8oG_wc')"></div>
+                <div *ngFor="let faculty of recentFacultyChanges" class="faculty-item" (click)="viewFacultyDetails(faculty)">
+                  <div class="faculty-avatar" [style.background-image]="'url(' + faculty.avatar + ')'"></div>
                   <div class="faculty-info">
-                    <p class="faculty-name">Alice Johnson</p>
-                    <p class="faculty-role">Senior Lecturer - Recently Promoted</p>
-                  </div>
-                  <span class="material-symbols-outlined chevron">chevron_right</span>
-                </div>
-                <div class="faculty-item">
-                  <div class="faculty-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjNVIwYogETpglvkEd7kd4IK1K9-HPRNlkOroRXJaVZAv_Oxkr_flu4Oukr96laOwcdk0IardreU7Nw0DRGA4hyFZqrw2oklKovs9QaMzczv58zvToVUEkJR-BLly6VCWvf6XdifTblP-cki6h9MeI4IhtaKAapwoUL2mg4XHPX8L8OOrpKpUz_Rui88Te6_WWBWKph57tSD8S80N27dMPl1XkCzR5QruN3VqnEqVlMTHL-oBBCuyop1DFVx_vXZLpqS21JdDCXhU')"></div>
-                  <div class="faculty-info">
-                    <p class="faculty-name">Dr. Jane Smith</p>
-                    <p class="faculty-role">Professor - Updated Course HIS450</p>
+                    <p class="faculty-name">{{ faculty.name }}</p>
+                    <p class="faculty-role">{{ faculty.role }}</p>
                   </div>
                   <span class="material-symbols-outlined chevron">chevron_right</span>
                 </div>
               </div>
-              <button class="btn btn-secondary">
+              <button class="btn btn-secondary" (click)="viewAllFaculty()">
                 <span class="material-symbols-outlined">person_add</span>
                 <span>View All Faculty</span>
               </button>
@@ -198,22 +147,15 @@
                 Review Performance
               </h2>
               <div class="performance-list">
-                <div class="performance-item">
+                <div *ngFor="let performance of performanceMetrics" class="performance-item" (click)="downloadReport(performance)">
                   <div class="performance-info">
-                    <p class="performance-title">Q3 Student Feedback Report</p>
-                    <p class="performance-text">Overall satisfaction at 85%.</p>
-                  </div>
-                  <span class="material-symbols-outlined download-icon">download</span>
-                </div>
-                <div class="performance-item">
-                  <div class="performance-info">
-                    <p class="performance-title">Faculty Publication Rates</p>
-                    <p class="performance-text">Average 2.3 publications per faculty this year.</p>
+                    <p class="performance-title">{{ performance.title }}</p>
+                    <p class="performance-text">{{ performance.description }}</p>
                   </div>
                   <span class="material-symbols-outlined download-icon">download</span>
                 </div>
               </div>
-              <button class="btn btn-secondary">
+              <button class="btn btn-secondary" (click)="accessPerformanceReports()">
                 <span class="material-symbols-outlined">analytics</span>
                 <span>Access Performance Reports</span>
               </button>

@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">
+         [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -30,7 +30,7 @@
     <div class="sidebar-footer">
       <a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
       <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span
-          class="material-symbols-outlined">logout</span><span>Logout</span></a>
+        class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -41,7 +41,7 @@
           <span class="notification-badge"></span>
         </button>
         <div class="user-avatar"
-          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
+             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
         </div>
         <div class="user-info">
           <p class="user-name">Alex Hartman</p>
@@ -58,37 +58,36 @@
             </h2>
             <div class="form-group">
               <label class="form-label">Semester</label>
-              <select class="form-input">
-                <option>Fall 2024</option>
-                <option>Spring 2025</option>
+              <select class="form-input" [(ngModel)]="selectedSemester">
+                <option *ngFor="let sem of semesters">{{ sem }}</option>
               </select>
             </div>
             <div class="form-group">
               <label class="form-label">Courses to Include</label>
-              <input class="form-input" placeholder="e.g., CS101, MATH203" type="text" />
+              <input class="form-input" placeholder="e.g., CS101, MATH203" type="text" [(ngModel)]="coursesToInclude" />
             </div>
             <div class="form-group">
               <label class="form-label">Instructor Availability</label>
-              <input class="form-input" placeholder="e.g., Dr. Evans, Prof. Lee" type="text" />
+              <input class="form-input" placeholder="e.g., Dr. Evans, Prof. Lee" type="text" [(ngModel)]="instructorAvailability" />
             </div>
             <div class="form-group">
               <label class="form-label">Room Capacity & Type</label>
-              <input class="form-input" placeholder="e.g., Hall A (>100), Lab 301 (Comp)" type="text" />
+              <input class="form-input" placeholder="e.g., Hall A (>100), Lab 301 (Comp)" type="text" [(ngModel)]="roomCapacity" />
             </div>
             <div class="form-group">
               <label class="form-label">Additional Rules</label>
               <div class="checkbox-group">
                 <label class="checkbox-label">
-                  <input checked type="checkbox" />
+                  <input [(ngModel)]="constraints.avoidBackToBack" type="checkbox" />
                   <span>Avoid back-to-back classes for instructors</span>
                 </label>
                 <label class="checkbox-label">
-                  <input type="checkbox" />
+                  <input [(ngModel)]="constraints.prioritizeMorning" type="checkbox" />
                   <span>Prioritize morning slots for core courses</span>
                 </label>
               </div>
             </div>
-            <button class="btn-primary" style="width: 100%; margin-top: 24px; justify-content: center;">
+            <button class="btn-primary" (click)="generateTimetable()" style="width: 100%; margin-top: 24px; justify-content: center;">
               <span class="material-symbols-outlined">auto_awesome</span>
               <span>Generate Timetable</span>
             </button>
@@ -98,18 +97,18 @@
           <div class="card">
             <div class="timetable-header">
               <h2 class="card-title">
-                <span class="material-symbols-outlined">grid_view</span> Generated Timetable (Fall 2024)
+                <span class="material-symbols-outlined">grid_view</span> Generated Timetable ({{ selectedSemester }})
               </h2>
               <div class="timetable-actions">
-                <button class="btn-warning">
+                <button class="btn-warning" (click)="reviewConflicts()">
                   <span class="material-symbols-outlined">report</span>
-                  <span>Review Conflicts (2)</span>
+                  <span>Review Conflicts ({{ conflictCount }})</span>
                 </button>
-                <button class="btn-secondary">
+                <button class="btn-secondary" (click)="manuallyAdjust()">
                   <span class="material-symbols-outlined">edit</span>
                   <span>Manually Adjust</span>
                 </button>
-                <button class="btn-success">
+                <button class="btn-success" (click)="publishTimetable()">
                   <span class="material-symbols-outlined">publish</span>
                   <span>Publish</span>
                 </button>
@@ -118,104 +117,59 @@
             <div class="table-wrapper">
               <table class="timetable-table">
                 <thead>
-                  <tr>
-                    <th class="time-cell">Time</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                  </tr>
+                <tr>
+                  <th class="time-cell">Time</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="time-cell">09:00 - 10:00</td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">MATH201</p>
-                        <p class="class-details">Dr. Abel / Room 101</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">MATH201</p>
-                        <p class="class-details">Dr. Abel / Room 101</p>
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td class="time-cell">10:00 - 11:00</td>
-                    <td>
-                      <div class="class-slot conflict">
-                        <span class="material-symbols-outlined">error</span>
-                        <p class="class-title">CS101</p>
-                        <p class="class-details">Dr. Evans / Hall A</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">CS101</p>
-                        <p class="class-details">Dr. Evans / Hall A</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">CS101</p>
-                        <p class="class-details">Dr. Evans / Hall A</p>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="time-cell">11:00 - 12:00</td>
-                    <td>
-                      <div class="class-slot conflict">
-                        <span class="material-symbols-outlined">group</span>
-                        <p class="class-title">ENG203</p>
-                        <p class="class-details">Dr. Evans / Room 204</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="class-slot accent">
-                        <p class="class-title">PHY310 Lab</p>
-                        <p class="class-details">Dr. Curie / Lab 3</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot accent">
-                        <p class="class-title">PHY310 Lab</p>
-                        <p class="class-details">Dr. Curie / Lab 3</p>
-                      </div>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td class="time-cell">12:00 - 13:00</td>
-                    <td colspan="5" class="lunch-break">Lunch Break</td>
-                  </tr>
-                  <tr>
-                    <td class="time-cell">13:00 - 14:00</td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">HIS450</p>
-                        <p class="class-details">Dr. Smith / Room 204</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td>
-                      <div class="class-slot primary">
-                        <p class="class-title">HIS450</p>
-                        <p class="class-details">Dr. Smith / Room 204</p>
-                      </div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                <tr *ngFor="let slot of timetable">
+                  <td class="time-cell">{{ slot.time }}</td>
+                  <td>
+                    <div *ngIf="slot.monday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.monday.type">
+                      <span *ngIf="slot.monday.type === 'conflict'" class="material-symbols-outlined">error</span>
+                      <p class="class-title">{{ slot.monday.courseCode }}</p>
+                      <p class="class-details">{{ slot.monday.instructor }} / {{ slot.monday.room }}</p>
+                    </div>
+                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
+                  </td>
+                  <td>
+                    <div *ngIf="slot.tuesday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.tuesday.type">
+                      <span *ngIf="slot.tuesday.type === 'conflict'" class="material-symbols-outlined">error</span>
+                      <p class="class-title">{{ slot.tuesday.courseCode }}</p>
+                      <p class="class-details">{{ slot.tuesday.instructor }} / {{ slot.tuesday.room }}</p>
+                    </div>
+                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
+                  </td>
+                  <td>
+                    <div *ngIf="slot.wednesday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.wednesday.type">
+                      <span *ngIf="slot.wednesday.type === 'conflict'" class="material-symbols-outlined">error</span>
+                      <p class="class-title">{{ slot.wednesday.courseCode }}</p>
+                      <p class="class-details">{{ slot.wednesday.instructor }} / {{ slot.wednesday.room }}</p>
+                    </div>
+                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
+                  </td>
+                  <td>
+                    <div *ngIf="slot.thursday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.thursday.type">
+                      <span *ngIf="slot.thursday.type === 'conflict'" class="material-symbols-outlined">error</span>
+                      <p class="class-title">{{ slot.thursday.courseCode }}</p>
+                      <p class="class-details">{{ slot.thursday.instructor }} / {{ slot.thursday.room }}</p>
+                    </div>
+                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
+                  </td>
+                  <td>
+                    <div *ngIf="slot.friday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.friday.type">
+                      <span *ngIf="slot.friday.type === 'conflict'" class="material-symbols-outlined">error</span>
+                      <p class="class-title">{{ slot.friday.courseCode }}</p>
+                      <p class="class-details">{{ slot.friday.instructor }} / {{ slot.friday.room }}</p>
+                    </div>
+                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>

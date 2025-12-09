@@ -1,16 +1,15 @@
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="material-symbols-outlined logo-icon">school</span>
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item active" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+      <a class="nav-item active" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
         <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
@@ -26,10 +25,6 @@
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
-      </a>
     </nav>
     <div class="sidebar-footer">
       <a class="nav-item" href="#">
@@ -43,9 +38,7 @@
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main-wrapper">
-    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <button class="notification-btn">
@@ -60,7 +53,6 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="content-container">
         <div class="courses-header">
@@ -70,103 +62,97 @@
           </div>
           <div class="search-wrapper">
             <span class="material-symbols-outlined search-icon">search</span>
-            <input class="search-input" placeholder="Search by course name or code..." type="text"/>
+            <input class="search-input" placeholder="Search by course name or code..." type="text" (keyup)="filterCourses($event)"/>
           </div>
         </div>
 
         <div class="courses-grid">
-          <!-- Course Card 1 -->
           <div class="course-card">
             <div class="course-image blue-bg">
-              <img alt="Programming illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
+              <img alt="Programming" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
             </div>
             <div class="course-content">
               <span class="course-code blue">CS101</span>
               <h3 class="course-title">Intro to Programming</h3>
               <p class="course-professor">Prof. Alan Turing</p>
-              <a class="course-btn blue-btn" href="#">
+              <a class="course-btn blue-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">forum</span>
-                <span>Course Forum</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>
 
-          <!-- Course Card 2 -->
           <div class="course-card">
             <div class="course-image green-bg">
-              <img alt="Data Structures illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6_PB_q1WmQT6Pv5PoVkhgUPvWQq5wb1gPsZENjDu7IeUrx5Szee5FAd1PicWO9XaFssXNoAiQx3gj9u3D0co1fL9QLbFShEr8Jnd_XVQeXfypQwjHLmDR8Ho76syQR6ODfE2jBObHkgXyLZBezf3jcf3P-8JcOrTpJBC7ujLdfj9ydiVQU86N4GfiIYHoKjzagUpUGijeZ0MibjU0gRmTe-ZwF4vCCE8_7NiFV83UVAjF4t2Xzoh97j8LmdiC14dO_HB4oFnPEjY"/>
+              <img alt="Data Structures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6_PB_q1WmQT6Pv5PoVkhgUPvWQq5wb1gPsZENjDu7IeUrx5Szee5FAd1PicWO9XaFssXNoAiQx3gj9u3D0co1fL9QLbFShEr8Jnd_XVQeXfypQwjHLmDR8Ho76syQR6ODfE2jBObHkgXyLZBezf3jcf3P-8JcOrTpJBC7ujLdfj9ydiVQU86N4GfiIYHoKjzagUpUGijeZ0MibjU0gRmTe-ZwF4vCCE8_7NiFV83UVAjF4t2Xzoh97j8LmdiC14dO_HB4oFnPEjY"/>
             </div>
             <div class="course-content">
               <span class="course-code green">CS202</span>
               <h3 class="course-title">Data Structures</h3>
               <p class="course-professor">Prof. Ada Lovelace</p>
-              <a class="course-btn green-btn" href="#">
+              <a class="course-btn green-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">groups</span>
-                <span>Collaboration Space</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>
 
-          <!-- Course Card 3 -->
           <div class="course-card">
             <div class="course-image pink-bg">
-              <img alt="Web Development illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1qcodMjywwIZEc52Tb7QvvIQbVMMCdhxnwVapKz9bwbLVJkVaFc6zL2mjvKFdGJ_gMHdOQ7JIaasJ0mhrbcjLjPPf99mJbPqqsUSVjsyUFgejXmoWr1QZwAG0MExv78BpFdhBCKuFE5x2WJnsSGpavRKWEgUpKmmrj6Qw8Gw4AKANCVxeV1_tuZlbKdPmzT5rfvIM3C1P56Dh8EJ5en4Z70dczstS_IUumU8L_S8QEJof3bcOx2084zOGn0FgcrA2-vyGAecd5fk"/>
+              <img alt="Web Development" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1qcodMjywwIZEc52Tb7QvvIQbVMMCdhxnwVapKz9bwbLVJkVaFc6zL2mjvKFdGJ_gMHdOQ7JIaasJ0mhrbcjLjPPf99mJbPqqsUSVjsyUFgejXmoWr1QZwAG0MExv78BpFdhBCKuFE5x2WJnsSGpavRKWEgUpKmmrj6Qw8Gw4AKANCVxeV1_tuZlbKdPmzT5rfvIM3C1P56Dh8EJ5en4Z70dczstS_IUumU8L_S8QEJof3bcOx2084zOGn0FgcrA2-vyGAecd5fk"/>
             </div>
             <div class="course-content">
               <span class="course-code pink">DS310</span>
               <h3 class="course-title">Web Development</h3>
               <p class="course-professor">Prof. Tim Berners-Lee</p>
-              <a class="course-btn pink-btn" href="#">
+              <a class="course-btn pink-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">forum</span>
-                <span>Course Forum</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>
 
-          <!-- Course Card 4 -->
           <div class="course-card">
             <div class="course-image purple-bg">
-              <img alt="Artificial Intelligence illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL9xJAqM3QdM6SYYmyi6Bavvl3GiACrAIqhKHLfvKQsA6v0b4IjAAn8i2LPeAns2w7Vbs3ESWc5LH7UkQWuaWxGcLFIZBTqNObNylzGotw2Z-GMbb_tWYmu9WO-EbE6non98bXmMubbTtET2gxFE3IB9zLFQBarnR6EwAfv0Zw0HGr0j3PgiSwg-X0a8mt4BGmM2S4oOwFxDPN1UIEqy2o0F4z9BR4RDkiONWqrvWsyC_24OjZDEy-8BPAxe5aUjyys087QMp7-LY"/>
+              <img alt="Artificial Intelligence" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL9xJAqM3QdM6SYYmyi6Bavvl3GiACrAIqhKHLfvKQsA6v0b4IjAAn8i2LPeAns2w7Vbs3ESWc5LH7UkQWuaWxGcLFIZBTqNObNylzGotw2Z-GMbb_tWYmu9WO-EbE6non98bXmMubbTtET2gxFE3IB9zLFQBarnR6EwAfv0Zw0HGr0j3PgiSwg-X0a8mt4BGmM2S4oOwFxDPN1UIEqy2o0F4z9BR4RDkiONWqrvWsyC_24OjZDEy-8BPAxe5aUjyys087QMp7-LY"/>
             </div>
             <div class="course-content">
               <span class="course-code purple">AI404</span>
               <h3 class="course-title">Artificial Intelligence</h3>
               <p class="course-professor">Prof. Geoffrey Hinton</p>
-              <a class="course-btn purple-btn" href="#">
+              <a class="course-btn purple-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">forum</span>
-                <span>Course Forum</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>
 
-          <!-- Course Card 5 -->
           <div class="course-card">
             <div class="course-image amber-bg">
-              <img alt="Database illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMEhwc5WiDnqJtlHiPs1de3CcSXigDXGnh7U25_Yvr8EHquyiTNmpzkVxrHTK9LsY1YEPIIKItqNEN9AWYhMdT7E6kIoOc0iAGtTemXTDMk2409ZyVjM_n2TOXYmTFTi0fMmYdRkYdkJcvWw5wyc1qE_Gc7QL7kbnxoGeOieK6bT4gZ9jgcCYP0lPJpX4Ipzn8hS2oT5j_8xnqtXthQBK9y3wqOmXbqZaSQrLV4T8OUDJhKWKpCT1sKwMy2pris-1cOH3Bdm4_fVk"/>
+              <img alt="Database" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMEhwc5WiDnqJtlHiPs1de3CcSXigDXGnh7U25_Yvr8EHquyiTNmpzkVxrHTK9LsY1YEPIIKItqNEN9AWYhMdT7E6kIoOc0iAGtTemXTDMk2409ZyVjM_n2TOXYmTFTi0fMmYdRkYdkJcvWw5wyc1qE_Gc7QL7kbnxoGeOieK6bT4gZ9jgcCYP0lPJpX4Ipzn8hS2oT5j_8xnqtXthQBK9y3wqOmXbqZaSQrLV4T8OUDJhKWKpCT1sKwMy2pris-1cOH3Bdm4_fVk"/>
             </div>
             <div class="course-content">
               <span class="course-code amber">DB521</span>
               <h3 class="course-title">Database Systems</h3>
               <p class="course-professor">Prof. Edgar Codd</p>
-              <a class="course-btn amber-btn" href="#">
+              <a class="course-btn amber-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">groups</span>
-                <span>Collaboration Space</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>
 
-          <!-- Course Card 6 -->
           <div class="course-card">
             <div class="course-image red-bg">
-              <img alt="Calculus illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTMU-yCbEgu1rUAaomeS3y-5xe1QKjpPKaH0qkL7mtfQKVtE_w_4irm1AVw4z3P8_MjcVfDNUGH6a3SSSaezBXnw_7yCjw2HZuM2AIG5UXLTjPDVlS6tFArHthU5057VImuAaJf35cTum6PDlEyTd1BY4s0a2p1apvvpZHjkjtp4H1KeER1MpfF6_fLLf3VH9tawB41Buq2v26p9IE5oulc4n3mSpvJdjFo5hWMQOLBl0OKaCpQKZ4IvJv-7brFOuhFsDHkcf1sI4"/>
+              <img alt="Calculus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTMU-yCbEgu1rUAaomeS3y-5xe1QKjpPKaH0qkL7mtfQKVtE_w_4irm1AVw4z3P8_MjcVfDNUGH6a3SSSaezBXnw_7yCjw2HZuM2AIG5UXLTjPDVlS6tFArHthU5057VImuAaJf35cTum6PDlEyTd1BY4s0a2p1apvvpZHjkjtp4H1KeER1MpfF6_fLLf3VH9tawB41Buq2v26p9IE5oulc4n3mSpvJdjFo5hWMQOLBl0OKaCpQKZ4IvJv-7brFOuhFsDHkcf1sI4"/>
             </div>
             <div class="course-content">
               <span class="course-code red">MA110</span>
               <h3 class="course-title">Calculus I</h3>
               <p class="course-professor">Prof. Isaac Newton</p>
-              <a class="course-btn red-btn" href="#">
+              <a class="course-btn red-btn" href="#" routerLink="/student-dashboard/view-materials">
                 <span class="material-symbols-outlined">forum</span>
-                <span>Course Forum</span>
+                <span>View Materials</span>
               </a>
             </div>
           </div>

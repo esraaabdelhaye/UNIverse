@@ -5,47 +5,43 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
-        <span class="nav-text">Dashboard</span>
+        <span>Dashboard</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
+      <a class="nav-link active" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
-        <span class="nav-text">Upload Material</span>
+        <span>Upload Material</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
-        <span class="nav-text">Grade Students</span>
+        <span>Grade Students</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
-        <span class="nav-text">View Submissions</span>
+        <span>View Submissions</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
-        <span class="nav-text">Course Announcements</span>
+        <span>Announcements</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span class="nav-text">Settings</span>
-      </a>
-      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
+      <a class="nav-link logout-link" (click)="logout()" href="javascript:void(0)">
         <span class="material-symbols-outlined">logout</span>
-        <span class="nav-text">Log Out</span>
+        <span>Log Out</span>
       </a>
     </div>
   </aside>
 
-  <div class="main-content">
+  <div class="main-wrapper">
     <header class="header">
       <div class="header-actions">
         <button class="icon-button">
           <span class="material-symbols-outlined">notifications</span>
-          <span class="notification-dot"></span>
+          <span class="notification-badge"></span>
         </button>
-        <div class="user-avatar"></div>
+        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
         <div class="user-info">
           <p class="user-name">John Doe</p>
           <p class="user-role">Professor</p>
@@ -53,95 +49,67 @@
       </div>
     </header>
 
-    <main class="content">
+    <main class="main-content">
       <div class="content-wrapper">
         <div class="page-header">
-          <h2 class="page-title">Upload Course Materials</h2>
-          <p class="page-subtitle">Add new learning resources for your students.</p>
+          <h1 class="page-title">Upload Course Material</h1>
+          <p class="page-subtitle">Add resources for your students</p>
         </div>
 
         <div class="card">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label" for="course-select">Select Course</label>
-              <select class="form-select" id="course-select" name="course-select">
-                <option>PHIL-301: Existentialism in Film</option>
-                <option>HIST-212: Renaissance Art History</option>
-                <option>LIT-405: Modernist Poetry</option>
-                <option>PHIL-101: Introduction to Logic</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="material-type">Material Type</label>
-              <select class="form-select" id="material-type" name="material-type">
-                <option>Lab Notes</option>
-                <option>Tutorial Material</option>
-                <option>Practice Problems</option>
-                <option>Lecture Slides</option>
-                <option>Reading Material</option>
-              </select>
+          <div class="form-group">
+            <label class="form-label">Select Course *</label>
+            <select class="form-select" [(ngModel)]="selectedCourse">
+              <option value="">Choose a course</option>
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.code }}: {{ course.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Material Title *</label>
+            <input class="form-input" type="text" [(ngModel)]="materialTitle" placeholder="e.g., Week 5 Lecture Notes"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Upload Files *</label>
+            <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
+              <span class="material-symbols-outlined upload-icon">cloud_upload</span>
+              <p class="upload-text">Click to upload or drag and drop</p>
+              <p class="upload-hint">PDF, DOCX, PPT (max 50MB)</p>
+              <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;"/>
             </div>
           </div>
 
-          <div class="upload-section">
-            <label class="form-label" for="file-upload">Upload Files</label>
-            <div class="drop-zone" id="drop-zone">
-              <div class="drop-zone-content">
-                <span class="material-symbols-outlined upload-icon">cloud_upload</span>
-                <p class="upload-text">
-                  <span class="upload-link">Click to upload</span> or drag and drop
-                </p>
-                <p class="upload-hint">PDF, DOCX, PPT, or ZIP (max. 50MB)</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="file-preview-section">
-            <h4 class="preview-title">File Preview</h4>
-            <div class="file-preview" id="file-preview">
-              <div class="file-item">
-                <div class="file-info">
-                  <span class="material-symbols-outlined file-icon pdf">picture_as_pdf</span>
-                  <div class="file-details">
-                    <p class="file-name">Lab_Notes_Week_5.pdf</p>
-                    <p class="file-size">1.2 MB</p>
-                  </div>
+          <div class="file-list" *ngIf="uploadedFiles.length > 0">
+            <h4 class="file-list-title">Selected Files ({{ uploadedFiles.length }})</h4>
+            <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
+              <div class="file-info">
+                <span class="material-symbols-outlined file-icon" [ngClass]="'file-icon-' + file.type">
+                  {{ file.type === 'pdf' ? 'picture_as_pdf' : 'description' }}
+                </span>
+                <div class="file-details">
+                  <p class="file-name">{{ file.name }}</p>
+                  <p class="file-size">{{ file.size }}</p>
                 </div>
-                <button class="file-remove">
-                  <span class="material-symbols-outlined">close</span>
-                </button>
               </div>
-              <div class="file-item">
-                <div class="file-info">
-                  <span class="material-symbols-outlined file-icon doc">description</span>
-                  <div class="file-details">
-                    <p class="file-name">Sartre_Reading_Guide.docx</p>
-                    <p class="file-size">450 KB</p>
-                  </div>
-                </div>
-                <button class="file-remove">
-                  <span class="material-symbols-outlined">close</span>
-                </button>
-              </div>
+              <button class="file-remove" (click)="removeFile(i)" type="button">
+                <span class="material-symbols-outlined">close</span>
+              </button>
             </div>
           </div>
 
-          <div class="form-fields">
-            <div class="form-group">
-              <label class="form-label" for="material-title">Material Title</label>
-              <input class="form-input" id="material-title" name="material-title" placeholder="e.g., Week 5 Lab Notes on The Absurd" type="text"/>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="material-description">Description (Optional)</label>
-              <textarea class="form-textarea" id="material-description" name="material-description" placeholder="A brief summary of what these materials cover." rows="4"></textarea>
-            </div>
+          <div class="form-group">
+            <label class="form-label">Description (Optional)</label>
+            <textarea class="form-textarea" rows="3" [(ngModel)]="materialDescription" placeholder="Brief description..."></textarea>
           </div>
 
           <div class="action-buttons">
-            <button class="btn btn-secondary" type="button">Save as Draft</button>
-            <button class="btn btn-primary" type="button">
-              <span class="material-symbols-outlined">cloud_upload</span>
-              Upload
+            <button class="btn btn-secondary" (click)="saveDraft()" type="button">Save Draft</button>
+            <button class="btn btn-primary" (click)="uploadMaterials()" [disabled]="isUploading" type="button">
+              <span class="material-symbols-outlined" *ngIf="!isUploading">upload</span>
+              <span *ngIf="isUploading">Uploading...</span>
             </button>
           </div>
         </div>

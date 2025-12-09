@@ -62,51 +62,7 @@ export const routes: Routes = [
     path: 'doctor-dashboard/course-announcements',
     loadComponent: () =>
       import('./features/doctor-pages/course-announcements/course-announcements')
-        .then(m => m.CourseAnnouncements),
-  },
-
-  // ---------------- TA ----------------
-  {
-    path: 'ta-dashboard',
-    loadComponent: () =>
-      import('./features/ta-pages/ta-dashboard/ta-dashboard')
-        .then(m => m.TaDashboard),
-  },
-  {
-    path: 'ta-dashboard/upload-materials',
-    loadComponent: () =>
-      import('./features/ta-pages/upload-materials/upload-materials')
-        .then(m => m.UploadMaterials),
-  },
-  {
-    path: 'ta-dashboard/add-grades',
-    loadComponent: () =>
-      import('./features/ta-pages/add-grades/add-grades')
-        .then(m => m.AddGrades),
-  },
-  {
-    path: 'ta-dashboard/add-assignment',
-    loadComponent: () =>
-      import('./features/ta-pages/add-assignment/add-assignment')
-        .then(m => m.AddAssignment),
-  },
-  {
-    path: 'ta-dashboard/answer-questions',
-    loadComponent: () =>
-      import('./features/ta-pages/answer-questions/answer-questions')
-        .then(m => m.AnswerQuestions),
-  },
-  {
-    path: 'ta-dashboard/manage-announcements',
-    loadComponent: () =>
-      import('./features/ta-pages/manage-announcements/manage-announcements')
-        .then(m => m.ManageAnnouncements),
-  },
-  {
-    path: 'ta-dashboard/schedule',
-    loadComponent: () =>
-      import('./features/ta-pages/schedule/schedule')
-        .then(m => m.Schedule),
+        .then(m => m.Announcements),
   },
 
   // ---------------- STUDENT ----------------
@@ -140,12 +96,6 @@ export const routes: Routes = [
       import('./features/student-pages/view-materials/view-materials')
         .then(m => m.ViewMaterials),
   },
-  {
-    path: 'student-dashboard/view-schedule',
-    loadComponent: () =>
-      import('./features/student-pages/view-schedule/view-schedule')
-        .then(m => m.ViewSchedule),
-  },
 
   // ---------------- SUPERVISOR ----------------
   {
@@ -171,12 +121,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/supervisor-pages/generate-timetable/generate-timetable')
         .then(m => m.GenerateTimetable),
-  },
-  {
-    path: 'supervisor-dashboard/review-performance',
-    loadComponent: () =>
-      import('./features/supervisor-pages/review-performance/review-performance')
-        .then(m => m.ReviewPerformance),
   },
 
   // ---------------- 404 ----------------

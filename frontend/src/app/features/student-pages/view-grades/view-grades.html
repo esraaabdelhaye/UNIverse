@@ -1,12 +1,11 @@
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="material-symbols-outlined logo-icon">school</span>
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item active" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -18,17 +17,13 @@
         <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+      <a class="nav-item active" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
       <a class="nav-item" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
-      </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -43,9 +38,7 @@
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main-wrapper">
-    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <button class="notification-btn">
@@ -60,33 +53,11 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="content-container">
-        <div class="grades-header">
-          <div>
-            <h1>My Grades</h1>
-            <p class="page-subtitle">Your comprehensive academic performance overview.</p>
-          </div>
-          <div class="filters">
-            <div class="select-wrapper">
-              <select class="filter-select">
-                <option selected>Fall 2024</option>
-                <option>Spring 2024</option>
-                <option>Fall 2023</option>
-              </select>
-              <span class="material-symbols-outlined select-icon">expand_more</span>
-            </div>
-            <div class="select-wrapper">
-              <select class="filter-select">
-                <option selected>All Courses</option>
-                <option>CS101: Intro to Programming</option>
-                <option>CS202: Data Structures</option>
-                <option>DS310: Web Development</option>
-              </select>
-              <span class="material-symbols-outlined select-icon">expand_more</span>
-            </div>
-          </div>
+        <div class="page-header">
+          <h1>My Grades</h1>
+          <p class="page-subtitle">Your comprehensive academic performance overview.</p>
         </div>
 
         <div class="grades-container">
@@ -102,38 +73,24 @@
                 <p class="grade-value grade-a">92% (A-)</p>
               </div>
             </div>
-            <div class="progress-section">
-              <div class="progress-header">
-                <span class="progress-label progress-primary">Course Completion</span>
-                <span class="progress-percentage progress-primary">75%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill progress-primary-fill" style="width: 75%"></div>
-              </div>
-            </div>
             <div class="assignments-grid">
               <div class="assignment-item blue-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Assignment 1</p>
                   <span class="assignment-grade grade-high">95%</span>
                 </div>
-                <p class="assignment-feedback">Great work on the loops!</p>
-                <a class="feedback-link" href="#">View Feedback</a>
               </div>
               <div class="assignment-item blue-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Quiz 1</p>
                   <span class="assignment-grade grade-high">100%</span>
                 </div>
-                <a class="feedback-link" href="#">View Feedback</a>
               </div>
               <div class="assignment-item blue-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Midterm Exam</p>
                   <span class="assignment-grade grade-mid">88%</span>
                 </div>
-                <p class="assignment-feedback">Strong understanding of concepts.</p>
-                <a class="feedback-link" href="#">View Feedback</a>
               </div>
             </div>
           </div>
@@ -150,30 +107,18 @@
                 <p class="grade-value grade-b">85% (B)</p>
               </div>
             </div>
-            <div class="progress-section">
-              <div class="progress-header">
-                <span class="progress-label progress-green">Course Completion</span>
-                <span class="progress-percentage progress-green">45%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill progress-green-fill" style="width: 45%"></div>
-              </div>
-            </div>
             <div class="assignments-grid">
               <div class="assignment-item green-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Lab Report 1</p>
                   <span class="assignment-grade grade-mid">82%</span>
                 </div>
-                <a class="feedback-link green-link" href="#">View Feedback</a>
               </div>
               <div class="assignment-item green-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Homework 1</p>
                   <span class="assignment-grade grade-high">90%</span>
                 </div>
-                <p class="assignment-feedback">Excellent analysis.</p>
-                <a class="feedback-link green-link" href="#">View Feedback</a>
               </div>
             </div>
           </div>
@@ -190,38 +135,24 @@
                 <p class="grade-value grade-c">78% (C+)</p>
               </div>
             </div>
-            <div class="progress-section">
-              <div class="progress-header">
-                <span class="progress-label progress-pink">Course Completion</span>
-                <span class="progress-percentage progress-pink">60%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill progress-pink-fill" style="width: 60%"></div>
-              </div>
-            </div>
             <div class="assignments-grid">
               <div class="assignment-item purple-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Project Proposal</p>
                   <span class="assignment-grade grade-high">94%</span>
                 </div>
-                <a class="feedback-link purple-link" href="#">View Feedback</a>
               </div>
               <div class="assignment-item purple-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Assignment 2</p>
                   <span class="assignment-grade grade-low">75%</span>
                 </div>
-                <p class="assignment-feedback">Review CSS Flexbox principles.</p>
-                <a class="feedback-link purple-link" href="#">View Feedback</a>
               </div>
               <div class="assignment-item purple-item">
                 <div class="assignment-header">
                   <p class="assignment-name">Quiz 2</p>
                   <span class="assignment-grade grade-low">68%</span>
                 </div>
-                <p class="assignment-feedback">Let's connect during office hours.</p>
-                <a class="feedback-link purple-link" href="#">View Feedback</a>
               </div>
             </div>
           </div>

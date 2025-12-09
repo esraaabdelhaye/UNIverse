@@ -5,48 +5,43 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-item" routerLink="/doctor-dashboard" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
-        <span class="nav-text">Dashboard</span>
+        <span>Dashboard</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
-        <span class="nav-text">Upload Material</span>
+        <span>Upload Material</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
-        <span class="nav-text">Grade Students</span>
+        <span>Grade Students</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
-        <span class="nav-text">View Submissions</span>
+        <span>View Submissions</span>
       </a>
-      <a class="nav-item" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
+      <a class="nav-link active" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
-        <span class="nav-text">Course Announcements</span>
+        <span>Announcements</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span class="nav-text">Settings</span>
-      </a>
-      <a class="nav-item" href="javascript:void(0)" (click)="logout()">
+      <a class="nav-link logout-link" (click)="logout()" href="javascript:void(0)">
         <span class="material-symbols-outlined">logout</span>
-        <span class="nav-text">Log Out</span>
+        <span>Log Out</span>
       </a>
     </div>
   </aside>
 
-  <div class="main-content">
+  <div class="main-wrapper">
     <header class="header">
       <div class="header-actions">
         <button class="icon-button">
           <span class="material-symbols-outlined">notifications</span>
-          <span class="notification-dot"></span>
+          <span class="notification-badge"></span>
         </button>
-        <div class="user-avatar"></div>
+        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
         <div class="user-info">
           <p class="user-name">John Doe</p>
           <p class="user-role">Professor</p>
@@ -54,170 +49,80 @@
       </div>
     </header>
 
-    <main class="content">
-      <div class="page-header">
-        <h2 class="page-title">Course Announcements</h2>
-        <p class="page-subtitle">Manage announcements for your assigned courses.</p>
-      </div>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1 class="page-title">Announcements</h1>
+          <p class="page-subtitle">Manage course announcements</p>
+        </div>
 
-      <div class="create-card">
-        <h3 class="card-title">Create New Announcement</h3>
-        <p class="card-subtitle">Draft and schedule announcements for one or more courses.</p>
-        <div class="create-grid">
-          <div class="create-main">
-            <input class="form-input" placeholder="Announcement Title" type="text" />
-            <textarea class="form-textarea" placeholder="Write your announcement here..." rows="4"></textarea>
-          </div>
-          <div class="create-sidebar">
-            <select class="form-select">
-              <option>Select Course</option>
-              <option>PHIL-301: Existentialism in Film</option>
-              <option>HIST-212: Renaissance Art History</option>
+        <!-- Create Announcement -->
+        <div class="card create-announcement">
+          <h3 class="card-title">Create Announcement</h3>
+
+          <div class="form-group">
+            <label class="form-label">Select Course *</label>
+            <select class="form-select" [(ngModel)]="selectedCourse">
+              <option value="">Choose a course</option>
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.code }}: {{ course.name }}
+              </option>
             </select>
-            <input class="form-input" type="datetime-local" />
-            <div class="button-group">
-              <button class="btn btn-schedule">
-                <span class="material-symbols-outlined">schedule</span>
-                Schedule
-              </button>
-              <button class="btn btn-publish">
-                <span class="material-symbols-outlined">send</span>
-                Publish
-              </button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Title *</label>
+            <input class="form-input" type="text" [(ngModel)]="newTitle" placeholder="Announcement title"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message *</label>
+            <textarea class="form-textarea" rows="4" [(ngModel)]="newMessage" placeholder="Write your announcement..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-secondary" (click)="saveDraft()" type="button">Save Draft</button>
+            <button class="btn btn-primary" (click)="publishAnnouncement()" [disabled]="isPublishing" type="button">
+              <span class="material-symbols-outlined" *ngIf="!isPublishing">send</span>
+              {{ isPublishing ? 'Publishing...' : 'Publish' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Announcements List -->
+        <div class="card">
+          <h3 class="card-title">Recent Announcements</h3>
+
+          <div class="announcement-list">
+            <div class="announcement-item" *ngFor="let announcement of announcements">
+              <div class="announcement-header">
+                <div>
+                  <h4 class="announcement-title">{{ announcement.title }}</h4>
+                  <span class="announcement-course">{{ getCourseCode(announcement.course) }}</span>
+                </div>
+                <span class="badge" [ngClass]="'badge-' + announcement.status">
+                  {{ announcement.status | titlecase }}
+                </span>
+              </div>
+
+              <p class="announcement-text">{{ announcement.message }}</p>
+
+              <div class="announcement-meta">
+                <span class="announcement-date">{{ announcement.createdDate }}</span>
+              </div>
+
+              <div class="announcement-actions">
+                <button class="btn-small btn-edit" (click)="editAnnouncement(announcement)" type="button">Edit</button>
+                <button class="btn-small btn-delete" (click)="deleteAnnouncement(announcement)" type="button">Delete</button>
+                <button class="btn-small btn-publish" (click)="publishDraft(announcement)"
+                        *ngIf="announcement.status === 'draft'" type="button">Publish</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="announcements-card">
-        <div class="announcements-header">
-          <h3 class="card-title">Existing Announcements</h3>
-          <div class="filter-group">
-            <span class="material-symbols-outlined filter-icon">filter_list</span>
-            <select class="form-select-small">
-              <option>Filter by Course</option>
-              <option>All Courses</option>
-              <option>PHIL-301</option>
-              <option>HIST-212</option>
-            </select>
+          <div class="no-announcements" *ngIf="announcements.length === 0">
+            <p>No announcements yet</p>
           </div>
-        </div>
-        <div class="table-wrapper">
-          <table class="announcements-table">
-            <thead>
-              <tr>
-                <th>Title & Course</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th class="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p class="announcement-title">Reminder: Essay 2 deadline</p>
-                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-                </td>
-                <td>
-                  <span class="status-badge status-published">
-                    <span class="status-dot"></span> Published
-                  </span>
-                </td>
-                <td>Oct 26, 2023</td>
-                <td class="actions-cell">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">visibility</span>
-                  </button>
-                  <button class="action-btn delete-btn">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="announcement-title">New Material Uploaded</p>
-                  <p class="announcement-course">HIST-212: Renaissance Art History</p>
-                </td>
-                <td>
-                  <span class="status-badge status-published">
-                    <span class="status-dot"></span> Published
-                  </span>
-                </td>
-                <td>Oct 25, 2023</td>
-                <td class="actions-cell">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">visibility</span>
-                  </button>
-                  <button class="action-btn delete-btn">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="announcement-title">Mid-term Exam Schedule</p>
-                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-                </td>
-                <td>
-                  <span class="status-badge status-scheduled">
-                    <span class="status-dot"></span> Scheduled
-                  </span>
-                </td>
-                <td>For Oct 30, 2023</td>
-                <td class="actions-cell">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">visibility</span>
-                  </button>
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="announcement-title">Office hours update</p>
-                  <p class="announcement-course">HIST-212: Renaissance Art History</p>
-                </td>
-                <td>
-                  <span class="status-badge status-draft">
-                    <span class="status-dot"></span> Draft
-                  </span>
-                </td>
-                <td>Oct 23, 2023</td>
-                <td class="actions-cell">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p class="announcement-title">Clarification on Rubric</p>
-                  <p class="announcement-course">PHIL-301: Existentialism in Film</p>
-                </td>
-                <td>
-                  <span class="status-badge status-awaiting">
-                    <span class="status-dot"></span> Awaiting Approval
-                  </span>
-                </td>
-                <td>Oct 20, 2023</td>
-                <td class="actions-cell">
-                  <button class="action-btn">
-                    <span class="material-symbols-outlined">edit</span>
-                  </button>
-                  <button class="action-btn delete-btn">
-                    <span class="material-symbols-outlined">delete</span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </main>

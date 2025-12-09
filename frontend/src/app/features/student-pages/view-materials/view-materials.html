@@ -1,12 +1,11 @@
 <div class="container">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <span class="material-symbols-outlined logo-icon">school</span>
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item active" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -22,13 +21,9 @@
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+      <a class="nav-item active" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
-      </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span>View Schedule</span>
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -43,9 +38,7 @@
     </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="main-wrapper">
-    <!-- Header -->
     <header class="header">
       <div class="header-content">
         <button class="notification-btn">
@@ -60,7 +53,6 @@
       </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="content-container">
         <div class="page-header">
@@ -72,27 +64,20 @@
           <div class="materials-filters">
             <div class="materials-search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="materials-search-input" placeholder="Search for a file, e.g., 'Lecture 3 slides'..." type="text"/>
+              <input class="materials-search-input" placeholder="Search materials..." type="text" (keyup)="filterMaterials($event)"/>
             </div>
             <div class="materials-selects">
-              <select class="materials-select">
+              <select class="materials-select" (change)="filterByCourse($event)">
                 <option>All Courses</option>
                 <option>CS101: Intro to Programming</option>
                 <option>CS202: Data Structures</option>
                 <option>DS310: Web Development</option>
               </select>
-              <select class="materials-select">
-                <option>All Types</option>
-                <option>Lecture</option>
-                <option>Reading</option>
-                <option>Problem Set</option>
-                <option>Syllabus</option>
-              </select>
             </div>
           </div>
 
           <div class="materials-sections">
-            <!-- Section 1: CS101 -->
+            <!-- CS101 Section -->
             <div class="materials-section">
               <h2 class="materials-section-title blue-border">CS101: Intro to Programming</h2>
               <div class="materials-list">
@@ -105,7 +90,7 @@
                     </div>
                   </div>
                   <span class="material-size">PDF, 2.5 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('cs101_week1.pdf')">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>
@@ -119,10 +104,10 @@
                       <p class="material-type">Reading Material</p>
                     </div>
                   </div>
-                  <span class="material-size">Online Link</span>
-                  <button class="btn btn-secondary btn-with-icon">
-                    <span class="material-symbols-outlined">visibility</span>
-                    View
+                  <span class="material-size">PDF, 3.1 MB</span>
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('reading_ch1_2.pdf')">
+                    <span class="material-symbols-outlined">download</span>
+                    Download
                   </button>
                 </div>
 
@@ -131,11 +116,11 @@
                     <span class="material-symbols-outlined material-icon red-icon">quiz</span>
                     <div class="material-details">
                       <p class="material-title">Problem Set 1</p>
-                      <p class="material-type">Problem Set</p>
+                      <p class="material-type">Practice Problems</p>
                     </div>
                   </div>
                   <span class="material-size">PDF, 300 KB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('ps1.pdf')">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>
@@ -143,7 +128,43 @@
               </div>
             </div>
 
-            <!-- Section 2: DS310 -->
+            <!-- CS202 Section -->
+            <div class="materials-section">
+              <h2 class="materials-section-title blue-border">CS202: Data Structures</h2>
+              <div class="materials-list">
+                <div class="material-item">
+                  <div class="material-info">
+                    <span class="material-symbols-outlined material-icon primary-icon">slideshow</span>
+                    <div class="material-details">
+                      <p class="material-title">Linked Lists Lecture</p>
+                      <p class="material-type">Lecture Slides</p>
+                    </div>
+                  </div>
+                  <span class="material-size">PDF, 2.0 MB</span>
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('cs202_linkedlists.pdf')">
+                    <span class="material-symbols-outlined">download</span>
+                    Download
+                  </button>
+                </div>
+
+                <div class="material-item">
+                  <div class="material-info">
+                    <span class="material-symbols-outlined material-icon amber-icon">code</span>
+                    <div class="material-details">
+                      <p class="material-title">Code Examples</p>
+                      <p class="material-type">Source Code</p>
+                    </div>
+                  </div>
+                  <span class="material-size">ZIP, 512 KB</span>
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('code_examples.zip')">
+                    <span class="material-symbols-outlined">download</span>
+                    Download
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DS310 Section -->
             <div class="materials-section">
               <h2 class="materials-section-title pink-border">DS310: Web Development</h2>
               <div class="materials-list">
@@ -152,11 +173,11 @@
                     <span class="material-symbols-outlined material-icon purple-icon">menu_book</span>
                     <div class="material-details">
                       <p class="material-title">Course Syllabus</p>
-                      <p class="material-type">Syllabus</p>
+                      <p class="material-type">Course Info</p>
                     </div>
                   </div>
                   <span class="material-size">PDF, 1.2 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('syllabus_ds310.pdf')">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>
@@ -171,7 +192,7 @@
                     </div>
                   </div>
                   <span class="material-size">PPTX, 5.1 MB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('react_hooks.pptx')">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>
@@ -186,7 +207,7 @@
                     </div>
                   </div>
                   <span class="material-size">ZIP, 850 KB</span>
-                  <button class="btn btn-primary btn-with-icon">
+                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial('project2_starter.zip')">
                     <span class="material-symbols-outlined">download</span>
                     Download
                   </button>
