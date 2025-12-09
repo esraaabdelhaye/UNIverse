@@ -27,6 +27,10 @@ public class Announcement {
     @Column(name = "visibility")
     private String visibility;
 
+    @Column(name = "status")
+    private String status;
+
+    @ElementCollection
     @Column(name = "attachements")
     private List<String> attachments = new ArrayList<>();
 

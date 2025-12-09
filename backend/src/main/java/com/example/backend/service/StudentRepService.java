@@ -191,7 +191,7 @@ public class StudentRepService {
 
     public ApiResponse<StudentRepresentativeDTO> getStudentRepById(Long id) {
         try {
-            Optional<StudentRepresentative> repOpt = repo.findById(Math.toIntExact(id));
+            Optional<StudentRepresentative> repOpt = repo.findById(id);
 
             if (repOpt.isEmpty()) {
                 return ApiResponse.notFound("Student Representative not found with ID: " + id);
@@ -265,7 +265,7 @@ public class StudentRepService {
 
     public ApiResponse<StudentRepresentativeDTO> updateStudentRep(Long id, StudentRepresentativeDTO dto) {
         try {
-            Optional<StudentRepresentative> repOpt = repo.findById(Math.toIntExact(id));
+            Optional<StudentRepresentative> repOpt = repo.findById(id);
 
             if (repOpt.isEmpty()) {
                 return ApiResponse.notFound("Student Representative not found with ID: " + id);
@@ -290,10 +290,10 @@ public class StudentRepService {
 
     public ApiResponse<Void> deleteStudentRep(Long id) {
         try {
-            if (!repo.existsById(Math.toIntExact(id))) {
+            if (!repo.existsById(id)) {
                 return ApiResponse.notFound("Student Representative not found with ID: " + id);
             }
-            repo.deleteById(Math.toIntExact(id));
+            repo.deleteById(id);
             return ApiResponse.success("Student Representative deleted successfully", null);
 
         } catch (Exception e) {
