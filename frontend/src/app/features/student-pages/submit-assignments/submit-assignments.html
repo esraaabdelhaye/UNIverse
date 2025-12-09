@@ -55,21 +55,30 @@
           <h1>Submit Assignments</h1>
           <p class="page-subtitle">Stay on top of your deadlines and submit your work here.</p>
         </div>
+
         <div class="card">
           <div class="card-header">
             <h2>Your Assignments</h2>
             <div class="filters">
               <div class="select-wrapper">
-                <select class="filter-select" (change)="filterAssignments()">
-                  <option>All Courses</option>
-                  <option>CS101: Intro to Programming</option>
-                  <option>CS202: Data Structures</option>
-                  <option>DS310: Web Development</option>
+                <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+                  <option value="">All Courses</option>
+                  <option value="CS101">CS101: Intro to Programming</option>
+                  <option value="CS202">CS202: Data Structures</option>
+                  <option value="DS310">DS310: Web Development</option>
+                </select>
+                <span class="material-symbols-outlined select-icon">expand_more</span>
+              </div>
+              <div class="select-wrapper">
+                <select class="filter-select" [(ngModel)]="selectedSort" (change)="onSortChange()">
+                  <option value="duedate">Sort by Due Date</option>
+                  <option value="course">Sort by Course</option>
                 </select>
                 <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
             </div>
           </div>
+
           <div class="table-wrapper">
             <table class="assignments-table">
               <thead>
@@ -85,24 +94,42 @@
               <tr *ngFor="let assignment of filteredAssignments">
                 <td class="assignment-title">{{ assignment.title }}</td>
                 <td class="course-code">{{ assignment.course }}</td>
-                <td class="due-date" [ngClass]="assignment.status === 'pending' ? 'urgent' : ''">{{ assignment.dueDate }}</td>
+                <td class="due-date" [ngClass]="assignment.status === 'pending' && assignment.dueDate.includes('Today') ? 'urgent' : assignment.status === 'pending' ? 'warning' : ''">
+                  {{ assignment.dueDate }}
+                </td>
                 <td>
-                  <span class="status-badge" [ngClass]="'status-' + assignment.status">
-                    <span *ngIf="assignment.status === 'graded'">Graded ({{ assignment.grade }}%)</span>
-                    <span *ngIf="assignment.status === 'pending'">Pending</span>
-                    <span *ngIf="assignment.status === 'submitted'">Submitted</span>
-                    <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
-                  </span>
+                    <span class="status-badge" [ngClass]="'status-' + assignment.status">
+                      <span *ngIf="assignment.status === 'graded'">Graded ({{ assignment.grade }}%)</span>
+                      <span *ngIf="assignment.status === 'pending'">Pending</span>
+                      <span *ngIf="assignment.status === 'submitted'">Submitted</span>
+                      <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
+                    </span>
                 </td>
                 <td class="text-right">
-                  <button *ngIf="assignment.status === 'pending'" class="btn btn-primary" (click)="submitAssignment(assignment)">Submit</button>
-                  <button *ngIf="assignment.status === 'submitted'" class="btn btn-secondary" (click)="viewSubmission(assignment)">View Submission</button>
-                  <button *ngIf="assignment.status === 'graded'" class="btn btn-secondary" (click)="viewGrade(assignment)">View Grade</button>
-                  <button *ngIf="assignment.status === 'pastdue'" class="btn btn-disabled" disabled>Submission Closed</button>
+                  <button *ngIf="assignment.status === 'pending'" class="btn btn-primary" (click)="submitAssignment(assignment)">
+                    <span class="material-symbols-outlined">upload</span>
+                    Submit
+                  </button>
+                  <button *ngIf="assignment.status === 'submitted'" class="btn btn-secondary" (click)="viewSubmission(assignment)">
+                    <span class="material-symbols-outlined">visibility</span>
+                    View
+                  </button>
+                  <button *ngIf="assignment.status === 'graded'" class="btn btn-secondary" (click)="viewGrade(assignment)">
+                    <span class="material-symbols-outlined">grade</span>
+                    Grade
+                  </button>
+                  <button *ngIf="assignment.status === 'pastdue'" class="btn btn-disabled" disabled>
+                    <span class="material-symbols-outlined">lock</span>
+                    Closed
+                  </button>
                 </td>
               </tr>
               </tbody>
             </table>
+          </div>
+
+          <div *ngIf="filteredAssignments.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+            <p>No assignments found</p>
           </div>
         </div>
       </div>

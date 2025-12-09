@@ -40,7 +40,7 @@ export class UploadMaterial implements OnInit {
     this.loadCourses();
   }
 
-  loadCourses() {
+  loadCourses(): void {
     this.courses = [
       { id: 1, code: 'PHIL-301', name: 'Existentialism in Film' },
       { id: 2, code: 'HIST-212', name: 'Renaissance Art History' },
@@ -49,12 +49,12 @@ export class UploadMaterial implements OnInit {
     ];
   }
 
-  onDragOver(event: DragEvent) {
+  onDragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
   }
 
-  onDrop(event: DragEvent) {
+  onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
 
@@ -64,14 +64,14 @@ export class UploadMaterial implements OnInit {
     }
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const files = event.target.files;
     if (files) {
       this.handleFiles(files);
     }
   }
 
-  handleFiles(files: FileList) {
+  handleFiles(files: FileList): void {
     Array.from(files).forEach((file: any) => {
       const uploadFile: UploadFile = {
         name: file.name,
@@ -93,24 +93,27 @@ export class UploadMaterial implements OnInit {
   getFileType(filename: string): string {
     if (filename.endsWith('.pdf')) return 'pdf';
     if (filename.endsWith('.docx') || filename.endsWith('.doc')) return 'doc';
+    if (filename.endsWith('.pptx') || filename.endsWith('.ppt')) return 'ppt';
+    if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return 'xls';
     return 'file';
   }
 
-  removeFile(index: number) {
+  removeFile(index: number): void {
     this.uploadedFiles.splice(index, 1);
   }
 
-  triggerFileInput() {
+  triggerFileInput(): void {
     this.fileInput.nativeElement.click();
   }
 
-  uploadMaterials() {
+  uploadMaterials(): void {
     if (!this.selectedCourse || !this.materialTitle || this.uploadedFiles.length === 0) {
       alert('Please fill all required fields and select at least one file');
       return;
     }
 
     this.isUploading = true;
+
     // Simulate API call
     setTimeout(() => {
       console.log('Materials uploaded:', {
@@ -126,24 +129,30 @@ export class UploadMaterial implements OnInit {
     }, 1500);
   }
 
-  resetForm() {
-    this.selectedCourse = '';
-    this.materialTitle = '';
-    this.materialDescription = '';
-    this.uploadedFiles = [];
-  }
+  saveDraft(): void {
+    if (!this.selectedCourse || !this.materialTitle || this.uploadedFiles.length === 0) {
+      alert('Please add at least a title and select files');
+      return;
+    }
 
-  saveDraft() {
     console.log('Saved as draft:', {
       course: this.selectedCourse,
       title: this.materialTitle,
       description: this.materialDescription,
       files: this.uploadedFiles,
     });
-    alert('Saved as draft!');
+
+    alert('Draft saved! You can finish uploading later.');
   }
 
-  logout() {
+  resetForm(): void {
+    this.selectedCourse = '';
+    this.materialTitle = '';
+    this.materialDescription = '';
+    this.uploadedFiles = [];
+  }
+
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
   }

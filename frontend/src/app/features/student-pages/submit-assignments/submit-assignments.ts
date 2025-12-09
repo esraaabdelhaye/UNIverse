@@ -33,7 +33,7 @@ export class SubmitAssignments implements OnInit {
     this.loadAssignments();
   }
 
-  loadAssignments() {
+  loadAssignments(): void {
     this.assignments = [
       {
         id: 1,
@@ -75,39 +75,84 @@ export class SubmitAssignments implements OnInit {
     this.filterAssignments();
   }
 
-  filterAssignments() {
+  filterAssignments(): void {
     let filtered = [...this.assignments];
 
+    // Filter by course if selected
     if (this.selectedCourse) {
       filtered = filtered.filter(a => a.course === this.selectedCourse);
     }
 
+    // Sort by due date or course
     if (this.selectedSort === 'course') {
       filtered.sort((a, b) => a.course.localeCompare(b.course));
+    } else {
+      // Default: sort by due date (pending first)
+      filtered.sort((a, b) => {
+        if (a.status === 'pending' && b.status !== 'pending') return -1;
+        if (a.status !== 'pending' && b.status === 'pending') return 1;
+        return 0;
+      });
     }
 
     this.filteredAssignments = filtered;
   }
 
-  submitAssignment(assignment: Assignment) {
+  onCourseChange(): void {
+    this.filterAssignments();
+  }
+
+  onSortChange(): void {
+    this.filterAssignments();
+  }
+
+  submitAssignment(assignment: Assignment): void {
+    if (assignment.status !== 'pending') {
+      alert('This assignment cannot be submitted in its current status');
+      return;
+    }
+
     assignment.status = 'submitted';
+    console.log('Submitted:', assignment.title);
     alert(`Assignment "${assignment.title}" submitted successfully!`);
   }
 
-  viewSubmission(assignment: Assignment) {
-    console.log('Viewing submission:', assignment);
-    alert(`Viewing submission for "${assignment.title}"`);
+  viewSubmission(assignment: Assignment): void {
+    if (assignment.status === 'pending') {
+      alert('No submission yet');
+      return;
+    }
+
+    console.log('Viewing submission:', assignment.id);
+    alert(`Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`);
   }
 
-  resubmit(assignment: Assignment) {
-    alert(`Resubmitting "${assignment.title}"`);
+  resubmit(assignment: Assignment): void {
+    if (assignment.status !== 'submitted' && assignment.status !== 'graded') {
+      alert('Cannot resubmit this assignment');
+      return;
+    }
+
+    assignment.status = 'submitted';
+    console.log('Resubmitting:', assignment.title);
+    alert(`Resubmitted "${assignment.title}". Please upload your file.`);
   }
 
-  viewGrade(assignment: Assignment) {
-    alert(`Grade for "${assignment.title}": ${assignment.grade}%`);
+  viewGrade(assignment: Assignment): void {
+    if (!assignment.grade) {
+      alert('Grade not available yet');
+      return;
+    }
+
+    const letterGrade = assignment.grade >= 90 ? 'A' :
+      assignment.grade >= 80 ? 'B' :
+        assignment.grade >= 70 ? 'C' :
+          assignment.grade >= 60 ? 'D' : 'F';
+
+    alert(`Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`);
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
   }

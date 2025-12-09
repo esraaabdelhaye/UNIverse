@@ -58,7 +58,7 @@
 
         <div class="card">
           <div class="form-group">
-            <label class="form-label">Select Course *</label>
+            <label class="form-label">Select Course <span style="color: #EF4444;">*</span></label>
             <select class="form-select" [(ngModel)]="selectedCourse">
               <option value="">Choose a course</option>
               <option *ngFor="let course of courses" [value]="course.id">
@@ -68,16 +68,16 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Material Title *</label>
+            <label class="form-label">Material Title <span style="color: #EF4444;">*</span></label>
             <input class="form-input" type="text" [(ngModel)]="materialTitle" placeholder="e.g., Week 5 Lecture Notes"/>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Upload Files *</label>
+            <label class="form-label">Upload Files <span style="color: #EF4444;">*</span></label>
             <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
               <span class="material-symbols-outlined upload-icon">cloud_upload</span>
               <p class="upload-text">Click to upload or drag and drop</p>
-              <p class="upload-hint">PDF, DOCX, PPT (max 50MB)</p>
+              <p class="upload-hint">PDF, DOCX, PPT, XLSX (max 50MB)</p>
               <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;"/>
             </div>
           </div>
@@ -87,7 +87,7 @@
             <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
               <div class="file-info">
                 <span class="material-symbols-outlined file-icon" [ngClass]="'file-icon-' + file.type">
-                  {{ file.type === 'pdf' ? 'picture_as_pdf' : 'description' }}
+                  {{ file.type === 'pdf' ? 'picture_as_pdf' : file.type === 'doc' ? 'description' : file.type === 'ppt' ? 'slideshow' : 'table_chart' }}
                 </span>
                 <div class="file-details">
                   <p class="file-name">{{ file.name }}</p>
@@ -102,13 +102,17 @@
 
           <div class="form-group">
             <label class="form-label">Description (Optional)</label>
-            <textarea class="form-textarea" rows="3" [(ngModel)]="materialDescription" placeholder="Brief description..."></textarea>
+            <textarea class="form-textarea" rows="3" [(ngModel)]="materialDescription" placeholder="Brief description of the material..."></textarea>
           </div>
 
           <div class="action-buttons">
-            <button class="btn btn-secondary" (click)="saveDraft()" type="button">Save Draft</button>
+            <button class="btn btn-secondary" (click)="saveDraft()" type="button">
+              <span class="material-symbols-outlined">save</span>
+              Save Draft
+            </button>
             <button class="btn btn-primary" (click)="uploadMaterials()" [disabled]="isUploading" type="button">
               <span class="material-symbols-outlined" *ngIf="!isUploading">upload</span>
+              <span *ngIf="!isUploading">Upload Materials</span>
               <span *ngIf="isUploading">Uploading...</span>
             </button>
           </div>
