@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.dto.DoctorDTO;
 import com.example.backend.dto.PostAuthor;
 import com.example.backend.dto.PostDTO;
+import com.example.backend.dto.request.CreatePostRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    ApiResponse<?> createPost(@AuthenticationPrincipal PostAuthor postAuthorDTO , @RequestBody PostDTO postDTO, HttpServletRequest request , HttpServletResponse response ){
-        return postService.createPost(postAuthorDTO,postDTO) ;
+    ApiResponse<?> createPost(@AuthenticationPrincipal PostAuthor postAuthorDTO , @RequestBody CreatePostRequest createPostRequest, HttpServletRequest request , HttpServletResponse response ){
+        return postService.createPost(postAuthorDTO,createPostRequest) ;
     }
 }
