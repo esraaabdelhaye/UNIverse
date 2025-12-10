@@ -12,11 +12,12 @@ public class PostDTO {
     private Integer likeCount;
     private Integer commentCount;
     private String postType;
+    private String title ;
     private String[] tags;
 
     public PostDTO() {}
 
-    public PostDTO(String postId, String authorId, String authorName, String authorRole, String postContent,
+    public PostDTO(String postId, String authorId, String authorName, String authorRole, String postContent,String title,
                    LocalDateTime createdDate, Integer likeCount, Integer commentCount, String postType, String[] tags) {
         this.postId = postId;
         this.authorId = authorId;
@@ -28,6 +29,7 @@ public class PostDTO {
         this.commentCount = commentCount;
         this.postType = postType;
         this.tags = tags;
+        this.title = title;
     }
 
     public String getPostId() { return postId; }
@@ -59,4 +61,12 @@ public class PostDTO {
 
     public String[] getTags() { return tags; }
     public void setTags(String[] tags) { this.tags = tags; }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

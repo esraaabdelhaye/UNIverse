@@ -171,4 +171,11 @@ public class Announcement {
     public void removeAttachment(String attachment) {
         this.attachments.remove(attachment);
     }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

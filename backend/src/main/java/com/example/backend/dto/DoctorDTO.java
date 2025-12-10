@@ -2,7 +2,7 @@ package com.example.backend.dto;
 
 import java.time.LocalDate;
 
-public class DoctorDTO {
+public class DoctorDTO implements  PostAuthor {
     private String doctorId;
     private String fullName;
     private String email;
