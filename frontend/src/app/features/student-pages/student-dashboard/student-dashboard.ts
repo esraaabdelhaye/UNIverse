@@ -97,8 +97,12 @@ export class StudentDashboard implements OnInit {
     ];
   }
 
-  postQuestion() {
-    alert('Question posted successfully!');
+  postQuestion(): void {
+    const question = prompt('Enter your question:');
+    if (question && question.trim()) {
+      console.log('Question posted:', question);
+      alert('Question posted successfully! Your instructors will respond soon.');
+    }
   }
 
   navigateToCourse(courseCode: string): void {
@@ -106,6 +110,20 @@ export class StudentDashboard implements OnInit {
       queryParams: { course: courseCode }
     });
     console.log('Navigating to course:', courseCode);
+  }
+
+  getLetterGrade(score: number): string {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    if (score >= 60) return 'D';
+    return 'F';
+  }
+
+  getGradeColor(score: number): string {
+    if (score >= 90) return '#059669';
+    if (score >= 80) return '#D97706';
+    return '#DC2626';
   }
 
   logout() {

@@ -123,6 +123,7 @@
                     <span class="btn-text">Closed</span>
                   </button>
                 </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -162,7 +163,7 @@
         <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0; color: #1E293B;">Selected Files ({{ uploadedFiles.length }})</h4>
         <div *ngFor="let file of uploadedFiles; let i = index" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #FFFFFF; border-radius: 6px; margin-bottom: 8px; border: 1px solid #E2E8F0;">
           <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-            <span class="material-symbols-outlined" [ngClass]="file.type === 'pdf' ? '' : file.type === 'doc' ? '' : file.type === 'ppt' ? '' : file.type === 'xls' ? '' : ''" style="color: #2563EB;">
+            <span class="material-symbols-outlined" style="color: #2563EB;">
               {{ file.type === 'pdf' ? 'picture_as_pdf' : file.type === 'doc' ? 'description' : file.type === 'ppt' ? 'slideshow' : file.type === 'xls' ? 'table_chart' : 'insert_drive_file' }}
             </span>
             <div>

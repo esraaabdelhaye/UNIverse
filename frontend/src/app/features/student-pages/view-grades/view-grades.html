@@ -56,6 +56,22 @@
           <p class="page-subtitle">Your comprehensive academic performance overview.</p>
         </div>
 
+        <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
+          <div class="select-wrapper" style="flex: 1; min-width: 200px;">
+            <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+              <option value="">All Courses</option>
+              <option *ngFor="let course of filteredGrades" [value]="course.code">
+                {{ course.code }}: {{ course.name }}
+              </option>
+            </select>
+            <span class="material-symbols-outlined select-icon">expand_more</span>
+          </div>
+          <button class="btn btn-primary" (click)="downloadGrades()" style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined">download</span>
+            Download Report
+          </button>
+        </div>
+
         <div class="grades-container">
           <div class="grade-card" *ngFor="let course of filteredGrades">
             <div class="grade-card-header">
@@ -65,7 +81,9 @@
               </div>
               <div class="overall-grade">
                 <p class="grade-label">Overall Grade</p>
-                <p class="grade-value" [ngClass]="course.overallGrade >= 90 ? 'grade-a' : course.overallGrade >= 80 ? 'grade-b' : 'grade-c'">{{ course.overallGrade }}% ({{ course.overallGrade >= 90 ? 'A-' : course.overallGrade >= 80 ? 'B' : 'C+' }})</p>
+                <p class="grade-value" [ngClass]="getGradeColor(course.overallGrade)">
+                  {{ course.overallGrade }}% ({{ getLetterGrade(course.overallGrade) }})
+                </p>
               </div>
             </div>
             <div class="assignments-grid">
@@ -79,6 +97,10 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div *ngIf="filteredGrades.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+          <p>No grades available</p>
         </div>
       </div>
     </main>

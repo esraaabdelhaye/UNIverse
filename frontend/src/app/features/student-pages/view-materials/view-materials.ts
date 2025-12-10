@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -31,6 +31,7 @@ interface CourseSection {
 export class ViewMaterials implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
 
   sections: CourseSection[] = [];
   filteredSections: CourseSection[] = [];
@@ -40,6 +41,14 @@ export class ViewMaterials implements OnInit {
 
   ngOnInit() {
     this.loadMaterials();
+
+    // Check for query params from My Courses
+    this.route.queryParams.subscribe(params => {
+      if (params['course']) {
+        this.selectedCourse = params['course'];
+        this.filterMaterials();
+      }
+    });
   }
 
   loadMaterials() {
@@ -156,12 +165,37 @@ export class ViewMaterials implements OnInit {
     this.filterMaterials();
   }
 
-  downloadMaterial(material: Material) {
+  getCourseOptions(): string[] {
+    const courses = new Set(['All Courses']);
+    this.sections.forEach(section => {
+      courses.add(section.courseCode);
+    });
+    return Array.from(courses);
+  }
+
+  getMaterialTypes(): string[] {
+    const types = new Set(['All Types']);
+    this.sections.forEach(section => {
+      section.materials.forEach(material => {
+        types.add(material.type);
+      });
+    });
+    return Array.from(types);
+  }
+
+  downloadMaterial(material: Material): void {
+    console.log('Downloading:', material.title);
+    // Simulate download
+    const link = document.createElement('a');
+    link.href = '#';
+    link.download = material.title;
+    link.click();
     alert(`Downloading: ${material.title}`);
   }
 
-  viewMaterial(material: Material) {
-    alert(`Viewing: ${material.title}`);
+  viewMaterial(material: Material): void {
+    console.log('Viewing:', material.title);
+    alert(`Opening: ${material.title}\n\nType: ${material.type}`);
   }
 
   logout() {

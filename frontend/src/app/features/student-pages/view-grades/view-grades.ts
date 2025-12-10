@@ -114,10 +114,22 @@ export class ViewGrades implements OnInit {
     }
   }
 
+  onCourseChange() {
+    this.filterGrades();
+  }
+
   getGradeColor(grade: number): string {
     if (grade >= 90) return 'grade-high';
     if (grade >= 80) return 'grade-mid';
     return 'grade-low';
+  }
+
+  getLetterGrade(percentage: number): string {
+    if (percentage >= 90) return 'A';
+    if (percentage >= 80) return 'B';
+    if (percentage >= 70) return 'C';
+    if (percentage >= 60) return 'D';
+    return 'F';
   }
 
   getItemColor(index: number): string {
@@ -127,10 +139,46 @@ export class ViewGrades implements OnInit {
 
   viewFeedback(assignment: Assignment) {
     if (assignment.feedback) {
-      alert(`Feedback: ${assignment.feedback}`);
+      alert(`Feedback for ${assignment.name}:\n\n${assignment.feedback}`);
     } else {
       alert('No feedback available yet.');
     }
+  }
+
+  downloadGrades(): void {
+    console.log('Downloading grades report');
+    const gradeReport = this.generateGradeReport();
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(gradeReport));
+    element.setAttribute('download', 'grades-report.txt');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    alert('Grades report downloaded successfully!');
+  }
+
+  private generateGradeReport(): string {
+    let report = 'GRADE REPORT\n';
+    report += '=' .repeat(50) + '\n\n';
+
+    this.filteredGrades.forEach(course => {
+      report += `Course: ${course.code} - ${course.name}\n`;
+      report += `Professor: ${course.professor}\n`;
+      report += `Overall Grade: ${course.overallGrade}% (${this.getLetterGrade(course.overallGrade)})\n`;
+      report += `Completion: ${course.completion}%\n\n`;
+      report += 'Assignments:\n';
+
+      course.assignments.forEach(assignment => {
+        report += `  - ${assignment.name}: ${assignment.grade}%\n`;
+        if (assignment.feedback) {
+          report += `    Feedback: ${assignment.feedback}\n`;
+        }
+      });
+      report += '\n';
+    });
+
+    return report;
   }
 
   logout() {

@@ -93,14 +93,17 @@
                 <td class="text-center"><span [ngClass]="'badge ' + getStatusBadgeClass(course.status)">{{ course.status }}</span></td>
                 <td class="text-center">
                   <div class="action-buttons">
-                    <button class="icon-btn" (click)="editCourse(course)">
+                    <button class="icon-btn" (click)="editCourse(course)" title="Edit">
                       <span class="material-symbols-outlined">edit</span>
                     </button>
-                    <button class="icon-btn" (click)="addStudent(course)">
-                      <span class="material-symbols-outlined">person_add</span>
+                    <button class="icon-btn" (click)="viewStudents(course)" title="View Students">
+                      <span class="material-symbols-outlined">people</span>
                     </button>
-                    <button class="icon-btn danger" (click)="cancelCourse(course)">
-                      <span class="material-symbols-outlined">cancel</span>
+                    <button class="icon-btn" (click)="duplicateCourse(course)" title="Duplicate">
+                      <span class="material-symbols-outlined">content_copy</span>
+                    </button>
+                    <button class="icon-btn danger" (click)="cancelCourse(course)" title="Cancel">
+                      <span class="material-symbols-outlined">close</span>
                     </button>
                   </div>
                 </td>
@@ -118,6 +121,10 @@
               <a class="page-link last" (click)="nextPage()" href="javascript:void(0)">Next</a>
             </div>
           </div>
+          <button class="btn btn-secondary" (click)="exportCourseList()" style="margin-top: 24px;">
+            <span class="material-symbols-outlined">download</span>
+            <span>Export Course List</span>
+          </button>
         </div>
       </div>
     </main>

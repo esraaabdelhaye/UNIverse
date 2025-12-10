@@ -147,7 +147,6 @@ export class GenerateTimetable implements OnInit {
   }
 
   initializeTimetable(): void {
-    // Initialize timetable with default values
     console.log('Timetable initialized');
   }
 
@@ -159,31 +158,40 @@ export class GenerateTimetable implements OnInit {
 
     // Simulate timetable generation
     this.isGenerated = true;
-    this.conflictCount = 2;
-
-    // Here you would call a service to generate the timetable
-    // this.timetableService.generateTimetable(constraints).subscribe(...)
+    this.conflictCount = Math.floor(Math.random() * 3);
+    alert(`Timetable generated with ${this.conflictCount} conflict(s)`);
   }
 
   reviewConflicts(): void {
     console.log('Reviewing conflicts. Total conflicts:', this.conflictCount);
-    // Implement conflict review logic
+    alert(`Found ${this.conflictCount} scheduling conflict(s).\n\nReview and resolve them to publish.`);
   }
 
   manuallyAdjust(): void {
     console.log('Opening manual adjustment mode');
-    // Implement manual adjustment logic
+    alert('Manual adjustment mode enabled. Click on any time slot to edit.');
   }
 
   publishTimetable(): void {
+    if (this.conflictCount > 0) {
+      alert(`Cannot publish: ${this.conflictCount} conflict(s) remain. Resolve them first.`);
+      return;
+    }
+
     if (
       confirm(
         'Are you sure you want to publish this timetable? This action cannot be undone.'
       )
     ) {
       console.log('Publishing timetable');
-      // Implement publish logic
+      alert('Timetable published successfully! All users have been notified.');
     }
+  }
+
+  resolveConflict(slotIndex: number, dayKey: string): void {
+    console.log(`Resolving conflict at ${slotIndex} on ${dayKey}`);
+    this.conflictCount = Math.max(0, this.conflictCount - 1);
+    alert('Conflict resolved! Timetable updated.');
   }
 
   getClassSlot(dayOfWeek: string, timeSlot: TimeSlot): ClassSlot | undefined {
@@ -199,6 +207,36 @@ export class GenerateTimetable implements OnInit {
   updateConstraint(constraintName: keyof Constraint, value: boolean): void {
     this.constraints[constraintName] = value;
     console.log(`Updated constraint ${constraintName}: ${value}`);
+  }
+
+  downloadTimetable(): void {
+    console.log('Downloading timetable...');
+    let timetableContent = `TIMETABLE - ${this.selectedSemester}\n`;
+    timetableContent += '='.repeat(70) + '\n\n';
+
+    this.timetable.forEach(slot => {
+      timetableContent += `Time: ${slot.time}\n`;
+      if (slot.monday) timetableContent += `  Monday: ${slot.monday.courseCode}\n`;
+      if (slot.tuesday) timetableContent += `  Tuesday: ${slot.tuesday.courseCode}\n`;
+      if (slot.wednesday) timetableContent += `  Wednesday: ${slot.wednesday.courseCode}\n`;
+      if (slot.thursday) timetableContent += `  Thursday: ${slot.thursday.courseCode}\n`;
+      if (slot.friday) timetableContent += `  Friday: ${slot.friday.courseCode}\n`;
+      timetableContent += '\n';
+    });
+
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(timetableContent));
+    element.setAttribute('download', `timetable-${this.selectedSemester}.txt`);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    alert('Timetable downloaded successfully!');
+  }
+
+  exportAsCalendar(): void {
+    console.log('Exporting as calendar...');
+    alert('Timetable exported as calendar file (ICS format)');
   }
 
   logout(): void {

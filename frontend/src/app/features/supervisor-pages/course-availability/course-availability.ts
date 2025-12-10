@@ -32,6 +32,8 @@ export class CourseAvailability implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
+  Math = Math;
+
   courses: Course[] = [
     {
       id: '1',
@@ -92,6 +94,7 @@ export class CourseAvailability implements OnInit {
     'Computer Science',
     'History',
     'Mathematics',
+    'Physics',
   ];
 
   semesters: string[] = ['All Semesters', 'Fall 2024', 'Spring 2025'];
@@ -131,24 +134,61 @@ export class CourseAvailability implements OnInit {
 
   addNewCourse(): void {
     console.log('Add new course clicked');
+    alert('Opening new course creation dialog...');
     // Implement add course logic
   }
 
   editCourse(course: Course): void {
     console.log('Edit course:', course.code);
+    alert(`Edit mode for ${course.code}: ${course.title}`);
     // Implement edit course logic
   }
 
   addStudent(course: Course): void {
     console.log('Add student to course:', course.code);
+    alert(`Opening enrollment dialog for ${course.code}`);
     // Implement add student logic
   }
 
   cancelCourse(course: Course): void {
-    if (confirm(`Are you sure you want to cancel ${course.code}?`)) {
+    if (confirm(`Are you sure you want to cancel ${course.code}? This action cannot be undone.`)) {
       console.log('Cancel course:', course.code);
-      // Implement cancel course logic
+      course.status = 'Closed';
+      alert(`Course ${course.code} has been closed.`);
     }
+  }
+
+  duplicateCourse(course: Course): void {
+    console.log('Duplicating course:', course.code);
+    alert(`Creating duplicate of ${course.code}...`);
+  }
+
+  viewStudents(course: Course): void {
+    console.log('Viewing students for course:', course.code);
+    alert(`Enrolled Students: ${course.enrolled}/${course.capacity}`);
+  }
+
+  exportCourseList(): void {
+    console.log('Exporting course list...');
+    let exportData = 'COURSE AVAILABILITY REPORT\n';
+    exportData += '=' .repeat(70) + '\n\n';
+
+    this.filteredCourses.forEach(course => {
+      exportData += `${course.code}: ${course.title}\n`;
+      exportData += `Department: ${course.department}\n`;
+      exportData += `Instructor: ${course.instructor}\n`;
+      exportData += `Capacity: ${course.enrolled}/${course.capacity}\n`;
+      exportData += `Status: ${course.status}\n\n`;
+    });
+
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData));
+    element.setAttribute('download', 'course-availability.txt');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    alert('Course list exported successfully!');
   }
 
   getStatusBadgeClass(status: string): string {
@@ -188,6 +228,4 @@ export class CourseAvailability implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
-
-  protected readonly Math = Math;
 }

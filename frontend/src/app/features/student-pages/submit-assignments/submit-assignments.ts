@@ -39,6 +39,7 @@ export class SubmitAssignments implements OnInit {
   uploadedFiles: UploadFile[] = [];
   isSubmittingAssignment = false;
   selectedAssignmentForSubmit: Assignment | null = null;
+  Math = Math;
 
   ngOnInit() {
     this.loadAssignments();
@@ -247,6 +248,11 @@ export class SubmitAssignments implements OnInit {
           assignment.grade >= 60 ? 'D' : 'F';
 
     alert(`Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`);
+  }
+
+  downloadSubmissionTemplate(assignment: Assignment): void {
+    console.log('Downloading template for:', assignment.title);
+    alert(`Template downloaded for: ${assignment.title}`);
   }
 
   logout(): void {

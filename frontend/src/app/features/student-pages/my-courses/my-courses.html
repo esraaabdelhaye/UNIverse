@@ -64,18 +64,22 @@
         <div class="courses-grid">
           <div class="course-card" *ngFor="let course of filteredCourses">
             <div class="course-image" [ngClass]="course.bgColor">
-              <img alt="Programming" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
+              <img alt="Programming" [src]="getCourseImage(course.code)"/>
             </div>
             <div class="course-content">
               <span class="course-code" [ngClass]="course.textColor">{{ course.code }}</span>
               <h3 class="course-title">{{ course.name }}</h3>
               <p class="course-professor">{{ course.professor }}</p>
               <button class="course-btn" [ngClass]="course.buttonColor" (click)="viewCourse(course)">
-                <span class="material-symbols-outlined">forum</span>
+                <span class="material-symbols-outlined">folder</span>
                 <span>View Materials</span>
               </button>
             </div>
           </div>
+        </div>
+
+        <div *ngIf="filteredCourses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+          <p>No courses found matching your search</p>
         </div>
       </div>
     </main>

@@ -44,6 +44,8 @@ export class SupervisorDashboard implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
+  Math = Math;
+
   // Statistics
   stats: StatCard[] = [
     {
@@ -146,50 +148,44 @@ export class SupervisorDashboard implements OnInit {
 
   loadDashboardData(): void {
     console.log('Loading dashboard data...');
-    // In a real application, you would fetch data from services here
-    // this.dashboardService.getStats().subscribe(stats => this.stats = stats);
-    // this.dashboardService.getCourseAlerts().subscribe(alerts => this.courseAlerts = alerts);
-    // etc.
   }
 
-  navigateToManageCourses(): void {
-    console.log('Navigating to manage courses');
+  viewAllCourses(): void {
     this.router.navigate(['/supervisor-dashboard/course-availability']);
   }
 
-  navigateToGenerateTimetable(): void {
-    console.log('Navigating to generate timetable');
+  generateNewTimetable(): void {
     this.router.navigate(['/supervisor-dashboard/generate-timetable']);
   }
 
-  navigateToManageFaculty(): void {
-    console.log('Navigating to manage faculty');
+  viewAllFaculty(): void {
     this.router.navigate(['/supervisor-dashboard/manage-faculty']);
   }
 
-  navigateToReviewPerformance(): void {
-    console.log('Navigating to review performance');
-    this.router.navigate(['/supervisor-dashboard/review-performance']);
+  viewFacultyDetails(faculty: FacultyItem): void {
+    console.log('Viewing faculty details for:', faculty.name);
+    this.router.navigate(['/supervisor-dashboard/manage-faculty'], {
+      queryParams: { id: faculty.id },
+    });
   }
 
-  reviewCourseDetails(alert: Alert): void {
-    console.log('Reviewing course details:', alert.title);
-    this.router.navigate(['/supervisor-dashboard/course-availability']);
+  accessPerformanceReports(): void {
+    console.log('Accessing performance reports');
   }
 
-  adjustCapacity(alert: Alert): void {
-    console.log('Adjusting capacity for course');
-    // Implement capacity adjustment logic
+  downloadReport(performance: PerformanceItem): void {
+    console.log('Downloading report:', performance.title);
+    if (performance.downloadUrl) {
+      window.open(performance.downloadUrl, '_blank');
+    } else {
+      alert(`Report: ${performance.title}\n\n${performance.description}`);
+    }
   }
 
-  resolveConflicts(alert: Alert): void {
-    console.log('Resolving timetable conflicts');
-    this.router.navigate(['/supervisor-dashboard/generate-timetable']);
-  }
-
-  viewCurrentTimetable(alert: Alert): void {
-    console.log('Viewing current timetable');
-    this.router.navigate(['/supervisor-dashboard/generate-timetable']);
+  refreshDashboard(): void {
+    console.log('Refreshing dashboard');
+    this.loadDashboardData();
+    alert('Dashboard refreshed successfully!');
   }
 
   handleAlertAction(alert: Alert): void {
@@ -211,48 +207,49 @@ export class SupervisorDashboard implements OnInit {
     }
   }
 
-  viewAllCourses(): void {
-    console.log('Viewing all courses');
+  reviewCourseDetails(alert: Alert): void {
     this.router.navigate(['/supervisor-dashboard/course-availability']);
+    console.log('Reviewing course details');
   }
 
-  generateNewTimetable(): void {
-    console.log('Generating new timetable');
+  adjustCapacity(alert: Alert): void {
+    this.router.navigate(['/supervisor-dashboard/course-availability']);
+    console.log('Adjusting capacity for course');
+  }
+
+  resolveConflicts(alert: Alert): void {
     this.router.navigate(['/supervisor-dashboard/generate-timetable']);
+    console.log('Resolving timetable conflicts');
   }
 
-  viewAllFaculty(): void {
-    console.log('Viewing all faculty');
-    this.router.navigate(['/supervisor-dashboard/manage-faculty']);
+  viewCurrentTimetable(alert: Alert): void {
+    this.router.navigate(['/supervisor-dashboard/generate-timetable']);
+    console.log('Viewing current timetable');
   }
 
-  viewFacultyDetails(faculty: FacultyItem): void {
-    console.log('Viewing faculty details for:', faculty.name);
-    this.router.navigate(['/supervisor-dashboard/manage-faculty'], {
-      queryParams: { id: faculty.id },
+  exportDashboardData(): void {
+    console.log('Exporting dashboard data...');
+    let exportData = 'SUPERVISOR DASHBOARD EXPORT\n';
+    exportData += '='.repeat(50) + '\n\n';
+
+    exportData += 'STATISTICS\n';
+    this.stats.forEach(stat => {
+      exportData += `${stat.label}: ${stat.value}\n`;
     });
-  }
 
-  accessPerformanceReports(): void {
-    console.log('Accessing performance reports');
-    this.router.navigate(['/supervisor-dashboard/review-performance']);
-  }
+    exportData += '\nCOURSE ALERTS\n';
+    this.courseAlerts.forEach(alert => {
+      exportData += `${alert.title}: ${alert.text}\n`;
+    });
 
-  downloadReport(performance: PerformanceItem): void {
-    console.log('Downloading report:', performance.title);
-    if (performance.downloadUrl) {
-      window.open(performance.downloadUrl, '_blank');
-    }
-  }
-
-  refreshDashboard(): void {
-    console.log('Refreshing dashboard');
-    this.loadDashboardData();
-  }
-
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData));
+    element.setAttribute('download', 'dashboard-export.txt');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    alert('Dashboard data exported successfully!');
   }
 
   getStatIconClass(color: string): string {
@@ -263,8 +260,8 @@ export class SupervisorDashboard implements OnInit {
     return `alert alert-${type}`;
   }
 
-  getStatColor(index: number): string {
-    const colors = ['blue', 'green', 'yellow', 'red'];
-    return colors[index % colors.length];
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

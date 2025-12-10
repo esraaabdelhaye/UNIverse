@@ -104,11 +104,20 @@ export class MyCourses implements OnInit {
   }
 
   viewCourse(course: Course) {
-    // Navigate to course materials with course code as query param
     this.router.navigate(['/student-dashboard/view-materials'], {
       queryParams: { course: course.code }
     });
     console.log('Viewing course:', course.code);
+  }
+
+  getCourseImage(courseCode: string): string {
+    // Return appropriate image based on course code
+    return 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo';
+  }
+
+  enrollCourse(course: Course): void {
+    alert(`You are now enrolled in ${course.name}!`);
+    console.log('Enrolled in course:', course.code);
   }
 
   logout() {

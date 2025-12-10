@@ -64,10 +64,10 @@
             </div>
             <div class="materials-selects">
               <select class="materials-select" [(ngModel)]="selectedCourse" (change)="onFilterChange()">
-                <option value="">All Courses</option>
-                <option value="CS101">CS101: Intro to Programming</option>
-                <option value="CS202">CS202: Data Structures</option>
-                <option value="DS310">DS310: Web Development</option>
+                <option *ngFor="let course of getCourseOptions()">{{ course }}</option>
+              </select>
+              <select class="materials-select" [(ngModel)]="selectedType" (change)="onFilterChange()">
+                <option *ngFor="let type of getMaterialTypes()">{{ type }}</option>
               </select>
             </div>
           </div>
@@ -92,6 +92,10 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div *ngIf="filteredSections.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+            <p>No materials found matching your filters</p>
           </div>
         </div>
       </div>
