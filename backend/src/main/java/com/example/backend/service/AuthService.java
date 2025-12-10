@@ -82,7 +82,7 @@ public class AuthService {
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENT")) ;
             // We set the password to null since we don't want to store password in the session
-            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(student),null,authorities);
             // 1. Create an empty Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             // 2. Set Authentication
@@ -114,7 +114,7 @@ public class AuthService {
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENTREP")) ;
             // We set the password to null since we don't want to store password in the session
-            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(student),null,authorities);
             // 1. Create an empty Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             // 2. Set Authentication
@@ -146,7 +146,8 @@ public class AuthService {
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_DOCTOR")) ;
             // We set the password to null since we don't want to store password in the session
-            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            // Save the DTO instead of the email such that you can get the doctor data easier
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(doctor),null,authorities);
             // 1. Create an empty Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             // 2. Set Authentication
@@ -161,7 +162,7 @@ public class AuthService {
             return ApiResponse.success("Doctor logged in successfully",dto);
         }
         catch (Exception e) {
-            return ApiResponse.internalServerError("Internal Server Error");
+            return ApiResponse.internalServerError("Internal Server Error"+e.getMessage());
         }
     }
 
@@ -178,7 +179,7 @@ public class AuthService {
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR")) ;
             // We set the password to null since we don't want to store password in the session
-            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(supervisor),null,authorities);
             // 1. Create an empty Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             // 2. Set Authentication
@@ -209,7 +210,7 @@ public class AuthService {
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_TA")) ;
             // We set the password to null since we don't want to store password in the session
-            Authentication auth = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),null,authorities);
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(ta),null,authorities);
             // 1. Create an empty Context
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             // 2. Set Authentication
@@ -259,10 +260,11 @@ public class AuthService {
 
     private DoctorDTO convertToDTO(Doctor doc) {
         DoctorDTO dto = new DoctorDTO();
-        dto.setDepartment(doc.getDepartment().getName());
+        // Currently no departments exist
+//        dto.setDepartment(doc.getDepartment().getName());
         dto.setEmail(doc.getEmail());
         dto.setFullName(doc.getName());
-//        dto.setDoctorId(doc.get());
+        dto.setDoctorId(String.valueOf(doc.getId()));
         dto.setOfficeLocation( doc.getOfficeLocation());
         dto.setPhoneNumber(doc.getPhoneNumber());
         dto.setQualifications(doc.getExpertise());
@@ -274,7 +276,7 @@ public class AuthService {
         dto.setDepartment(supervisor.getDepartment().getName());
         dto.setEmail(supervisor.getEmail());
         dto.setFullName(supervisor.getName());
-//        dto.setEmployeeId(supervisor.getId());
+        dto.setEmployeeId(String.valueOf(supervisor.getId()));
         dto.setOfficeLocation( supervisor.getOfficeLocation());
         dto.setPositionTitle(supervisor.getTitle());
         return dto;
