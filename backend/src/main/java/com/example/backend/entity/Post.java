@@ -3,7 +3,9 @@ package com.example.backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,6 +33,25 @@ public class Post {
     @Column(length = 50, nullable = false)
     private String status; // e.g., public, private, draft, archived
 
+    @Lob
+    @Column(name = "attachment")
+    private byte[] attachmentFile;
+
+    @Column(name = "like_count")
+    int likeCount;
+
+    @Column(name = "comment_count")
+    int commentCount;
+
+    @Column(name="tags")
+    private String tags;
+
+    @Column(name="visibility")
+    private String visibility;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "comments")
+    private List<String> comments = new ArrayList<>();
 
     // With the current way of manging relations there could be empty sets
     // this allows for different combination of post creating but come at
@@ -136,6 +157,66 @@ public class Post {
 
     public void addStudentRep(StudentRepresentative studentRepresentative) {
         this.studentReps.add(studentRepresentative);
+    }
+
+    public byte[] getAttachmentFile() {
+        return attachmentFile;
+    }
+
+    public void setAttachmentFile(byte[] attachmentFile) {
+        this.attachmentFile = attachmentFile;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
+
+    public boolean removeComment(String comment) {
+        return this.comments.remove(comment);
+    }
+
+    public void setId(long id) {
+        this.id = id ;
     }
 
     //Add helper methods if needed
