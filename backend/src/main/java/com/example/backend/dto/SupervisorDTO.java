@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-public class SupervisorDTO implements PostAuthor {
+public class SupervisorDTO implements PostAuthor , AnnouncementAuthor {
     private String employeeId;
     private String fullName;
     private String email;
