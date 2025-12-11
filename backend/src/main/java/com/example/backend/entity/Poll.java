@@ -32,7 +32,7 @@ public class Poll {
     private Supervisor supervisorCreator;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "professor_id")
+    @JoinColumn(name = "doctor_id")
     private Doctor doctorCreator;
 
     @ManyToOne(fetch = FetchType.LAZY)
