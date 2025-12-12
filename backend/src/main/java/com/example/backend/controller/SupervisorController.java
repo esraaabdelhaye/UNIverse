@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.dto.DoctorDTO;
 import com.example.backend.dto.CourseDTO;
 import com.example.backend.dto.PerformanceMetricsDTO;
+import com.example.backend.dto.SupervisorDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.service.SupervisorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,37 +24,37 @@ public class SupervisorController {
     private SupervisorService supervisorService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<DoctorDTO>>> getAllSupervisors(
+    public ResponseEntity<ApiResponse<Page<SupervisorDTO>>> getAllSupervisors(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        ApiResponse<Page<DoctorDTO>> response = supervisorService.getAllSupervisors(pageable);
+        ApiResponse<Page<SupervisorDTO>> response = supervisorService.getAllSupervisors(pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<DoctorDTO>> getSupervisorById(@PathVariable Long id) {
-        ApiResponse<DoctorDTO> response = supervisorService.getSupervisorById(id);
+    public ResponseEntity<ApiResponse<SupervisorDTO>> getSupervisorById(@PathVariable Long id) {
+        ApiResponse<SupervisorDTO> response = supervisorService.getSupervisorById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<ApiResponse<DoctorDTO>> getSupervisorByEmail(@PathVariable String email) {
-        ApiResponse<DoctorDTO> response = supervisorService.getSupervisorByEmail(email);
+    public ResponseEntity<ApiResponse<SupervisorDTO>> getSupervisorByEmail(@PathVariable String email) {
+        ApiResponse<SupervisorDTO> response = supervisorService.getSupervisorByEmail(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<DoctorDTO>> createSupervisor(@RequestBody DoctorDTO supervisorDTO) {
-        ApiResponse<DoctorDTO> response = supervisorService.registerSupervisor(supervisorDTO);
+    public ResponseEntity<ApiResponse<SupervisorDTO>> createSupervisor(@RequestBody SupervisorDTO supervisorDTO) {
+        ApiResponse<SupervisorDTO> response = supervisorService.registerSupervisor(supervisorDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<DoctorDTO>> updateSupervisor(
+    public ResponseEntity<ApiResponse<SupervisorDTO>> updateSupervisor(
             @PathVariable Long id,
-            @RequestBody DoctorDTO supervisorDTO) {
-        ApiResponse<DoctorDTO> response = supervisorService.updateSupervisor(id, supervisorDTO);
+            @RequestBody SupervisorDTO supervisorDTO) {
+        ApiResponse<SupervisorDTO> response = supervisorService.updateSupervisor(id, supervisorDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

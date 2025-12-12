@@ -260,6 +260,7 @@ public class AuthService {
         dto.setFullName(student.getName());
         dto.setEmail(student.getEmail());
         dto.setEnrollmentStatus("Active");
+        dto.setRole("student");
         return dto;
     }
 
