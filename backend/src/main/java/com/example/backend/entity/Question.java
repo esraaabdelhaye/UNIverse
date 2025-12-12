@@ -13,11 +13,36 @@ public class Question {
     @Column(nullable = false, length = 1000)
     private String content;
 
+    @Column(name = "title", nullable = false)
+    private String title;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "answer" , nullable = true)
     private String answer;
+
+    @Column(name = "answered_at", nullable = true)
+    private LocalDateTime answeredAt;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @Column(name = "priority", nullable = true)
+    private String priority;
+
+    @Column(name = "view_count", nullable = false)
+    private Integer viewCount = 0;
+
+    @Column(name = "upvotes", nullable = false)
+    private Integer upvotes = 0;
+
+    @Column(name = "answer_count", nullable = false)
+    private Integer answerCount = 0;
+
+    @Column(name = "tags", nullable = true)
+    private String tags; // Comma-separated list of tags
+
 
     // UniDirectional relation for now
     @ManyToOne(fetch = FetchType.LAZY)
@@ -86,4 +111,54 @@ public class Question {
     public void setDoctorResponder(Doctor doctorResponder) {
         this.doctorResponder = doctorResponder;
     }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getTags() {
+        return tags;
+    }
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+    public LocalDateTime getAnsweredAt() {
+        return answeredAt;
+    }
+    public void setAnsweredAt(LocalDateTime answeredAt) {
+        this.answeredAt = answeredAt;
+    }
+    public String getPriority() {
+        return priority;
+    }
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+    public Integer getViewCount() {
+        return viewCount;
+    }
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+    public Integer getUpvotes() {
+        return upvotes;
+    }
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
+    public Integer getAnswerCount() {
+        return answerCount;
+    }
+    public void setAnswerCount(Integer answerCount) {
+        this.answerCount = answerCount;
+    }
+
+    
 }
