@@ -140,6 +140,10 @@ public class PostService {
         }
     }
 
+    /**
+     * Currently these methods add and remove likes blindly but I will
+     * Edit them to store the user id and likes in hash map
+     */
     public ApiResponse<PostDTO> addLike(PostDTO postDTO) {
         try {
             Long postId = Long.parseLong(postDTO.getPostId());
@@ -183,6 +187,10 @@ public class PostService {
         }
     }
 
+    /**
+     * The same here for comments i will try to do the same trick
+     * Hash map the user id as key list of comments as value
+     */
     public ApiResponse<PostDTO> addComment(String comment, PostDTO postDTO) {
         try {
             Optional<Post> postOpt = postRepo.findById(Long.valueOf(postDTO.getPostId())) ;
@@ -246,7 +254,7 @@ public class PostService {
     /**
      * Post retrieval methods
      */
-    ApiResponse<PostDTO> getPost(String postId) {
+    public ApiResponse<PostDTO> getPost(String postId) {
         try {
             Optional<Post> postOpt = postRepo.findById(Long.parseLong(postId));
             if (postOpt.isEmpty()) return ApiResponse.badRequest("Post not found");
