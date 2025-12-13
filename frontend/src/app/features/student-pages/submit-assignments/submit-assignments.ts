@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { AssignmentService } from '../../../core/services/assignment.service';
+import { SubmissionService } from '../../../core/services/submission.service';
 
 interface Assignment {
   id: number;
   title: string;
   course: string;
+  courseId: number;
   dueDate: string;
   status: 'pending' | 'submitted' | 'graded' | 'pastdue';
   grade?: number;
@@ -31,10 +34,8 @@ export class SubmitAssignments implements OnInit {
 
   private router = inject(Router);
   private authService = inject(AuthService);
-  public isPopUp: boolean = false;
-  public statusMessage: string = "";
-  public status: string = "";
-  public gradeMessage: string = "";
+  private assignmentService = inject(AssignmentService);
+  private submissionService = inject(SubmissionService);
 
   assignments: Assignment[] = [];
   filteredAssignments: Assignment[] = [];
@@ -43,67 +44,64 @@ export class SubmitAssignments implements OnInit {
   uploadedFiles: UploadFile[] = [];
   isSubmittingAssignment = false;
   selectedAssignmentForSubmit: Assignment | null = null;
-  Math = Math;
+  isPopUp = false;
+  statusMessage = '';
+  status = '';
+  isLoading = true;
 
   ngOnInit() {
     this.loadAssignments();
   }
 
   loadAssignments(): void {
-    this.assignments = [
-      {
-        id: 1,
-        title: 'Assignment 1: Basic Algorithms',
-        course: 'CS101',
-        dueDate: 'Today, 11:59 PM',
-        status: 'pending',
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const studentId = parseInt(currentUser.studentId || currentUser.id);
+
+    this.assignmentService.getAllAssignments().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.assignments = response.data.map((a: any) => ({
+            id: a.id || a.assignmentId,
+            title: a.title || a.assignmentTitle,
+            course: a.courseCode,
+            courseId: a.courseId || 0,
+            dueDate: a.dueDate,
+            status: this.getAssignmentStatus(a.dueDate),
+          }));
+        }
+        this.filterAssignments();
+        this.isLoading = false;
       },
-      {
-        id: 2,
-        title: 'Lab Report: Linked Lists',
-        course: 'CS202',
-        dueDate: 'In 3 days',
-        status: 'pending',
-      },
-      {
-        id: 3,
-        title: 'Project Proposal',
-        course: 'DS310',
-        dueDate: 'Oct 28, 2024',
-        status: 'submitted',
-      },
-      {
-        id: 4,
-        title: 'Quiz 1: Programming Fundamentals',
-        course: 'CS101',
-        dueDate: 'Oct 15, 2024',
-        status: 'graded',
-        grade: 95,
-      },
-      {
-        id: 5,
-        title: 'Homework 2: API Integration',
-        course: 'DS310',
-        dueDate: 'Oct 10, 2024',
-        status: 'pastdue',
-      },
-    ];
-    this.filterAssignments();
+      error: (err) => {
+        console.error('Error loading assignments:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private getAssignmentStatus(dueDate: string): 'pending' | 'submitted' | 'graded' | 'pastdue' {
+    const date = new Date(dueDate);
+    const today = new Date();
+
+    if (date < today) return 'pastdue';
+    return 'pending';
   }
 
   filterAssignments(): void {
     let filtered = [...this.assignments];
 
-    // Filter by course if selected
     if (this.selectedCourse) {
       filtered = filtered.filter(a => a.course === this.selectedCourse);
     }
 
-    // Sort by due date or course
     if (this.selectedSort === 'course') {
       filtered.sort((a, b) => a.course.localeCompare(b.course));
     } else {
-      // Default: sort by due date (pending first)
       filtered.sort((a, b) => {
         if (a.status === 'pending' && b.status !== 'pending') return -1;
         if (a.status !== 'pending' && b.status === 'pending') return 1;
@@ -124,9 +122,8 @@ export class SubmitAssignments implements OnInit {
 
   submitAssignment(assignment: Assignment): void {
     if (assignment.status !== 'pending') {
-      // alert('This assignment cannot be submitted in its current status');
       this.statusMessage = 'This assignment cannot be submitted in its current status';
-      this.status = "Error";
+      this.status = 'Error';
       this.isPopUp = true;
       return;
     }
@@ -197,39 +194,45 @@ export class SubmitAssignments implements OnInit {
 
   completeSubmission(): void {
     if (this.uploadedFiles.length === 0) {
-      // alert('Please select at least one file to submit');
       this.statusMessage = 'Please select at least one file to submit';
-      this.status = "Error";
+      this.status = 'Error';
       this.isPopUp = true;
       return;
     }
 
     if (!this.selectedAssignmentForSubmit) {
-      // alert('Error: Assignment not selected');
       this.statusMessage = 'Error: Assignment not selected';
-      this.status = "Error";
+      this.status = 'Error';
       this.isPopUp = true;
       return;
     }
 
+    const currentUser = this.authService.getCurrentUser();
+    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    const assignmentId = this.selectedAssignmentForSubmit.id;
+
     this.isSubmittingAssignment = true;
 
-    // Simulate API call
-    setTimeout(() => {
-      this.selectedAssignmentForSubmit!.status = 'submitted';
-      console.log('Assignment submitted:', {
-        assignment: this.selectedAssignmentForSubmit?.title,
-        files: this.uploadedFiles,
-      });
-
-      // alert(`Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`);
-      this.statusMessage = `Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`;
-      this.status = "Submitted";
-      this.isPopUp = true;
-      this.resetUploadForm();
-      this.isSubmittingAssignment = false;
-      this.filterAssignments();
-    }, 1500);
+    this.submissionService.submitAssignment(studentId, assignmentId, 'submitted').subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.statusMessage = `Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`;
+          this.status = 'Submitted';
+          this.isPopUp = true;
+          this.selectedAssignmentForSubmit!.status = 'submitted';
+          this.resetUploadForm();
+          this.filterAssignments();
+        }
+        this.isSubmittingAssignment = false;
+      },
+      error: (err) => {
+        console.error('Error submitting assignment:', err);
+        this.statusMessage = 'Failed to submit assignment. Please try again.';
+        this.status = 'Error';
+        this.isPopUp = true;
+        this.isSubmittingAssignment = false;
+      }
+    });
   }
 
   cancelSubmission(): void {
@@ -243,24 +246,16 @@ export class SubmitAssignments implements OnInit {
   }
 
   viewSubmission(assignment: Assignment): void {
-    if (assignment.status === 'pending') {
-      // alert('No submission yet');
-      this.statusMessage = 'No submission yet';
-      this.status ='Pending' ;
-      this.isPopUp = true;
-      return;
-    }
-
-    console.log('Viewing submission:', assignment.id);
-    // alert(`Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`);
-    this.statusMessage = `Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`;
-    this.status ='Submitted' ;
+    this.statusMessage = `Viewing submission for: ${assignment.title}`;
+    this.status = 'Submitted';
     this.isPopUp = true;
   }
 
   viewGrade(assignment: Assignment): void {
     if (!assignment.grade) {
-      alert('Grade not available yet');
+      this.statusMessage = 'Grade not available yet';
+      this.status = 'Pending';
+      this.isPopUp = true;
       return;
     }
 
@@ -269,29 +264,17 @@ export class SubmitAssignments implements OnInit {
         assignment.grade >= 70 ? 'C' :
           assignment.grade >= 60 ? 'D' : 'F';
 
-    // alert(`Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`);
-    this.statusMessage = `Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`;
-    this.status = "Graded";
+    this.statusMessage = `Grade for ${assignment.title}: ${assignment.grade}% (${letterGrade})`;
+    this.status = 'Graded';
     this.isPopUp = true;
   }
 
-  downloadSubmissionTemplate(assignment: Assignment): void {
-    console.log('Downloading template for:', assignment.title);
-    // alert(`Template downloaded for: ${assignment.title}`);
-    this.statusMessage = `Template downloaded for: ${assignment.title}`;
-    this.status = "Downloaded";
-    this.isPopUp = true;
+  closePopup(): void {
+    this.isPopUp = false;
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
-  }
-
-  openPopup() {
-    this.isPopUp = true;
-  }
-  closePopup() {
-    this.isPopUp = false;
   }
 }

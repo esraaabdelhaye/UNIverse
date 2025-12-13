@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { MaterialService } from '../../../core/services/material.service';
 
 interface Material {
   id: number;
@@ -12,6 +13,7 @@ interface Material {
   icon: string;
   iconColor: string;
   courseCode: string;
+  url: string;
 }
 
 interface CourseSection {
@@ -32,108 +34,114 @@ export class ViewMaterials implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
+  private materialService = inject(MaterialService);
 
   sections: CourseSection[] = [];
   filteredSections: CourseSection[] = [];
   searchQuery = '';
   selectedCourse = '';
   selectedType = '';
+  isLoading = true;
 
   ngOnInit() {
     this.loadMaterials();
 
-    // Check for query params from My Courses
     this.route.queryParams.subscribe(params => {
-      if (params['course']) {
-        this.selectedCourse = params['course'];
-        this.filterMaterials();
+      if (params['courseId']) {
+        this.loadMaterialsForCourse(parseInt(params['courseId']));
       }
     });
   }
 
   loadMaterials() {
-    this.sections = [
-      {
-        courseCode: 'CS101',
-        courseName: 'Intro to Programming',
-        borderColor: 'blue-border',
-        materials: [
-          {
-            id: 1,
-            title: 'Week 1 - Introduction to Python',
-            type: 'Lecture Slides',
-            size: 'PDF, 2.5 MB',
-            icon: 'slideshow',
-            iconColor: 'primary-icon',
-            courseCode: 'CS101',
-          },
-          {
-            id: 2,
-            title: 'Reading: Chapter 1 & 2',
-            type: 'Reading Material',
-            size: 'Online Link',
-            icon: 'description',
-            iconColor: 'green-icon',
-            courseCode: 'CS101',
-          },
-          {
-            id: 3,
-            title: 'Problem Set 1',
-            type: 'Problem Set',
-            size: 'PDF, 300 KB',
-            icon: 'quiz',
-            iconColor: 'red-icon',
-            courseCode: 'CS101',
-          },
-        ],
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.materialService.getAllMaterials().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.processMaterials(response.data);
+        }
+        this.isLoading = false;
       },
-      {
-        courseCode: 'DS310',
-        courseName: 'Web Development',
-        borderColor: 'pink-border',
-        materials: [
-          {
-            id: 4,
-            title: 'Course Syllabus',
-            type: 'Syllabus',
-            size: 'PDF, 1.2 MB',
-            icon: 'menu_book',
-            iconColor: 'purple-icon',
-            courseCode: 'DS310',
-          },
-          {
-            id: 5,
-            title: 'Week 5 - React Hooks',
-            type: 'Lecture Slides',
-            size: 'PPTX, 5.1 MB',
-            icon: 'slideshow',
-            iconColor: 'primary-icon',
-            courseCode: 'DS310',
-          },
-          {
-            id: 6,
-            title: 'Project 2 Starter Code',
-            type: 'Code Files',
-            size: 'ZIP, 850 KB',
-            icon: 'code',
-            iconColor: 'amber-icon',
-            courseCode: 'DS310',
-          },
-        ],
+      error: (err) => {
+        console.error('Error loading materials:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadMaterialsForCourse(courseId: number) {
+    this.materialService.getMaterialsByCourse(courseId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.processMaterials(response.data, courseId);
+        }
       },
-    ];
+      error: (err) => console.error('Error loading course materials:', err)
+    });
+  }
+
+  private processMaterials(materials: any[], courseId?: number) {
+    const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    const grouped = new Map<string, Material[]>();
+
+    materials.forEach((material) => {
+      const courseCode = material.courseCode || 'Unknown';
+
+      if (!grouped.has(courseCode)) {
+        grouped.set(courseCode, []);
+      }
+
+      const mat: Material = {
+        id: material.materialId || material.id,
+        title: material.materialTitle || material.title,
+        type: material.materialType || 'PDF',
+        size: '1 MB',
+        icon: this.getIconForType(material.materialType),
+        iconColor: this.getColorForType(material.materialType),
+        courseCode: courseCode,
+        url: material.downloadUrl || material.url || '',
+      };
+
+      grouped.get(courseCode)!.push(mat);
+    });
+
+    this.sections = Array.from(grouped.entries()).map((entry, index) => ({
+      courseCode: entry[0],
+      courseName: entry[0],
+      borderColor: colorMap[index % colorMap.length] + '-border',
+      materials: entry[1],
+    }));
+
     this.filterMaterials();
+  }
+
+  private getIconForType(type: string): string {
+    if (type?.includes('PDF')) return 'picture_as_pdf';
+    if (type?.includes('VIDEO')) return 'play_circle';
+    if (type?.includes('RECORDING')) return 'mic';
+    if (type?.includes('TEXTBOOK')) return 'menu_book';
+    return 'description';
+  }
+
+  private getColorForType(type: string): string {
+    if (type?.includes('PDF')) return 'primary-icon';
+    if (type?.includes('VIDEO')) return 'red-icon';
+    if (type?.includes('RECORDING')) return 'amber-icon';
+    return 'green-icon';
   }
 
   filterMaterials() {
     let filtered = [...this.sections];
 
-    // Filter by course
     if (this.selectedCourse) {
       filtered = filtered.filter(s => s.courseCode === this.selectedCourse);
     }
 
-    // Filter by type
     if (this.selectedType) {
       filtered = filtered.map(section => ({
         ...section,
@@ -141,7 +149,6 @@ export class ViewMaterials implements OnInit {
       }));
     }
 
-    // Search
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.map(section => ({
@@ -184,18 +191,22 @@ export class ViewMaterials implements OnInit {
   }
 
   downloadMaterial(material: Material): void {
-    console.log('Downloading:', material.title);
-    // Simulate download
-    const link = document.createElement('a');
-    link.href = '#';
-    link.download = material.title;
-    link.click();
-    alert(`Downloading: ${material.title}`);
+    if (material.url) {
+      const link = document.createElement('a');
+      link.href = material.url;
+      link.download = material.title;
+      link.click();
+    } else {
+      alert(`Download: ${material.title}`);
+    }
   }
 
   viewMaterial(material: Material): void {
-    console.log('Viewing:', material.title);
-    alert(`Opening: ${material.title}\n\nType: ${material.type}`);
+    if (material.url) {
+      window.open(material.url, '_blank');
+    } else {
+      alert(`Opening: ${material.title}`);
+    }
   }
 
   logout() {

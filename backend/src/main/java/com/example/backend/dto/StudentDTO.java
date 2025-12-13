@@ -9,6 +9,7 @@ public class StudentDTO {
     private LocalDate dateOfBirth;
     private String phoneNumber;
     private String enrollmentStatus;
+    private String role;
 
     public StudentDTO() {}
 
@@ -39,5 +40,8 @@ public class StudentDTO {
 
     public String getEnrollmentStatus() { return enrollmentStatus; }
     public void setEnrollmentStatus(String enrollmentStatus) { this.enrollmentStatus = enrollmentStatus; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }
 

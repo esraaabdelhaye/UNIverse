@@ -2,8 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { StudentService } from '../../../core/services/student.service';
+import { CourseService } from '../../../core/services/course.service';
+import { GradeService } from '../../../core/services/grade.service';
 
 interface Deadline {
+  id: number;
   title: string;
   course: string;
   dueDate: string;
@@ -17,6 +21,7 @@ interface Grade {
 }
 
 interface Course {
+  id: number;
   code: string;
   name: string;
   professor: string;
@@ -33,83 +38,99 @@ interface Course {
 export class StudentDashboard implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private studentService = inject(StudentService);
+  private courseService = inject(CourseService);
+  private gradeService = inject(GradeService);
 
   deadlines: Deadline[] = [];
   grades: Grade[] = [];
   courses: Course[] = [];
+  isLoading = true;
+  errorMessage = '';
 
   ngOnInit() {
-    this.loadDeadlines();
-    this.loadGrades();
-    this.loadCourses();
+    this.loadStudentData();
   }
 
-  loadDeadlines() {
-    this.deadlines = [
-      {
-        title: 'CS101 - Assignment 1',
-        course: 'CS101',
-        dueDate: 'Today',
-        urgency: 'urgent',
-      },
-      {
-        title: 'CS202 - Lab Report',
-        course: 'CS202',
-        dueDate: 'In 3 days',
-        urgency: 'warning',
-      },
-      {
-        title: 'DS310 - Project Proposal',
-        course: 'DS310',
-        dueDate: 'Oct 28',
-        urgency: 'normal',
-      },
-    ];
-  }
-
-  loadGrades() {
-    this.grades = [
-      { course: 'CS101', assignment: 'Quiz 1', score: 95 },
-      { course: 'DS310', assignment: 'Homework 2', score: 82 },
-    ];
-  }
-
-  loadCourses() {
-    this.courses = [
-      {
-        code: 'CS101',
-        name: 'Intro to Programming',
-        professor: 'Prof. Alan Turing',
-        progress: 75,
-      },
-      {
-        code: 'CS202',
-        name: 'Data Structures',
-        professor: 'Prof. Ada Lovelace',
-        progress: 45,
-      },
-      {
-        code: 'DS310',
-        name: 'Web Development',
-        professor: 'Prof. Tim Berners-Lee',
-        progress: 60,
-      },
-    ];
-  }
-
-  postQuestion(): void {
-    const question = prompt('Enter your question:');
-    if (question && question.trim()) {
-      console.log('Question posted:', question);
-      alert('Question posted successfully! Your instructors will respond soon.');
+  loadStudentData(): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.router.navigate(['/login']);
+      return;
     }
+
+    const studentId = parseInt(currentUser.studentId || currentUser.id);
+
+    // Load courses
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.courses = response.data.map((course: any) => ({
+            id: course.id,
+            code: course.courseCode,
+            name: course.courseTitle,
+            professor: course.professor || 'TBA',
+            progress: Math.floor(Math.random() * 100),
+          }));
+        }
+      },
+      error: (err) => {
+        console.error('Error loading courses:', err);
+        this.errorMessage = 'Failed to load courses';
+      }
+    });
+
+    // Load grades
+    this.gradeService.getStudentGrades(studentId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.grades = response.data.slice(0, 2).map((grade: any) => ({
+            course: grade.courseCode,
+            assignment: grade.gradingStatus,
+            score: grade.score || 0,
+          }));
+        }
+      },
+      error: (err) => {
+        console.error('Error loading grades:', err);
+      }
+    });
+
+    // Load deadlines
+    this.studentService.getStudentAssignments(studentId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.deadlines = response.data.slice(0, 3).map((assignment: any, index: number) => ({
+            id: index,
+            title: assignment.assignmentTitle || assignment.title,
+            course: assignment.courseCode,
+            dueDate: assignment.dueDate,
+            urgency: this.getUrgency(assignment.dueDate),
+          }));
+        }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading assignments:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private getUrgency(dueDate: string): 'urgent' | 'warning' | 'normal' {
+    const date = new Date(dueDate);
+    const today = new Date();
+    const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (daysUntil <= 0) return 'urgent';
+    if (daysUntil <= 3) return 'warning';
+    return 'normal';
   }
 
   navigateToCourse(courseCode: string): void {
     this.router.navigate(['/student-dashboard/my-courses'], {
       queryParams: { course: courseCode }
     });
-    console.log('Navigating to course:', courseCode);
   }
 
   getLetterGrade(score: number): string {

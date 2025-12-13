@@ -1,12 +1,15 @@
 export interface Grade {
-  id: number;
+  gradeId?: string;
+  id?: number;
   studentId: number;
   courseCode: string;
-  courseName: string;
-  assignmentId: number;
-  assignmentName: string;
+  courseName?: string;
+  courseTitle?: string;
+  assignmentId?: number;
+  assignmentName?: string;
   score: number;
   feedback?: string;
   gradingStatus: string;
-  gradedDate: string;
+  gradedDate?: string;
+  status?: string;
 }

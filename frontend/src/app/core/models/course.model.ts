@@ -1,11 +1,11 @@
 export interface Course {
   id: number;
   courseCode: string;
-  name: string;
+  courseTitle: string;
   credits: number;
   semester: string;
   description: string;
-  department: string;
+  department?: string;
   professor?: string;
   progress?: number;
 }
