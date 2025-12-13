@@ -36,10 +36,10 @@ public class SupervisorService {
     }
 
     // Get all supervisors
-    public ApiResponse<Page<DoctorDTO>> getAllSupervisors(Pageable pageable) {
+    public ApiResponse<Page<SupervisorDTO>> getAllSupervisors(Pageable pageable) {
         try {
             Page<Supervisor> supervisors = supervisorRepo.findAll(pageable);
-            Page<DoctorDTO> supervisorDTOs = supervisors.map(this::convertToDTO);
+            Page<SupervisorDTO> supervisorDTOs = supervisors.map(this::convertToDTO);
 
             return ApiResponse.success(supervisorDTOs);
 
@@ -49,7 +49,7 @@ public class SupervisorService {
     }
 
     // Get supervisor by ID
-    public ApiResponse<DoctorDTO> getSupervisorById(Long id) {
+    public ApiResponse<SupervisorDTO> getSupervisorById(Long id) {
         try {
             Optional<Supervisor> supervisorOpt = supervisorRepo.findById(id);
 
@@ -57,7 +57,7 @@ public class SupervisorService {
                 return ApiResponse.notFound("Supervisor not found with ID: " + id);
             }
 
-            DoctorDTO dto = convertToDTO(supervisorOpt.get());
+            SupervisorDTO dto = convertToDTO(supervisorOpt.get());
             return ApiResponse.success(dto);
 
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class SupervisorService {
     }
 
     // Get supervisor by email
-    public ApiResponse<DoctorDTO> getSupervisorByEmail(String email) {
+    public ApiResponse<SupervisorDTO> getSupervisorByEmail(String email) {
         try {
             Optional<Doctor> doctorOpt = doctorRepo.findByEmail(email);
 
@@ -75,7 +75,7 @@ public class SupervisorService {
             }
 
             if (doctorOpt.get() instanceof Supervisor supervisor) {
-                DoctorDTO dto = convertToDTO(supervisor);
+                SupervisorDTO dto = convertToDTO(supervisor);
                 return ApiResponse.success(dto);
             }
 
@@ -87,7 +87,7 @@ public class SupervisorService {
     }
 
     // Register new supervisor
-    public ApiResponse<DoctorDTO> registerSupervisor(DoctorDTO request) {
+    public ApiResponse<SupervisorDTO> registerSupervisor(SupervisorDTO request) {
         try {
             if (doctorRepo.findByEmail(request.getEmail()).isPresent()) {
                 return ApiResponse.conflict("Supervisor with this email already exists");
@@ -96,11 +96,8 @@ public class SupervisorService {
             Supervisor supervisor = new Supervisor();
             supervisor.setName(request.getFullName());
             supervisor.setEmail(request.getEmail());
-            supervisor.setPhoneNumber(request.getPhoneNumber());
             supervisor.setOfficeLocation(request.getOfficeLocation());
-            supervisor.setTitle(request.getSpecialization());
-            supervisor.setExpertise(request.getQualifications());
-            supervisor.setStartDate(request.getStartDate());
+            supervisor.setTitle(request.getPositionTitle());
 
             Supervisor savedSupervisor = supervisorRepo.save(supervisor);
 
@@ -112,7 +109,7 @@ public class SupervisorService {
     }
 
     // Update supervisor
-    public ApiResponse<DoctorDTO> updateSupervisor(Long id, DoctorDTO supervisorDTO) {
+    public ApiResponse<SupervisorDTO> updateSupervisor(Long id, SupervisorDTO supervisorDTO) {
         try {
             Optional<Supervisor> supervisorOpt = supervisorRepo.findById(id);
 
@@ -128,15 +125,15 @@ public class SupervisorService {
             if (supervisorDTO.getEmail() != null) {
                 supervisor.setEmail(supervisorDTO.getEmail());
             }
-            if (supervisorDTO.getPhoneNumber() != null) {
-                supervisor.setPhoneNumber(supervisorDTO.getPhoneNumber());
-            }
             if (supervisorDTO.getOfficeLocation() != null) {
                 supervisor.setOfficeLocation(supervisorDTO.getOfficeLocation());
             }
+            if (supervisorDTO.getPositionTitle() != null) {
+                supervisor.setTitle(supervisorDTO.getPositionTitle());
+            }
 
             Supervisor updatedSupervisor = supervisorRepo.save(supervisor);
-            DoctorDTO dto = convertToDTO(updatedSupervisor);
+            SupervisorDTO dto = convertToDTO(updatedSupervisor);
 
             return ApiResponse.success("Supervisor updated successfully", dto);
 
@@ -384,17 +381,16 @@ public class SupervisorService {
     }
 
     // Helper methods
-    private DoctorDTO convertToDTO(Supervisor supervisor) {
-        DoctorDTO dto = new DoctorDTO();
-        dto.setDoctorId(String.valueOf(supervisor.getId()));
+    private SupervisorDTO convertToDTO(Supervisor supervisor) {
+        SupervisorDTO dto = new SupervisorDTO();
+        dto.setEmployeeId(String.valueOf(supervisor.getId()));
         dto.setFullName(supervisor.getName());
         dto.setEmail(supervisor.getEmail());
-        dto.setPhoneNumber(supervisor.getPhoneNumber());
-        dto.setSpecialization(supervisor.getTitle());
+        dto.setPositionTitle(supervisor.getTitle());
         dto.setOfficeLocation(supervisor.getOfficeLocation());
-        dto.setQualifications(supervisor.getExpertise());
-        dto.setAvailableForConsultation(true);
-        dto.setStartDate(supervisor.getStartDate());
+        if (supervisor.getDepartment() != null) {
+            dto.setDepartment(supervisor.getDepartment().getName());
+        }
         return dto;
     }
 

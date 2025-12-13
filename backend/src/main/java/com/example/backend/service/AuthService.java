@@ -56,6 +56,7 @@ public class AuthService {
         return switch (loginRequest.getRole()) {
             case "student" -> loginStudent(loginRequest ,  request, response);
             case "studentRep" -> loginStudentRep(loginRequest,request, response);
+            case "staff" -> loginStaff(loginRequest,request,response) ;
             case "doctor" -> loginDoctor(loginRequest,request, response);
             case "supervisor" -> loginSupervisor(loginRequest,request, response) ;
             case "ta" -> loginTA(loginRequest,request, response);
@@ -229,6 +230,23 @@ public class AuthService {
         }
     }
 
+
+    /**
+     * Generic method to work with frontend
+     */
+    private ApiResponse<?> loginStaff(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
+        Optional<Doctor> doctor = doctorRepo.findByEmail(loginRequest.getEmail());
+        if (doctor.isPresent()) {
+            return loginDoctor(loginRequest, request, response);
+        }
+
+        Optional<TeachingAssistant> ta = taRepo.findByEmail(loginRequest.getEmail());
+        if (ta.isPresent()) {
+            return loginTA(loginRequest, request, response);
+        }
+        return ApiResponse.unauthorized("Invalid email or password");
+    }
+
     //Helper method to convert from Entity to DTO
     /*
     Refactor Move them to entity classes
@@ -242,6 +260,7 @@ public class AuthService {
         dto.setFullName(student.getName());
         dto.setEmail(student.getEmail());
         dto.setEnrollmentStatus("Active");
+        dto.setRole("student");
         return dto;
     }
 
