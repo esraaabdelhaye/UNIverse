@@ -6,6 +6,7 @@ public class CreateEventRequest {
     private String eventTitle;
     private String eventDescription;
     private LocalDateTime eventDateTime;
+    private LocalDateTime eventEndDateTime;
     private String location;
     private String eventType;
     private String courseCode;
@@ -39,4 +40,12 @@ public class CreateEventRequest {
 
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+
+    public LocalDateTime getEventEndDateTime() {
+        return eventEndDateTime;
+    }
+
+    public void setEventEndDateTime(LocalDateTime eventEndDateTime) {
+        this.eventEndDateTime = eventEndDateTime;
+    }
 }
