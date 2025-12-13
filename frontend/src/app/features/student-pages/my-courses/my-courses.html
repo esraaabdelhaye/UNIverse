@@ -42,8 +42,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -61,10 +61,16 @@
           </div>
         </div>
 
-        <div class="courses-grid">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px; color: #64748B;">
+          <p>Loading your courses...</p>
+        </div>
+
+        <!-- Courses Grid -->
+        <div *ngIf="!isLoading" class="courses-grid">
           <div class="course-card" *ngFor="let course of filteredCourses">
             <div class="course-image" [ngClass]="course.bgColor">
-              <img alt="Programming" [src]="getCourseImage(course.code)"/>
+              <img alt="Course" [src]="getCourseImage(course.code)"/>
             </div>
             <div class="course-content">
               <span class="course-code" [ngClass]="course.textColor">{{ course.code }}</span>
@@ -78,8 +84,11 @@
           </div>
         </div>
 
-        <div *ngIf="filteredCourses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
-          <p>No courses found matching your search</p>
+        <!-- No Courses Found -->
+        <div *ngIf="!isLoading && filteredCourses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+          <p *ngIf="errorMessage">{{ errorMessage }}</p>
+          <p *ngIf="!errorMessage && searchQuery">No courses found matching your search</p>
+          <p *ngIf="!errorMessage && !searchQuery">No courses enrolled yet</p>
         </div>
       </div>
     </main>

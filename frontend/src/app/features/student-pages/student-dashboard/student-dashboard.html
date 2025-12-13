@@ -43,8 +43,8 @@
         </button>
         <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC-LETa4BflVlQ-Ke4L1wK7jtSz5aP99ABOzLi0704ZljGf5FDMgfp5f-jIvQ1BtVkL0GlLxVHAvU0XTllE38dKcebfTPb7utJ8-cAWaPGS9T27juHXLKrFw1LTJP8NOx59KeIBXL7Qkt-g60iKue6ZC44Wl-FbKOwh7oSGGYVOPzJOoTtEjZhYn3CHNWbHK4tkdoAz4uskjwlIoMIoFoe4B46z1CHJsKKPQIY1gswCW_1j7WoHfNUICaoxhoDT9NlPLKLRsqoo");'></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -52,11 +52,17 @@
     <main class="main-content">
       <div class="content-wrapper">
         <div class="page-header">
-          <h1>Welcome back, Alex! 👋</h1>
+          <h1>Welcome back, {{ currentUser?.fullName?.split(' ')[0] }}! 👋</h1>
           <p>Here's your academic overview</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading your dashboard...</p>
+        </div>
+
+        <!-- Main Content -->
+        <div *ngIf="!isLoading" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
             <span style="font-size: 32px;">📚</span>
             <div>
@@ -68,28 +74,29 @@
             <span style="font-size: 32px;">✅</span>
             <div>
               <p style="color: #64748B; font-size: 14px; margin: 0;">Completed</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">8</p>
+              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ completedAssignments }}</p>
             </div>
           </div>
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
             <span style="font-size: 32px;">⏳</span>
             <div>
               <p style="color: #64748B; font-size: 14px; margin: 0;">Pending</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ deadlines.length }}</p>
+              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ pendingCount }}</p>
             </div>
           </div>
           <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
             <span style="font-size: 32px;">⭐</span>
             <div>
               <p style="color: #64748B; font-size: 14px; margin: 0;">Avg. Grade</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #059669;">A-</p>
+              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #059669;">{{ getLetterGrade(averageGrade) }} ({{ averageGrade }}%)</p>
             </div>
           </div>
         </div>
 
+        <!-- Courses Section -->
         <div class="courses-section">
           <h2 class="section-title-large">My Courses</h2>
-          <div class="courses-grid">
+          <div *ngIf="!isLoading && courses.length > 0" class="courses-grid">
             <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.code)">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
               <h3>{{ course.code }}: {{ course.name }}</h3>
@@ -101,6 +108,9 @@
                 <span class="material-symbols-outlined">forum</span> Course Info
               </a>
             </div>
+          </div>
+          <div *ngIf="!isLoading && courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+            <p>No courses enrolled yet</p>
           </div>
         </div>
       </div>

@@ -36,30 +36,40 @@ export class ViewMaterials implements OnInit {
   private route = inject(ActivatedRoute);
   private materialService = inject(MaterialService);
 
+  // User data
+  currentUser: any;
+
+  // Material data
   sections: CourseSection[] = [];
   filteredSections: CourseSection[] = [];
+
+  // Filters
   searchQuery = '';
   selectedCourse = '';
   selectedType = '';
+
+  // Loading state
   isLoading = true;
 
   ngOnInit() {
-    this.loadMaterials();
+    this.currentUser = this.authService.getCurrentUser();
 
+    if (!this.currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    // Check if course ID was passed as query param
     this.route.queryParams.subscribe(params => {
       if (params['courseId']) {
         this.loadMaterialsForCourse(parseInt(params['courseId']));
+      } else {
+        this.loadMaterials();
       }
     });
   }
 
   loadMaterials() {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.materialService.getAllMaterials().subscribe({
       next: (response) => {
         if (response.success && response.data) {
@@ -80,8 +90,12 @@ export class ViewMaterials implements OnInit {
         if (response.success && response.data) {
           this.processMaterials(response.data, courseId);
         }
+        this.isLoading = false;
       },
-      error: (err) => console.error('Error loading course materials:', err)
+      error: (err) => {
+        console.error('Error loading course materials:', err);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -100,7 +114,7 @@ export class ViewMaterials implements OnInit {
         id: material.materialId || material.id,
         title: material.materialTitle || material.title,
         type: material.materialType || 'PDF',
-        size: '1 MB',
+        size: '1 MB', // Default size
         icon: this.getIconForType(material.materialType),
         iconColor: this.getColorForType(material.materialType),
         courseCode: courseCode,
@@ -173,21 +187,25 @@ export class ViewMaterials implements OnInit {
   }
 
   getCourseOptions(): string[] {
-    const courses = new Set(['All Courses']);
+    const courses = ['All Courses'];
     this.sections.forEach(section => {
-      courses.add(section.courseCode);
+      if (!courses.includes(section.courseCode)) {
+        courses.push(section.courseCode);
+      }
     });
-    return Array.from(courses);
+    return courses;
   }
 
   getMaterialTypes(): string[] {
-    const types = new Set(['All Types']);
+    const types = ['All Types'];
     this.sections.forEach(section => {
       section.materials.forEach(material => {
-        types.add(material.type);
+        if (!types.includes(material.type)) {
+          types.push(material.type);
+        }
       });
     });
-    return Array.from(types);
+    return types;
   }
 
   downloadMaterial(material: Material): void {

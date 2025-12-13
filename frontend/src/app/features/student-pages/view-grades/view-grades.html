@@ -56,8 +56,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -69,7 +69,13 @@
           <p class="page-subtitle">Your comprehensive academic performance overview.</p>
         </div>
 
-        <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading your grades...</p>
+        </div>
+
+        <!-- Filters -->
+        <div *ngIf="!isLoading" style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap">
           <div class="select-wrapper" style="flex: 1; min-width: 200px">
             <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
               <option value="">All Courses</option>
@@ -89,7 +95,8 @@
           </button>
         </div>
 
-        <div class="grades-container">
+        <!-- Grades Container -->
+        <div *ngIf="!isLoading && filteredGrades.length > 0" class="grades-container">
           <div class="grade-card" *ngFor="let course of filteredGrades">
             <div class="grade-card-header">
               <div>
@@ -112,10 +119,9 @@
                 <div class="assignment-header">
                   <p class="assignment-name">{{ assignment.name }}</p>
                   <span class="assignment-grade" [ngClass]="getGradeColor(assignment.grade)"
-                    >{{ assignment.grade }}%</span
+                  >{{ assignment.grade }}%</span
                   >
                 </div>
-                <!-- Added part for pop up window -->
                 <p class="assignment-feedback" *ngIf="assignment.feedback">
                   {{ assignment.feedback | slice : 0 : 80 }}
                   <span *ngIf="assignment.feedback.length > 80">...</span>
@@ -125,37 +131,39 @@
                   class="feedback-link"
                   href="javascript:void(0)"
                   (click)="viewFeedback(assignment)"
-                  >View Feedback</a
+                >View Feedback</a
                 >
               </div>
             </div>
           </div>
         </div>
 
+        <!-- No Grades -->
         <div
-          *ngIf="filteredGrades.length === 0"
+          *ngIf="!isLoading && filteredGrades.length === 0"
           style="text-align: center; padding: 32px; color: #64748b"
         >
           <p>No grades available</p>
         </div>
       </div>
     </main>
-    <!-- Added part for pop up window -->
-    <div class="popup-overlay" *ngIf="isPopUp">
-      <div class="popup-container">
-        <div class="popup-header">
-          <h3>Feedback</h3>
-          <button class="close-btn" (click)="closePopup()">
-            <span class="material-symbols-outlined">close</span>
-          </button>
-        </div>
-        <div class="popup-body">
-          <p>{{ feedBack }}</p>
-        </div>
-        <div class="popup-footer">
-          <button class="btn btn-primary" (click)="closePopup()">Close</button>
-        </div>
-      </div>
+  </div>
+</div>
+
+<!-- Feedback Popup -->
+<div class="popup-overlay" *ngIf="isPopUp">
+  <div class="popup-container">
+    <div class="popup-header">
+      <h3>Feedback</h3>
+      <button class="close-btn" (click)="closePopup()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="popup-body">
+      <p>{{ feedBack }}</p>
+    </div>
+    <div class="popup-footer">
+      <button class="btn btn-primary" (click)="closePopup()">Close</button>
     </div>
   </div>
 </div>

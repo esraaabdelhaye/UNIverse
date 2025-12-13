@@ -37,25 +37,34 @@ export class ViewGrades implements OnInit {
   private gradeService = inject(GradeService);
   private studentService = inject(StudentService);
 
+  // User data
+  currentUser: any;
+
+  // Grade data
   courseGrades: CourseGrade[] = [];
   filteredGrades: CourseGrade[] = [];
   selectedCourse = '';
+
+  // Popup
   isPopUp = false;
   feedBack = '';
+
+  // Loading state
   isLoading = true;
 
   ngOnInit() {
-    this.loadGrades();
-  }
+    this.currentUser = this.authService.getCurrentUser();
 
-  loadGrades() {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
+    if (!this.currentUser) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    this.loadGrades();
+  }
+
+  loadGrades() {
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
 
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (courses) => {
@@ -177,7 +186,7 @@ export class ViewGrades implements OnInit {
     yPosition = 55;
     doc.setTextColor(100, 116, 139);
     doc.setFontSize(10);
-    const userName = this.authService.getCurrentUser().fullName || 'Student';
+    const userName = this.currentUser?.fullName || 'Student';
     doc.text('Student: ' + userName, 14, yPosition);
     doc.text(`Generated: ${new Date().toLocaleDateString()}`, pageWidth - 14, yPosition, { align: 'right' });
 
@@ -218,7 +227,7 @@ export class ViewGrades implements OnInit {
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(100, 116, 139);
       doc.text(`Professor: ${course.professor}`, 14, yPosition + 8);
-      doc.text(`Grade: ${course.overallGrade}%`, 14, yPosition + 14);
+      doc.text(`Grade: ${course.overallGrade}% (${this.getLetterGrade(course.overallGrade)})`, 14, yPosition + 14);
 
       yPosition += 20;
     });

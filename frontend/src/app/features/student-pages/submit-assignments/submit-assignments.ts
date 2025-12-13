@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { AssignmentService } from '../../../core/services/assignment.service';
 import { SubmissionService } from '../../../core/services/submission.service';
+import { StudentService } from '../../../core/services/student.service';
 
 interface Assignment {
   id: number;
@@ -36,49 +37,78 @@ export class SubmitAssignments implements OnInit {
   private authService = inject(AuthService);
   private assignmentService = inject(AssignmentService);
   private submissionService = inject(SubmissionService);
+  private studentService = inject(StudentService);
 
+  // User data
+  currentUser: any;
+
+  // Data
   assignments: Assignment[] = [];
   filteredAssignments: Assignment[] = [];
+  courses: string[] = [];
+
+  // Filters
   selectedCourse = '';
   selectedSort = 'duedate';
+
+  // File upload
   uploadedFiles: UploadFile[] = [];
   isSubmittingAssignment = false;
   selectedAssignmentForSubmit: Assignment | null = null;
+
+  // Popup
   isPopUp = false;
   statusMessage = '';
   status = '';
+
+  // Loading
   isLoading = true;
 
   ngOnInit() {
-    this.loadAssignments();
-  }
+    this.currentUser = this.authService.getCurrentUser();
 
-  loadAssignments(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
+    if (!this.currentUser) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    this.loadAssignments();
+  }
 
-    this.assignmentService.getAllAssignments().subscribe({
-      next: (response) => {
-        if (response.success && response.data) {
-          this.assignments = response.data.map((a: any) => ({
-            id: a.id || a.assignmentId,
-            title: a.title || a.assignmentTitle,
-            course: a.courseCode,
-            courseId: a.courseId || 0,
-            dueDate: a.dueDate,
-            status: this.getAssignmentStatus(a.dueDate),
-          }));
+  loadAssignments(): void {
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
+
+    // First load student's courses
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (courseResponse) => {
+        if (courseResponse.success && courseResponse.data) {
+          this.courses = courseResponse.data.map((c: any) => c.courseCode);
         }
-        this.filterAssignments();
-        this.isLoading = false;
+
+        // Then load assignments
+        this.assignmentService.getAllAssignments().subscribe({
+          next: (response) => {
+            if (response.success && response.data) {
+              this.assignments = response.data.map((a: any) => ({
+                id: a.id || a.assignmentId,
+                title: a.title || a.assignmentTitle,
+                course: a.courseCode,
+                courseId: a.courseId || 0,
+                dueDate: a.dueDate,
+                status: this.getAssignmentStatus(a.dueDate),
+              }));
+            }
+            this.filterAssignments();
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.error('Error loading assignments:', err);
+            this.isLoading = false;
+          }
+        });
       },
       error: (err) => {
-        console.error('Error loading assignments:', err);
+        console.error('Error loading courses:', err);
         this.isLoading = false;
       }
     });
@@ -120,6 +150,12 @@ export class SubmitAssignments implements OnInit {
     this.filterAssignments();
   }
 
+  // Get unique courses for dropdown
+  get uniqueCourses(): string[] {
+    const unique = [...new Set(this.assignments.map(a => a.course))];
+    return unique;
+  }
+
   submitAssignment(assignment: Assignment): void {
     if (assignment.status !== 'pending') {
       this.statusMessage = 'This assignment cannot be submitted in its current status';
@@ -130,7 +166,6 @@ export class SubmitAssignments implements OnInit {
 
     this.selectedAssignmentForSubmit = assignment;
     this.uploadedFiles = [];
-    this.triggerFileInput();
   }
 
   onDragOver(event: DragEvent): void {
@@ -207,8 +242,7 @@ export class SubmitAssignments implements OnInit {
       return;
     }
 
-    const currentUser = this.authService.getCurrentUser();
-    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
     const assignmentId = this.selectedAssignmentForSubmit.id;
 
     this.isSubmittingAssignment = true;

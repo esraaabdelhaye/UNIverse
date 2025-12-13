@@ -5,6 +5,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { StudentService } from '../../../core/services/student.service';
 import { CourseService } from '../../../core/services/course.service';
 import { GradeService } from '../../../core/services/grade.service';
+import { SubmissionService } from '../../../core/services/submission.service';
 
 interface Deadline {
   id: number;
@@ -41,29 +42,42 @@ export class StudentDashboard implements OnInit {
   private studentService = inject(StudentService);
   private courseService = inject(CourseService);
   private gradeService = inject(GradeService);
+  private submissionService = inject(SubmissionService);
 
+  // User data
+  currentUser: any;
+
+  // Data arrays
   deadlines: Deadline[] = [];
   grades: Grade[] = [];
   courses: Course[] = [];
+
+  // Stats
+  completedAssignments = 0;
+  averageGrade = 0;
+  pendingCount = 0;
+
+  // Loading state
   isLoading = true;
   errorMessage = '';
 
   ngOnInit() {
-    this.loadStudentData();
-  }
+    this.currentUser = this.authService.getCurrentUser();
 
-  loadStudentData(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
+    if (!this.currentUser) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    this.loadStudentData();
+  }
+
+  loadStudentData(): void {
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
 
     // Load courses
     this.studentService.getStudentCourses(studentId).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         if (response.success && response.data) {
           this.courses = response.data.map((course: any) => ({
             id: course.id,
@@ -74,7 +88,7 @@ export class StudentDashboard implements OnInit {
           }));
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading courses:', err);
         this.errorMessage = 'Failed to load courses';
       }
@@ -82,24 +96,31 @@ export class StudentDashboard implements OnInit {
 
     // Load grades
     this.gradeService.getStudentGrades(studentId).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         if (response.success && response.data) {
           this.grades = response.data.slice(0, 2).map((grade: any) => ({
             course: grade.courseCode,
             assignment: grade.gradingStatus,
             score: grade.score || 0,
           }));
+
+          // Calculate average grade
+          if (response.data.length > 0) {
+            const total = response.data.reduce((sum: number, g: any) => sum + (g.score || 0), 0);
+            this.averageGrade = Math.round((total / response.data.length) * 10) / 10;
+          }
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading grades:', err);
       }
     });
 
-    // Load deadlines
+    // Load assignments and create deadlines
     this.studentService.getStudentAssignments(studentId).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         if (response.success && response.data) {
+          // Create deadlines from assignments
           this.deadlines = response.data.slice(0, 3).map((assignment: any, index: number) => ({
             id: index,
             title: assignment.assignmentTitle || assignment.title,
@@ -107,11 +128,25 @@ export class StudentDashboard implements OnInit {
             dueDate: assignment.dueDate,
             urgency: this.getUrgency(assignment.dueDate),
           }));
+
+          this.pendingCount = this.deadlines.length;
+        }
+      },
+      error: (err: any) => {
+        console.error('Error loading assignments:', err);
+      }
+    });
+
+    // Load submission count for completed assignments
+    this.submissionService.getSubmissionsByStatus('graded').subscribe({
+      next: (response: any) => {
+        if (response.success && response.data) {
+          this.completedAssignments = response.data.length;
         }
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Error loading assignments:', err);
+      error: (err: any) => {
+        console.error('Error loading submissions:', err);
         this.isLoading = false;
       }
     });

@@ -52,8 +52,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -65,7 +65,13 @@
           <p class="page-subtitle">Stay on top of your deadlines and submit your work here.</p>
         </div>
 
-        <div class="card">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading assignments...</p>
+        </div>
+
+        <!-- Main Content -->
+        <div *ngIf="!isLoading" class="card">
           <div class="card-header">
             <h2>Your Assignments</h2>
             <div class="filters">
@@ -76,9 +82,9 @@
                   (change)="onCourseChange()"
                 >
                   <option value="">All Courses</option>
-                  <option value="CS101">CS101: Intro to Programming</option>
-                  <option value="CS202">CS202: Data Structures</option>
-                  <option value="DS310">DS310: Web Development</option>
+                  <option *ngFor="let course of uniqueCourses" [value]="course">
+                    {{ course }}
+                  </option>
                 </select>
                 <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
@@ -95,75 +101,75 @@
           <div class="table-wrapper">
             <table class="assignments-table">
               <thead>
-                <tr>
-                  <th>Assignment Title</th>
-                  <th>Course</th>
-                  <th>Due Date</th>
-                  <th>Status</th>
-                  <th class="text-right">Action</th>
-                </tr>
+              <tr>
+                <th>Assignment Title</th>
+                <th>Course</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th class="text-right">Action</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let assignment of filteredAssignments">
-                  <td class="assignment-title">{{ assignment.title }}</td>
-                  <td class="course-code">{{ assignment.course }}</td>
-                  <td
-                    class="due-date"
-                    [ngClass]="
+              <tr *ngFor="let assignment of filteredAssignments">
+                <td class="assignment-title">{{ assignment.title }}</td>
+                <td class="course-code">{{ assignment.course }}</td>
+                <td
+                  class="due-date"
+                  [ngClass]="
                       assignment.status === 'pending' && assignment.dueDate.includes('Today')
                         ? 'urgent'
                         : assignment.status === 'pending'
                         ? 'warning'
                         : ''
                     "
-                  >
-                    {{ assignment.dueDate }}
-                  </td>
-                  <td>
+                >
+                  {{ assignment.dueDate }}
+                </td>
+                <td>
                     <span class="status-badge" [ngClass]="'status-' + assignment.status">
                       <span *ngIf="assignment.status === 'graded'"
-                        >Graded ({{ assignment.grade }}%)</span
+                      >Graded ({{ assignment.grade }}%)</span
                       >
                       <span *ngIf="assignment.status === 'pending'">Pending</span>
                       <span *ngIf="assignment.status === 'submitted'">Submitted</span>
                       <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
                     </span>
-                  </td>
-                  <td class="text-right">
-                    <button
-                      *ngIf="assignment.status === 'pending'"
-                      class="btn btn-primary"
-                      (click)="submitAssignment(assignment)"
-                    >
-                      <span class="material-symbols-outlined btn-icon">upload</span>
-                      <span class="btn-text">Submit</span>
-                    </button>
-                    <button
-                      *ngIf="assignment.status === 'submitted'"
-                      class="btn btn-secondary"
-                      (click)="viewSubmission(assignment)"
-                    >
-                      <span class="material-symbols-outlined btn-icon">visibility</span>
-                      <span class="btn-text">View</span>
-                    </button>
-                    <button
-                      *ngIf="assignment.status === 'graded'"
-                      class="btn btn-secondary"
-                      (click)="viewGrade(assignment)"
-                    >
-                      <span class="material-symbols-outlined btn-icon">grade</span>
-                      <span class="btn-text">Grade</span>
-                    </button>
-                    <button
-                      *ngIf="assignment.status === 'pastdue'"
-                      class="btn btn-disabled"
-                      disabled
-                    >
-                      <span class="material-symbols-outlined btn-icon">lock</span>
-                      <span class="btn-text">Closed</span>
-                    </button>
-                  </td>
-                </tr>
+                </td>
+                <td class="text-right">
+                  <button
+                    *ngIf="assignment.status === 'pending'"
+                    class="btn btn-primary"
+                    (click)="submitAssignment(assignment)"
+                  >
+                    <span class="material-symbols-outlined btn-icon">upload</span>
+                    <span class="btn-text">Submit</span>
+                  </button>
+                  <button
+                    *ngIf="assignment.status === 'submitted'"
+                    class="btn btn-secondary"
+                    (click)="viewSubmission(assignment)"
+                  >
+                    <span class="material-symbols-outlined btn-icon">visibility</span>
+                    <span class="btn-text">View</span>
+                  </button>
+                  <button
+                    *ngIf="assignment.status === 'graded'"
+                    class="btn btn-secondary"
+                    (click)="viewGrade(assignment)"
+                  >
+                    <span class="material-symbols-outlined btn-icon">grade</span>
+                    <span class="btn-text">Grade</span>
+                  </button>
+                  <button
+                    *ngIf="assignment.status === 'pastdue'"
+                    class="btn btn-disabled"
+                    disabled
+                  >
+                    <span class="material-symbols-outlined btn-icon">lock</span>
+                    <span class="btn-text">Closed</span>
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -234,7 +240,7 @@
             margin-bottom: 12px;
             color: #374151;
           "
-          >Upload Files <span style="color: #ef4444">*</span></label
+        >Upload Files <span style="color: #ef4444">*</span></label
         >
         <div
           (dragover)="onDragOver($event)"
@@ -256,7 +262,7 @@
           <span
             class="material-symbols-outlined"
             style="font-size: 40px; color: #9ca3af; margin-bottom: 12px"
-            >cloud_upload</span
+          >cloud_upload</span
           >
           <p style="font-size: 14px; color: #4b5563; margin: 0; margin-bottom: 4px">
             Click to upload or drag and drop
@@ -306,12 +312,12 @@
                 file.type === 'pdf'
                   ? 'picture_as_pdf'
                   : file.type === 'doc'
-                  ? 'description'
-                  : file.type === 'ppt'
-                  ? 'slideshow'
-                  : file.type === 'xls'
-                  ? 'table_chart'
-                  : 'insert_drive_file'
+                    ? 'description'
+                    : file.type === 'ppt'
+                      ? 'slideshow'
+                      : file.type === 'xls'
+                        ? 'table_chart'
+                        : 'insert_drive_file'
               }}
             </span>
             <div>
@@ -372,21 +378,22 @@
       </div>
     </div>
   </div>
-</div>
-<!-- Added part for pop up window -->
-<div class="popup-overlay" *ngIf="isPopUp">
-  <div class="popup-container">
-    <div class="popup-header">
-      <h3>Submission Status : {{status}}</h3>
-      <button class="close-btn" (click)="closePopup()">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    </div>
-    <div class="popup-body">
-      <p>{{ statusMessage }}</p>
-    </div>
-    <div class="popup-footer">
-      <button class="btn btn-primary" (click)="closePopup()">Close</button>
+
+  <!-- Status Popup -->
+  <div class="popup-overlay" *ngIf="isPopUp">
+    <div class="popup-container">
+      <div class="popup-header">
+        <h3>Submission Status: {{ status }}</h3>
+        <button class="close-btn" (click)="closePopup()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="popup-body">
+        <p>{{ statusMessage }}</p>
+      </div>
+      <div class="popup-footer">
+        <button class="btn btn-primary" (click)="closePopup()">Close</button>
+      </div>
     </div>
   </div>
 </div>

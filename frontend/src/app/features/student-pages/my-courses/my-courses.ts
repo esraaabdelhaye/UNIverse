@@ -28,31 +28,38 @@ export class MyCourses implements OnInit {
   private studentService = inject(StudentService);
   private route = inject(ActivatedRoute);
 
+  // User data
+  currentUser: any;
+
+  // Course data
   courses: Course[] = [];
   filteredCourses: Course[] = [];
   searchQuery = '';
+
+  // Loading state
   isLoading = true;
   errorMessage = '';
 
   ngOnInit() {
-    this.loadCourses();
-  }
+    this.currentUser = this.authService.getCurrentUser();
 
-  loadCourses() {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) {
+    if (!this.currentUser) {
       this.router.navigate(['/login']);
       return;
     }
 
-    const studentId = parseInt(currentUser.studentId || currentUser.id);
+    this.loadCourses();
+  }
+
+  loadCourses() {
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
 
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (response) => {
         if (response.success && response.data) {
           const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
 
-          this.courses = response.data.map((course, index) => ({
+          this.courses = response.data.map((course: any, index: number) => ({
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,
@@ -63,6 +70,8 @@ export class MyCourses implements OnInit {
           }));
 
           this.filteredCourses = [...this.courses];
+        } else {
+          this.errorMessage = 'No courses found';
         }
         this.isLoading = false;
       },
@@ -91,6 +100,7 @@ export class MyCourses implements OnInit {
   }
 
   getCourseImage(courseCode: string): string {
+    // Return a generic course image - in production, this could be stored per course
     return 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo';
   }
 
