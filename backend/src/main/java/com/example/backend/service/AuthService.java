@@ -229,15 +229,10 @@ public class AuthService {
         }
     }
 
-    //Helper method to convert from Entity to DTO
-    /*
-    Refactor Move them to entity classes
-    or create general util class
-    Also unify the Model between DTOs and Entities
-     */
 
     private StudentDTO convertToDTO(Student student) {
         StudentDTO dto = new StudentDTO();
+        dto.setRole("student");
         dto.setStudentId(String.valueOf(student.getId()));
         dto.setFullName(student.getName());
         dto.setEmail(student.getEmail());
@@ -247,6 +242,7 @@ public class AuthService {
 
     private StudentRepresentativeDTO convertToDTO(StudentRepresentative rep) {
         StudentRepresentativeDTO dto = new StudentRepresentativeDTO();
+        dto.setRole("studentRep");
         dto.setStudentId(String.valueOf(rep.getId()));
         dto.setFullName(rep.getName());
         dto.setEmail(rep.getEmail());
@@ -262,6 +258,7 @@ public class AuthService {
         DoctorDTO dto = new DoctorDTO();
         // Currently no departments exist
 //        dto.setDepartment(doc.getDepartment().getName());
+        dto.setRole("doctor");
         dto.setEmail(doc.getEmail());
         dto.setFullName(doc.getName());
         dto.setDoctorId(String.valueOf(doc.getId()));
@@ -273,6 +270,7 @@ public class AuthService {
 
     private SupervisorDTO convertToDTO(Supervisor supervisor) {
         SupervisorDTO dto = new SupervisorDTO();
+        dto.setRole("supervisor");
         dto.setDepartment(supervisor.getDepartment().getName());
         dto.setEmail(supervisor.getEmail());
         dto.setFullName(supervisor.getName());
@@ -284,6 +282,7 @@ public class AuthService {
 
     private TeachingAssistantDTO convertToDTO(TeachingAssistant teachingAssistant) {
         TeachingAssistantDTO dto = new TeachingAssistantDTO();
+        dto.setRole("ta");
         dto.setFullName(teachingAssistant.getName());
         dto.setEmail(teachingAssistant.getEmail());
         dto.setPhoneNumber(teachingAssistant.getPhoneNumber());

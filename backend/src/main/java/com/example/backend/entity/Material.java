@@ -2,10 +2,17 @@ package com.example.backend.entity;
 
 import com.example.backend.Utils.MaterialType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,70 +51,4 @@ public class Material {
     @JoinColumn(name = "ta_id")
     private TeachingAssistant taUploader;
 
-    public Material() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public LocalDateTime getUploadDate() {
-        return uploadDate;
-    }
-
-    public void setUploadDate(LocalDateTime uploadDate) {
-        this.uploadDate = uploadDate;
-    }
-
-    public MaterialType getType() {
-        return type;
-    }
-
-    public void setType(MaterialType type) {
-        this.type = type;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Doctor getDoctorUploader() {
-        return doctorUploader;
-    }
-
-    public void setDoctorUploader(Doctor doctorUploader) {
-        this.doctorUploader = doctorUploader;
-    }
-
-    public TeachingAssistant getTaUploader() {
-        return taUploader;
-    }
-
-    public void setTaUploader(TeachingAssistant taUploader) {
-        this.taUploader = taUploader;
-    }
 }

@@ -739,25 +739,34 @@ public class DataInitializer {
             // ==================== QUESTIONS ====================
             if (questionRepo.findAll().isEmpty()) {
                 Question question1 = new Question();
+                question1.setTitle("first question");
                 question1.setContent("What is the difference between a while loop and a for loop in Java?");
                 question1.setCreatedAt(LocalDateTime.of(2025, 9, 20, 14, 30));
                 question1.setAuthor(student1);
                 question1.setDoctorResponder(doctor1);
                 question1.setAnswer("A for loop is typically used when you know the number of iterations, while a while loop is used when the iteration count depends on a condition.");
+                question1.setAnsweredAt(LocalDateTime.of(2025, 9, 20, 14, 30));
+                question1.setStatus("pending");
                 questionRepo.save(question1);
 
                 Question question2 = new Question();
+                question2.setTitle("second question");
                 question2.setContent("How do I implement a recursive function for factorial?");
                 question2.setCreatedAt(LocalDateTime.of(2025, 9, 25, 10, 15));
+                question2.setAnsweredAt(LocalDateTime.of(2025, 9, 25, 10, 15));
                 question2.setAuthor(student2);
                 question2.setTaResponder(ta1);
                 question2.setAnswer("A factorial function can be implemented recursively by returning n * factorial(n-1) with base case factorial(0) = 1.");
+                question2.setStatus("pending");
                 questionRepo.save(question2);
 
                 Question question3 = new Question();
+                question3.setTitle("third question");
                 question3.setContent("What are the advantages of using a linked list over an array?");
                 question3.setCreatedAt(LocalDateTime.of(2025, 10, 5, 16, 45));
+                question3.setAnsweredAt(LocalDateTime.of(2025, 10, 5, 16, 45));
                 question3.setAuthor(student3);
+                question3.setStatus("pending");
                 // No answer yet - pending question
                 questionRepo.save(question3);
 

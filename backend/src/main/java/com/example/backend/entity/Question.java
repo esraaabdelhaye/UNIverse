@@ -31,13 +31,13 @@ public class Question {
     @Column(name = "priority", nullable = true)
     private String priority;
 
-    @Column(name = "view_count", nullable = false)
+    @Column(name = "view_count", nullable = true)
     private Integer viewCount = 0;
 
-    @Column(name = "upvotes", nullable = false)
+    @Column(name = "upvotes", nullable = true)
     private Integer upvotes = 0;
 
-    @Column(name = "answer_count", nullable = false)
+    @Column(name = "answer_count", nullable = true)
     private Integer answerCount = 0;
 
     @Column(name = "tags", nullable = true)

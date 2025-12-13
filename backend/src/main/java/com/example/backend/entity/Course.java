@@ -1,9 +1,12 @@
 package com.example.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 public class Course {
     @Id
@@ -83,96 +86,44 @@ public class Course {
     public Course() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getCourseCode() {
-        return courseCode;
-    }
-
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public Integer getCredits() {
-        return credits;
-    }
-
     public void setCredits(Integer credits) {
         this.credits = credits;
-    }
-
-    public String getSemester() {
-        return semester;
     }
 
     public void setSemester(String semester) {
         this.semester = semester;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Department getDepartment() {
-        return department;
     }
 
     public void setDepartment(Department department) {
         this.department = department;
     }
 
-    public Set<CourseEnrollment> getEnrollments() {
-        return enrollments;
-    }
-
     public void setEnrollments(Set<CourseEnrollment> enrollments) {
         this.enrollments = enrollments;
-    }
-
-    public Set<Doctor> getDoctors() {
-        return doctors;
     }
 
     public void setDoctors(Set<Doctor> doctors) {
         this.doctors = doctors;
     }
 
-    public Set<TeachingAssistant> getTas() {
-        return tas;
-    }
-
     public void setTas(Set<TeachingAssistant> tas) {
         this.tas = tas;
     }
 
-    public Set<Course> getPrerequisites() {
-        return prerequisites;
-    }
-
     public void setPrerequisites(Set<Course> prerequisites) {
         this.prerequisites = prerequisites;
-    }
-
-    public Set<Course> getDependentCourses() {
-        return dependentCourses;
-    }
-
-    public Set<Supervisor> getCoordinators() {
-        return coordinators;
     }
 
     public void setCoordinators(Set<Supervisor> coordinators) {
@@ -183,24 +134,12 @@ public class Course {
         this.dependentCourses = dependentCourses;
     }
 
-    public Set<Material> getMaterials() {
-        return materials;
-    }
-
     public void setMaterials(Set<Material> materials) {
         this.materials = materials;
     }
 
-    public Set<Assignment> getAssignments() {
-        return assignments;
-    }
-
     public void setAssignments(Set<Assignment> assignments) {
         this.assignments = assignments;
-    }
-
-    public Set<AssignmentSubmission> getSubmissions() {
-        return submissions;
     }
 
     public void setSubmissions(Set<AssignmentSubmission> submissions) {

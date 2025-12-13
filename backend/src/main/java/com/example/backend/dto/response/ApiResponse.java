@@ -1,7 +1,16 @@
 package com.example.backend.dto.response;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@ToString
+@Builder
 public class ApiResponse<T> {
     private Integer statusCode;
     private String message;
@@ -39,46 +48,6 @@ public class ApiResponse<T> {
         this.message = message;
         this.data = data;
         this.timestamp = timestamp;
-    }
-
-    public Integer getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
     }
 
     public static class Builder<T> {
@@ -190,14 +159,4 @@ public class ApiResponse<T> {
         return data != null;
     }
 
-    @Override
-    public String toString() {
-        return "ApiResponse{" +
-                "statusCode=" + statusCode +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                ", timestamp=" + timestamp +
-                ", traceId='" + traceId + '\'' +
-                '}';
-    }
 }
