@@ -31,6 +31,10 @@ export class SubmitAssignments implements OnInit {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  public isPopUp: boolean = false;
+  public statusMessage: string = "";
+  public status: string = "";
+  public gradeMessage: string = "";
 
   assignments: Assignment[] = [];
   filteredAssignments: Assignment[] = [];
@@ -120,7 +124,10 @@ export class SubmitAssignments implements OnInit {
 
   submitAssignment(assignment: Assignment): void {
     if (assignment.status !== 'pending') {
-      alert('This assignment cannot be submitted in its current status');
+      // alert('This assignment cannot be submitted in its current status');
+      this.statusMessage = 'This assignment cannot be submitted in its current status';
+      this.status = "Error";
+      this.isPopUp = true;
       return;
     }
 
@@ -190,12 +197,18 @@ export class SubmitAssignments implements OnInit {
 
   completeSubmission(): void {
     if (this.uploadedFiles.length === 0) {
-      alert('Please select at least one file to submit');
+      // alert('Please select at least one file to submit');
+      this.statusMessage = 'Please select at least one file to submit';
+      this.status = "Error";
+      this.isPopUp = true;
       return;
     }
 
     if (!this.selectedAssignmentForSubmit) {
-      alert('Error: Assignment not selected');
+      // alert('Error: Assignment not selected');
+      this.statusMessage = 'Error: Assignment not selected';
+      this.status = "Error";
+      this.isPopUp = true;
       return;
     }
 
@@ -209,7 +222,10 @@ export class SubmitAssignments implements OnInit {
         files: this.uploadedFiles,
       });
 
-      alert(`Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`);
+      // alert(`Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`);
+      this.statusMessage = `Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`;
+      this.status = "Submitted";
+      this.isPopUp = true;
       this.resetUploadForm();
       this.isSubmittingAssignment = false;
       this.filterAssignments();
@@ -228,12 +244,18 @@ export class SubmitAssignments implements OnInit {
 
   viewSubmission(assignment: Assignment): void {
     if (assignment.status === 'pending') {
-      alert('No submission yet');
+      // alert('No submission yet');
+      this.statusMessage = 'No submission yet';
+      this.status ='Pending' ;
+      this.isPopUp = true;
       return;
     }
 
     console.log('Viewing submission:', assignment.id);
-    alert(`Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`);
+    // alert(`Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`);
+    this.statusMessage = `Viewing submission for: ${assignment.title}\n\nSubmission details would load here.`;
+    this.status ='Submitted' ;
+    this.isPopUp = true;
   }
 
   viewGrade(assignment: Assignment): void {
@@ -247,16 +269,29 @@ export class SubmitAssignments implements OnInit {
         assignment.grade >= 70 ? 'C' :
           assignment.grade >= 60 ? 'D' : 'F';
 
-    alert(`Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`);
+    // alert(`Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`);
+    this.statusMessage = `Grade for ${assignment.title}:\n\n${assignment.grade}% (${letterGrade})`;
+    this.status = "Graded";
+    this.isPopUp = true;
   }
 
   downloadSubmissionTemplate(assignment: Assignment): void {
     console.log('Downloading template for:', assignment.title);
-    alert(`Template downloaded for: ${assignment.title}`);
+    // alert(`Template downloaded for: ${assignment.title}`);
+    this.statusMessage = `Template downloaded for: ${assignment.title}`;
+    this.status = "Downloaded";
+    this.isPopUp = true;
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  openPopup() {
+    this.isPopUp = true;
+  }
+  closePopup() {
+    this.isPopUp = false;
   }
 }
