@@ -33,6 +33,7 @@
       </a>
     </div>
   </aside>
+
   <div class="main-wrapper">
     <header class="header">
       <div class="header-content">
@@ -50,33 +51,27 @@
 
     <main class="main-content">
       <div class="content-container">
-        <div class="courses-header">
-          <div>
-            <h1>My Courses 📚</h1>
-            <p class="page-subtitle">Here are all the courses you're enrolled in this semester.</p>
-          </div>
-          <div class="search-wrapper">
-            <span class="material-symbols-outlined search-icon">search</span>
-            <input class="search-input" placeholder="Search by course name or code..." type="text" [(ngModel)]="searchQuery" (keyup)="searchCourses()"/>
-          </div>
+        <div class="page-header">
+          <h1>My Courses</h1>
+          <p class="page-subtitle">Here are all the courses you're enrolled in this semester.</p>
         </div>
 
         <!-- Loading State -->
-        <div *ngIf="isLoading" style="text-align: center; padding: 40px; color: #64748B;">
-          <p>Loading your courses...</p>
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading your courses...</p>
         </div>
 
         <!-- Courses Grid -->
         <div *ngIf="!isLoading" class="courses-grid">
-          <div class="course-card" *ngFor="let course of filteredCourses">
-            <div class="course-image" [ngClass]="course.bgColor">
-              <img alt="Course" [src]="getCourseImage(course.code)"/>
+          <div class="course-card" *ngFor="let course of filteredCourses; let i = index" (click)="viewCourse(course)">
+            <div class="course-image" [ngClass]="getCourseImageColor(i)">
+              <img [src]="getCourseImage(course.code)"/>
             </div>
             <div class="course-content">
-              <span class="course-code" [ngClass]="course.textColor">{{ course.code }}</span>
+              <span class="course-code" [ngClass]="getCourseCodeColor(i)">{{ course.code }}</span>
               <h3 class="course-title">{{ course.name }}</h3>
               <p class="course-professor">{{ course.professor }}</p>
-              <button class="course-btn" [ngClass]="course.buttonColor" (click)="viewCourse(course)">
+              <button class="course-btn" [ngClass]="getCourseButtonColor(i)" (click)="viewCourse(course)">
                 <span class="material-symbols-outlined">folder</span>
                 <span>View Materials</span>
               </button>

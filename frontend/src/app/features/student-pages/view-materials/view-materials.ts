@@ -45,8 +45,8 @@ export class ViewMaterials implements OnInit {
 
   // Filters
   searchQuery = '';
-  selectedCourse = '';
-  selectedType = '';
+  selectedCourse = 'All Courses';
+  selectedType = 'All Types';
 
   // Loading state
   isLoading = true;
@@ -114,7 +114,7 @@ export class ViewMaterials implements OnInit {
         id: material.materialId || material.id,
         title: material.materialTitle || material.title,
         type: material.materialType || 'PDF',
-        size: '1 MB', // Default size
+        size: '1 MB',
         icon: this.getIconForType(material.materialType),
         iconColor: this.getColorForType(material.materialType),
         courseCode: courseCode,
@@ -152,19 +152,22 @@ export class ViewMaterials implements OnInit {
   filterMaterials() {
     let filtered = [...this.sections];
 
-    if (this.selectedCourse) {
+    // Filter by course
+    if (this.selectedCourse && this.selectedCourse !== 'All Courses') {
       filtered = filtered.filter(s => s.courseCode === this.selectedCourse);
     }
 
-    if (this.selectedType) {
+    // Filter by material type
+    if (this.selectedType && this.selectedType !== 'All Types') {
       filtered = filtered.map(section => ({
         ...section,
         materials: section.materials.filter(m => m.type === this.selectedType),
       }));
     }
 
-    if (this.searchQuery) {
-      const query = this.searchQuery.toLowerCase();
+    // Filter by search query
+    if (this.searchQuery && this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase().trim();
       filtered = filtered.map(section => ({
         ...section,
         materials: section.materials.filter(
@@ -175,6 +178,7 @@ export class ViewMaterials implements OnInit {
       }));
     }
 
+    // Keep only sections with materials
     this.filteredSections = filtered.filter(s => s.materials.length > 0);
   }
 

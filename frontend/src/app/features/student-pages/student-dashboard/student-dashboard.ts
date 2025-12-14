@@ -29,6 +29,24 @@ interface Course {
   progress: number;
 }
 
+interface RecentAssignment {
+  id: number;
+  title: string;
+  courseCode: string;
+  courseName: string;
+  dueDate: string;
+  status: 'pending' | 'submitted' | 'graded' | 'pastdue';
+  grade?: number;
+}
+
+interface RecentGrade {
+  courseCode: string;
+  courseName: string;
+  assignmentTitle: string;
+  score: number;
+  feedback?: string;
+}
+
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
@@ -51,6 +69,8 @@ export class StudentDashboard implements OnInit {
   deadlines: Deadline[] = [];
   grades: Grade[] = [];
   courses: Course[] = [];
+  recentAssignments: RecentAssignment[] = [];
+  recentGrades: RecentGrade[] = [];
 
   // Stats
   completedAssignments = 0;
@@ -82,10 +102,10 @@ export class StudentDashboard implements OnInit {
           const data = response.data;
 
           const coursesArray = Array.isArray(data)
-            ? data           // Already an array
-            : data           // Not an array: could be a single object or null
-              ? [data]       // Wrap single object in array
-              : [];          // If null/undefined, fallback to empty array
+            ? data
+            : data
+              ? [data]
+              : [];
 
           this.courses = coursesArray.map((course: any) => ({
             id: course.id,
@@ -106,16 +126,32 @@ export class StudentDashboard implements OnInit {
     this.gradeService.getStudentGrades(studentId).subscribe({
       next: (response: any) => {
         if (response.success && response.data) {
-          this.grades = response.data.slice(0, 2).map((grade: any) => ({
+          const gradesData = Array.isArray(response.data)
+            ? response.data
+            : response.data
+              ? [response.data]
+              : [];
+
+          // Get recent grades (last 2)
+          this.recentGrades = gradesData.slice(0, 2).map((g: any) => ({
+            courseCode: g.courseCode,
+            courseName: g.courseTitle,
+            assignmentTitle: g.assignmentName || 'Assignment',
+            score: g.score || 0,
+            feedback: g.feedback || '',
+          }));
+
+          // Set old format grades for backward compatibility
+          this.grades = gradesData.slice(0, 2).map((grade: any) => ({
             course: grade.courseCode,
             assignment: grade.gradingStatus,
             score: grade.score || 0,
           }));
 
           // Calculate average grade
-          if (response.data.length > 0) {
-            const total = response.data.reduce((sum: number, g: any) => sum + (g.score || 0), 0);
-            this.averageGrade = Math.round((total / response.data.length) * 10) / 10;
+          if (gradesData.length > 0) {
+            const total = gradesData.reduce((sum: number, g: any) => sum + (g.score || 0), 0);
+            this.averageGrade = Math.round((total / gradesData.length) * 10) / 10;
           }
         }
       },
@@ -124,12 +160,29 @@ export class StudentDashboard implements OnInit {
       }
     });
 
-    // Load assignments and create deadlines
+    // Load assignments and create recent assignments
     this.studentService.getStudentAssignments(studentId).subscribe({
       next: (response: any) => {
         if (response.success && response.data) {
+          const assignmentsData = Array.isArray(response.data)
+            ? response.data
+            : response.data
+              ? [response.data]
+              : [];
+
+          // Get recent assignments (first 3)
+          this.recentAssignments = assignmentsData.slice(0, 3).map((a: any) => ({
+            id: a.id || parseInt(a.assignmentId || 0),
+            title: a.assignmentTitle || a.title,
+            courseCode: a.courseCode,
+            courseName: a.courseName || 'Course',
+            dueDate: a.dueDate,
+            status: this.getAssignmentStatus(a.dueDate),
+            grade: a.grade ? parseInt(a.grade) : undefined,
+          }));
+
           // Create deadlines from assignments
-          this.deadlines = response.data.slice(0, 3).map((assignment: any, index: number) => ({
+          this.deadlines = assignmentsData.slice(0, 3).map((assignment: any, index: number) => ({
             id: index,
             title: assignment.assignmentTitle || assignment.title,
             course: assignment.courseCode,
@@ -137,7 +190,7 @@ export class StudentDashboard implements OnInit {
             urgency: this.getUrgency(assignment.dueDate),
           }));
 
-          this.pendingCount = this.deadlines.length;
+          this.pendingCount = this.deadlines.filter(d => d.urgency !== 'normal').length;
         }
       },
       error: (err: any) => {
@@ -160,6 +213,14 @@ export class StudentDashboard implements OnInit {
     });
   }
 
+  private getAssignmentStatus(dueDate: string): 'pending' | 'submitted' | 'graded' | 'pastdue' {
+    const date = new Date(dueDate);
+    const today = new Date();
+
+    if (date < today) return 'pastdue';
+    return 'pending';
+  }
+
   private getUrgency(dueDate: string): 'urgent' | 'warning' | 'normal' {
     const date = new Date(dueDate);
     const today = new Date();
@@ -168,6 +229,121 @@ export class StudentDashboard implements OnInit {
     if (daysUntil <= 0) return 'urgent';
     if (daysUntil <= 3) return 'warning';
     return 'normal';
+  }
+
+  getAssignmentCardStyle(assignment: RecentAssignment) {
+    const date = new Date(assignment.dueDate);
+    const today = new Date();
+    const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (daysUntil < 0) {
+      return {
+        'border-left-color': '#DC2626',
+        'background-color': '#FEE2E2'
+      };
+    }
+    if (daysUntil <= 0) {
+      return {
+        'border-left-color': '#991B1B',
+        'background-color': '#FEE2E2'
+      };
+    }
+    if (daysUntil <= 3) {
+      return {
+        'border-left-color': '#D97706',
+        'background-color': '#FFFBEB'
+      };
+    }
+    return {
+      'border-left-color': '#059669',
+      'background-color': '#ECFDF5'
+    };
+  }
+
+  getAssignmentBadgeClass(assignment: RecentAssignment): string {
+    const date = new Date(assignment.dueDate);
+    const today = new Date();
+    const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (daysUntil < 0) {
+      return 'badge-past-due';
+    }
+    if (daysUntil <= 3) {
+      return 'badge-urgent';
+    }
+    return 'badge-upcoming';
+  }
+
+  getAssignmentStatusText(assignment: RecentAssignment): string {
+    const date = new Date(assignment.dueDate);
+    const today = new Date();
+    const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (assignment.status === 'graded') return 'Graded';
+    if (assignment.status === 'submitted') return 'Submitted';
+
+    if (daysUntil < 0) return 'Past Due';
+    if (daysUntil <= 0) return 'Due Today';
+    if (daysUntil <= 1) return 'Due Tomorrow';
+    if (daysUntil <= 3) return 'Due Soon';
+
+    return 'Upcoming';
+  }
+
+  getCourseCardColor(index: number): string {
+    const colors = ['course-blue', 'course-green', 'course-pink', 'course-purple', 'course-amber', 'course-red'];
+    return colors[index % colors.length];
+  }
+
+  getCourseImageColor(index: number): string {
+    const colors = ['blue-bg', 'green-bg', 'pink-bg', 'purple-bg', 'amber-bg', 'red-bg'];
+    return colors[index % colors.length];
+  }
+
+  getCourseCodeColor(index: number): string {
+    const colors = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    return colors[index % colors.length];
+  }
+
+  getCourseButtonColor(index: number): string {
+    const colors = ['blue-btn', 'green-btn', 'pink-btn', 'purple-btn', 'amber-btn', 'red-btn'];
+    return colors[index % colors.length];
+  }
+
+  getGradeBoxStyle(score: number): any {
+    if (score >= 90) {
+      return {
+        'background-color': '#ECFDF5',
+        'border-left': '4px solid #059669',
+        'border': '1px solid #A7F3D0'
+      };
+    }
+    if (score >= 80) {
+      return {
+        'background-color': '#FEF3C7',
+        'border-left': '4px solid #D97706',
+        'border': '1px solid #FCD34D'
+      };
+    }
+    if (score >= 70) {
+      return {
+        'background-color': '#DBEAFE',
+        'border-left': '4px solid #2563EB',
+        'border': '1px solid #BFDBFE'
+      };
+    }
+    return {
+      'background-color': '#FEE2E2',
+      'border-left': '4px solid #DC2626',
+      'border': '1px solid #FECACA'
+    };
+  }
+
+  getGradeColor(score: number): string {
+    if (score >= 90) return '#059669';
+    if (score >= 80) return '#D97706';
+    if (score >= 70) return '#2563EB';
+    return '#DC2626';
   }
 
   navigateToCourse(courseCode: string): void {
@@ -182,12 +358,6 @@ export class StudentDashboard implements OnInit {
     if (score >= 70) return 'C';
     if (score >= 60) return 'D';
     return 'F';
-  }
-
-  getGradeColor(score: number): string {
-    if (score >= 90) return '#059669';
-    if (score >= 80) return '#D97706';
-    return '#DC2626';
   }
 
   logout() {

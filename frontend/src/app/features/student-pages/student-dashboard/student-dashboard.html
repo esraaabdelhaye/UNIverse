@@ -52,7 +52,7 @@
     <main class="main-content">
       <div class="content-wrapper">
         <div class="page-header">
-          <h1>Welcome back, {{ currentUser?.fullName?.split(' ')[0] }}! 👋</h1>
+          <h1>Welcome back, {{ currentUser?.fullName?.split(' ')[0] }}!</h1>
           <p>Here's your academic overview</p>
         </div>
 
@@ -62,55 +62,126 @@
         </div>
 
         <!-- Main Content -->
-        <div *ngIf="!isLoading" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
-          <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
-            <span style="font-size: 32px;">📚</span>
-            <div>
-              <p style="color: #64748B; font-size: 14px; margin: 0;">Active Courses</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ courses.length }}</p>
-            </div>
-          </div>
-          <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
-            <span style="font-size: 32px;">✅</span>
-            <div>
-              <p style="color: #64748B; font-size: 14px; margin: 0;">Completed</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ completedAssignments }}</p>
-            </div>
-          </div>
-          <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
-            <span style="font-size: 32px;">⏳</span>
-            <div>
-              <p style="color: #64748B; font-size: 14px; margin: 0;">Pending</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #2C3E50;">{{ pendingCount }}</p>
-            </div>
-          </div>
-          <div style="background-color: #FFFFFF; padding: 24px; border-radius: 8px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 16px;">
-            <span style="font-size: 32px;">⭐</span>
-            <div>
-              <p style="color: #64748B; font-size: 14px; margin: 0;">Avg. Grade</p>
-              <p style="font-size: 24px; font-weight: 700; margin: 0; color: #059669;">{{ getLetterGrade(averageGrade) }} ({{ averageGrade }}%)</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Courses Section -->
-        <div class="courses-section">
-          <h2 class="section-title-large">My Courses</h2>
-          <div *ngIf="!isLoading && courses.length > 0" class="courses-grid">
-            <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.code)">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
-              <h3>{{ course.code }}: {{ course.name }}</h3>
-              <p class="professor">{{ course.professor }}</p>
-              <div class="progress-bar">
-                <div class="progress-fill" [style.width.%]="course.progress"></div>
+        <div *ngIf="!isLoading">
+          <!-- Stats Overview -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
+            <!-- Active Courses -->
+            <div style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); padding: 24px; border-radius: 12px; border: 1px solid #BFDBFE; box-shadow: 0 1px 3px 0 rgba(37, 99, 235, 0.1); display: flex; align-items: center; gap: 16px;">
+              <div style="width: 56px; height: 56px; border-radius: 12px; background-color: #2563EB; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 28px; color: white;">book</span>
               </div>
-              <a class="course-forum-btn blue" href="javascript:void(0)" (click)="navigateToCourse(course.code)">
-                <span class="material-symbols-outlined">forum</span> Course Info
-              </a>
+              <div>
+                <p style="color: #64748B; font-size: 14px; margin: 0; font-weight: 500;">Active Courses</p>
+                <p style="font-size: 28px; font-weight: 700; margin: 0; color: #1E40AF;">{{ courses.length }}</p>
+              </div>
+            </div>
+
+            <!-- Completed -->
+            <div style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 24px; border-radius: 12px; border: 1px solid #A7F3D0; box-shadow: 0 1px 3px 0 rgba(5, 150, 105, 0.1); display: flex; align-items: center; gap: 16px;">
+              <div style="width: 56px; height: 56px; border-radius: 12px; background-color: #059669; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 28px; color: white;">check_circle</span>
+              </div>
+              <div>
+                <p style="color: #64748B; font-size: 14px; margin: 0; font-weight: 500;">Completed</p>
+                <p style="font-size: 28px; font-weight: 700; margin: 0; color: #065F46;">{{ completedAssignments }}</p>
+              </div>
+            </div>
+
+            <!-- Pending -->
+            <div style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); padding: 24px; border-radius: 12px; border: 1px solid #FCD34D; box-shadow: 0 1px 3px 0 rgba(217, 119, 6, 0.1); display: flex; align-items: center; gap: 16px;">
+              <div style="width: 56px; height: 56px; border-radius: 12px; background-color: #D97706; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 28px; color: white;">hourglass_top</span>
+              </div>
+              <div>
+                <p style="color: #64748B; font-size: 14px; margin: 0; font-weight: 500;">Pending</p>
+                <p style="font-size: 28px; font-weight: 700; margin: 0; color: #92400E;">{{ pendingCount }}</p>
+              </div>
+            </div>
+
+            <!-- Avg. Grade -->
+            <div style="background: linear-gradient(135deg, #FCC2D7 0%, #F8B4CA 100%); padding: 24px; border-radius: 12px; border: 1px solid #F48FB1; box-shadow: 0 1px 3px 0 rgba(236, 72, 153, 0.12); display: flex; align-items: center; gap: 16px;">
+              <div style="width: 56px; height: 56px; border-radius: 12px; background-color: #EC4899; display: flex; align-items: center; justify-content: center;">
+                <span class="material-symbols-outlined" style="font-size: 28px; color: white;">grade</span>
+              </div>
+              <div>
+                <p style="color: #64748B; font-size: 14px; margin: 0; font-weight: 500;">Avg. Grade</p>
+                <p style="font-size: 28px; font-weight: 700; margin: 0; color: #BE185D;">{{ getLetterGrade(averageGrade) }} ({{ averageGrade }}%)</p>
+              </div>
             </div>
           </div>
-          <div *ngIf="!isLoading && courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
-            <p>No courses enrolled yet</p>
+
+          <!-- Recent Deadlines and Grades Section -->
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px;">
+            <!-- Recent Assignments -->
+            <div style="background-color: #FFFFFF; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); border: 1px solid #E2E8F0;">
+              <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #1E293B;">Upcoming Deadlines</h2>
+              <div *ngIf="recentAssignments.length > 0" style="display: flex; flex-direction: column; gap: 12px;">
+                <div *ngFor="let assignment of recentAssignments" style="padding: 12px; border-radius: 8px; border-left: 4px solid;" [ngStyle]="getAssignmentCardStyle(assignment)">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                    <div style="flex: 1;">
+                      <p style="font-weight: 600; font-size: 14px; margin: 0; color: #1E293B;">{{ assignment.title }}</p>
+                      <p style="font-size: 12px; color: #64748B; margin: 4px 0 0 0;">{{ assignment.courseCode }}</p>
+                    </div>
+                    <span style="padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;" [ngClass]="getAssignmentBadgeClass(assignment)">
+                      {{ getAssignmentStatusText(assignment) }}
+                    </span>
+                  </div>
+                  <p style="font-size: 12px; color: #64748B; margin: 8px 0 0 0;">Due: {{ assignment.dueDate | slice:0:10 }}</p>
+                </div>
+              </div>
+              <div *ngIf="recentAssignments.length === 0" style="text-align: center; padding: 20px; color: #64748B;">
+                <p>No upcoming assignments</p>
+              </div>
+            </div>
+
+            <!-- Recent Grades -->
+            <div style="background-color: #FFFFFF; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); border: 1px solid #E2E8F0;">
+              <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #1E293B;">Recent Grades</h2>
+              <div *ngIf="recentGrades.length > 0" style="display: flex; flex-direction: column; gap: 12px;">
+                <div *ngFor="let grade of recentGrades" style="padding: 16px; border-radius: 8px; border: 1px solid;" [ngStyle]="getGradeBoxStyle(grade.score)">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div>
+                      <p style="font-weight: 600; font-size: 14px; margin: 0; color: #1E293B;">{{ grade.courseCode }}</p>
+                      <p style="font-size: 12px; color: #64748B; margin: 4px 0 0 0;">{{ grade.assignmentTitle }}</p>
+                    </div>
+                    <div style="text-align: right;">
+                      <p style="font-size: 22px; font-weight: 700; margin: 0;" [style.color]="getGradeColor(grade.score)">
+                        {{ grade.score }}%
+                      </p>
+                      <p style="font-size: 12px; font-weight: 600; margin: 2px 0 0 0;" [style.color]="getGradeColor(grade.score)">{{ getLetterGrade(grade.score) }}</p>
+                    </div>
+                  </div>
+                  <p *ngIf="grade.feedback" style="font-size: 11px; color: #64748B; margin: 0; font-style: italic;">Feedback: {{ grade.feedback | slice:0:50 }}...</p>
+                </div>
+              </div>
+              <div *ngIf="recentGrades.length === 0" style="text-align: center; padding: 20px; color: #64748B;">
+                <p>No recent grades</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Courses Section -->
+          <div class="courses-section">
+            <h2 class="section-title-large">My Courses</h2>
+            <div *ngIf="courses.length > 0" class="courses-grid">
+              <div class="course-card" *ngFor="let course of courses; let i = index" (click)="navigateToCourse(course.code)" [ngClass]="getCourseCardColor(i)">
+                <div class="course-image" [ngClass]="getCourseImageColor(i)">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo"/>
+                </div>
+                <div class="course-content">
+                  <span class="course-code" [ngClass]="getCourseCodeColor(i)">{{ course.code }}</span>
+                  <h3 class="course-title">{{ course.name }}</h3>
+                  <p class="course-professor">{{ course.professor }}</p>
+                  <button class="course-btn" [ngClass]="getCourseButtonColor(i)" (click)="navigateToCourse(course.code)">
+                    <span class="material-symbols-outlined">folder</span>
+                    <span>View Materials</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+              <p>No courses enrolled yet</p>
+            </div>
           </div>
         </div>
       </div>

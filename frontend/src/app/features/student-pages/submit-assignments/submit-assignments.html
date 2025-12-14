@@ -86,14 +86,12 @@
                     {{ course }}
                   </option>
                 </select>
-                <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
               <div class="select-wrapper">
                 <select class="filter-select" [(ngModel)]="selectedSort" (change)="onSortChange()">
                   <option value="duedate">Sort by Due Date</option>
                   <option value="course">Sort by Course</option>
                 </select>
-                <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
             </div>
           </div>
@@ -110,7 +108,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let assignment of filteredAssignments">
+              <tr *ngFor="let assignment of filteredAssignments" [ngStyle]="getAssignmentRowStyle(assignment)">
                 <td class="assignment-title">{{ assignment.title }}</td>
                 <td class="course-code">{{ assignment.course }}</td>
                 <td
@@ -126,7 +124,7 @@
                   {{ assignment.dueDate }}
                 </td>
                 <td>
-                    <span class="status-badge" [ngClass]="'status-' + assignment.status">
+                    <span class="status-badge" [ngClass]="getStatusBadgeClass(assignment.status)">
                       <span *ngIf="assignment.status === 'graded'"
                       >Graded ({{ assignment.grade }}%)</span
                       >

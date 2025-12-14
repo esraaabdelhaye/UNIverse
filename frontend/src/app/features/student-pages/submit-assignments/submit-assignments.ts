@@ -84,10 +84,10 @@ export class SubmitAssignments implements OnInit {
         if (courseResponse.success && courseResponse.data) {
           const  data = courseResponse.data ;
           const coursesArray = Array.isArray(data)
-            ? data           // Already an array
-            : data           // Not an array: could be a single object or null
-              ? [data]       // Wrap single object in array
-              : [];          // If null/undefined, fallback to empty array
+            ? data
+            : data
+              ? [data]
+              : [];
           this.courses = coursesArray.map((c: any) => c.courseCode);
         }
 
@@ -160,6 +160,48 @@ export class SubmitAssignments implements OnInit {
   get uniqueCourses(): string[] {
     const unique = [...new Set(this.assignments.map(a => a.course))];
     return unique;
+  }
+
+  getAssignmentRowStyle(assignment: Assignment): any {
+    switch(assignment.status) {
+      case 'pastdue':
+        return {
+          'background-color': '#FEE2E2',
+          'border-left': '4px solid #DC2626'
+        };
+      case 'pending':
+        return {
+          'background-color': '#FFFBEB',
+          'border-left': '4px solid #D97706'
+        };
+      case 'submitted':
+        return {
+          'background-color': '#ECFDF5',
+          'border-left': '4px solid #059669'
+        };
+      case 'graded':
+        return {
+          'background-color': '#DBEAFE',
+          'border-left': '4px solid #2563EB'
+        };
+      default:
+        return {};
+    }
+  }
+
+  getStatusBadgeClass(status: string): string {
+    switch(status) {
+      case 'pending':
+        return 'badge-pending';
+      case 'submitted':
+        return 'badge-submitted';
+      case 'graded':
+        return 'badge-graded';
+      case 'pastdue':
+        return 'badge-pastdue';
+      default:
+        return '';
+    }
   }
 
   submitAssignment(assignment: Assignment): void {

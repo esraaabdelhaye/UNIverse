@@ -57,24 +57,22 @@ export class MyCourses implements OnInit {
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (response) => {
         if (response.success && response.data) {
-          const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
-
           const data = response.data;
 
           const coursesArray = Array.isArray(data)
-            ? data           // Already an array
-            : data           // Not an array: could be a single object or null
-              ? [data]       // Wrap single object in array
-              : [];          // If null/undefined, fallback to empty array
+            ? data
+            : data
+              ? [data]
+              : [];
 
           this.courses = coursesArray.map((course: any, index: number) => ({
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,
             professor: course.professor || 'TBA',
-            bgColor: `${colorMap[index % colorMap.length]}-bg`,
-            buttonColor: `${colorMap[index % colorMap.length]}-btn`,
-            textColor: colorMap[index % colorMap.length],
+            bgColor: `${this.getColorName(index)}-bg`,
+            buttonColor: `${this.getColorName(index)}-btn`,
+            textColor: this.getColorName(index),
           }));
 
           this.filteredCourses = [...this.courses];
@@ -108,8 +106,27 @@ export class MyCourses implements OnInit {
   }
 
   getCourseImage(courseCode: string): string {
-    // Return a generic course image - in production, this could be stored per course
     return 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo';
+  }
+
+  getCourseImageColor(index: number): string {
+    const colors = ['blue-bg', 'green-bg', 'pink-bg', 'purple-bg', 'amber-bg', 'red-bg'];
+    return colors[index % colors.length];
+  }
+
+  getCourseCodeColor(index: number): string {
+    const colors = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    return colors[index % colors.length];
+  }
+
+  getCourseButtonColor(index: number): string {
+    const colors = ['blue-btn', 'green-btn', 'pink-btn', 'purple-btn', 'amber-btn', 'red-btn'];
+    return colors[index % colors.length];
+  }
+
+  private getColorName(index: number): string {
+    const colors = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    return colors[index % colors.length];
   }
 
   logout() {
