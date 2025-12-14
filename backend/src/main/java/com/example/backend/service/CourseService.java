@@ -33,10 +33,12 @@ public class CourseService {
         this.doctorRepo = doctorRepo;
     }
 
-    public ApiResponse<Page<CourseDTO>> getAllCourses(Pageable pageable) {
+    public ApiResponse<List<CourseDTO>> getAllCourses(Pageable pageable) {
         try {
-            Page<Course> courses = courseRepo.findAll(pageable);
-            Page<CourseDTO> courseDTOs = courses.map(this::convertToDTO);
+            List<Course> courses = courseRepo.findAll();
+            List<CourseDTO> courseDTOs = courses.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
             return ApiResponse.success(courseDTOs);
         } catch (Exception e) {
             return ApiResponse.internalServerError("Error fetching courses: " + e.getMessage());
@@ -171,6 +173,7 @@ public class CourseService {
         dto.setEnrolled(course.getEnrollments().size());
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
+        dto.setCourseId(String.valueOf(course.getId()));
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
             dto.setInstructorId(String.valueOf(course.getDepartment().getId()));

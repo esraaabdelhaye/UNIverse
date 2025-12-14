@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/submissions")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class SubmissionController {
 
     private final SubmissionService submissionService;

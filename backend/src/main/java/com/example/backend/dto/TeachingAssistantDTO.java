@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-public class TeachingAssistantDTO {
+public class TeachingAssistantDTO  {
     private String employeeId;
     private String fullName;
     private String email;

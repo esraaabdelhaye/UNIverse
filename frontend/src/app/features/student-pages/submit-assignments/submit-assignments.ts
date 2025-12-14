@@ -82,7 +82,13 @@ export class SubmitAssignments implements OnInit {
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (courseResponse) => {
         if (courseResponse.success && courseResponse.data) {
-          this.courses = courseResponse.data.map((c: any) => c.courseCode);
+          const  data = courseResponse.data ;
+          const coursesArray = Array.isArray(data)
+            ? data           // Already an array
+            : data           // Not an array: could be a single object or null
+              ? [data]       // Wrap single object in array
+              : [];          // If null/undefined, fallback to empty array
+          this.courses = coursesArray.map((c: any) => c.courseCode);
         }
 
         // Then load assignments

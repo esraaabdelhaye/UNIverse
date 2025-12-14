@@ -416,6 +416,7 @@ public class SupervisorService {
         dto.setEnrolled(course.getEnrollments().size());
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
+        dto.setCourseId(String.valueOf(course.getId()));
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
         }

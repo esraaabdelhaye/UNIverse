@@ -68,9 +68,16 @@ export class ViewGrades implements OnInit {
 
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (courses) => {
-        if (courses.success && courses.data && Array.isArray(courses.data)) {
+        if (courses.success && courses.data ) {
+          const  data = courses.data ;
+          const coursesArray = Array.isArray(data)
+            ? data
+            : data
+              ? [data]
+              : [];
+
           let loadedCount = 0;
-          const coursesData = courses.data as any[];
+          const coursesData = coursesArray;
 
           if (coursesData.length === 0) {
             this.isLoading = false;
@@ -78,17 +85,44 @@ export class ViewGrades implements OnInit {
           }
 
           coursesData.forEach((course: any) => {
-            this.gradeService.getCourseGrades(studentId, course.id).subscribe({
+            const courseId = course.courseId || course.id;
+            const numericCourseId = parseInt(String(courseId).trim(), 10);
+
+            // Debug logging
+            console.log('Course object:', course);
+            console.log('Course keys:', Object.keys(course));
+            console.log('course.courseId:', course.courseId);
+            console.log('course.id:', course.id);
+            console.log('courseId value:', courseId);
+            console.log('courseId type:', typeof courseId);
+            console.log('numericCourseId:', numericCourseId);
+            console.log('is NaN?:', isNaN(numericCourseId));
+            if (isNaN(numericCourseId)) {
+              console.error('Invalid course ID:', course);
+              loadedCount++;
+              if (loadedCount === coursesData.length) {
+                this.filterGrades();
+                this.isLoading = false;
+              }
+              return;
+            }
+            this.gradeService.getCourseGrades(studentId, Number(course.courseId)).subscribe({
               next: (gradesResponse) => {
-                if (gradesResponse.success && gradesResponse.data && Array.isArray(gradesResponse.data)) {
+                if (gradesResponse.success && gradesResponse.data ) {
+                  const  gradeData = gradesResponse.data ;
+                  const gradesArray = Array.isArray(gradeData)
+                    ? gradeData           // Already an array
+                    : gradeData           // Not an array: could be a single object or null
+                      ? [gradeData]       // Wrap single object in array
+                      : [];          // If null/undefined, fallback to empty array
                   const courseGrade: CourseGrade = {
-                    id: course.id,
+                    id: Number(course.courseId),
                     code: course.courseCode,
                     name: course.courseTitle,
                     professor: course.professor || 'TBA',
-                    overallGrade: this.calculateOverallGrade(gradesResponse.data),
+                    overallGrade: this.calculateOverallGrade(gradesArray),
                     completion: 50,
-                    assignments: gradesResponse.data.map((g: any) => ({
+                    assignments: gradesArray.map((g: any) => ({
                       name: g.courseTitle || 'Assignment',
                       grade: g.score || 0,
                       feedback: g.feedback || '',

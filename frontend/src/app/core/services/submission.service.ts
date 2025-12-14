@@ -12,34 +12,34 @@ export class SubmissionService {
 
   submitAssignment(studentId: number, assignmentId: number, submissionFile: string): Observable<ApiResponse<Submission>> {
     return this.api.post<ApiResponse<Submission>>(
-      `/submissions/student/${studentId}/assignment/${assignmentId}`,
+      `/api/submissions/student/${studentId}/assignment/${assignmentId}`,
       { submissionFile }
     );
   }
 
   getSubmission(submissionId: number): Observable<ApiResponse<Submission>> {
-    return this.api.get<ApiResponse<Submission>>(`/submissions/${submissionId}`);
+    return this.api.get<ApiResponse<Submission>>(`/api/submissions/${submissionId}`);
   }
 
   getSubmissionStatus(studentId: number, assignmentId: number): Observable<ApiResponse<any>> {
     return this.api.get<ApiResponse<any>>(
-      `/submissions/student/${studentId}/assignment/${assignmentId}/status`
+      `/api/submissions/student/${studentId}/assignment/${assignmentId}/status`
     );
   }
 
   getStudentSubmissions(studentId: number): Observable<ApiResponse<Submission[]>> {
-    return this.api.get<ApiResponse<Submission[]>>(`/submissions/student/${studentId}`);
+    return this.api.get<ApiResponse<Submission[]>>(`/api/submissions/student/${studentId}`);
   }
 
   getAssignmentSubmissions(assignmentId: number): Observable<ApiResponse<Submission[]>> {
-    return this.api.get<ApiResponse<Submission[]>>(`/submissions/assignment/${assignmentId}`);
+    return this.api.get<ApiResponse<Submission[]>>(`/api/submissions/assignment/${assignmentId}`);
   }
 
   updateSubmission(submissionId: number, submissionFile: string): Observable<ApiResponse<Submission>> {
-    return this.api.put<ApiResponse<Submission>>(`/submissions/${submissionId}`, { submissionFile });
+    return this.api.put<ApiResponse<Submission>>(`/api/submissions/${submissionId}`, { submissionFile });
   }
 
   getSubmissionsByStatus(status: string): Observable<ApiResponse<Submission[]>> {
-    return this.api.get<ApiResponse<Submission[]>>(`/submissions/status/${status}`);
+    return this.api.get<ApiResponse<Submission[]>>(`/api/submissions/status/${status}`);
   }
 }

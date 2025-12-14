@@ -11,26 +11,26 @@ export class MaterialService {
   constructor(private api: ApiService) {}
 
   getMaterialById(id: number): Observable<ApiResponse<Material>> {
-    return this.api.get<ApiResponse<Material>>(`/materials/${id}`);
+    return this.api.get<ApiResponse<Material>>(`/api/materials/${id}`);
   }
 
   getMaterialsByCourse(courseId: number): Observable<ApiResponse<Material[]>> {
-    return this.api.get<ApiResponse<Material[]>>(`/materials/course/${courseId}`);
+    return this.api.get<ApiResponse<Material[]>>(`/api/materials/course/${courseId}`);
   }
 
   getAllMaterials(): Observable<ApiResponse<Material[]>> {
-    return this.api.get<ApiResponse<Material[]>>(`/materials`);
+    return this.api.get<ApiResponse<Material[]>>(`/api/materials`);
   }
 
   uploadMaterial(courseId: number, material: Material): Observable<ApiResponse<Material>> {
-    return this.api.post<ApiResponse<Material>>(`/materials/course/${courseId}`, material);
+    return this.api.post<ApiResponse<Material>>(`/api/materials/course/${courseId}`, material);
   }
 
   updateMaterial(id: number, material: Material): Observable<ApiResponse<Material>> {
-    return this.api.put<ApiResponse<Material>>(`/materials/${id}`, material);
+    return this.api.put<ApiResponse<Material>>(`/api/materials/${id}`, material);
   }
 
   deleteMaterial(id: number): Observable<ApiResponse<void>> {
-    return this.api.delete<ApiResponse<void>>(`/materials/${id}`);
+    return this.api.delete<ApiResponse<void>>(`/api/materials/${id}`);
   }
 }

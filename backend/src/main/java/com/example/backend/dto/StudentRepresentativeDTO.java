@@ -2,7 +2,7 @@ package com.example.backend.dto;
 
 import java.time.LocalDate;
 
-public class StudentRepresentativeDTO {
+public class StudentRepresentativeDTO  {
     private String representativeId;
     private String studentId;
     private String fullName;
