@@ -8,8 +8,19 @@ import com.example.backend.dto.request.RegisterStudentRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,21 +37,25 @@ public class StudentService {
     private final CourseRepo courseRepo;
     private final CourseEnrollmentRepo enrollmentRepo;
     private final AssignmentSubmissionRepo submissionRepo;
+    private final SecurityContextRepository securityContextRepository ;
 
+
+    @Autowired
     public StudentService(
             StudentRepo studentRepo,
             CourseRepo courseRepo,
             CourseEnrollmentRepo enrollmentRepo,
-            AssignmentSubmissionRepo submissionRepo
+            AssignmentSubmissionRepo submissionRepo, SecurityContextRepository securityContextRepository
     ) {
         this.studentRepo = studentRepo;
         this.courseRepo = courseRepo;
         this.enrollmentRepo = enrollmentRepo;
         this.submissionRepo = submissionRepo;
+        this.securityContextRepository = securityContextRepository;
     }
 
 
-    public ApiResponse<StudentDTO> registerStudent(RegisterStudentRequest request) {
+    public ApiResponse<StudentDTO> registerStudent(RegisterStudentRequest request , HttpServletRequest req , HttpServletResponse response) {
         try {
             // Check if student already exists by email
             if (studentRepo.findByEmail(request.getStudentEmail()).isPresent()) {
@@ -57,6 +72,19 @@ public class StudentService {
             student.setName(request.getFullName());
             student.setEmail(request.getStudentEmail());
             student.setAcademicId(Long.parseLong(request.getStudentId()));
+
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENT")) ;
+            // We set the password to null since we don't want to store password in the session
+            Authentication auth = new UsernamePasswordAuthenticationToken(convertToDTO(student),null,authorities);
+            // 1. Create an empty Context
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            // 2. Set Authentication
+            context.setAuthentication(auth);
+            // 3. Set it to the Holder
+            SecurityContextHolder.setContext(context);
+
+            //Save the context
+            securityContextRepository.saveContext(context, req, response);
 
             // Save student
             Student savedStudent = studentRepo.save(student);

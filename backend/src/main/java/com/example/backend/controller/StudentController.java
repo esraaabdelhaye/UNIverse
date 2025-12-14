@@ -4,6 +4,8 @@ import com.example.backend.dto.StudentDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.dto.request.RegisterStudentRequest;
 import com.example.backend.service.StudentService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,15 +45,15 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@RequestBody StudentDTO studentDTO) {
-        RegisterStudentRequest request = new RegisterStudentRequest(
+    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@RequestBody StudentDTO studentDTO , HttpServletRequest request, HttpServletResponse res) {
+        RegisterStudentRequest createStudentReq = new RegisterStudentRequest(
                 studentDTO.getFullName(),
                 studentDTO.getEmail(),
                 studentDTO.getStudentId(),
                 LocalDate.now(),
                 studentDTO.getPhoneNumber()
         );
-        ApiResponse<StudentDTO> response = studentService.registerStudent(request);
+        ApiResponse<StudentDTO> response = studentService.registerStudent(createStudentReq,request,res);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

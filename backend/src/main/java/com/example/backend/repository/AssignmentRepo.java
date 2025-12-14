@@ -2,6 +2,7 @@ package com.example.backend.repository;
 
 import com.example.backend.entity.Assignment;
 import com.example.backend.entity.Course;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -19,4 +20,6 @@ public interface AssignmentRepo extends JpaRepository<Assignment, Long> {
     List<Assignment> findByOrderByDueDateAsc();
 
     List<Assignment> findByCourseOrderByDueDateAsc(Course course);
+
+    JsonNode findByCourseAndTitle(Course course, String title);
 }

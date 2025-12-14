@@ -52,7 +52,7 @@ export class AuthService {
    */
   registerStudent(data: RegisterStudentRequest): Observable<RegisterStudentRequest> {
     return this.http.post<RegisterStudentRequest>(
-      `${this.baseUrl}/students/register`,
+      `${this.baseUrl}/students`,
       {
         fullName: data.fullName,
         studentEmail: data.studentEmail,
