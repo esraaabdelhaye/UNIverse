@@ -22,12 +22,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px 24px;
+  padding: 20px 24px 26px 24px;
   border-bottom: 1px solid #E2E8F0;
 }
 
 .logo-icon {
-  font-size: 30px;
+  font-size: 32px;
   color: #2563EB;
 }
 

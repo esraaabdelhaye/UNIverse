@@ -13,29 +13,29 @@
 .sidebar {
   width: 256px;
   flex-shrink: 0;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid #E2E8F0;
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px 24px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 20px 24px 26px 24px;
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .logo-icon {
   font-size: 32px;
-  color: #2563eb;
+  color: #2563EB;
 }
 
 .logo-text {
   font-size: 20px;
   font-weight: 700;
-  color: #2563eb;
+  color: #2563EB;
 }
 
 .sidebar-nav {
