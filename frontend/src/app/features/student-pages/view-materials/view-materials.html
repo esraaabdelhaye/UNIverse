@@ -43,8 +43,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -57,7 +57,13 @@
         </div>
 
         <div class="card">
-          <div class="materials-filters">
+          <!-- Loading State -->
+          <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+            <p style="color: #64748B;">Loading materials...</p>
+          </div>
+
+          <!-- Filters -->
+          <div *ngIf="!isLoading" class="materials-filters">
             <div class="materials-search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
               <input class="materials-search-input" placeholder="Search materials..." type="text" [(ngModel)]="searchQuery" (keyup)="onSearchChange()"/>
@@ -72,7 +78,8 @@
             </div>
           </div>
 
-          <div class="materials-sections">
+          <!-- Materials Sections -->
+          <div *ngIf="!isLoading && filteredSections.length > 0" class="materials-sections">
             <div class="materials-section" *ngFor="let section of filteredSections">
               <h2 class="materials-section-title" [ngClass]="section.borderColor">{{ section.courseCode }}: {{ section.courseName }}</h2>
               <div class="materials-list">
@@ -94,7 +101,8 @@
             </div>
           </div>
 
-          <div *ngIf="filteredSections.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+          <!-- No Materials -->
+          <div *ngIf="!isLoading && filteredSections.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
             <p>No materials found matching your filters</p>
           </div>
         </div>

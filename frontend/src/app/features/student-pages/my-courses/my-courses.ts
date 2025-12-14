@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { StudentService } from '../../../core/services/student.service';
 
 interface Course {
   id: number;
@@ -24,73 +25,70 @@ interface Course {
 export class MyCourses implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private studentService = inject(StudentService);
+  private route = inject(ActivatedRoute);
 
+  // User data
+  currentUser: any;
+
+  // Course data
   courses: Course[] = [];
   filteredCourses: Course[] = [];
   searchQuery = '';
 
+  // Loading state
+  isLoading = true;
+  errorMessage = '';
+
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+
+    if (!this.currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.loadCourses();
   }
 
   loadCourses() {
-    this.courses = [
-      {
-        id: 1,
-        code: 'CS101',
-        name: 'Intro to Programming',
-        professor: 'Prof. Alan Turing',
-        bgColor: 'blue-bg',
-        buttonColor: 'blue-btn',
-        textColor: 'blue',
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
+
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+
+          const data = response.data;
+
+          const coursesArray = Array.isArray(data)
+            ? data           // Already an array
+            : data           // Not an array: could be a single object or null
+              ? [data]       // Wrap single object in array
+              : [];          // If null/undefined, fallback to empty array
+
+          this.courses = coursesArray.map((course: any, index: number) => ({
+            id: course.id,
+            code: course.courseCode,
+            name: course.courseTitle,
+            professor: course.professor || 'TBA',
+            bgColor: `${colorMap[index % colorMap.length]}-bg`,
+            buttonColor: `${colorMap[index % colorMap.length]}-btn`,
+            textColor: colorMap[index % colorMap.length],
+          }));
+
+          this.filteredCourses = [...this.courses];
+        } else {
+          this.errorMessage = 'No courses found';
+        }
+        this.isLoading = false;
       },
-      {
-        id: 2,
-        code: 'CS202',
-        name: 'Data Structures',
-        professor: 'Prof. Ada Lovelace',
-        bgColor: 'green-bg',
-        buttonColor: 'green-btn',
-        textColor: 'green',
-      },
-      {
-        id: 3,
-        code: 'DS310',
-        name: 'Web Development',
-        professor: 'Prof. Tim Berners-Lee',
-        bgColor: 'pink-bg',
-        buttonColor: 'pink-btn',
-        textColor: 'pink',
-      },
-      {
-        id: 4,
-        code: 'AI404',
-        name: 'Artificial Intelligence',
-        professor: 'Prof. Geoffrey Hinton',
-        bgColor: 'purple-bg',
-        buttonColor: 'purple-btn',
-        textColor: 'purple',
-      },
-      {
-        id: 5,
-        code: 'DB521',
-        name: 'Database Systems',
-        professor: 'Prof. Edgar Codd',
-        bgColor: 'amber-bg',
-        buttonColor: 'amber-btn',
-        textColor: 'amber',
-      },
-      {
-        id: 6,
-        code: 'MA110',
-        name: 'Calculus I',
-        professor: 'Prof. Isaac Newton',
-        bgColor: 'red-bg',
-        buttonColor: 'red-btn',
-        textColor: 'red',
-      },
-    ];
-    this.filteredCourses = [...this.courses];
+      error: (err) => {
+        console.error('Error loading courses:', err);
+        this.errorMessage = 'Failed to load courses';
+        this.isLoading = false;
+      }
+    });
   }
 
   searchCourses() {
@@ -105,19 +103,13 @@ export class MyCourses implements OnInit {
 
   viewCourse(course: Course) {
     this.router.navigate(['/student-dashboard/view-materials'], {
-      queryParams: { course: course.code }
+      queryParams: { course: course.code, courseId: course.id }
     });
-    console.log('Viewing course:', course.code);
   }
 
   getCourseImage(courseCode: string): string {
-    // Return appropriate image based on course code
+    // Return a generic course image - in production, this could be stored per course
     return 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo';
-  }
-
-  enrollCourse(course: Course): void {
-    alert(`You are now enrolled in ${course.name}!`);
-    console.log('Enrolled in course:', course.code);
   }
 
   logout() {

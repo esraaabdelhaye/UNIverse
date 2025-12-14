@@ -49,23 +49,24 @@ export class Login implements OnInit, OnDestroy {
   validateForm(): boolean {
     if (!this.email || !this.email.trim()) {
       this.errorMessage = 'البريد الإلكتروني مطلوب / Email is required';
-        this.errorMessage = 'Email is required';
+      this.errorMessage = 'Email is required';
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(this.email)) {
       this.errorMessage = 'صيغة البريد غير صحيحة / Invalid email format';
-        this.errorMessage = 'Invalid email format';
+      this.errorMessage = 'Invalid email format';
       return false;
     }
     if (!this.password || !this.password.trim()) {
       this.errorMessage = 'كلمة السر مطلوبة / Password is required';
-        this.errorMessage = 'Password is required';
+      this.errorMessage = 'Password is required';
       return false;
     }
     if (this.password.length < 6) {
-      this.errorMessage = 'كلمة السر يجب أن تكون 6 أحرف على الأقل / Password must be at least 6 characters';
-        this.errorMessage = 'Password must be at least 6 characters';
+      this.errorMessage =
+        'كلمة السر يجب أن تكون 6 أحرف على الأقل / Password must be at least 6 characters';
+      this.errorMessage = 'Password must be at least 6 characters';
       return false;
     }
     return true;
@@ -82,17 +83,22 @@ export class Login implements OnInit, OnDestroy {
     const credentials = {
       email: this.email.trim().toLowerCase(),
       password: this.password,
-      role: loginRole
+      role: loginRole,
     };
 
-    this.authService.login(credentials)
+    this.authService
+      .login(credentials)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response: any) => {
+          console.log(response);
+
           if (response && response.statusCode === 200 && response.data) {
             localStorage.setItem('currentUser', JSON.stringify(response.data));
             this.isLoading = false;
             // If staff, check returned role
+            console.log('data.role: ', response.data.role);
+
             if (this.selectedRole === 'staff') {
               if (response.data.role === 'doctor') {
                 this.router.navigate(['/doctor-dashboard']);
@@ -106,7 +112,7 @@ export class Login implements OnInit, OnDestroy {
             }
           } else {
             this.errorMessage = response?.message || 'حدث خطأ ما / Login failed';
-              this.errorMessage = response?.message || 'Login failed';
+            this.errorMessage = response?.message || 'Login failed';
             this.isLoading = false;
           }
         },
@@ -114,16 +120,16 @@ export class Login implements OnInit, OnDestroy {
           this.isLoading = false;
           if (error?.error?.statusCode === 401) {
             this.errorMessage = 'بيانات الدخول غير صحيحة / Invalid credentials';
-              this.errorMessage = 'Invalid credentials';
+            this.errorMessage = 'Invalid credentials';
           } else if (error?.error?.message) {
             this.errorMessage = error.error.message;
           } else if (error?.message) {
             this.errorMessage = error.message;
           } else {
             this.errorMessage = 'فشل تسجيل الدخول / Login failed. Please try again.';
-              this.errorMessage = 'Login failed. Please try again.';
+            this.errorMessage = 'Login failed. Please try again.';
           }
-        }
+        },
       });
   }
 
@@ -144,9 +150,9 @@ export class Login implements OnInit, OnDestroy {
       case 'student':
         this.router.navigate(['/student-dashboard']);
         break;
-      case 'studentrepresentative':
-        this.router.navigate(['/studentrep-dashboard']);
-        break;
+      // case 'studentrepresentative':
+      //   this.router.navigate(['/studentrep-dashboard']);
+      //   break;
       default:
         console.warn('Unknown role:', role);
         this.router.navigate(['/']);

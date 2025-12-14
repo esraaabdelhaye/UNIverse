@@ -357,6 +357,7 @@ public class StudentService {
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
         dto.setDescription(course.getDescription());
+        dto.setCourseId(String.valueOf(course.getId()));
         return dto;
     }
 

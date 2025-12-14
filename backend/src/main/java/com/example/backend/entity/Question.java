@@ -13,10 +13,10 @@ public class Question {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = true)
     private String title;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = true)
     private LocalDateTime createdAt;
 
     @Column(name = "answer" , nullable = true)
@@ -25,7 +25,7 @@ public class Question {
     @Column(name = "answered_at", nullable = true)
     private LocalDateTime answeredAt;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = true)
     private String status;
 
     @Column(name = "priority", nullable = true)

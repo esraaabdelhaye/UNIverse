@@ -7,6 +7,7 @@ public class EventDTO {
     private String eventTitle;
     private String eventDescription;
     private LocalDateTime eventDateTime;
+    private LocalDateTime eventEndDateTime;
     private String location;
     private String eventType;
     private Integer attendeeCount;
@@ -44,4 +45,12 @@ public class EventDTO {
 
     public Integer getAttendeeCount() { return attendeeCount; }
     public void setAttendeeCount(Integer attendeeCount) { this.attendeeCount = attendeeCount; }
+
+    public LocalDateTime getEventEndDateTime() {
+        return eventEndDateTime;
+    }
+
+    public void setEventEndDateTime(LocalDateTime eventEndDateTime) {
+        this.eventEndDateTime = eventEndDateTime;
+    }
 }

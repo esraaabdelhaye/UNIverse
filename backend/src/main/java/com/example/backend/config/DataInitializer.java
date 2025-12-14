@@ -4,9 +4,9 @@ import com.example.backend.Utils.MaterialType;
 import com.example.backend.Utils.NotificationType;
 import com.example.backend.entity.*;
 import com.example.backend.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -17,11 +17,32 @@ import java.time.LocalDateTime;
  * The H2 with mock data for testing, debugging, etc.
  * Creates a complete system with one department and one semester.
  */
-@Configuration
-public class DataInitializer {
+@Component
+public class DataInitializer implements CommandLineRunner {
 
-    @Bean
-    CommandLineRunner initDatabase(
+    private final StudentRepo studentRepo;
+    private final DoctorRepo doctorRepo;
+    private final SupervisorRepo supervisorRepo;
+    private final TeachingAssistantRepo taRepo;
+    private final DepartmentRepo departmentRepo;
+    private final SemesterRepo semesterRepo;
+    private final CourseRepo courseRepo;
+    private final CourseEnrollmentRepo enrollmentRepo;
+    private final AssignmentRepo assignmentRepo;
+    private final AssignmentSubmissionRepo submissionRepo;
+    private final AnnouncementRepo announcementRepo;
+    private final MaterialRepo materialRepo;
+    private final EventRepo eventRepo;
+    private final PostRepo postRepo;
+    private final StudentGroupRepo studentGroupRepo;
+    private final PollRepo pollRepo;
+    private final PollOptionRepo pollOptionRepo;
+    private final NotificationRepo notificationRepo;
+    private final QuestionRepo questionRepo;
+    private final StudentRepresentativeRepo studentRepRepo;
+    private final PasswordEncoder passwordEncoder;
+
+    public DataInitializer(
             StudentRepo studentRepo,
             DoctorRepo doctorRepo,
             SupervisorRepo supervisorRepo,
@@ -43,9 +64,33 @@ public class DataInitializer {
             QuestionRepo questionRepo,
             StudentRepresentativeRepo studentRepRepo,
             PasswordEncoder passwordEncoder) {
+        this.studentRepo = studentRepo;
+        this.doctorRepo = doctorRepo;
+        this.supervisorRepo = supervisorRepo;
+        this.taRepo = taRepo;
+        this.departmentRepo = departmentRepo;
+        this.semesterRepo = semesterRepo;
+        this.courseRepo = courseRepo;
+        this.enrollmentRepo = enrollmentRepo;
+        this.assignmentRepo = assignmentRepo;
+        this.submissionRepo = submissionRepo;
+        this.announcementRepo = announcementRepo;
+        this.materialRepo = materialRepo;
+        this.eventRepo = eventRepo;
+        this.postRepo = postRepo;
+        this.studentGroupRepo = studentGroupRepo;
+        this.pollRepo = pollRepo;
+        this.pollOptionRepo = pollOptionRepo;
+        this.notificationRepo = notificationRepo;
+        this.questionRepo = questionRepo;
+        this.studentRepRepo = studentRepRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-        return args -> {
-            System.out.println("=== Starting Database Initialization ===");
+    @Override
+    @Transactional
+    public void run(String... args) throws Exception {
+        System.out.println("=== Starting Database Initialization ===");
 
             // ==================== SUPERVISOR ====================
             Supervisor supervisor;
@@ -784,6 +829,5 @@ public class DataInitializer {
             System.out.println("Student 2: student2@university.edu / password123");
             System.out.println("Student 3: student3@university.edu / password123");
             System.out.println("Student Rep: studentrep@university.edu / password123");
-        };
     }
 }

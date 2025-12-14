@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-item"
+        routerLink="/student-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -13,11 +18,19 @@
         <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+      <a
+        class="nav-item"
+        routerLink="/student-dashboard/submit-assignments"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
-      <a class="nav-item active" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+      <a
+        class="nav-item active"
+        routerLink="/student-dashboard/view-grades"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">grade</span>
         <span>View Grades</span>
       </a>
@@ -43,8 +56,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -56,8 +69,14 @@
           <p class="page-subtitle">Your comprehensive academic performance overview.</p>
         </div>
 
-        <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
-          <div class="select-wrapper" style="flex: 1; min-width: 200px;">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading your grades...</p>
+        </div>
+
+        <!-- Filters -->
+        <div *ngIf="!isLoading" style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap">
+          <div class="select-wrapper" style="flex: 1; min-width: 200px">
             <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
               <option value="">All Courses</option>
               <option *ngFor="let course of filteredGrades" [value]="course.code">
@@ -66,13 +85,18 @@
             </select>
             <span class="material-symbols-outlined select-icon">expand_more</span>
           </div>
-          <button class="btn btn-primary" (click)="downloadGrades()" style="display: flex; align-items: center; gap: 8px;">
+          <button
+            class="btn btn-primary"
+            (click)="downloadGrades()"
+            style="display: flex; align-items: center; gap: 8px"
+          >
             <span class="material-symbols-outlined">download</span>
             Download Report
           </button>
         </div>
 
-        <div class="grades-container">
+        <!-- Grades Container -->
+        <div *ngIf="!isLoading && filteredGrades.length > 0" class="grades-container">
           <div class="grade-card" *ngFor="let course of filteredGrades">
             <div class="grade-card-header">
               <div>
@@ -87,22 +111,59 @@
               </div>
             </div>
             <div class="assignments-grid">
-              <div class="assignment-item" *ngFor="let assignment of course.assignments; let i = index" [ngClass]="getItemColor(i)">
+              <div
+                class="assignment-item"
+                *ngFor="let assignment of course.assignments; let i = index"
+                [ngClass]="getItemColor(i)"
+              >
                 <div class="assignment-header">
                   <p class="assignment-name">{{ assignment.name }}</p>
-                  <span class="assignment-grade" [ngClass]="getGradeColor(assignment.grade)">{{ assignment.grade }}%</span>
+                  <span class="assignment-grade" [ngClass]="getGradeColor(assignment.grade)"
+                  >{{ assignment.grade }}%</span
+                  >
                 </div>
-                <p class="assignment-feedback" *ngIf="assignment.feedback">{{ assignment.feedback }}</p>
-                <a *ngIf="assignment.feedback" class="feedback-link" href="javascript:void(0)" (click)="viewFeedback(assignment)">View Feedback</a>
+                <p class="assignment-feedback" *ngIf="assignment.feedback">
+                  {{ assignment.feedback | slice : 0 : 80 }}
+                  <span *ngIf="assignment.feedback.length > 80">...</span>
+                </p>
+                <a
+                  *ngIf="assignment.feedback"
+                  class="feedback-link"
+                  href="javascript:void(0)"
+                  (click)="viewFeedback(assignment)"
+                >View Feedback</a
+                >
               </div>
             </div>
           </div>
         </div>
 
-        <div *ngIf="filteredGrades.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+        <!-- No Grades -->
+        <div
+          *ngIf="!isLoading && filteredGrades.length === 0"
+          style="text-align: center; padding: 32px; color: #64748b"
+        >
           <p>No grades available</p>
         </div>
       </div>
     </main>
+  </div>
+</div>
+
+<!-- Feedback Popup -->
+<div class="popup-overlay" *ngIf="isPopUp">
+  <div class="popup-container">
+    <div class="popup-header">
+      <h3>Feedback</h3>
+      <button class="close-btn" (click)="closePopup()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="popup-body">
+      <p>{{ feedBack }}</p>
+    </div>
+    <div class="popup-footer">
+      <button class="btn btn-primary" (click)="closePopup()">Close</button>
+    </div>
   </div>
 </div>

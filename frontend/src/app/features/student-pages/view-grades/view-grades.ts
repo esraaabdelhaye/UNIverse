@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { GradeService } from '../../../core/services/grade.service';
+import { StudentService } from '../../../core/services/student.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 interface Assignment {
   name: string;
@@ -30,85 +34,138 @@ interface CourseGrade {
 export class ViewGrades implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private gradeService = inject(GradeService);
+  private studentService = inject(StudentService);
 
+  // User data
+  currentUser: any;
+
+  // Grade data
   courseGrades: CourseGrade[] = [];
   filteredGrades: CourseGrade[] = [];
-  selectedSemester = 'Fall 2024';
   selectedCourse = '';
 
+  // Popup
+  isPopUp = false;
+  feedBack = '';
+
+  // Loading state
+  isLoading = true;
+
   ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+
+    if (!this.currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.loadGrades();
   }
 
   loadGrades() {
-    this.courseGrades = [
-      {
-        id: 1,
-        code: 'CS101',
-        name: 'Intro to Programming',
-        professor: 'Prof. Alan Turing',
-        overallGrade: 92,
-        completion: 75,
-        assignments: [
-          {
-            name: 'Assignment 1',
-            grade: 95,
-            feedback: 'Great work on the loops!',
-          },
-          { name: 'Quiz 1', grade: 100, feedback: '' },
-          {
-            name: 'Midterm Exam',
-            grade: 88,
-            feedback: 'Strong understanding of concepts.',
-          },
-        ],
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
+
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (courses) => {
+        if (courses.success && courses.data ) {
+          const  data = courses.data ;
+          const coursesArray = Array.isArray(data)
+            ? data
+            : data
+              ? [data]
+              : [];
+
+          let loadedCount = 0;
+          const coursesData = coursesArray;
+
+          if (coursesData.length === 0) {
+            this.isLoading = false;
+            return;
+          }
+
+          coursesData.forEach((course: any) => {
+            const courseId = course.courseId || course.id;
+            const numericCourseId = parseInt(String(courseId).trim(), 10);
+
+            // Debug logging
+            console.log('Course object:', course);
+            console.log('Course keys:', Object.keys(course));
+            console.log('course.courseId:', course.courseId);
+            console.log('course.id:', course.id);
+            console.log('courseId value:', courseId);
+            console.log('courseId type:', typeof courseId);
+            console.log('numericCourseId:', numericCourseId);
+            console.log('is NaN?:', isNaN(numericCourseId));
+            if (isNaN(numericCourseId)) {
+              console.error('Invalid course ID:', course);
+              loadedCount++;
+              if (loadedCount === coursesData.length) {
+                this.filterGrades();
+                this.isLoading = false;
+              }
+              return;
+            }
+            this.gradeService.getCourseGrades(studentId, Number(course.courseId)).subscribe({
+              next: (gradesResponse) => {
+                if (gradesResponse.success && gradesResponse.data ) {
+                  const  gradeData = gradesResponse.data ;
+                  const gradesArray = Array.isArray(gradeData)
+                    ? gradeData           // Already an array
+                    : gradeData           // Not an array: could be a single object or null
+                      ? [gradeData]       // Wrap single object in array
+                      : [];          // If null/undefined, fallback to empty array
+                  const courseGrade: CourseGrade = {
+                    id: Number(course.courseId),
+                    code: course.courseCode,
+                    name: course.courseTitle,
+                    professor: course.professor || 'TBA',
+                    overallGrade: this.calculateOverallGrade(gradesArray),
+                    completion: 50,
+                    assignments: gradesArray.map((g: any) => ({
+                      name: g.courseTitle || 'Assignment',
+                      grade: g.score || 0,
+                      feedback: g.feedback || '',
+                    })),
+                  };
+                  this.courseGrades.push(courseGrade);
+                }
+                loadedCount++;
+                if (loadedCount === coursesData.length) {
+                  this.filterGrades();
+                  this.isLoading = false;
+                }
+              },
+              error: (err) => {
+                console.error('Error loading course grades:', err);
+                loadedCount++;
+                if (loadedCount === coursesData.length) {
+                  this.filterGrades();
+                  this.isLoading = false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading = false;
+        }
       },
-      {
-        id: 2,
-        code: 'CS202',
-        name: 'Data Structures',
-        professor: 'Prof. Ada Lovelace',
-        overallGrade: 85,
-        completion: 45,
-        assignments: [
-          { name: 'Lab Report 1', grade: 82, feedback: '' },
-          {
-            name: 'Homework 1',
-            grade: 90,
-            feedback: 'Excellent analysis.',
-          },
-        ],
-      },
-      {
-        id: 3,
-        code: 'DS310',
-        name: 'Web Development',
-        professor: 'Prof. Tim Berners-Lee',
-        overallGrade: 78,
-        completion: 60,
-        assignments: [
-          { name: 'Project Proposal', grade: 94, feedback: '' },
-          {
-            name: 'Assignment 2',
-            grade: 75,
-            feedback: 'Review CSS Flexbox principles.',
-          },
-          {
-            name: 'Quiz 2',
-            grade: 68,
-            feedback: "Let's connect during office hours.",
-          },
-        ],
-      },
-    ];
-    this.filterGrades();
+      error: (err) => {
+        console.error('Error loading courses:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private calculateOverallGrade(grades: any[]): number {
+    if (grades.length === 0) return 0;
+    const total = grades.reduce((sum, g) => sum + (g.score || 0), 0);
+    return Math.round(total / grades.length);
   }
 
   filterGrades() {
     if (this.selectedCourse) {
-      this.filteredGrades = this.courseGrades.filter(
-        g => g.code === this.selectedCourse
-      );
+      this.filteredGrades = this.courseGrades.filter(g => g.code === this.selectedCourse);
     } else {
       this.filteredGrades = [...this.courseGrades];
     }
@@ -138,47 +195,82 @@ export class ViewGrades implements OnInit {
   }
 
   viewFeedback(assignment: Assignment) {
-    if (assignment.feedback) {
-      alert(`Feedback for ${assignment.name}:\n\n${assignment.feedback}`);
-    } else {
-      alert('No feedback available yet.');
-    }
+    this.feedBack = assignment.feedback || 'No feedback available yet.';
+    this.isPopUp = true;
   }
 
   downloadGrades(): void {
-    console.log('Downloading grades report');
-    const gradeReport = this.generateGradeReport();
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(gradeReport));
-    element.setAttribute('download', 'grades-report.txt');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    alert('Grades report downloaded successfully!');
+    this.generatePdfReport();
   }
 
-  private generateGradeReport(): string {
-    let report = 'GRADE REPORT\n';
-    report += '=' .repeat(50) + '\n\n';
+  private generatePdfReport(): void {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    let yPosition = 20;
 
-    this.filteredGrades.forEach(course => {
-      report += `Course: ${course.code} - ${course.name}\n`;
-      report += `Professor: ${course.professor}\n`;
-      report += `Overall Grade: ${course.overallGrade}% (${this.getLetterGrade(course.overallGrade)})\n`;
-      report += `Completion: ${course.completion}%\n\n`;
-      report += 'Assignments:\n';
+    // Header
+    doc.setFillColor(37, 99, 235);
+    doc.rect(0, 0, pageWidth, 45, 'F');
 
-      course.assignments.forEach(assignment => {
-        report += `  - ${assignment.name}: ${assignment.grade}%\n`;
-        if (assignment.feedback) {
-          report += `    Feedback: ${assignment.feedback}\n`;
-        }
-      });
-      report += '\n';
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Academic Grade Report', 20, 27);
+
+    yPosition = 55;
+    doc.setTextColor(100, 116, 139);
+    doc.setFontSize(10);
+    const userName = this.currentUser?.fullName || 'Student';
+    doc.text('Student: ' + userName, 14, yPosition);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, pageWidth - 14, yPosition, { align: 'right' });
+
+    yPosition += 15;
+
+    // Summary
+    const totalGrade = this.filteredGrades.reduce((sum, course) => sum + course.overallGrade, 0);
+    const avgGrade = this.filteredGrades.length > 0 ? totalGrade / this.filteredGrades.length : 0;
+
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(14, yPosition - 5, pageWidth - 28, 25, 3, 3, 'F');
+
+    doc.setTextColor(30, 41, 59);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Overall Summary', 20, yPosition + 5);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text(`Courses: ${this.filteredGrades.length}`, 20, yPosition + 14);
+    doc.text(`Average: ${avgGrade.toFixed(1)}%`, 70, yPosition + 14);
+
+    yPosition += 35;
+
+    // Course details
+    this.filteredGrades.forEach((course) => {
+      if (yPosition > 240) {
+        doc.addPage();
+        yPosition = 20;
+      }
+
+      doc.setTextColor(30, 41, 59);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${course.code}: ${course.name}`, 14, yPosition);
+
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 116, 139);
+      doc.text(`Professor: ${course.professor}`, 14, yPosition + 8);
+      doc.text(`Grade: ${course.overallGrade}% (${this.getLetterGrade(course.overallGrade)})`, 14, yPosition + 14);
+
+      yPosition += 20;
     });
 
-    return report;
+    doc.save('grades-report.pdf');
+  }
+
+  closePopup() {
+    this.isPopUp = false;
   }
 
   logout() {

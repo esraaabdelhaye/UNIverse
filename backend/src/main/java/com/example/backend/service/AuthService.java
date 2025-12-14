@@ -56,6 +56,7 @@ public class AuthService {
         return switch (loginRequest.getRole()) {
             case "student" -> loginStudent(loginRequest ,  request, response);
             case "studentRep" -> loginStudentRep(loginRequest,request, response);
+            case "staff" -> loginStaff(loginRequest,request,response) ;
             case "doctor" -> loginDoctor(loginRequest,request, response);
             case "supervisor" -> loginSupervisor(loginRequest,request, response) ;
             case "ta" -> loginTA(loginRequest,request, response);
@@ -230,19 +231,41 @@ public class AuthService {
     }
 
 
+    /**
+     * Generic method to work with frontend
+     */
+    private ApiResponse<?> loginStaff(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
+        Optional<Doctor> doctor = doctorRepo.findByEmail(loginRequest.getEmail());
+        if (doctor.isPresent()) {
+            return loginDoctor(loginRequest, request, response);
+        }
+
+        Optional<TeachingAssistant> ta = taRepo.findByEmail(loginRequest.getEmail());
+        if (ta.isPresent()) {
+            return loginTA(loginRequest, request, response);
+        }
+        return ApiResponse.unauthorized("Invalid email or password");
+    }
+
+    //Helper method to convert from Entity to DTO
+    /*
+    Refactor Move them to entity classes
+    or create general util class
+    Also unify the Model between DTOs and Entities
+     */
+
     private StudentDTO convertToDTO(Student student) {
         StudentDTO dto = new StudentDTO();
-        dto.setRole("student");
         dto.setStudentId(String.valueOf(student.getId()));
         dto.setFullName(student.getName());
         dto.setEmail(student.getEmail());
         dto.setEnrollmentStatus("Active");
+        dto.setRole("student");
         return dto;
     }
 
     private StudentRepresentativeDTO convertToDTO(StudentRepresentative rep) {
         StudentRepresentativeDTO dto = new StudentRepresentativeDTO();
-        dto.setRole("studentRep");
         dto.setStudentId(String.valueOf(rep.getId()));
         dto.setFullName(rep.getName());
         dto.setEmail(rep.getEmail());
@@ -258,7 +281,6 @@ public class AuthService {
         DoctorDTO dto = new DoctorDTO();
         // Currently no departments exist
 //        dto.setDepartment(doc.getDepartment().getName());
-        dto.setRole("doctor");
         dto.setEmail(doc.getEmail());
         dto.setFullName(doc.getName());
         dto.setDoctorId(String.valueOf(doc.getId()));
@@ -270,7 +292,6 @@ public class AuthService {
 
     private SupervisorDTO convertToDTO(Supervisor supervisor) {
         SupervisorDTO dto = new SupervisorDTO();
-        dto.setRole("supervisor");
         dto.setDepartment(supervisor.getDepartment().getName());
         dto.setEmail(supervisor.getEmail());
         dto.setFullName(supervisor.getName());
@@ -282,7 +303,6 @@ public class AuthService {
 
     private TeachingAssistantDTO convertToDTO(TeachingAssistant teachingAssistant) {
         TeachingAssistantDTO dto = new TeachingAssistantDTO();
-        dto.setRole("ta");
         dto.setFullName(teachingAssistant.getName());
         dto.setEmail(teachingAssistant.getEmail());
         dto.setPhoneNumber(teachingAssistant.getPhoneNumber());

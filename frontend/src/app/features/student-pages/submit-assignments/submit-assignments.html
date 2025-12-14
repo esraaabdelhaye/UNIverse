@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-item"
+        routerLink="/student-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -13,7 +18,11 @@
         <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
-      <a class="nav-item active" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+      <a
+        class="nav-item active"
+        routerLink="/student-dashboard/submit-assignments"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
       </a>
@@ -43,8 +52,8 @@
         </button>
         <div class="user-avatar"></div>
         <div class="user-info">
-          <p class="user-name">Alex Johnson</p>
-          <p class="user-role">Student</p>
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
         </div>
       </div>
     </header>
@@ -56,16 +65,26 @@
           <p class="page-subtitle">Stay on top of your deadlines and submit your work here.</p>
         </div>
 
-        <div class="card">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading assignments...</p>
+        </div>
+
+        <!-- Main Content -->
+        <div *ngIf="!isLoading" class="card">
           <div class="card-header">
             <h2>Your Assignments</h2>
             <div class="filters">
               <div class="select-wrapper">
-                <select class="filter-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+                <select
+                  class="filter-select"
+                  [(ngModel)]="selectedCourse"
+                  (change)="onCourseChange()"
+                >
                   <option value="">All Courses</option>
-                  <option value="CS101">CS101: Intro to Programming</option>
-                  <option value="CS202">CS202: Data Structures</option>
-                  <option value="DS310">DS310: Web Development</option>
+                  <option *ngFor="let course of uniqueCourses" [value]="course">
+                    {{ course }}
+                  </option>
                 </select>
                 <span class="material-symbols-outlined select-icon">expand_more</span>
               </div>
@@ -94,31 +113,58 @@
               <tr *ngFor="let assignment of filteredAssignments">
                 <td class="assignment-title">{{ assignment.title }}</td>
                 <td class="course-code">{{ assignment.course }}</td>
-                <td class="due-date" [ngClass]="assignment.status === 'pending' && assignment.dueDate.includes('Today') ? 'urgent' : assignment.status === 'pending' ? 'warning' : ''">
+                <td
+                  class="due-date"
+                  [ngClass]="
+                      assignment.status === 'pending' && assignment.dueDate.includes('Today')
+                        ? 'urgent'
+                        : assignment.status === 'pending'
+                        ? 'warning'
+                        : ''
+                    "
+                >
                   {{ assignment.dueDate }}
                 </td>
                 <td>
                     <span class="status-badge" [ngClass]="'status-' + assignment.status">
-                      <span *ngIf="assignment.status === 'graded'">Graded ({{ assignment.grade }}%)</span>
+                      <span *ngIf="assignment.status === 'graded'"
+                      >Graded ({{ assignment.grade }}%)</span
+                      >
                       <span *ngIf="assignment.status === 'pending'">Pending</span>
                       <span *ngIf="assignment.status === 'submitted'">Submitted</span>
                       <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
                     </span>
                 </td>
                 <td class="text-right">
-                  <button *ngIf="assignment.status === 'pending'" class="btn btn-primary" (click)="submitAssignment(assignment)">
+                  <button
+                    *ngIf="assignment.status === 'pending'"
+                    class="btn btn-primary"
+                    (click)="submitAssignment(assignment)"
+                  >
                     <span class="material-symbols-outlined btn-icon">upload</span>
                     <span class="btn-text">Submit</span>
                   </button>
-                  <button *ngIf="assignment.status === 'submitted'" class="btn btn-secondary" (click)="viewSubmission(assignment)">
+                  <button
+                    *ngIf="assignment.status === 'submitted'"
+                    class="btn btn-secondary"
+                    (click)="viewSubmission(assignment)"
+                  >
                     <span class="material-symbols-outlined btn-icon">visibility</span>
                     <span class="btn-text">View</span>
                   </button>
-                  <button *ngIf="assignment.status === 'graded'" class="btn btn-secondary" (click)="viewGrade(assignment)">
+                  <button
+                    *ngIf="assignment.status === 'graded'"
+                    class="btn btn-secondary"
+                    (click)="viewGrade(assignment)"
+                  >
                     <span class="material-symbols-outlined btn-icon">grade</span>
                     <span class="btn-text">Grade</span>
                   </button>
-                  <button *ngIf="assignment.status === 'pastdue'" class="btn btn-disabled" disabled>
+                  <button
+                    *ngIf="assignment.status === 'pastdue'"
+                    class="btn btn-disabled"
+                    disabled
+                  >
                     <span class="material-symbols-outlined btn-icon">lock</span>
                     <span class="btn-text">Closed</span>
                   </button>
@@ -128,7 +174,10 @@
             </table>
           </div>
 
-          <div *ngIf="filteredAssignments.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+          <div
+            *ngIf="filteredAssignments.length === 0"
+            style="text-align: center; padding: 32px; color: #64748b"
+          >
             <p>No assignments found</p>
           </div>
         </div>
@@ -137,56 +186,214 @@
   </div>
 
   <!-- Upload Modal -->
-  <div *ngIf="selectedAssignmentForSubmit" style="position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-    <div style="background-color: #FFFFFF; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-        <h2 style="font-size: 20px; font-weight: 700; margin: 0;">Submit Assignment</h2>
-        <button (click)="cancelSubmission()" style="background: none; border: none; cursor: pointer; font-size: 24px; color: #64748B;">
+  <div
+    *ngIf="selectedAssignmentForSubmit"
+    style="
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    "
+  >
+    <div
+      style="
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 24px;
+        "
+      >
+        <h2 style="font-size: 20px; font-weight: 700; margin: 0">Submit Assignment</h2>
+        <button
+          (click)="cancelSubmission()"
+          style="background: none; border: none; cursor: pointer; font-size: 24px; color: #64748b"
+        >
           <span class="material-symbols-outlined">close</span>
         </button>
       </div>
 
-      <p style="color: #64748B; margin-bottom: 16px; margin-top: 0;">{{ selectedAssignmentForSubmit?.title }}</p>
+      <p style="color: #64748b; margin-bottom: 16px; margin-top: 0">
+        {{ selectedAssignmentForSubmit?.title }}
+      </p>
 
-      <div style="margin-bottom: 24px;">
-        <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 12px; color: #374151;">Upload Files <span style="color: #EF4444;">*</span></label>
-        <div (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; border: 2px dashed #D1D5DB; border-radius: 8px; background-color: #F9FAFB; cursor: pointer; transition: all 0.2s;">
-          <span class="material-symbols-outlined" style="font-size: 40px; color: #9CA3AF; margin-bottom: 12px;">cloud_upload</span>
-          <p style="font-size: 14px; color: #4b5563; margin: 0; margin-bottom: 4px;">Click to upload or drag and drop</p>
-          <p style="font-size: 12px; color: #9CA3AF; margin: 0;">PDF, DOCX, PPT, XLSX, TXT, Images (max 50MB)</p>
-          <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;"/>
+      <div style="margin-bottom: 24px">
+        <label
+          style="
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #374151;
+          "
+        >Upload Files <span style="color: #ef4444">*</span></label
+        >
+        <div
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop($event)"
+          (click)="triggerFileInput()"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            cursor: pointer;
+            transition: all 0.2s;
+          "
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-size: 40px; color: #9ca3af; margin-bottom: 12px"
+          >cloud_upload</span
+          >
+          <p style="font-size: 14px; color: #4b5563; margin: 0; margin-bottom: 4px">
+            Click to upload or drag and drop
+          </p>
+          <p style="font-size: 12px; color: #9ca3af; margin: 0">
+            PDF, DOCX, PPT, XLSX, TXT, Images (max 50MB)
+          </p>
+          <input
+            #fileInput
+            type="file"
+            multiple
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
         </div>
       </div>
 
-      <div *ngIf="uploadedFiles.length > 0" style="margin-bottom: 24px; padding: 16px; background-color: #F9FAFB; border-radius: 8px; border: 1px solid #E2E8F0;">
-        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0; color: #1E293B;">Selected Files ({{ uploadedFiles.length }})</h4>
-        <div *ngFor="let file of uploadedFiles; let i = index" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #FFFFFF; border-radius: 6px; margin-bottom: 8px; border: 1px solid #E2E8F0;">
-          <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-            <span class="material-symbols-outlined" style="color: #2563EB;">
-              {{ file.type === 'pdf' ? 'picture_as_pdf' : file.type === 'doc' ? 'description' : file.type === 'ppt' ? 'slideshow' : file.type === 'xls' ? 'table_chart' : 'insert_drive_file' }}
+      <div
+        *ngIf="uploadedFiles.length > 0"
+        style="
+          margin-bottom: 24px;
+          padding: 16px;
+          background-color: #f9fafb;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+        "
+      >
+        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0; color: #1e293b">
+          Selected Files ({{ uploadedFiles.length }})
+        </h4>
+        <div
+          *ngFor="let file of uploadedFiles; let i = index"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 12px; flex: 1">
+            <span class="material-symbols-outlined" style="color: #2563eb">
+              {{
+                file.type === 'pdf'
+                  ? 'picture_as_pdf'
+                  : file.type === 'doc'
+                    ? 'description'
+                    : file.type === 'ppt'
+                      ? 'slideshow'
+                      : file.type === 'xls'
+                        ? 'table_chart'
+                        : 'insert_drive_file'
+              }}
             </span>
             <div>
-              <p style="font-weight: 600; font-size: 14px; margin: 0; color: #1E293B;">{{ file.name }}</p>
-              <p style="font-size: 12px; color: #9CA3AF; margin: 0;">{{ file.size }}</p>
+              <p style="font-weight: 600; font-size: 14px; margin: 0; color: #1e293b">
+                {{ file.name }}
+              </p>
+              <p style="font-size: 12px; color: #9ca3af; margin: 0">{{ file.size }}</p>
             </div>
           </div>
-          <button (click)="removeFile(i)" style="background: none; border: none; cursor: pointer; color: #EF4444; padding: 4px;">
+          <button
+            (click)="removeFile(i)"
+            style="background: none; border: none; cursor: pointer; color: #ef4444; padding: 4px"
+          >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
       </div>
 
-      <div style="display: flex; gap: 12px; justify-content: flex-end;">
-        <button (click)="cancelSubmission()" style="padding: 10px 20px; border: 1px solid #D1D5DB; background-color: #FFFFFF; color: #1E293B; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">
+      <div style="display: flex; gap: 12px; justify-content: flex-end">
+        <button
+          (click)="cancelSubmission()"
+          style="
+            padding: 10px 20px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #1e293b;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+          "
+        >
           Cancel
         </button>
-        <button (click)="completeSubmission()" [disabled]="isSubmittingAssignment || uploadedFiles.length === 0" style="padding: 10px 20px; background-color: #2563EB; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; gap: 8px;" [style.opacity]="isSubmittingAssignment || uploadedFiles.length === 0 ? '0.6' : '1'">
+        <button
+          (click)="completeSubmission()"
+          [disabled]="isSubmittingAssignment || uploadedFiles.length === 0"
+          style="
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          "
+          [style.opacity]="isSubmittingAssignment || uploadedFiles.length === 0 ? '0.6' : '1'"
+        >
           <span class="material-symbols-outlined" *ngIf="!isSubmittingAssignment">upload</span>
           <span>{{ isSubmittingAssignment ? 'Submitting...' : 'Submit Assignment' }}</span>
         </button>
       </div>
+    </div>
+  </div>
 
+  <!-- Status Popup -->
+  <div class="popup-overlay" *ngIf="isPopUp">
+    <div class="popup-container">
+      <div class="popup-header">
+        <h3>Submission Status: {{ status }}</h3>
+        <button class="close-btn" (click)="closePopup()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="popup-body">
+        <p>{{ statusMessage }}</p>
+      </div>
+      <div class="popup-footer">
+        <button class="btn btn-primary" (click)="closePopup()">Close</button>
+      </div>
     </div>
   </div>
 </div>

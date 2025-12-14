@@ -16,6 +16,7 @@ public class CourseDTO {
     private String status;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private String courseId ;
 
     public CourseDTO() {}
 
@@ -75,4 +76,12 @@ public class CourseDTO {
 
     public LocalDateTime getUpdatedDate() { return updatedDate; }
     public void setUpdatedDate(LocalDateTime updatedDate) { this.updatedDate = updatedDate; }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
 }
