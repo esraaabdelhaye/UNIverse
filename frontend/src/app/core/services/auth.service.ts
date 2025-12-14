@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
+import { RegisterStudentRequest } from '../models/RegisterStudentRequest';
 export interface LoginRequest {
   email: string;
   password: string;
@@ -20,31 +20,24 @@ export interface LoginResponse {
   };
 }
 
-export interface RegisterRequest {
-  fullName: string;
-  studentEmail?: string;
-  studentId?: string;
-  dateOfBirth?: string;
-  phone?: string;
-}
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8080';
   private currentUserSubject = new BehaviorSubject<any>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Login with email, password, and role
    */
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials,{ withCredentials: true })
+    return this.http
+      .post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials, { withCredentials: true })
       .pipe(
-        tap(response => {
+        tap((response) => {
           if (response && response.statusCode === 200 && response.data) {
             // Store user info in localStorage
             localStorage.setItem('currentUser', JSON.stringify(response.data));
@@ -57,14 +50,19 @@ export class AuthService {
   /**
    * Register a new student
    */
-  registerStudent(data: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/students`, {
-      fullName: data.fullName,
-      studentEmail: data.studentEmail,
-      studentId: data.studentId,
-      dateOfBirth: data.dateOfBirth,
-      phone: data.phone
-    });
+  registerStudent(data: RegisterStudentRequest): Observable<RegisterStudentRequest> {
+    return this.http.post<RegisterStudentRequest>(
+      `${this.baseUrl}/students/register`,
+      {
+        fullName: data.fullName,
+        studentEmail: data.studentEmail,
+        studentId: data.studentId,
+        dateOfBirth: data.dateOfBirth,
+        phone: data.phone,
+      },
+
+      { withCredentials: true }
+    );
   }
 
   /**

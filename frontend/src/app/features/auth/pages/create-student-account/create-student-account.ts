@@ -1,9 +1,16 @@
-import { Component, signal, WritableSignal, ChangeDetectionStrategy, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  signal,
+  WritableSignal,
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
-
+import { RegisterStudentRequest } from '../../../../core/models/RegisterStudentRequest';
 @Component({
   selector: 'app-create-student-account',
   standalone: true,
@@ -28,7 +35,7 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
       enrollmentDate: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', Validators.required),
-      terms: new FormControl(false, Validators.requiredTrue)
+      terms: new FormControl(false, Validators.requiredTrue),
     });
   }
 
@@ -178,17 +185,17 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
         return;
       }
 
-      const signupData = {
+      const signupData: RegisterStudentRequest = {
         fullName: formValue.fullName,
-        email: formValue.email,
-        password: formValue.password,
-        role: 'student',
-        academicId: formValue.academicId, // Ensure this is parsed as number if backend expects Long
-        // departmentId: ... if needed
+        studentEmail: formValue.email,
+        studentId: formValue.academicId,
+        dateOfBirth: formValue.dob,
+        phone: formValue.phoneNumber,
       };
 
-      this.authService.signup(signupData).subscribe({
+      this.authService.registerStudent(signupData).subscribe({
         next: (response: any) => {
+          console.log(signupData);
           console.log('Signup successful', response);
           alert('Student account created successfully!');
           this.router.navigate(['/']);
@@ -196,7 +203,7 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
         error: (error: any) => {
           console.error('Signup failed', error);
           alert('Signup failed: ' + (error.error?.message || error.message));
-        }
+        },
       });
     } else {
       alert('Please fill in all required fields correctly.');
