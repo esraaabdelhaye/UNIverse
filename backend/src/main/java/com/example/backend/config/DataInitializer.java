@@ -623,7 +623,7 @@ public class DataInitializer implements CommandLineRunner {
             mlHw1.setDescription("Implement logistic regression with gradient descent.");
             mlHw1.setDueDate(LocalDateTime.of(2025, 10, 10, 23, 59));
             mlHw1.setMaxScore(100);
-            mlHw1 = assignmentRepo.save(mlHw1);
+            mlHw1 = assignmentRepo.save(mlHw1) ;
 
             mlHw2 = new Assignment();
             mlHw2.setCourse(courseML);
@@ -999,36 +999,82 @@ public class DataInitializer implements CommandLineRunner {
 
         // ==================== NOTIFICATIONS ====================
         if (notificationRepo.findAll().isEmpty()) {
+            // Notification for student1
             Notification notification1 = new Notification();
             notification1.setTitle("New Assignment Posted");
             notification1.setType(NotificationType.ASSIGNMENT);
             notification1.setMessage("A new assignment 'Java Basics Lab' has been posted for CS101.");
             notification1.setDoctorCreator(doctor1);
-            notification1.addStudent(student1);
-            notification1.addStudent(student2);
-            notification1.addStudent(student3);
-            notification1.addStudent(studentRep);
+            notification1.setRecipient(student1);
+            notification1.setCreatedAt(LocalDateTime.of(2025, 10, 1, 9, 0));
+            notification1.setRead(false);
             notificationRepo.save(notification1);
 
+            // Notification for student2
             Notification notification2 = new Notification();
-            notification2.setTitle("Upcoming Exam");
-            notification2.setType(NotificationType.EXAM);
-            notification2.setMessage("Reminder: CS101 Midterm Exam is scheduled for October 25th.");
+            notification2.setTitle("New Assignment Posted");
+            notification2.setType(NotificationType.ASSIGNMENT);
+            notification2.setMessage("A new assignment 'Java Basics Lab' has been posted for CS101.");
             notification2.setDoctorCreator(doctor1);
-            notification2.addStudent(student1);
-            notification2.addStudent(student2);
-            notification2.addStudent(studentRep);
+            notification2.setRecipient(student2);
+            notification2.setCreatedAt(LocalDateTime.of(2025, 10, 1, 9, 0));
+            notification2.setRead(true);
             notificationRepo.save(notification2);
 
+            // Exam reminder for student1
             Notification notification3 = new Notification();
-            notification3.setTitle("New Poll Available");
-            notification3.setType(NotificationType.POLL);
-            notification3.setMessage("Please vote on the poll regarding office hours timing.");
-            notification3.setTaCreator(ta1);
-            notification3.addStudent(student1);
-            notification3.addStudent(student2);
-            notification3.addStudent(student3);
+            notification3.setTitle("Upcoming Exam");
+            notification3.setType(NotificationType.EXAM);
+            notification3.setMessage("Reminder: CS101 Midterm Exam is scheduled for October 25th.");
+            notification3.setDoctorCreator(doctor1);
+            notification3.setRecipient(student1);
+            notification3.setCreatedAt(LocalDateTime.of(2025, 10, 20, 8, 0));
+            notification3.setRead(false);
             notificationRepo.save(notification3);
+
+            // Poll notification for student3
+            Notification notification4 = new Notification();
+            notification4.setTitle("New Poll Available");
+            notification4.setType(NotificationType.POLL);
+            notification4.setMessage("Please vote on the poll regarding office hours timing.");
+            notification4.setDoctorCreator(doctor1);
+            notification4.setRecipient(student3);
+            notification4.setCreatedAt(LocalDateTime.of(2025, 10, 10, 10, 0));
+            notification4.setRead(false);
+            notificationRepo.save(notification4);
+
+            // ML course notification for student4
+            Notification notification5 = new Notification();
+            notification5.setTitle("Machine Learning Assignment Due");
+            notification5.setType(NotificationType.ASSIGNMENT);
+            notification5.setMessage("Reminder: Logistic Regression HW is due on October 10th.");
+            notification5.setDoctorCreator(andrewNg);
+            notification5.setRecipient(student4);
+            notification5.setCreatedAt(LocalDateTime.of(2025, 10, 8, 14, 0));
+            notification5.setRead(true);
+            notificationRepo.save(notification5);
+
+            // Notification for student5
+            Notification notification6 = new Notification();
+            notification6.setTitle("Neural Networks Workshop");
+            notification6.setType(NotificationType.ANNOUNCEMENT);
+            notification6.setMessage("Join us for a hands-on workshop on neural networks this Saturday!");
+            notification6.setDoctorCreator(andrewNg);
+            notification6.setRecipient(student5);
+            notification6.setCreatedAt(LocalDateTime.of(2025, 10, 16, 11, 0));
+            notification6.setRead(false);
+            notificationRepo.save(notification6);
+
+            // Notification for studentRep
+            Notification notification7 = new Notification();
+            notification7.setTitle("Department Meeting");
+            notification7.setType(NotificationType.ANNOUNCEMENT);
+            notification7.setMessage("All student representatives are invited to the department meeting on October 20th.");
+            notification7.setSupervisorCreator(supervisor);
+            notification7.setRecipient(studentRep);
+            notification7.setCreatedAt(LocalDateTime.of(2025, 10, 15, 9, 0));
+            notification7.setRead(false);
+            notificationRepo.save(notification7);
 
             System.out.println("Inserted notifications");
         }
