@@ -76,6 +76,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
+                        // Allow creating students
+                        .requestMatchers("/students").permitAll()
                         .requestMatchers("/api/files/download/**").authenticated()
                         .requestMatchers("/api/files/view/**").authenticated()
                         .requestMatchers("/api/files/upload/**").authenticated()
