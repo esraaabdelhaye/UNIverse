@@ -76,6 +76,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/api/files/download/**").authenticated()
+                        .requestMatchers("/api/files/view/**").authenticated()
+                        .requestMatchers("/api/files/upload/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 // Add this line to allow Insomnia to use "Basic Auth"
