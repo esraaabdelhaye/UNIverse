@@ -21,11 +21,11 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<CourseDTO>>> getAllCourses(
+    public ResponseEntity<ApiResponse<List<CourseDTO>>> getAllCourses(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        ApiResponse<Page<CourseDTO>> response = courseService.getAllCourses(pageable);
+        ApiResponse<List<CourseDTO>> response = courseService.getAllCourses(pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

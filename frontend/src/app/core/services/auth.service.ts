@@ -42,7 +42,7 @@ export class AuthService {
    * Login with email, password, and role
    */
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials)
+    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials,{ withCredentials: true })
       .pipe(
         tap(response => {
           if (response && response.statusCode === 200 && response.data) {

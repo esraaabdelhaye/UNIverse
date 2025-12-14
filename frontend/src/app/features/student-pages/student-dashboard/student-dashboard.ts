@@ -79,7 +79,15 @@ export class StudentDashboard implements OnInit {
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (response: any) => {
         if (response.success && response.data) {
-          this.courses = response.data.map((course: any) => ({
+          const data = response.data;
+
+          const coursesArray = Array.isArray(data)
+            ? data           // Already an array
+            : data           // Not an array: could be a single object or null
+              ? [data]       // Wrap single object in array
+              : [];          // If null/undefined, fallback to empty array
+
+          this.courses = coursesArray.map((course: any) => ({
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,

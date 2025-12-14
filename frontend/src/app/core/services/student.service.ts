@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { Student } from '../models/student.model';
 import { Course } from '../models/course.model';
@@ -33,12 +34,38 @@ export class StudentService {
     return this.api.delete<ApiResponse<void>>(`/students/${id}`);
   }
 
-  getStudentCourses(studentId: number): Observable<ApiResponse<Course[]>> {
-    return this.api.get<ApiResponse<Course[]>>(`/students/${studentId}/courses`);
+  getStudentCourses(studentId: number): Observable<{
+    statusCode: number;
+    message: string;
+    data: {
+      id: number;
+      courseId: number | undefined;
+      courseCode: string;
+      courseTitle: string;
+      credits: number;
+      semester: string;
+      description: string;
+      department?: string;
+      professor?: string;
+      progress?: number
+    }[] | undefined;
+    success: boolean
+  }> {
+    return this.api.get<ApiResponse<Course[]>>(`/courses`).pipe(
+      map(response => ({
+        ...response,
+        data: Array.isArray(response.data)
+          ? response.data.map(course => ({
+              ...course,
+              courseId: course.courseId ? parseInt(String(course.courseId), 10) : undefined
+            }))
+          : response.data
+      }))
+    );
   }
 
   getStudentAssignments(studentId: number): Observable<ApiResponse<Assignment[]>> {
-    return this.api.get<ApiResponse<Assignment[]>>(`/students/${studentId}/assignments`);
+    return this.api.get<ApiResponse<Assignment[]>>(`/api/assignments`);
   }
 
   getStudentGrades(studentId: number): Observable<ApiResponse<Grade[]>> {

@@ -59,7 +59,15 @@ export class MyCourses implements OnInit {
         if (response.success && response.data) {
           const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
 
-          this.courses = response.data.map((course: any, index: number) => ({
+          const data = response.data;
+
+          const coursesArray = Array.isArray(data)
+            ? data           // Already an array
+            : data           // Not an array: could be a single object or null
+              ? [data]       // Wrap single object in array
+              : [];          // If null/undefined, fallback to empty array
+
+          this.courses = coursesArray.map((course: any, index: number) => ({
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,

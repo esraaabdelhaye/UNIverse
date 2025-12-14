@@ -11,30 +11,30 @@ export class AssignmentService {
   constructor(private api: ApiService) {}
 
   getAssignmentById(id: number): Observable<ApiResponse<Assignment>> {
-    return this.api.get<ApiResponse<Assignment>>(`/assignments/${id}`);
+    return this.api.get<ApiResponse<Assignment>>(`/api/assignments/${id}`);
   }
 
   getAssignmentsByCourse(courseId: number): Observable<ApiResponse<Assignment[]>> {
-    return this.api.get<ApiResponse<Assignment[]>>(`/assignments/course/${courseId}`);
+    return this.api.get<ApiResponse<Assignment[]>>(`/api/assignments/course/${courseId}`);
   }
 
   getAllAssignments(): Observable<ApiResponse<Assignment[]>> {
-    return this.api.get<ApiResponse<Assignment[]>>(`/assignments`);
+    return this.api.get<ApiResponse<Assignment[]>>(`/api/assignments`);
   }
 
   getSubmissionCount(assignmentId: number): Observable<ApiResponse<number>> {
-    return this.api.get<ApiResponse<number>>(`/assignments/${assignmentId}/submissions/count`);
+    return this.api.get<ApiResponse<number>>(`/api/assignments/${assignmentId}/submissions/count`);
   }
 
   createAssignment(courseId: number, assignment: Assignment): Observable<ApiResponse<Assignment>> {
-    return this.api.post<ApiResponse<Assignment>>(`/assignments/course/${courseId}`, assignment);
+    return this.api.post<ApiResponse<Assignment>>(`/api/assignments/course/${courseId}`, assignment);
   }
 
   updateAssignment(id: number, assignment: Assignment): Observable<ApiResponse<Assignment>> {
-    return this.api.put<ApiResponse<Assignment>>(`/assignments/${id}`, assignment);
+    return this.api.put<ApiResponse<Assignment>>(`/api/assignments/${id}`, assignment);
   }
 
   deleteAssignment(id: number): Observable<ApiResponse<void>> {
-    return this.api.delete<ApiResponse<void>>(`/assignments/${id}`);
+    return this.api.delete<ApiResponse<void>>(`/api/assignments/${id}`);
   }
 }
