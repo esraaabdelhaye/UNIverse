@@ -266,6 +266,7 @@
 
 .assignments-table tbody tr {
   border-bottom: 1px solid #E2E8F0;
+  transition: all 0.2s ease;
 }
 
 .assignments-table td {
@@ -584,6 +585,43 @@
   justify-content: flex-end;
   gap: 12px;
 }
+
+.badge-pending {
+  background-color: #FCD34D;
+  color: #92400E;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+}
+
+.badge-submitted {
+  background-color: #A7F3D0;
+  color: #065F46;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+}
+
+.badge-graded {
+  background-color: #BFDBFE;
+  color: #1E40AF;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+}
+
+.badge-pastdue {
+  background-color: #FECACA;
+  color: #991B1B;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+}
+
 
 @keyframes fadeIn {
   from {

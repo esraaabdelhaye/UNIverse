@@ -88,15 +88,6 @@ export class ViewGrades implements OnInit {
             const courseId = course.courseId || course.id;
             const numericCourseId = parseInt(String(courseId).trim(), 10);
 
-            // Debug logging
-            console.log('Course object:', course);
-            console.log('Course keys:', Object.keys(course));
-            console.log('course.courseId:', course.courseId);
-            console.log('course.id:', course.id);
-            console.log('courseId value:', courseId);
-            console.log('courseId type:', typeof courseId);
-            console.log('numericCourseId:', numericCourseId);
-            console.log('is NaN?:', isNaN(numericCourseId));
             if (isNaN(numericCourseId)) {
               console.error('Invalid course ID:', course);
               loadedCount++;
@@ -111,10 +102,10 @@ export class ViewGrades implements OnInit {
                 if (gradesResponse.success && gradesResponse.data ) {
                   const  gradeData = gradesResponse.data ;
                   const gradesArray = Array.isArray(gradeData)
-                    ? gradeData           // Already an array
-                    : gradeData           // Not an array: could be a single object or null
-                      ? [gradeData]       // Wrap single object in array
-                      : [];          // If null/undefined, fallback to empty array
+                    ? gradeData
+                    : gradeData
+                      ? [gradeData]
+                      : [];
                   const courseGrade: CourseGrade = {
                     id: Number(course.courseId),
                     code: course.courseCode,
@@ -175,10 +166,54 @@ export class ViewGrades implements OnInit {
     this.filterGrades();
   }
 
+  getGradeBoxStyle(score: number): any {
+    if (score >= 90) {
+      return {
+        'background-color': '#ECFDF5',
+        'border-left': '4px solid #059669',
+        'border': '1px solid #A7F3D0'
+      };
+    }
+    if (score >= 80) {
+      return {
+        'background-color': '#FEF3C7',
+        'border-left': '4px solid #D97706',
+        'border': '1px solid #FCD34D'
+      };
+    }
+    if (score >= 70) {
+      return {
+        'background-color': '#DBEAFE',
+        'border-left': '4px solid #2563EB',
+        'border': '1px solid #BFDBFE'
+      };
+    }
+    return {
+      'background-color': '#FEE2E2',
+      'border-left': '4px solid #DC2626',
+      'border': '1px solid #FECACA'
+    };
+  }
+
+  getGradeBoxClass(score: number): string {
+    if (score >= 90) return 'grade-box-a';
+    if (score >= 80) return 'grade-box-b';
+    if (score >= 70) return 'grade-box-c';
+    return 'grade-box-d';
+  }
+
+  getGradeTextColor(score: number): string {
+    if (score >= 90) return '#065F46';
+    if (score >= 80) return '#92400E';
+    if (score >= 70) return '#1E40AF';
+    return '#991B1B';
+  }
+
   getGradeColor(grade: number): string {
-    if (grade >= 90) return 'grade-high';
-    if (grade >= 80) return 'grade-mid';
-    return 'grade-low';
+    if (grade >= 90) return '#059669';
+    if (grade >= 80) return '#D97706';
+    if (grade >= 70) return '#2563EB';
+    return '#DC2626';
   }
 
   getLetterGrade(percentage: number): string {

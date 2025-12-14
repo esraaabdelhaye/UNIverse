@@ -83,7 +83,6 @@
                 {{ course.code }}: {{ course.name }}
               </option>
             </select>
-            <span class="material-symbols-outlined select-icon">expand_more</span>
           </div>
           <button
             class="btn btn-primary"
@@ -103,9 +102,9 @@
                 <h2 class="grade-course-title">{{ course.code }}: {{ course.name }}</h2>
                 <p class="grade-professor">{{ course.professor }}</p>
               </div>
-              <div class="overall-grade">
+              <div class="overall-grade" [ngStyle]="{'border': '3px solid ' + getGradeColor(course.overallGrade), 'border-radius': '12px', 'padding': '12px 16px', 'background-color': course.overallGrade >= 90 ? '#ECFDF5' : course.overallGrade >= 80 ? '#FEF3C7' : course.overallGrade >= 70 ? '#DBEAFE' : '#FEE2E2'}">
                 <p class="grade-label">Overall Grade</p>
-                <p class="grade-value" [ngClass]="getGradeColor(course.overallGrade)">
+                <p class="grade-value" [style.color]="getGradeTextColor(course.overallGrade)">
                   {{ course.overallGrade }}% ({{ getLetterGrade(course.overallGrade) }})
                 </p>
               </div>
@@ -114,15 +113,15 @@
               <div
                 class="assignment-item"
                 *ngFor="let assignment of course.assignments; let i = index"
-                [ngClass]="getItemColor(i)"
+                [ngStyle]="getGradeBoxStyle(assignment.grade)"
               >
                 <div class="assignment-header">
                   <p class="assignment-name">{{ assignment.name }}</p>
-                  <span class="assignment-grade" [ngClass]="getGradeColor(assignment.grade)"
+                  <span class="assignment-grade" [style.color]="getGradeTextColor(assignment.grade)"
                   >{{ assignment.grade }}%</span
                   >
                 </div>
-                <p class="assignment-feedback" *ngIf="assignment.feedback">
+                <p class="assignment-feedback" *ngIf="assignment.feedback" [style.color]="getGradeTextColor(assignment.grade)">
                   {{ assignment.feedback | slice : 0 : 80 }}
                   <span *ngIf="assignment.feedback.length > 80">...</span>
                 </p>
@@ -131,6 +130,7 @@
                   class="feedback-link"
                   href="javascript:void(0)"
                   (click)="viewFeedback(assignment)"
+                  [style.color]="getGradeColor(assignment.grade)"
                 >View Feedback</a
                 >
               </div>
