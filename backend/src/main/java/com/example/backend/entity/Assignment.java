@@ -35,6 +35,9 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment")
     private Set<AssignmentSubmission> submissions = new HashSet<>();
 
+    @Column(name = "assignment_path")
+    private String assignmentPath;
+
     public Assignment(Integer id, String title, String description, LocalDateTime dueDate,
                       Course course, Integer maxScore)
     {
@@ -108,6 +111,12 @@ public class Assignment {
     public void removeSubmission(AssignmentSubmission submission) {
         submissions.remove(submission);
         submission.setAssignment(null);
+    }
+    public String getAssignmentPath() {
+        return assignmentPath;
+    }
+    public void setAssignmentPath(String assignmentPath) {
+        this.assignmentPath = assignmentPath;
     }
 
 }
