@@ -227,9 +227,9 @@ public class TeachingAssistant {
         event.setTa(this);
     }
 
-    public void addMaterial(Material material) {
+    /* public void addMaterial(Material material) {
         material.setTaUploader(this);
         this.materials.add(material);
-    }
+    } */
 
 }
