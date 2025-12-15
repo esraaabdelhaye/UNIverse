@@ -61,6 +61,22 @@
               </select>
             </div>
 
+            <!-- Semester -->
+            <div style="margin-top: 12px; display: flex; gap: 12px;">
+              <div class="form-group" style="flex: 1; margin-top: 0;">
+                <label>Semester</label>
+                <select [(ngModel)]="selectedSemester" (change)="onSemesterChange()" class="form-control">
+                  <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 0 0 120px; margin-top: 0;">
+                <label>Year</label>
+                <select [(ngModel)]="selectedYear" (change)="onSemesterChange()" class="form-control">
+                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                </select>
+              </div>
+            </div>
+
             <!-- Constraint Form -->
             <div class="constraint-form"
               style="margin-top: 16px; border: 1px solid #E2E8F0; padding: 16px; border-radius: 8px; background: #F8FAFC;">
@@ -134,8 +150,7 @@
           <div class="card">
             <div class="timetable-header">
               <h2 class="card-title">
-                <span class="material-symbols-outlined">grid_view</span> Timetable ({{ selectedSemester }} - {{
-                selectedAcademicYear }})
+                <span class="material-symbols-outlined">grid_view</span> Timetable ( {{ selectedSemester }} {{selectedYear }} - {{selectedAcademicYear }} )
               </h2>
               <div class="timetable-actions">
                 <button class="btn-secondary" (click)="downloadTimetable()" *ngIf="isGenerated">
@@ -167,55 +182,43 @@
                   <tr *ngFor="let slot of generatedGrid">
                     <td class="time-cell">{{ slot.time }}</td>
                     <td [class.clickable]="slot.saturday && slot.saturday.length > 0">
-                      <div *ngFor="let course of slot.saturday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.saturday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>
                     </td>
                     <td [class.clickable]="slot.sunday && slot.sunday.length > 0">
-                      <div *ngFor="let course of slot.sunday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.sunday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>
                     </td>
                     <td [class.clickable]="slot.monday && slot.monday.length > 0">
-                      <div *ngFor="let course of slot.monday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.monday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>
                     </td>
                     <td [class.clickable]="slot.tuesday && slot.tuesday.length > 0">
-                      <div *ngFor="let course of slot.tuesday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.tuesday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>
                     </td>
                     <td [class.clickable]="slot.wednesday && slot.wednesday.length > 0">
-                      <div *ngFor="let course of slot.wednesday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.wednesday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>
                     </td>
                     <td [class.clickable]="slot.thursday && slot.thursday.length > 0">
-                      <div *ngFor="let course of slot.thursday" 
-                           (click)="onCellClick(course)" 
-                           [ngClass]="'class-slot ' + course.type"
-                           style="margin-bottom: 4px;">
+                      <div *ngFor="let course of slot.thursday" (click)="onCellClick(course)"
+                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
                         <p class="class-title">{{ course.courseCode }}</p>
                         <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
                       </div>

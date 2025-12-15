@@ -21,9 +21,11 @@ export interface PerformanceMetrics {
   courseApprovalRate: number;
   resourceConflictPercentage: number;
   systemUptimePercentage: number;
-  totalUsers: number;
+  totalStudents?: number;
+  totalFaculty?: number;
   activeCourses: number;
   pendingApprovals: number;
+  totalDepartments?: number;
   systemAlerts: string[];
 }
 

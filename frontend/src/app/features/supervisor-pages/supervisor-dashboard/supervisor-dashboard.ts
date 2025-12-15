@@ -77,10 +77,11 @@ export class SupervisorDashboard implements OnInit {
 
           // Build stats cards from metrics
           this.stats = [
-            { label: 'Total Users', value: metrics.totalUsers, icon: 'group', color: 'blue' },
+            { label: 'Total Students', value: metrics.totalStudents || 0, icon: 'groups', color: 'blue' },
+            { label: 'Total Faculty', value: metrics.totalFaculty || 0, icon: 'person', color: 'purple' },
             { label: 'Active Courses', value: metrics.activeCourses, icon: 'school', color: 'green' },
-            { label: 'Pending Approvals', value: metrics.pendingApprovals, icon: 'pending_actions', color: 'orange' },
-            { label: 'Publications', value: metrics.publicationsCount, icon: 'article', color: 'purple' },
+            { label: 'Departments', value: metrics.totalDepartments || 0, icon: 'corporate_fare', color: 'teal' },
+
           ];
 
           // Build alerts from system alerts
@@ -146,10 +147,10 @@ export class SupervisorDashboard implements OnInit {
         console.error('Failed to load performance metrics', err);
         // Use fallback data
         this.stats = [
-          { label: 'Total Users', value: 0, icon: 'group', color: 'blue' },
           { label: 'Active Courses', value: 0, icon: 'school', color: 'green' },
-          { label: 'Pending Approvals', value: 0, icon: 'pending_actions', color: 'orange' },
-          { label: 'Publications', value: 0, icon: 'article', color: 'purple' },
+          { label: 'Departments', value: 0, icon: 'corporate_fare', color: 'teal' },
+          { label: 'Total Students', value: 0, icon: 'groups', color: 'blue' },
+          { label: 'Total Faculty', value: 0, icon: 'person', color: 'purple' },
         ];
       }
     });

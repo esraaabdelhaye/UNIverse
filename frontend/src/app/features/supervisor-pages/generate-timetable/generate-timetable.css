@@ -165,13 +165,18 @@
 }
 
 .card {
-  background-color: #FFFFFF;
-  border-radius: 8px;
+  background: linear-gradient(to bottom, #FFFFFF 0%, #FAFBFC 100%);
+  border-radius: 12px;
   padding: 24px;
   border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
   height: 100%;
   overflow-y: auto;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Modal Styles */
@@ -415,18 +420,28 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background-color: #2563EB;
+  background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #1E40AF;
+  background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .timetable-header {
@@ -513,12 +528,15 @@
 }
 
 .timetable-table th {
-  padding: 12px;
-  background-color: #F9FAFB;
+  padding: 14px;
+  background: linear-gradient(to bottom, #F9FAFB 0%, #F1F5F9 100%);
   font-weight: 600;
-  color: #64748B;
+  color: #475569;
   text-align: left;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 2px solid #E2E8F0;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.05em;
 }
 
 .timetable-table td {
@@ -534,24 +552,32 @@
 }
 
 .class-slot {
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border-left: 4px solid;
   position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.class-slot:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .class-slot.primary {
-  background-color: #DBEAFE;
+  background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
   border-color: #2563EB;
 }
 
 .class-slot.accent {
-  background-color: #FEF3C7;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
   border-color: #F59E0B;
 }
 
 .class-slot.conflict {
-  background-color: #FEE2E2;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
   border-color: #EF4444;
 }
 

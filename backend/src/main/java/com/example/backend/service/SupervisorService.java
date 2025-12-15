@@ -18,6 +18,7 @@ import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Course;
 import com.example.backend.entity.Supervisor;
 import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
 import com.example.backend.repository.DoctorRepo;
 import com.example.backend.repository.StudentRepo;
 import com.example.backend.repository.SupervisorRepo;
@@ -30,17 +31,20 @@ public class SupervisorService {
     private final CourseRepo courseRepo;
     private final DoctorRepo doctorRepo;
     private final StudentRepo studentRepo;
+    private final DepartmentRepo departmentRepo;
 
     public SupervisorService(
             SupervisorRepo supervisorRepo,
             CourseRepo courseRepo,
             DoctorRepo doctorRepo,
-            StudentRepo studentRepo
+            StudentRepo studentRepo,
+            DepartmentRepo departmentRepo
     ) {
         this.supervisorRepo = supervisorRepo;
         this.courseRepo = courseRepo;
         this.doctorRepo = doctorRepo;
         this.studentRepo = studentRepo;
+        this.departmentRepo = departmentRepo;
     }
 
     // Get all supervisors with pagination
@@ -224,6 +228,7 @@ public class SupervisorService {
             long totalStudents = studentRepo.count();
             long totalDoctors = doctorRepo.count();
             long totalCourses = courseRepo.count();
+            long totalDepartments = departmentRepo.count();
             long activeCourses = courseRepo.findAll().stream()
                     .filter(c -> "Open".equalsIgnoreCase(c.getStatus()))
                     .count();
@@ -233,9 +238,11 @@ public class SupervisorService {
                     .filter(c -> c.getStatus() == null || "Pending".equalsIgnoreCase(c.getStatus()))
                     .count();
 
-            metrics.setTotalUsers((int) (totalStudents + totalDoctors));
+            metrics.setTotalStudents((int) totalStudents);
+            metrics.setTotalFaculty((int) totalDoctors);
             metrics.setActiveCourses((int) activeCourses);
             metrics.setPendingApprovals((int) pendingApprovals);
+            metrics.setTotalDepartments((int) totalDepartments);
 
             // Placeholder metrics (can be replaced with real calculations)
             metrics.setAvgStudentFeedback(4.2);

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { ScheduleService, Schedule, TimetableRequest } from '../../../core/services/schedule.service';
 import { CourseService } from '../../../core/services/course.service';
+import html2canvas from 'html2canvas';
 
 interface TimeSlot {
   time: string;
@@ -31,7 +32,8 @@ export class GenerateTimetable implements OnInit {
   private courseService = inject(CourseService);
 
   // Form inputs
-  selectedSemester: string = 'Fall 2024';
+  selectedSemester: string = 'Fall';
+  selectedYear: string = '2024';
   selectedAcademicYear: string = 'Year 1';
 
   // Data
@@ -49,7 +51,8 @@ export class GenerateTimetable implements OnInit {
   errorMessage: string = '';
 
   // Options
-  semesters: string[] = ['Fall 2024', 'Spring 2025'];
+  semesters: string[] = ['Fall', 'Spring'];
+  years: string[] = ['2024', '2025', '2026'];
   academicYears: string[] = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
   timeSlotsList = ['09:00', '10:00', '11:00', '12:00', '13:00']; // Limited to 5 slots (max capacity per day)
 
@@ -83,13 +86,13 @@ export class GenerateTimetable implements OnInit {
         } else if (Array.isArray(res.data)) {
           list = res.data;
         }
-        
+
         // Map DTO to component expected format
         this.availableCourses = list.map((c: any) => ({
-            ...c,
-            id: c.id,
-            name: c.courseTitle || c.name, // Ensure name is populated for dropdown display
-            code: c.courseCode
+          ...c,
+          id: c.id,
+          name: c.courseTitle || c.name, // Ensure name is populated for dropdown display
+          code: c.courseCode
         }));
       },
       error: (err: any) => console.error("Failed to fetch courses", err)
@@ -97,6 +100,10 @@ export class GenerateTimetable implements OnInit {
   }
 
   onYearChange() {
+    this.fetchSchedule();
+  }
+
+  onSemesterChange() {
     this.fetchSchedule();
   }
 
@@ -215,7 +222,7 @@ export class GenerateTimetable implements OnInit {
 
       const dayKey = slot.dayOfWeek.toLowerCase();
       console.log(`  Mapping ${slot.course?.courseCode} to row[${dayKey}] at time ${slot.startTime}`);
-      
+
       const courseData = {
         ...slot, // Keep full object for editing
         courseCode: slot.course.courseCode,
@@ -295,7 +302,29 @@ export class GenerateTimetable implements OnInit {
   }
 
   downloadTimetable() {
-    alert('Download feature coming soon.');
+    const timetableElement = document.querySelector('.timetable-view') as HTMLElement;
+
+    if (!timetableElement) {
+      alert('Timetable not found. Please generate a timetable first.');
+      return;
+    }
+
+    // Capture the timetable as image
+    html2canvas(timetableElement, {
+      scale: 2,  // Higher quality
+      backgroundColor: '#ffffff',
+      logging: false,
+      useCORS: true
+    }).then(canvas => {
+      // Convert to image and download
+      const link = document.createElement('a');
+      link.download = `timetable-${this.selectedSemester.replace(/\s+/g, '-')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(error => {
+      console.error('Error generating timetable image:', error);
+      alert('Failed to download timetable. Please try again.');
+    });
   }
 
   logout(): void {
