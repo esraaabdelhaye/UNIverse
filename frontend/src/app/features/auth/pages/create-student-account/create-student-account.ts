@@ -187,10 +187,12 @@ export class CreateStudentAccount implements AfterViewInit, OnDestroy {
 
       const signupData: RegisterStudentRequest = {
         fullName: formValue.fullName,
-        studentEmail: formValue.email,
+        email: formValue.email,
         studentId: formValue.academicId,
         dateOfBirth: formValue.dob,
         phone: formValue.phoneNumber,
+        password: formValue.password,
+        academicId: formValue.academicId,
       };
 
       this.authService.registerStudent(signupData).subscribe({

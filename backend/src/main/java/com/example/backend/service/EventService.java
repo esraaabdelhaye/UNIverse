@@ -4,6 +4,7 @@ import com.example.backend.dto.DoctorDTO;
 import com.example.backend.dto.EventDTO;
 import com.example.backend.dto.PostAuthor;
 import com.example.backend.dto.SupervisorDTO;
+import com.example.backend.dto.EventAuthor ;
 import com.example.backend.dto.request.CreateEventRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Doctor;
@@ -41,7 +42,7 @@ public class EventService {
     /**
      * Main entry point for creating an event
      */
-    public ApiResponse<EventDTO> createEvent(PostAuthor author, CreateEventRequest request) {
+    public ApiResponse<EventDTO> createEvent(EventAuthor author, CreateEventRequest request) {
         if (author instanceof DoctorDTO doctorDTO) {
             return createEventForDoctor(doctorDTO, request);
         }
@@ -99,7 +100,7 @@ public class EventService {
     /**
      * Event Modification methods
      */
-    public ApiResponse<EventDTO> updateEvent(PostAuthor author, EventDTO eventDTO) {
+    public ApiResponse<EventDTO> updateEvent(EventAuthor author, EventDTO eventDTO) {
         try {
             Long eventId = Long.parseLong(eventDTO.getEventId());
             Optional<Event> eventOpt = eventRepo.findById(eventId);
@@ -141,7 +142,7 @@ public class EventService {
     /**
      * Event deletion methods
      */
-    public ApiResponse<EventDTO> deleteEvent(PostAuthor author, EventDTO eventDTO) {
+    public ApiResponse<EventDTO> deleteEvent(EventAuthor author, EventDTO eventDTO) {
         try {
             Optional<Event> eventOpt = eventRepo.findById(Long.parseLong(eventDTO.getEventId()));
             if (eventOpt.isEmpty()) return ApiResponse.badRequest("Event not found");
@@ -189,7 +190,7 @@ public class EventService {
         }
     }
 
-    public ApiResponse<List<EventDTO>> getEventsByAuthor(PostAuthor author, int page, int pageSize) {
+    public ApiResponse<List<EventDTO>> getEventsByAuthor(EventAuthor author, int page, int pageSize) {
         try {
             List<Event> events;
 
@@ -280,7 +281,7 @@ public class EventService {
         return event;
     }
 
-    private ApiResponse<Void> verifyEventOwnership(PostAuthor author, Event event) {
+    private ApiResponse<Void> verifyEventOwnership(EventAuthor author, Event event) {
         try {
             if (author instanceof DoctorDTO doctorDTO) {
                 Long requesterId = Long.parseLong(doctorDTO.getDoctorId());

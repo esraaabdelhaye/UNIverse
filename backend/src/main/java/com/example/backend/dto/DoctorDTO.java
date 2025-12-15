@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorDTO implements  PostAuthor, AnnouncementAuthor, PollAuthor {
+public class DoctorDTO implements  PostAuthor, AnnouncementAuthor, PollAuthor, EventAuthor {
     private String doctorId;
     private String fullName;
     private String email;

@@ -54,11 +54,7 @@ export class AuthService {
     return this.http.post<RegisterStudentRequest>(
       `${this.baseUrl}/students`,
       {
-        fullName: data.fullName,
-        studentEmail: data.studentEmail,
-        studentId: data.studentId,
-        dateOfBirth: data.dateOfBirth,
-        phone: data.phone,
+        ...data
       },
 
       { withCredentials: true }

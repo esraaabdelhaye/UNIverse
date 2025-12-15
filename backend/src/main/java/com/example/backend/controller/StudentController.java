@@ -45,15 +45,9 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@RequestBody StudentDTO studentDTO , HttpServletRequest request, HttpServletResponse res) {
-        RegisterStudentRequest createStudentReq = new RegisterStudentRequest(
-                studentDTO.getFullName(),
-                studentDTO.getEmail(),
-                studentDTO.getStudentId(),
-                LocalDate.now(),
-                studentDTO.getPhoneNumber()
-        );
-        ApiResponse<StudentDTO> response = studentService.registerStudent(createStudentReq,request,res);
+    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@RequestBody RegisterStudentRequest registerStudentRequest , HttpServletRequest request, HttpServletResponse res) {
+
+        ApiResponse<StudentDTO> response = studentService.registerStudent(registerStudentRequest,request,res);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

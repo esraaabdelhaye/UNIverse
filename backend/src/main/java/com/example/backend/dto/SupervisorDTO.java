@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupervisorDTO implements PostAuthor , AnnouncementAuthor, PollAuthor {
+public class SupervisorDTO implements PostAuthor , AnnouncementAuthor, PollAuthor,EventAuthor {
     private String employeeId;
     private String fullName;
     private String email;
