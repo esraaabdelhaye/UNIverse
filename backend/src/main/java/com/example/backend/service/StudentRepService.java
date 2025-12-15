@@ -1,20 +1,43 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.AssignmentDTO;
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.GradeDTO;
-import com.example.backend.dto.StudentRepresentativeDTO;
-import com.example.backend.dto.request.*;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import com.example.backend.dto.AssignmentDTO;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.GradeDTO;
+import com.example.backend.dto.StudentRepresentativeDTO;
+import com.example.backend.dto.request.CreateAnnouncementRequest;
+import com.example.backend.dto.request.CreatePollRequest;
+import com.example.backend.dto.request.CreatePostRequest;
+import com.example.backend.dto.request.CreateStudentGroupRequest;
+import com.example.backend.dto.request.RegisterStudentRepRequest;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Announcement;
+import com.example.backend.entity.Assignment;
+import com.example.backend.entity.AssignmentSubmission;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.Department;
+import com.example.backend.entity.Poll;
+import com.example.backend.entity.PollOption;
+import com.example.backend.entity.Post;
+import com.example.backend.entity.StudentGroup;
+import com.example.backend.entity.StudentRepresentative;
+import com.example.backend.repository.AnnouncementRepo;
+import com.example.backend.repository.AssignmentSubmissionRepo;
+import com.example.backend.repository.CourseEnrollmentRepo;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
+import com.example.backend.repository.PollOptionRepo;
+import com.example.backend.repository.PollRepo;
+import com.example.backend.repository.PostRepo;
+import com.example.backend.repository.StudentGroupRepo;
+import com.example.backend.repository.StudentRepresentativeRepo;
 
 // Note that Rep is at the end just a Student
 // so we can easily reuse student methods with
@@ -366,7 +389,7 @@ public class StudentRepService {
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
         dto.setDescription(course.getDescription());
-        dto.setCourseId(String.valueOf(course.getId()));
+        dto.setId(course.getId());
         return dto;
     }
 

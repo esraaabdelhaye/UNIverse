@@ -2,35 +2,35 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import { SupervisorService, PerformanceMetrics } from '../../../core/services/supervisor.service';
+import { DoctorService, FacultyItem } from '../../../core/services/doctor.service';
 
 interface StatCard {
   label: string;
   value: number;
   icon: string;
-  color: 'blue' | 'green' | 'yellow' | 'red';
+  color: string;
 }
 
 interface Alert {
+  type: 'warning' | 'info' | 'success';
   title: string;
   text: string;
-  type: 'blue' | 'yellow' | 'red' | 'gray';
-  actionText?: string;
-  actionLink?: string;
+  actionText: string;
+  actionRoute?: string;
 }
 
-interface FacultyItem {
-  id: string;
+interface FacultyChange {
   name: string;
   role: string;
   avatar: string;
-  recentAction?: string;
+  id?: string;
 }
 
 interface PerformanceItem {
-  id: string;
   title: string;
   description: string;
-  downloadUrl?: string;
+  reportType?: string;
 }
 
 @Component({
@@ -43,111 +43,150 @@ interface PerformanceItem {
 export class SupervisorDashboard implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private supervisorService = inject(SupervisorService);
+  private doctorService = inject(DoctorService);
 
-  Math = Math;
+  // Stats cards
+  stats: StatCard[] = [];
 
-  // Statistics
-  stats: StatCard[] = [
-    {
-      label: 'Total Users',
-      value: 1254,
-      icon: 'group',
-      color: 'blue',
-    },
-    {
-      label: 'Active Courses',
-      value: 86,
-      icon: 'school',
-      color: 'green',
-    },
-    {
-      label: 'Pending Approvals',
-      value: 12,
-      icon: 'pending_actions',
-      color: 'yellow',
-    },
-    {
-      label: 'System Alerts',
-      value: 3,
-      icon: 'error',
-      color: 'red',
-    },
-  ];
+  // Alerts
+  courseAlerts: Alert[] = [];
+  timetableAlerts: Alert[] = [];
 
-  // Course Availability Alerts
-  courseAlerts: Alert[] = [
-    {
-      title: 'Upcoming Course Closures',
-      text: 'CS400 (Advanced AI) closing for enrollment in 3 days.',
-      type: 'blue',
-      actionText: 'Review Details',
-    },
-    {
-      title: 'Course Capacity Alert',
-      text: 'MATH201 (Calculus II) is 90% full. Consider adding another section.',
-      type: 'yellow',
-      actionText: 'Adjust Capacity',
-    },
-  ];
+  // Faculty
+  recentFacultyChanges: FacultyChange[] = [];
 
-  // Timetable Alerts
-  timetableAlerts: Alert[] = [
-    {
-      title: 'Timetable Conflicts (2)',
-      text: 'CS101 & ENG203 clash on Mon 10 AM. Dr. Evans double-booked.',
-      type: 'red',
-      actionText: 'Resolve Conflicts',
-    },
-    {
-      title: 'Last Generated: Oct 26, 2023',
-      text: 'Current timetable is active for Fall Semester.',
-      type: 'gray',
-      actionText: 'View Current Timetable',
-    },
-  ];
+  // Performance
+  performanceMetrics: PerformanceItem[] = [];
 
-  // Faculty List
-  recentFacultyChanges: FacultyItem[] = [
-    {
-      id: '1',
-      name: 'Alice Johnson',
-      role: 'Senior Lecturer - Recently Promoted',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuB3YHbEbU8SfmFn-oiqCV9_9rifN3FvAKK74-w9szwjG03WDWaZxLHLEt5ulxW4Iw6geddE7lDpg_wOUw0ZqPZMC8eFGLDRa5nl6Z8By1PyDy4uW6VtUGsrxQIwn6JHVgczTcJFMVjA13g56JGKU0xnwLHSCCekH3RagiV_GWlkWSSvE8DD86sOKb_Mtgf21I_RFzDelsA-LFCJMvNq0LRhANlqvShCpm3ofkCw66SFJjx0eZB13uoUgPad_7TmrkZ36pL4B8oG_wc',
-      recentAction: 'Recently Promoted',
-    },
-    {
-      id: '2',
-      name: 'Dr. Jane Smith',
-      role: 'Professor - Updated Course HIS450',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuBjNVIwYogETpglvkEd7kd4IK1K9-HPRNlkOroRXJaVZAv_Oxkr_flu4Oukr96laOwcdk0IardreU7Nw0DRGA4hyFZqrw2oklKovs9QaMzczv58zvToVUEkJR-BLly6VCWvf6XdifTblP-cki6h9MeI4IhtaKAapwoUL2mg4XHPX8L8OOrpKpUz_Rui88Te6_WWBWKph57tSD8S80N27dMPl1XkCzR5QruN3VqnEqVlMTHL-oBBCuyop1DFVx_vXZLpqS21JdDCXhU',
-      recentAction: 'Updated Course HIS450',
-    },
-  ];
-
-  // Performance Metrics
-  performanceMetrics: PerformanceItem[] = [
-    {
-      id: '1',
-      title: 'Q3 Student Feedback Report',
-      description: 'Overall satisfaction at 85%.',
-      downloadUrl: '/reports/q3-feedback.pdf',
-    },
-    {
-      id: '2',
-      title: 'Faculty Publication Rates',
-      description: 'Average 2.3 publications per faculty this year.',
-      downloadUrl: '/reports/publications.pdf',
-    },
-  ];
+  isLoading: boolean = false;
 
   ngOnInit(): void {
     this.loadDashboardData();
   }
 
   loadDashboardData(): void {
-    console.log('Loading dashboard data...');
+    this.isLoading = true;
+
+    // Load performance metrics
+    this.supervisorService.getSystemPerformance().subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+        if (res.data) {
+          const metrics: PerformanceMetrics = res.data;
+
+          // Build stats cards from metrics
+          this.stats = [
+            { label: 'Total Users', value: metrics.totalUsers, icon: 'group', color: 'blue' },
+            { label: 'Active Courses', value: metrics.activeCourses, icon: 'school', color: 'green' },
+            { label: 'Pending Approvals', value: metrics.pendingApprovals, icon: 'pending_actions', color: 'orange' },
+            { label: 'Publications', value: metrics.publicationsCount, icon: 'article', color: 'purple' },
+          ];
+
+          // Build alerts from system alerts
+          this.courseAlerts = [];
+          this.timetableAlerts = [];
+
+          if (metrics.pendingApprovals > 0) {
+            this.courseAlerts.push({
+              type: 'warning',
+              title: 'Pending Course Approvals',
+              text: `${metrics.pendingApprovals} course(s) require your approval.`,
+              actionText: 'Review Now',
+              actionRoute: '/supervisor-dashboard/course-availability'
+            });
+          }
+
+          if (metrics.activeCourses === 0) {
+            this.courseAlerts.push({
+              type: 'info',
+              title: 'No Active Courses',
+              text: 'There are no active courses for this semester.',
+              actionText: 'Add Course',
+              actionRoute: '/supervisor-dashboard/course-availability'
+            });
+          } else {
+            this.courseAlerts.push({
+              type: 'success',
+              title: 'Courses Active',
+              text: `${metrics.activeCourses} course(s) are currently running.`,
+              actionText: 'View All',
+              actionRoute: '/supervisor-dashboard/course-availability'
+            });
+          }
+
+          this.timetableAlerts.push({
+            type: 'info',
+            title: 'Timetable Status',
+            text: `Average generation time: ${metrics.timetableGenerationTime || 'N/A'}`,
+            actionText: 'Generate New',
+            actionRoute: '/supervisor-dashboard/generate-timetable'
+          });
+
+          if (metrics.resourceConflictPercentage > 0) {
+            this.timetableAlerts.push({
+              type: 'warning',
+              title: 'Resource Conflicts',
+              text: `${metrics.resourceConflictPercentage}% of slots have conflicts.`,
+              actionText: 'Resolve',
+              actionRoute: '/supervisor-dashboard/generate-timetable'
+            });
+          }
+
+          // Build performance metrics list
+          this.performanceMetrics = [
+            { title: 'Student Feedback Report', description: `Avg Rating: ${metrics.avgStudentFeedback?.toFixed(1) || 'N/A'}/5`, reportType: 'feedback' },
+            { title: 'Course Success Rate', description: `${metrics.courseSuccessRate?.toFixed(1) || 'N/A'}% completion`, reportType: 'success' },
+            { title: 'System Uptime', description: `${metrics.systemUptimePercentage?.toFixed(2) || 'N/A'}% uptime`, reportType: 'uptime' },
+          ];
+        }
+      },
+      error: (err: any) => {
+        this.isLoading = false;
+        console.error('Failed to load performance metrics', err);
+        // Use fallback data
+        this.stats = [
+          { label: 'Total Users', value: 0, icon: 'group', color: 'blue' },
+          { label: 'Active Courses', value: 0, icon: 'school', color: 'green' },
+          { label: 'Pending Approvals', value: 0, icon: 'pending_actions', color: 'orange' },
+          { label: 'Publications', value: 0, icon: 'article', color: 'purple' },
+        ];
+      }
+    });
+
+    // Load recent faculty
+    this.doctorService.getAllDoctors(0, 3).subscribe({
+      next: (res: any) => {
+        let doctors: FacultyItem[] = [];
+        if (res.data && res.data.content) {
+          doctors = res.data.content;
+        } else if (Array.isArray(res.data)) {
+          doctors = res.data.slice(0, 3);
+        }
+
+        this.recentFacultyChanges = doctors.map((dto: FacultyItem) => ({
+          name: dto.fullName,
+          role: dto.specialization || 'Faculty',
+          avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(dto.fullName) + '&background=random',
+          id: dto.doctorId
+        }));
+      },
+      error: (err: any) => console.error('Failed to load faculty', err)
+    });
+  }
+
+  getStatIconClass(color: string): string {
+    return `stat-icon stat-icon-${color}`;
+  }
+
+  getAlertClass(type: string): string {
+    return `alert alert-${type}`;
+  }
+
+  handleAlertAction(alert: Alert): void {
+    if (alert.actionRoute) {
+      this.router.navigate([alert.actionRoute]);
+    }
   }
 
   viewAllCourses(): void {
@@ -158,106 +197,20 @@ export class SupervisorDashboard implements OnInit {
     this.router.navigate(['/supervisor-dashboard/generate-timetable']);
   }
 
+  viewFacultyDetails(faculty: FacultyChange): void {
+    this.router.navigate(['/supervisor-dashboard/manage-faculty']);
+  }
+
   viewAllFaculty(): void {
     this.router.navigate(['/supervisor-dashboard/manage-faculty']);
   }
 
-  viewFacultyDetails(faculty: FacultyItem): void {
-    console.log('Viewing faculty details for:', faculty.name);
-    this.router.navigate(['/supervisor-dashboard/manage-faculty'], {
-      queryParams: { id: faculty.id },
-    });
-  }
-
-  accessPerformanceReports(): void {
-    console.log('Accessing performance reports');
-  }
-
   downloadReport(performance: PerformanceItem): void {
-    console.log('Downloading report:', performance.title);
-    if (performance.downloadUrl) {
-      window.open(performance.downloadUrl, '_blank');
-    } else {
-      alert(`Report: ${performance.title}\n\n${performance.description}`);
-    }
-  }
-
-  refreshDashboard(): void {
-    console.log('Refreshing dashboard');
-    this.loadDashboardData();
-    alert('Dashboard refreshed successfully!');
-  }
-
-  handleAlertAction(alert: Alert): void {
-    switch (alert.title) {
-      case 'Upcoming Course Closures':
-        this.reviewCourseDetails(alert);
-        break;
-      case 'Course Capacity Alert':
-        this.adjustCapacity(alert);
-        break;
-      case 'Timetable Conflicts (2)':
-        this.resolveConflicts(alert);
-        break;
-      case 'Last Generated: Oct 26, 2023':
-        this.viewCurrentTimetable(alert);
-        break;
-      default:
-        console.log('Alert action not mapped:', alert.title);
-    }
-  }
-
-  reviewCourseDetails(alert: Alert): void {
-    this.router.navigate(['/supervisor-dashboard/course-availability']);
-    console.log('Reviewing course details');
-  }
-
-  adjustCapacity(alert: Alert): void {
-    this.router.navigate(['/supervisor-dashboard/course-availability']);
-    console.log('Adjusting capacity for course');
-  }
-
-  resolveConflicts(alert: Alert): void {
-    this.router.navigate(['/supervisor-dashboard/generate-timetable']);
-    console.log('Resolving timetable conflicts');
-  }
-
-  viewCurrentTimetable(alert: Alert): void {
-    this.router.navigate(['/supervisor-dashboard/generate-timetable']);
-    console.log('Viewing current timetable');
+    alert(`Downloading ${performance.title}...`);
   }
 
   exportDashboardData(): void {
-    console.log('Exporting dashboard data...');
-    let exportData = 'SUPERVISOR DASHBOARD EXPORT\n';
-    exportData += '='.repeat(50) + '\n\n';
-
-    exportData += 'STATISTICS\n';
-    this.stats.forEach(stat => {
-      exportData += `${stat.label}: ${stat.value}\n`;
-    });
-
-    exportData += '\nCOURSE ALERTS\n';
-    this.courseAlerts.forEach(alert => {
-      exportData += `${alert.title}: ${alert.text}\n`;
-    });
-
-    const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData));
-    element.setAttribute('download', 'dashboard-export.txt');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    alert('Dashboard data exported successfully!');
-  }
-
-  getStatIconClass(color: string): string {
-    return `stat-icon ${color}`;
-  }
-
-  getAlertClass(type: string): string {
-    return `alert alert-${type}`;
+    alert('Exporting dashboard data...');
   }
 
   logout(): void {

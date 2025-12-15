@@ -1,5 +1,7 @@
 package com.example.backend.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,31 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-/**
- * Provides a PasswordEncoder bean for hashing passwords.
- *
- * BCrypt is a secure one-way hashing algorithm that:
- *  - automatically adds a random salt to each password
- *  - produces different hashes even for the same password
- *  - cannot be reversed (one-way)
- *
- * Use this bean to:
- *  passwordEncoder.encode(rawPassword);   // hash before saving
- *  passwordEncoder.matches(raw, stored);  // check during login
- */
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.Arrays;
-import org.springframework.security.config.Customizer;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SecurityConfig {
 
@@ -78,6 +60,10 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         // Allow creating students
                         .requestMatchers("/students").permitAll()
+                        .requestMatchers("/api/courses/**").permitAll()
+                        .requestMatchers("/api/doctors/**").permitAll()
+                        .requestMatchers("/supervisors/**").permitAll()
+                        .requestMatchers("/api/schedule/**").permitAll()
                         .requestMatchers("/api/files/download/**").authenticated()
                         .requestMatchers("/api/files/view/**").authenticated()
                         .requestMatchers("/api/files/upload/**").authenticated()
@@ -102,7 +88,7 @@ public class SecurityConfig {
                 registry.addMapping("/**")
                         // allow Angular and Insomnia
                         .allowedOrigins("http://localhost:4200", "http://localhost:9000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowCredentials(true)
                         .allowedHeaders("*");
             }
@@ -112,6 +98,23 @@ public class SecurityConfig {
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new HttpSessionSecurityContextRepository();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200")); 
+        
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "*"));
+        
+        configuration.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

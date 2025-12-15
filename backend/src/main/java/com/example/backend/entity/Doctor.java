@@ -1,13 +1,29 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "doctor_type", discriminatorType = DiscriminatorType.STRING)
 public class Doctor {
@@ -40,14 +56,18 @@ public class Doctor {
     @Column(name = "hashed_password", nullable = false , length = 100)
     private String hashedPassword ;
 
+    @Column(name = "status", length = 20)
+    private String status = "Active";
+
+
     // Linking tables
-    // Link to courses (simple relation for now)
     @ManyToMany
     @JoinTable(
             name = "doctor_course",
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Course> courses = new HashSet<>();
 
 
@@ -57,16 +77,20 @@ public class Doctor {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(mappedBy = "doctorAuthor")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Announcement> announcements = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "doctor")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Event> events = new ArrayList<>();
 
     @OneToMany(mappedBy = "doctorUploader")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Material> materials = new ArrayList<>();
 
     public Doctor() {}
@@ -214,5 +238,13 @@ public class Doctor {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

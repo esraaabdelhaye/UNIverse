@@ -1,14 +1,24 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @DiscriminatorValue("SUPERVISOR") // Single table inheritance marker
 public class Supervisor extends Doctor {
 
@@ -38,6 +48,7 @@ public class Supervisor extends Doctor {
     private Set<Course> coordinatedCourses = new HashSet<>();
 
     @OneToOne(mappedBy = "coordinator")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"coordinator", "department"})
     private Department CoordinatedDepartment;
 
     // Relation with announcement

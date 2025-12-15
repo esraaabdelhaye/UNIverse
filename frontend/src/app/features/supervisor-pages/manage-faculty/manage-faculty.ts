@@ -3,8 +3,9 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { DoctorService, FacultyItem } from '../../../core/services/doctor.service';
 
-interface FacultyMember {
+interface FacultyDisplayItem {
   id: string;
   name: string;
   email: string;
@@ -12,14 +13,8 @@ interface FacultyMember {
   department: string;
   position: string;
   courseCount: number;
-  status: 'Active' | 'Inactive' | 'On Leave';
+  status: string;
   avatar: string;
-}
-
-interface PaginationInfo {
-  currentPage: number;
-  pageSize: number;
-  totalItems: number;
 }
 
 @Component({
@@ -32,120 +27,102 @@ interface PaginationInfo {
 export class ManageFaculty implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private doctorService = inject(DoctorService);
 
-  facultyMembers: FacultyMember[] = [
-    {
-      id: '1',
-      name: 'Dr. Jane Smith',
-      email: 'jsmith@universe.edu',
-      employeeId: 'EMP45678',
-      department: 'History',
-      position: 'Professor',
-      courseCount: 3,
-      status: 'Active',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuBjNVIwYogETpglvkEd7kd4IK1K9-HPRNlkOroRXJaVZAv_Oxkr_flu4Oukr96laOwcdk0IardreU7Nw0DRGA4hyFZqrw2oklKovs9QaMzczv58zvToVUEkJR-BLly6VCWvf6XdifTblP-cki6h9MeI4IhtaKAapwoUL2mg4XHPX8L8OOrpKpUz_Rui88Te6_WWBWKph57tSD8S80N27dMPl1XkCzR5QruN3VqnEqVlMTHL-oBBCuyop1DFVx_vXZLpqS21JdDCXhU',
-    },
-    {
-      id: '2',
-      name: 'Dr. Robert Downy',
-      email: 'rdowny@universe.edu',
-      employeeId: 'EMP12345',
-      department: 'Computer Science',
-      position: 'Associate Professor',
-      courseCount: 4,
-      status: 'Active',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuB3YHbEbU8SfmFn-oiqCV9_9rifN3FvAKK74-w9szwjG03WDWaZxLHLEt5ulxW4Iw6geddE7lDpg_wOUw0ZqPZMC8eFGLDRa5nl6Z8By1PyDy4uW6VtUGsrxQIwn6JHVgczTcJFMVjA13g56JGKU0xnwLHSCCekH3RagiV_GWlkWSSvE8DD86sOKb_Mtgf21I_RFzDelsA-LFCJMvNq0LRhANlqvShCpm3ofkCw66SFJjx0eZB13uoUgPad_7TmrkZ36pL4B8oG_wc',
-    },
-    {
-      id: '3',
-      name: 'Alice Johnson',
-      email: 'ajohnson@universe.edu',
-      employeeId: 'EMP91011',
-      department: 'Mathematics',
-      position: 'Lecturer',
-      courseCount: 2,
-      status: 'Inactive',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAQYnUQkkLVgRasdG2jShDmaGSmxmKaZxWaODLOORMmJad27MJI2eznDU_8goc9ENNT07WfQQLhfOoJz78EfsRexVhZVwofkLVthNvUDPsY0UGJ_Zd-sKG0z_Iz30OFTO2tXa6wXGbvyb3U2ow8Vg7BjGLhmB9oJiYNelkDIowVBze473F68tXd1-HcWxcmLPuXt_WyvGEawSh-URY-Mne1RptdSJnibxb6Ke4CYpb73LRtCIKzGQ-nHykjK-vLbNq0TwwEagb7_LQ',
-    },
-    {
-      id: '4',
-      name: 'Michael Chen',
-      email: 'mchen@universe.edu',
-      employeeId: 'EMP12131',
-      department: 'Computer Science',
-      position: 'Teaching Assistant',
-      courseCount: 5,
-      status: 'Active',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuACKLE-qZUd1bqas4x8BUBex-goyY-X4PVm5dlYvjACscg4DFj3Ads23iuo8vu_XATO-0mx8dydToMsaLhN8nLw6uFGpWaJ5p_HdRc5yZLd8s1OAYIusAMHU42bxp9_TXhCzbVfXxknjVyBDC7Xt38xIUA0H2vYSFIIcbPCkp1-ycTY_Y-ibtHktY9TJS_pdJY37TeStiaLBpaX0EnAIh5MflM7rYZzkrNaP-Z-JzD7ABZO47xpghDCE_PK1Zd2RMapCvVpoLnTTaU',
-    },
-    {
-      id: '5',
-      name: 'Dr. Emily White',
-      email: 'ewhite@universe.edu',
-      employeeId: 'EMP41516',
-      department: 'History',
-      position: 'Senior Lecturer',
-      courseCount: 3,
-      status: 'On Leave',
-      avatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuB3O896A0bUMf3i4mDiLfIQZsbfm1BhFmIKAhLBgtkiKuhVyfZEJat_BAtxOG1OLtN_BiRp65KHrrRnG5S1EvlAoW_Fe6PC2tvV88azn2ARi6YzaKK6D3BX8GmdVzxas10NAatkHJGM4GkaL3x8tBCs-epMKmwMU5xyJAlp6VVby0vK7wNwlI4BP5wpiLWKBY5PW0a1mAEFRphetl3A0Io0alLSWBFfOXqi3p6uCpMENmw_TU3pWqT5PUCAxoY3Iz21Ozb1QOqG9sU',
-    },
-  ];
+  // Data
+  facultyMembers: FacultyDisplayItem[] = [];
+  filteredFaculty: FacultyDisplayItem[] = [];
 
-  filteredFaculty: FacultyMember[] = [];
+  // Filters
   searchTerm: string = '';
-  selectedDepartment: string = 'Department';
-  selectedPosition: string = 'Position';
+  selectedDepartment: string = 'All Departments';
+  selectedPosition: string = 'All Positions';
 
-  pagination: PaginationInfo = {
+  // Dropdown Options
+  departments: string[] = ['All Departments', 'Computer Science', 'Mathematics', 'Physics', 'History'];
+  positions: string[] = ['All Positions', 'Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer'];
+
+  // Pagination
+  pagination = {
     currentPage: 1,
-    pageSize: 5,
-    totalItems: 25,
+    pageSize: 10,
+    totalItems: 0,
   };
 
-  departments: string[] = [
-    'Department',
-    'Computer Science',
-    'History',
-    'Mathematics',
-  ];
+  // Modal State
+  isModalOpen: boolean = false;
+  isEditMode: boolean = false;
+  currentFaculty: any = this.getEmptyFaculty();
 
-  positions: string[] = [
-    'Position',
-    'Professor',
-    'Associate Professor',
-    'Lecturer',
-    'Teaching Assistant',
-    'Senior Lecturer',
-  ];
+  isLoading: boolean = false;
 
   ngOnInit(): void {
-    this.applyFilters();
+    this.loadFaculty();
+  }
+
+  loadFaculty(): void {
+    this.isLoading = true;
+    this.doctorService.getAllDoctors(this.pagination.currentPage - 1, this.pagination.pageSize).subscribe({
+      next: (res: any) => {
+        console.log('📥 Full Response:', res); // DEBUG
+        this.isLoading = false;
+        let doctors: FacultyItem[] = [];
+        if (res.data && res.data.content) {
+          console.log('✅ Using res.data.content'); // DEBUG
+          doctors = res.data.content;
+          this.pagination.totalItems = res.data.totalElements;
+        } else if (Array.isArray(res.data)) {
+          console.log('✅ Using res.data (array)'); // DEBUG
+          doctors = res.data;
+          this.pagination.totalItems = res.data.length;
+        } else {
+          console.log('⚠️ Unknown response format'); // DEBUG
+        }
+
+        console.log('👥 Doctors array:', doctors); // DEBUG
+
+        // Map DTO to display model
+        this.facultyMembers = doctors.map((dto: FacultyItem) => ({
+          id: dto.doctorId,
+          name: dto.fullName,
+          email: dto.email,
+          employeeId: dto.doctorId,
+          department: dto.department || 'Not Assigned',
+          position: dto.specialization || 'Faculty',
+          courseCount: dto.courseCount || 0,
+          status: dto.active ? 'Active' : 'Inactive',
+          avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(dto.fullName) + '&background=random'
+        }));
+
+        console.log('✅ Faculty Members:', this.facultyMembers); // DEBUG
+
+        this.applyFilters();
+      },
+      error: (err: any) => {
+        this.isLoading = false;
+        console.error('Failed to load faculty', err);
+      }
+    });
   }
 
   applyFilters(): void {
     this.filteredFaculty = this.facultyMembers.filter((faculty) => {
       const matchesSearch =
-        faculty.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        faculty.employeeId
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase()) ||
-        faculty.email.toLowerCase().includes(this.searchTerm.toLowerCase());
+        (faculty.name || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (faculty.employeeId || '').toLowerCase().includes(this.searchTerm.toLowerCase());
 
       const matchesDepartment =
-        this.selectedDepartment === 'Department' ||
+        this.selectedDepartment === 'All Departments' ||
         faculty.department === this.selectedDepartment;
 
       const matchesPosition =
-        this.selectedPosition === 'Position' ||
+        this.selectedPosition === 'All Positions' ||
         faculty.position === this.selectedPosition;
 
       return matchesSearch && matchesDepartment && matchesPosition;
     });
+    
+    console.log('🔍 Filtered Faculty Count:', this.filteredFaculty.length); // DEBUG
   }
 
   onSearchChange(): void {
@@ -156,78 +133,211 @@ export class ManageFaculty implements OnInit {
     this.applyFilters();
   }
 
-  addFaculty(): void {
-    console.log('Add faculty clicked');
-    // Implement add faculty logic - navigate to add faculty form
+  // Modal Operations
+  getEmptyFaculty(): any {
+    return {
+      doctorId: '',
+      fullName: '',
+      email: '',
+      phoneNumber: '',
+      department: 'Computer Science',
+      specialization: 'Professor',
+      officeLocation: '',
+      qualifications: '',
+      password: ''
+    };
   }
 
-  editFaculty(faculty: FacultyMember): void {
-    console.log('Edit faculty:', faculty.name);
-    // Implement edit faculty logic
+  openAddModal(): void {
+    this.isEditMode = false;
+    this.currentFaculty = this.getEmptyFaculty();
+    this.isModalOpen = true;
   }
 
-  viewMore(faculty: FacultyMember): void {
-    console.log('Show more options for:', faculty.name);
-    // Implement context menu or modal for more actions
+  openEditModal(faculty: FacultyDisplayItem): void {
+    if (!faculty || !faculty.id) {
+      alert('Invalid faculty member');
+      return;
+    }
+    this.isEditMode = true;
+    this.currentFaculty = {
+      doctorId: faculty.id,
+      fullName: faculty.name,
+      email: faculty.email,
+      phoneNumber: faculty.employeeId,
+      department: faculty.department || 'Computer Science',
+      specialization: faculty.position || 'Professor',
+      officeLocation: '',
+      qualifications: '',
+      password: '' // Not used in edit mode
+    };
+    this.isModalOpen = true;
   }
 
-  editFacultyDetails(faculty: FacultyMember): void {
-    console.log('Opening edit details modal for:', faculty.name);
-    // Implement edit details logic
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.currentFaculty = this.getEmptyFaculty();
   }
 
-  assignCourses(faculty: FacultyMember): void {
-    console.log('Assigning courses to:', faculty.name);
-    // Implement course assignment logic
-  }
+  saveFaculty(): void {
+    // Validation
+    if (!this.currentFaculty.fullName || !this.currentFaculty.email) {
+      alert('Please fill in required fields (Name and Email)');
+      return;
+    }
 
-  viewPerformance(faculty: FacultyMember): void {
-    console.log('Viewing performance for:', faculty.name);
-    // Implement performance view logic
-  }
+    if (!this.isEditMode && !this.currentFaculty.password) {
+      alert('Password is required for new faculty members');
+      return;
+    }
 
-  deactivateAccount(faculty: FacultyMember): void {
-    if (
-      confirm(
-        `Are you sure you want to deactivate ${faculty.name}'s account? This action can be reversed later.`
-      )
-    ) {
-      console.log('Deactivating account for:', faculty.name);
-      faculty.status = 'Inactive';
-      // Implement deactivate logic
+    // Prepare payload
+    const payload: any = {
+      fullName: this.currentFaculty.fullName,
+      email: this.currentFaculty.email,
+      phoneNumber: this.currentFaculty.phoneNumber || '',
+      department: this.currentFaculty.department,
+      specialization: this.currentFaculty.specialization,
+      officeLocation: this.currentFaculty.officeLocation || '',
+      qualifications: this.currentFaculty.qualifications || '',
+      availableForConsultation: true,
+      active: true
+    };
+
+    // Add password only for new faculty
+    if (!this.isEditMode) {
+      payload.password = this.currentFaculty.password;
+    }
+
+    if (this.isEditMode) {
+      // Update existing faculty
+      const id = parseInt(this.currentFaculty.doctorId, 10);
+      if (isNaN(id)) {
+        alert('Invalid faculty ID');
+        return;
+      }
+      this.doctorService.updateDoctor(id, payload).subscribe({
+        next: () => {
+          alert('Faculty member updated successfully');
+          
+          // Update the faculty in the local arrays (frontend only)
+          const updatedFaculty: FacultyDisplayItem = {
+            id: this.currentFaculty.doctorId,
+            name: this.currentFaculty.fullName,
+            email: this.currentFaculty.email,
+            employeeId: this.currentFaculty.phoneNumber,
+            department: this.currentFaculty.department,
+            position: this.currentFaculty.specialization,
+            courseCount: 0, // Keep existing or update
+            status: 'Active',
+            avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(this.currentFaculty.fullName) + '&background=random'
+          };
+          
+          // Update in main facultyMembers array
+          const facultyIndex = this.facultyMembers.findIndex(f => f.id === this.currentFaculty.doctorId);
+          if (facultyIndex !== -1) {
+            this.facultyMembers[facultyIndex] = { ...this.facultyMembers[facultyIndex], ...updatedFaculty };
+          }
+          
+          // Re-apply filters to update filtered view
+          this.applyFilters();
+          
+          this.closeModal();
+        },
+        error: (err: any) => alert('Failed to update: ' + (err.error?.message || err.message))
+      });
+    } else {
+      // Create new faculty
+      this.doctorService.createDoctor(payload).subscribe({
+        next: () => {
+          alert('Faculty member added successfully');
+          this.closeModal();
+          this.loadFaculty(); // Reload to get fresh data from backend
+        },
+        error: (err: any) => {
+          alert('Failed to create: ' + (err.error?.message || err.message));
+        }
+      });
     }
   }
 
-  getStatusBadgeClass(status: string): string {
-    switch (status) {
-      case 'Active':
-        return 'green';
-      case 'Inactive':
-        return 'red';
-      case 'On Leave':
-        return 'yellow';
-      default:
-        return '';
+  deleteFaculty(faculty: FacultyDisplayItem): void {
+    if (!faculty || !faculty.id) {
+      alert('Invalid faculty member');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete ${faculty.name}?`)) {
+      const id = parseInt(faculty.id, 10);
+      if (isNaN(id)) {
+        alert('Invalid faculty ID');
+        return;
+      }
+      this.doctorService.deleteDoctor(id).subscribe({
+        next: () => {
+          alert('Faculty member deleted successfully');
+          
+          // Remove from local arrays immediately
+          const facultyIndex = this.facultyMembers.findIndex(f => f.id === faculty.id);
+          if (facultyIndex !== -1) {
+            this.facultyMembers.splice(facultyIndex, 1);
+            this.pagination.totalItems--;
+          }
+          
+          // Re-apply filters to update filtered view
+          this.applyFilters();
+        },
+        error: (err: any) => alert('Failed to delete: ' + (err.error?.message || err.message))
+      });
     }
   }
 
+  // Quick Actions (kept for backward compatibility)
+  viewMore(faculty: FacultyDisplayItem): void {
+    this.openEditModal(faculty);
+  }
+
+  editFacultyDetails(faculty: FacultyDisplayItem): void {
+    this.openEditModal(faculty);
+  }
+
+  assignCourses(faculty: FacultyDisplayItem): void {
+    alert(`Assign courses to ${faculty.name} - Feature coming soon`);
+  }
+
+  viewPerformance(faculty: FacultyDisplayItem): void {
+    alert(`View performance for ${faculty.name} - Feature coming soon`);
+  }
+
+  deactivateAccount(faculty: FacultyDisplayItem): void {
+    this.deleteFaculty(faculty);
+  }
+
+  // Pagination
   goToPage(page: number): void {
     this.pagination.currentPage = page;
-    console.log('Navigate to page:', page);
+    this.loadFaculty();
   }
 
   previousPage(): void {
     if (this.pagination.currentPage > 1) {
       this.pagination.currentPage--;
+      this.loadFaculty();
     }
   }
 
   nextPage(): void {
-    const totalPages = Math.ceil(
-      this.pagination.totalItems / this.pagination.pageSize
-    );
+    const totalPages = Math.ceil(this.pagination.totalItems / this.pagination.pageSize);
     if (this.pagination.currentPage < totalPages) {
       this.pagination.currentPage++;
+      this.loadFaculty();
+    }
+  }
+
+  getStatusBadgeClass(status: string): string {
+    switch (status) {
+      case 'Active': return 'badge-green';
+      case 'Inactive': return 'badge-red';
+      default: return '';
     }
   }
 

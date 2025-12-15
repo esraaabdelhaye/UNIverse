@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: true}">
+        [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -25,7 +25,7 @@
     </nav>
     <div class="sidebar-footer">
       <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span
-        class="material-symbols-outlined">logout</span><span>Logout</span></a>
+          class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -36,7 +36,7 @@
           <span class="notification-badge"></span>
         </button>
         <div class="user-avatar"
-             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
         </div>
         <div class="user-info">
           <p class="user-name">Alex Hartman</p>
@@ -49,42 +49,84 @@
         <div class="constraints-panel">
           <div class="card">
             <h2 class="card-title">
-              <span class="material-symbols-outlined">tune</span> Timetable Constraints
+              <span class="material-symbols-outlined">tune</span> Schedule Constraints
             </h2>
-            <div class="form-group">
-              <label class="form-label">Semester</label>
-              <select class="form-input" [(ngModel)]="selectedSemester">
-                <option *ngFor="let sem of semesters">{{ sem }}</option>
+            <p class="subtitle">Select courses and optional room preferences for generation.</p>
+
+            <!-- Academic Year -->
+            <div class="form-group" style="margin-top: 16px;">
+              <label>Academic Year</label>
+              <select [(ngModel)]="selectedAcademicYear" (change)="onYearChange()" class="form-control">
+                <option *ngFor="let year of academicYears" [value]="year">{{ year }}</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label">Courses to Include</label>
-              <input class="form-input" placeholder="e.g., CS101, MATH203" type="text" [(ngModel)]="coursesToInclude" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Instructor Availability</label>
-              <input class="form-input" placeholder="e.g., Dr. Evans, Prof. Lee" type="text" [(ngModel)]="instructorAvailability" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Room Capacity & Type</label>
-              <input class="form-input" placeholder="e.g., Hall A (>100), Lab 301 (Comp)" type="text" [(ngModel)]="roomCapacity" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Additional Rules</label>
-              <div class="checkbox-group">
-                <label class="checkbox-label">
-                  <input [(ngModel)]="constraints.avoidBackToBack" type="checkbox" />
-                  <span>Avoid back-to-back classes for instructors</span>
-                </label>
-                <label class="checkbox-label">
-                  <input [(ngModel)]="constraints.prioritizeMorning" type="checkbox" />
-                  <span>Prioritize morning slots for core courses</span>
-                </label>
+
+            <!-- Constraint Form -->
+            <div class="constraint-form"
+              style="margin-top: 16px; border: 1px solid #E2E8F0; padding: 16px; border-radius: 8px; background: #F8FAFC;">
+              <h3 style="font-size: 14px; margin-bottom: 12px;">Add Course to Schedule</h3>
+
+              <div class="form-group">
+                <label>Course</label>
+                <select [(ngModel)]="newConstraint.courseId" class="form-control">
+                  <option [ngValue]="null">Select Course...</option>
+                  <option *ngFor="let c of availableCourses" [value]="c.id">{{ c.courseCode }} - {{ c.name }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Preferred Room (Optional)</label>
+                <select [(ngModel)]="newConstraint.room" class="form-control">
+                  <option value="">Any (Auto-assign)</option>
+                  <option value="Room 101">Room 101</option>
+                  <option value="Room 102">Room 102</option>
+                  <option value="Lab 1">Lab 1</option>
+                  <option value="Hall A">Hall A</option>
+                </select>
+              </div>
+
+              <div class="action-bar" style="margin-top: 16px;">
+                <button class="btn-primary" (click)="addConstraint()" [disabled]="!newConstraint.courseId">
+                  <span class="material-symbols-outlined">add</span>
+                  <span>Add to List</span>
+                </button>
               </div>
             </div>
-            <button class="btn-primary" (click)="generateTimetable()" style="width: 100%; margin-top: 24px; justify-content: center;">
-              <span class="material-symbols-outlined">auto_awesome</span>
-              <span>Generate Timetable</span>
+
+            <div class="table-wrapper" style="max-height: 400px; overflow-y: auto; margin-top: 24px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Room Pref</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of constraints">
+                    <td class="course-code">{{ c.code }}</td>
+                    <td>{{ c.room }}</td>
+                    <td>
+                      <button class="icon-btn danger" (click)="removeConstraint(c)">
+                        <span class="material-symbols-outlined">delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="constraints.length === 0">
+                    <td colspan="3" style="text-align: center; color: #64748B; padding: 20px;">
+                      No courses selected. Add courses above.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button class="btn-primary" (click)="generateTimetable()"
+              style="width: 100%; margin-top: 24px; justify-content: center;"
+              [disabled]="isLoading || constraints.length === 0">
+              <span class="material-symbols-outlined" *ngIf="!isLoading">auto_awesome</span>
+              <span class="spinner" *ngIf="isLoading"></span>
+              <span>{{ isLoading ? 'Generating...' : 'Generate Timetable' }}</span>
             </button>
           </div>
         </div>
@@ -92,83 +134,93 @@
           <div class="card">
             <div class="timetable-header">
               <h2 class="card-title">
-                <span class="material-symbols-outlined">grid_view</span> Generated Timetable ({{ selectedSemester }})
+                <span class="material-symbols-outlined">grid_view</span> Timetable ({{ selectedSemester }} - {{
+                selectedAcademicYear }})
               </h2>
               <div class="timetable-actions">
-                <button class="btn-warning" (click)="reviewConflicts()">
-                  <span class="material-symbols-outlined">report</span>
-                  <span>Review Conflicts ({{ conflictCount }})</span>
-                </button>
-                <button class="btn-secondary" (click)="manuallyAdjust()">
-                  <span class="material-symbols-outlined">edit</span>
-                  <span>Manually Adjust</span>
-                </button>
-                <button class="btn-success" (click)="publishTimetable()">
-                  <span class="material-symbols-outlined">publish</span>
-                  <span>Publish</span>
-                </button>
-                <button class="btn-secondary" (click)="downloadTimetable()">
+                <button class="btn-secondary" (click)="downloadTimetable()" *ngIf="isGenerated">
                   <span class="material-symbols-outlined">download</span>
                   <span>Download</span>
                 </button>
               </div>
             </div>
-            <div class="table-wrapper">
+
+            <div class="empty-state" *ngIf="!isGenerated">
+              <span class="material-symbols-outlined" style="font-size: 48px; color: #CBD5E1;">calendar_today</span>
+              <p>Add constraints and generate to view timetable.</p>
+            </div>
+
+            <div class="table-wrapper" *ngIf="isGenerated">
               <table class="timetable-table">
                 <thead>
-                <tr>
-                  <th class="time-cell">Time</th>
-                  <th>Monday</th>
-                  <th>Tuesday</th>
-                  <th>Wednesday</th>
-                  <th>Thursday</th>
-                  <th>Friday</th>
-                </tr>
+                  <tr>
+                    <th class="time-cell">Time</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let slot of timetable">
-                  <td class="time-cell">{{ slot.time }}</td>
-                  <td>
-                    <div *ngIf="slot.monday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.monday.type">
-                      <span *ngIf="slot.monday.type === 'conflict'" class="material-symbols-outlined">error</span>
-                      <p class="class-title">{{ slot.monday.courseCode }}</p>
-                      <p class="class-details">{{ slot.monday.instructor }} / {{ slot.monday.room }}</p>
-                    </div>
-                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
-                  </td>
-                  <td>
-                    <div *ngIf="slot.tuesday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.tuesday.type">
-                      <span *ngIf="slot.tuesday.type === 'conflict'" class="material-symbols-outlined">error</span>
-                      <p class="class-title">{{ slot.tuesday.courseCode }}</p>
-                      <p class="class-details">{{ slot.tuesday.instructor }} / {{ slot.tuesday.room }}</p>
-                    </div>
-                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
-                  </td>
-                  <td>
-                    <div *ngIf="slot.wednesday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.wednesday.type">
-                      <span *ngIf="slot.wednesday.type === 'conflict'" class="material-symbols-outlined">error</span>
-                      <p class="class-title">{{ slot.wednesday.courseCode }}</p>
-                      <p class="class-details">{{ slot.wednesday.instructor }} / {{ slot.wednesday.room }}</p>
-                    </div>
-                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
-                  </td>
-                  <td>
-                    <div *ngIf="slot.thursday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.thursday.type">
-                      <span *ngIf="slot.thursday.type === 'conflict'" class="material-symbols-outlined">error</span>
-                      <p class="class-title">{{ slot.thursday.courseCode }}</p>
-                      <p class="class-details">{{ slot.thursday.instructor }} / {{ slot.thursday.room }}</p>
-                    </div>
-                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
-                  </td>
-                  <td>
-                    <div *ngIf="slot.friday && !isLunchBreak(slot.time)" [ngClass]="'class-slot ' + slot.friday.type">
-                      <span *ngIf="slot.friday.type === 'conflict'" class="material-symbols-outlined">error</span>
-                      <p class="class-title">{{ slot.friday.courseCode }}</p>
-                      <p class="class-details">{{ slot.friday.instructor }} / {{ slot.friday.room }}</p>
-                    </div>
-                    <div *ngIf="isLunchBreak(slot.time)" class="lunch-break">Lunch Break</div>
-                  </td>
-                </tr>
+                  <tr *ngFor="let slot of generatedGrid">
+                    <td class="time-cell">{{ slot.time }}</td>
+                    <td [class.clickable]="slot.saturday && slot.saturday.length > 0">
+                      <div *ngFor="let course of slot.saturday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td [class.clickable]="slot.sunday && slot.sunday.length > 0">
+                      <div *ngFor="let course of slot.sunday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td [class.clickable]="slot.monday && slot.monday.length > 0">
+                      <div *ngFor="let course of slot.monday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td [class.clickable]="slot.tuesday && slot.tuesday.length > 0">
+                      <div *ngFor="let course of slot.tuesday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td [class.clickable]="slot.wednesday && slot.wednesday.length > 0">
+                      <div *ngFor="let course of slot.wednesday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td [class.clickable]="slot.thursday && slot.thursday.length > 0">
+                      <div *ngFor="let course of slot.thursday" 
+                           (click)="onCellClick(course)" 
+                           [ngClass]="'class-slot ' + course.type"
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -177,4 +229,51 @@
       </div>
     </main>
   </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" *ngIf="isEditModalOpen" (click)="closeEditModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Edit Schedule Slot</h3>
+        <button class="close-btn" (click)="closeEditModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedSlot">
+        <p><strong>Course:</strong> {{ selectedSlot.courseCode }} - {{ selectedSlot.title }}</p>
+
+        <div class="form-group">
+          <label>Day</label>
+          <select [(ngModel)]="editForm.dayOfWeek">
+            <option>Saturday</option>
+            <option>Sunday</option>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Start Time</label>
+          <select [(ngModel)]="editForm.startTime">
+            <option *ngFor="let t of timeSlotsList" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Room</label>
+          <input type="text" [(ngModel)]="editForm.room" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="icon-btn danger" (click)="deleteSlot()" style="margin-right: auto;">
+          <span class="material-symbols-outlined">delete</span> Delete
+        </button>
+        <button class="btn-secondary" (click)="closeEditModal()">Cancel</button>
+        <button class="btn-primary" (click)="updateSlot()">Update</button>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -1,11 +1,20 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class TeachingAssistant {
@@ -49,24 +58,27 @@ public class TeachingAssistant {
     )
     private Set<Course> assistedCourses = new HashSet<>();
 
-    // Many-to-Many with Post
     @ManyToMany
     @JoinTable(
             name = "teaching_assistant_post",
             joinColumns = @JoinColumn(name = "teaching_assistant_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Post> posts = new HashSet<>();
 
     // Relation with announcements
     @OneToMany(mappedBy = "taAuthor")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Announcement> announcements = new ArrayList<>();
 
     // Relation with Events
     @OneToMany(mappedBy = "ta")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Event> events = new ArrayList<>();
 
     @OneToMany(mappedBy = "taUploader")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Material> materials = new ArrayList<>();
 
     public TeachingAssistant(long id, String name, String email, String phoneNumber,

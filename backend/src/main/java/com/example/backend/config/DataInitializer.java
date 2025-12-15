@@ -1,16 +1,56 @@
 package com.example.backend.config;
 
-import com.example.backend.Utils.MaterialType;
-import com.example.backend.Utils.NotificationType;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
-import jakarta.transaction.Transactional;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import com.example.backend.Utils.MaterialType;
+import com.example.backend.Utils.NotificationType;
+import com.example.backend.entity.Announcement;
+import com.example.backend.entity.Assignment;
+import com.example.backend.entity.AssignmentSubmission;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.CourseEnrollment;
+import com.example.backend.entity.Department;
+import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Event;
+import com.example.backend.entity.Material;
+import com.example.backend.entity.Notification;
+import com.example.backend.entity.Poll;
+import com.example.backend.entity.PollOption;
+import com.example.backend.entity.Post;
+import com.example.backend.entity.Question;
+import com.example.backend.entity.Semester;
+import com.example.backend.entity.Student;
+import com.example.backend.entity.StudentGroup;
+import com.example.backend.entity.StudentRepresentative;
+import com.example.backend.entity.Supervisor;
+import com.example.backend.entity.TeachingAssistant;
+import com.example.backend.repository.AnnouncementRepo;
+import com.example.backend.repository.AssignmentRepo;
+import com.example.backend.repository.AssignmentSubmissionRepo;
+import com.example.backend.repository.CourseEnrollmentRepo;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
+import com.example.backend.repository.DoctorRepo;
+import com.example.backend.repository.EventRepo;
+import com.example.backend.repository.MaterialRepo;
+import com.example.backend.repository.NotificationRepo;
+import com.example.backend.repository.PollOptionRepo;
+import com.example.backend.repository.PollRepo;
+import com.example.backend.repository.PostRepo;
+import com.example.backend.repository.QuestionRepo;
+import com.example.backend.repository.SemesterRepo;
+import com.example.backend.repository.StudentGroupRepo;
+import com.example.backend.repository.StudentRepo;
+import com.example.backend.repository.StudentRepresentativeRepo;
+import com.example.backend.repository.SupervisorRepo;
+import com.example.backend.repository.TeachingAssistantRepo;
+
+import jakarta.transaction.Transactional;
 
 /**
  * For development purpose this class will be used to fill

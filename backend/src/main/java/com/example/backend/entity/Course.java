@@ -1,13 +1,24 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +39,27 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(length = 20)
+    private String status = "Open";
+
+    @Column(name = "capacity")
+    private Integer capacity = 50; // Default capacity
+
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<CourseEnrollment> enrollments = new HashSet<>();
 
     @ManyToMany(mappedBy = "courses")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Doctor> doctors = new HashSet<>();
 
     // Many-to-Many with TAs
     @ManyToMany(mappedBy = "assistedCourses")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<TeachingAssistant> tas = new HashSet<>();
 
     // Courses that are prerequisites for this course
@@ -53,22 +73,25 @@ public class Course {
 
     // Courses for which this course is a prerequisite
     @ManyToMany(mappedBy = "prerequisites")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Course> dependentCourses = new HashSet<>();
 
     //Relation with coordinator
     @ManyToMany(mappedBy = "coordinatedCourses")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Supervisor> coordinators = new HashSet<>();
 
     //Relation with materials
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Material> materials = new HashSet<>();
 
-    // Relation with assignments
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Assignment> assignments = new HashSet<>();
 
-    // Relation with assignment submissions
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<AssignmentSubmission> submissions = new HashSet<>();
 
     public Course(Long id, String courseCode, String name, Integer credits,
@@ -84,6 +107,70 @@ public class Course {
     }
 
     public Course() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public Set<CourseEnrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public Set<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public Set<TeachingAssistant> getTas() {
+        return tas;
+    }
+
+    public Set<Course> getPrerequisites() {
+        return prerequisites;
+    }
+
+    public Set<Course> getDependentCourses() {
+        return dependentCourses;
+    }
+
+    public Set<Supervisor> getCoordinators() {
+        return coordinators;
+    }
+
+    public Set<Material> getMaterials() {
+        return materials;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public Set<AssignmentSubmission> getSubmissions() {
+        return submissions;
     }
 
     public void setCourseCode(String courseCode) {
@@ -203,5 +290,21 @@ public class Course {
     public void removeAssignment(Assignment assignment) {
         this.assignments.remove(assignment);
         assignment.setCourse(null);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 }

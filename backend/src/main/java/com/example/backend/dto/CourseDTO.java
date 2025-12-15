@@ -3,6 +3,7 @@ package com.example.backend.dto;
 import java.time.LocalDateTime;
 
 public class CourseDTO {
+    private Long id;
     private String courseCode;
     private String courseTitle;
     private String department;
@@ -16,7 +17,9 @@ public class CourseDTO {
     private String status;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
-    private String courseId ;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public CourseDTO() {}
 
@@ -76,12 +79,4 @@ public class CourseDTO {
 
     public LocalDateTime getUpdatedDate() { return updatedDate; }
     public void setUpdatedDate(LocalDateTime updatedDate) { this.updatedDate = updatedDate; }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
 }

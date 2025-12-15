@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: true}">
+        [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -25,7 +25,7 @@
     </nav>
     <div class="sidebar-footer">
       <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span
-        class="material-symbols-outlined">logout</span><span>Logout</span></a>
+          class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -36,7 +36,7 @@
           <span class="notification-badge"></span>
         </button>
         <div class="user-avatar"
-             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
         </div>
         <div class="user-info">
           <p class="user-name">Alex Hartman</p>
@@ -50,7 +50,8 @@
           <div class="toolbar">
             <div class="search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" placeholder="Search by name or ID..." type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" />
+              <input class="search-input" placeholder="Search by name or ID..." type="text" [(ngModel)]="searchTerm"
+                (input)="onSearchChange()" />
             </div>
             <div class="filters">
               <select class="filter-select" [(ngModel)]="selectedDepartment" (change)="onFilterChange()">
@@ -59,7 +60,7 @@
               <select class="filter-select" [(ngModel)]="selectedPosition" (change)="onFilterChange()">
                 <option *ngFor="let pos of positions">{{ pos }}</option>
               </select>
-              <button class="btn-primary" (click)="addFaculty()">
+              <button class="btn-primary" (click)="openAddModal()">
                 <span class="material-symbols-outlined">person_add</span>
                 <span>Add Faculty</span>
               </button>
@@ -68,49 +69,56 @@
           <div class="table-wrapper">
             <table class="data-table">
               <thead>
-              <tr>
-                <th>Name</th>
-                <th>Employee ID</th>
-                <th>Department</th>
-                <th>Position</th>
-                <th>Courses</th>
-                <th>Status</th>
-                <th class="text-center">Actions</th>
-              </tr>
+                <tr>
+                  <th>Name</th>
+                  <th>Employee ID</th>
+                  <th>Department</th>
+                  <th>Position</th>
+                  <th>Courses</th>
+                  <th>Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let faculty of filteredFaculty">
-                <td>
-                  <div class="faculty-cell">
-                    <div class="faculty-avatar"
-                         [style.background-image]="'url(' + faculty.avatar + ')'">
+                <tr *ngFor="let faculty of filteredFaculty">
+                  <td>
+                    <div class="faculty-cell">
+                      <div class="faculty-avatar" [style.background-image]="'url(' + faculty.avatar + ')'">
+                      </div>
+                      <div>
+                        <p class="faculty-name">{{ faculty.name }}</p>
+                        <p class="faculty-email">{{ faculty.email }}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p class="faculty-name">{{ faculty.name }}</p>
-                      <p class="faculty-email">{{ faculty.email }}</p>
+                  </td>
+                  <td>{{ faculty.employeeId }}</td>
+                  <td>{{ faculty.department }}</td>
+                  <td>{{ faculty.position }}</td>
+                  <td>{{ faculty.courseCount }}</td>
+                  <td><span [ngClass]="'badge ' + getStatusBadgeClass(faculty.status)">{{ faculty.status }}</span></td>
+                  <td class="text-center">
+                    <div class="action-buttons">
+                      <button class="icon-btn" (click)="openEditModal(faculty)" title="Edit">
+                        <span class="material-symbols-outlined">edit</span>
+                      </button>
+                      <button class="icon-btn danger" (click)="deleteFaculty(faculty)" title="Delete">
+                        <span class="material-symbols-outlined">delete</span>
+                      </button>
                     </div>
-                  </div>
-                </td>
-                <td>{{ faculty.employeeId }}</td>
-                <td>{{ faculty.department }}</td>
-                <td>{{ faculty.position }}</td>
-                <td>{{ faculty.courseCount }}</td>
-                <td><span [ngClass]="'badge ' + getStatusBadgeClass(faculty.status)">{{ faculty.status }}</span></td>
-                <td class="text-center">
-                  <button class="action-btn" (click)="viewMore(faculty)">
-                    <span class="material-symbols-outlined">more_vert</span>
-                  </button>
-                </td>
-              </tr>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination">
-            <span class="pagination-info">Showing 1 to {{ pagination.pageSize }} of {{ pagination.totalItems }} faculty members</span>
+            <span class="pagination-info">Showing 1 to {{ pagination.pageSize }} of {{ pagination.totalItems }} faculty
+              members</span>
             <div class="pagination-buttons">
               <a class="page-link first" (click)="previousPage()" href="javascript:void(0)">Previous</a>
-              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 1}" (click)="goToPage(1)" href="javascript:void(0)">1</a>
-              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 2}" (click)="goToPage(2)" href="javascript:void(0)">2</a>
+              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 1}" (click)="goToPage(1)"
+                href="javascript:void(0)">1</a>
+              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 2}" (click)="goToPage(2)"
+                href="javascript:void(0)">2</a>
               <a class="page-link last" (click)="nextPage()" href="javascript:void(0)">Next</a>
             </div>
           </div>
@@ -138,5 +146,71 @@
         </div>
       </div>
     </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ isEditMode ? 'Edit Faculty Member' : 'Add New Faculty Member' }}</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input type="text" class="form-input" [(ngModel)]="currentFaculty.fullName" placeholder="e.g. Dr. John Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email *</label>
+        <input type="email" class="form-input" [(ngModel)]="currentFaculty.email"
+          placeholder="e.g. john.smith@university.edu">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" [(ngModel)]="currentFaculty.phoneNumber" placeholder="+1234567890">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <select class="form-select" [(ngModel)]="currentFaculty.department">
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="History">History</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Position</label>
+          <select class="form-select" [(ngModel)]="currentFaculty.specialization">
+            <option value="Professor">Professor</option>
+            <option value="Associate Professor">Associate Professor</option>
+            <option value="Lecturer">Lecturer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Office Location</label>
+          <input type="text" class="form-input" [(ngModel)]="currentFaculty.officeLocation"
+            placeholder="Building A, Room 123">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Qualifications</label>
+        <input type="text" class="form-input" [(ngModel)]="currentFaculty.qualifications"
+          placeholder="e.g. PhD in Computer Science">
+      </div>
+      <div class="form-group" *ngIf="!isEditMode">
+        <label class="form-label">Password *</label>
+        <input type="password" class="form-input" [(ngModel)]="currentFaculty.password" placeholder="Enter password">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+      <button class="btn-primary" (click)="saveFaculty()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    </div>
   </div>
 </div>

@@ -1,5 +1,7 @@
 package com.example.backend.dto;
 
+import java.util.List;
+
 public class PerformanceMetricsDTO {
     private Double avgStudentFeedback;
     private Double courseSuccessRate;
@@ -9,11 +11,18 @@ public class PerformanceMetricsDTO {
     private Double resourceConflictPercentage;
     private Double systemUptimePercentage;
 
+    // Dashboard Stats
+    private Integer totalUsers;
+    private Integer activeCourses;
+    private Integer pendingApprovals;
+    private List<String> systemAlerts;
+
     public PerformanceMetricsDTO() {}
 
     public PerformanceMetricsDTO(Double avgStudentFeedback, Double courseSuccessRate, Integer publicationsCount,
                                  String timetableGenerationTime, Double courseApprovalRate, Double resourceConflictPercentage,
-                                 Double systemUptimePercentage) {
+                                 Double systemUptimePercentage, Integer totalUsers, Integer activeCourses, 
+                                 Integer pendingApprovals, List<String> systemAlerts) {
         this.avgStudentFeedback = avgStudentFeedback;
         this.courseSuccessRate = courseSuccessRate;
         this.publicationsCount = publicationsCount;
@@ -21,8 +30,13 @@ public class PerformanceMetricsDTO {
         this.courseApprovalRate = courseApprovalRate;
         this.resourceConflictPercentage = resourceConflictPercentage;
         this.systemUptimePercentage = systemUptimePercentage;
+        this.totalUsers = totalUsers;
+        this.activeCourses = activeCourses;
+        this.pendingApprovals = pendingApprovals;
+        this.systemAlerts = systemAlerts;
     }
-
+    
+    // ... Existing Getters/Setters ...
     public Double getAvgStudentFeedback() { return avgStudentFeedback; }
     public void setAvgStudentFeedback(Double avgStudentFeedback) { this.avgStudentFeedback = avgStudentFeedback; }
 
@@ -43,4 +57,17 @@ public class PerformanceMetricsDTO {
 
     public Double getSystemUptimePercentage() { return systemUptimePercentage; }
     public void setSystemUptimePercentage(Double systemUptimePercentage) { this.systemUptimePercentage = systemUptimePercentage; }
+
+    // New Getters/Setters
+    public Integer getTotalUsers() { return totalUsers; }
+    public void setTotalUsers(Integer totalUsers) { this.totalUsers = totalUsers; }
+
+    public Integer getActiveCourses() { return activeCourses; }
+    public void setActiveCourses(Integer activeCourses) { this.activeCourses = activeCourses; }
+
+    public Integer getPendingApprovals() { return pendingApprovals; }
+    public void setPendingApprovals(Integer pendingApprovals) { this.pendingApprovals = pendingApprovals; }
+
+    public List<String> getSystemAlerts() { return systemAlerts; }
+    public void setSystemAlerts(List<String> systemAlerts) { this.systemAlerts = systemAlerts; }
 }

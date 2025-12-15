@@ -1,35 +1,42 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.StudentDTO;
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.AssignmentDTO;
-import com.example.backend.dto.GradeDTO;
-import com.example.backend.dto.request.RegisterStudentRequest;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.method.P;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.DelegatingSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.backend.dto.AssignmentDTO;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.GradeDTO;
+import com.example.backend.dto.StudentDTO;
+import com.example.backend.dto.request.RegisterStudentRequest;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Assignment;
+import com.example.backend.entity.AssignmentSubmission;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.CourseEnrollment;
+import com.example.backend.entity.Student;
+import com.example.backend.repository.AssignmentSubmissionRepo;
+import com.example.backend.repository.CourseEnrollmentRepo;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.StudentRepo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 @Transactional
@@ -393,7 +400,7 @@ public class StudentService {
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
         dto.setDescription(course.getDescription());
-        dto.setCourseId(String.valueOf(course.getId()));
+        dto.setId(course.getId());
         return dto;
     }
 

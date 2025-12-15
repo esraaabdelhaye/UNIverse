@@ -1,18 +1,23 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.Department;
+import com.example.backend.repository.AnnouncementRepo;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
+import com.example.backend.repository.DoctorRepo;
+import com.example.backend.repository.ScheduleRepo;
 
 @Service
 @Transactional
@@ -21,16 +26,22 @@ public class CourseService {
     private final CourseRepo courseRepo;
     private final DepartmentRepo departmentRepo;
     private final DoctorRepo doctorRepo;
+    private final ScheduleRepo scheduleRepo;
+    private final AnnouncementRepo announcementRepo;
 
     @Autowired
     public CourseService(
             CourseRepo courseRepo,
             DepartmentRepo departmentRepo,
-            DoctorRepo doctorRepo
+            DoctorRepo doctorRepo,
+            ScheduleRepo scheduleRepo,
+            AnnouncementRepo announcementRepo
     ) {
         this.courseRepo = courseRepo;
         this.departmentRepo = departmentRepo;
         this.doctorRepo = doctorRepo;
+        this.scheduleRepo = scheduleRepo;
+        this.announcementRepo = announcementRepo;
     }
 
     public ApiResponse<List<CourseDTO>> getAllCourses(Pageable pageable) {
@@ -106,6 +117,48 @@ public class CourseService {
             course.setDescription(courseDTO.getDescription());
             course.setCredits(courseDTO.getCredits());
             course.setSemester(courseDTO.getSemester());
+
+            // Handle Department - more flexible matching
+            String deptName = courseDTO.getDepartment();
+            Optional<Department> deptOpt = Optional.empty();
+            
+            if (deptName != null && !deptName.isEmpty()) {
+                // Try exact match first
+                deptOpt = departmentRepo.findByName(deptName);
+                
+                // If not found, try with "Department" suffix
+                if (deptOpt.isEmpty()) {
+                    deptOpt = departmentRepo.findByName(deptName + " Department");
+                }
+                
+                // If still not found, try to find by partial match (contains)
+                if (deptOpt.isEmpty()) {
+                    List<Department> allDepts = departmentRepo.findAll();
+                    deptOpt = allDepts.stream()
+                        .filter(d -> d.getName().toLowerCase().contains(deptName.toLowerCase()))
+                        .findFirst();
+                }
+            }
+            
+            // If still not found, use first available department as fallback
+            if (deptOpt.isEmpty()) {
+                List<Department> allDepts = departmentRepo.findAll();
+                if (!allDepts.isEmpty()) {
+                    deptOpt = Optional.of(allDepts.get(0));
+                } else {
+                    return ApiResponse.badRequest("No departments found in system");
+                }
+            }
+            
+            course.setDepartment(deptOpt.get());
+
+            // Set status, default to Open
+            if (courseDTO.getStatus() != null && !courseDTO.getStatus().isEmpty()) {
+                course.setStatus(courseDTO.getStatus());
+            } else {
+                course.setStatus("Open");
+            }
+
             Course savedCourse = courseRepo.save(course);
             return ApiResponse.created("Course created successfully", convertToDTO(savedCourse));
         } catch (Exception e) {
@@ -123,6 +176,9 @@ public class CourseService {
             if (courseDTO.getCourseTitle() != null) {
                 course.setName(courseDTO.getCourseTitle());
             }
+            if (courseDTO.getCourseCode() != null && !courseDTO.getCourseCode().isEmpty()) {
+                course.setCourseCode(courseDTO.getCourseCode());
+            }
             if (courseDTO.getDescription() != null) {
                 course.setDescription(courseDTO.getDescription());
             }
@@ -132,6 +188,35 @@ public class CourseService {
             if (courseDTO.getSemester() != null) {
                 course.setSemester(courseDTO.getSemester());
             }
+            if (courseDTO.getDepartment() != null) {
+                // Use same flexible matching as createCourse
+                String deptName = courseDTO.getDepartment();
+                Optional<Department> deptOpt = departmentRepo.findByName(deptName);
+                
+                // If not found, try with "Department" suffix
+                if (deptOpt.isEmpty()) {
+                    deptOpt = departmentRepo.findByName(deptName + " Department");
+                }
+                
+                // If still not found, try partial match
+                if (deptOpt.isEmpty()) {
+                    List<Department> allDepts = departmentRepo.findAll();
+                    deptOpt = allDepts.stream()
+                        .filter(d -> d.getName().toLowerCase().contains(deptName.toLowerCase()))
+                        .findFirst();
+                }
+                
+                if (deptOpt.isPresent()) {
+                    course.setDepartment(deptOpt.get());
+                }
+            }
+            if (courseDTO.getStatus() != null) {
+                course.setStatus(courseDTO.getStatus());
+            }
+            if (courseDTO.getCapacity() != null) {
+                course.setCapacity(courseDTO.getCapacity());
+            }
+            
             Course updatedCourse = courseRepo.save(course);
             CourseDTO dto = convertToDTO(updatedCourse);
             return ApiResponse.success("Course updated successfully", dto);
@@ -140,14 +225,35 @@ public class CourseService {
         }
     }
 
+    @Transactional
     public ApiResponse<Void> deleteCourse(Long id) {
         try {
-            if (!courseRepo.existsById(id)) {
+            Optional<Course> courseOpt = courseRepo.findById(id);
+            if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with ID: " + id);
             }
+            
+            // Delete all related entities manually in the correct order
+            // 1. Delete announcements
+            announcementRepo.deleteAllByCourseId(id);
+            
+            // 2. Delete schedules
+            scheduleRepo.deleteAllByCourseId(id);
+            
+            // 3. Delete junction table entries (clear() doesn't work!)
+            courseRepo.deleteDoctorCourseByCourseId(id);
+            courseRepo.deleteTaCourseByCourseId(id);
+            courseRepo.deleteCoordinatorCourseByCourseId(id);
+            courseRepo.deleteCoursePrerequisitesByCourseId(id);
+            courseRepo.deleteSemesterCoursesByCourseId(id);
+            
+            // 4. Delete the course (cascade will handle enrollments, materials, assignments, submissions)
             courseRepo.deleteById(id);
+            courseRepo.flush();
+            
             return ApiResponse.success("Course deleted successfully", null);
         } catch (Exception e) {
+            e.printStackTrace();
             return ApiResponse.internalServerError("Error deleting course: " + e.getMessage());
         }
     }
@@ -164,16 +270,33 @@ public class CourseService {
         }
     }
 
+    public ApiResponse<CourseDTO> updateCourseStatus(Long id, String status) {
+        try {
+            Optional<Course> courseOpt = courseRepo.findById(id);
+            if (courseOpt.isEmpty()) {
+                return ApiResponse.notFound("Course not found with ID: " + id);
+            }
+            Course course = courseOpt.get();
+            course.setStatus(status);
+            Course savedCourse = courseRepo.save(course);
+            return ApiResponse.success("Course status updated successfully", convertToDTO(savedCourse));
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error updating course status: " + e.getMessage());
+        }
+    }
+
     private CourseDTO convertToDTO(Course course) {
         CourseDTO dto = new CourseDTO();
+        dto.setId(course.getId());
         dto.setCourseCode(course.getCourseCode());
         dto.setCourseTitle(course.getName());
         dto.setDescription(course.getDescription());
-        dto.setCapacity(course.getEnrollments().size());
-        dto.setEnrolled(course.getEnrollments().size());
+        dto.setEnrolled(course.getEnrollments() != null ? course.getEnrollments().size() : 0);
+        dto.setCapacity(course.getCapacity() != null ? course.getCapacity() : 50);
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
-        dto.setCourseId(String.valueOf(course.getId()));
+        dto.setStatus(course.getStatus() != null ? course.getStatus() : "Open");
+        dto.setId(course.getId());
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
             dto.setInstructorId(String.valueOf(course.getDepartment().getId()));

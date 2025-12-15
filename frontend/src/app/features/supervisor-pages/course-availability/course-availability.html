@@ -5,7 +5,7 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="nav-link" routerLink="/supervisor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -26,6 +26,7 @@
       <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
     </div>
   </aside>
+
   <div class="main-wrapper">
     <header class="header">
       <div class="header-actions">
@@ -40,6 +41,7 @@
         </div>
       </div>
     </header>
+
     <main class="main-content">
       <div class="content-wrapper">
         <div class="card">
@@ -48,15 +50,16 @@
               <h2 class="card-title">Current Course Offerings</h2>
               <p class="subtitle">Manage course availability for the upcoming semesters.</p>
             </div>
-            <button class="btn-primary" (click)="addNewCourse()">
+            <button class="btn-primary" (click)="openAddModal()">
               <span class="material-symbols-outlined">add</span>
               <span>Add New Course</span>
             </button>
           </div>
+
           <div class="filter-grid">
             <div class="search-wrapper">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" placeholder="Search by course or instructor..." type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"/>
+              <input class="search-input" placeholder="Search by course..." type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"/>
             </div>
             <select class="filter-select" [(ngModel)]="selectedDepartment" (change)="onFilterChange()">
               <option *ngFor="let dept of departments">{{ dept }}</option>
@@ -64,69 +67,104 @@
             <select class="filter-select" [(ngModel)]="selectedSemester" (change)="onFilterChange()">
               <option *ngFor="let sem of semesters">{{ sem }}</option>
             </select>
-            <select class="filter-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
-              <option *ngFor="let stat of statuses">{{ stat }}</option>
-            </select>
           </div>
+
           <div class="table-wrapper">
-            <table class="data-table">
+            <div *ngIf="isLoading" style="text-align: center; padding: 20px; color: #64748B;">Loading courses...</div>
+            <table class="data-table" *ngIf="!isLoading">
               <thead>
               <tr>
-                <th>Course Code</th>
+                <th>Code</th>
                 <th>Title</th>
                 <th>Department</th>
-                <th>Instructor</th>
+                <th>Credits</th>
                 <th class="text-center">Capacity</th>
-                <th class="text-center">Enrolled</th>
-                <th class="text-center">Status</th>
                 <th class="text-center">Actions</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let course of filteredCourses">
-                <td class="course-code">{{ course.code }}</td>
-                <td>{{ course.title }}</td>
-                <td>{{ course.department }}</td>
-                <td>{{ course.instructor }}</td>
-                <td class="text-center">{{ course.capacity }}</td>
-                <td class="text-center">{{ course.enrolled }}</td>
-                <td class="text-center"><span [ngClass]="'badge ' + getStatusBadgeClass(course.status)">{{ course.status }}</span></td>
+                <td class="course-code">{{ course.courseCode }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.departmentName || 'N/A' }}</td>
+                <td>{{ course.creditHours }}</td>
+                <td class="text-center">{{ course.capacity || 50 }}</td>
                 <td class="text-center">
                   <div class="action-buttons">
-                    <button class="icon-btn" (click)="editCourse(course)" title="Edit">
+                    <button class="icon-btn" (click)="openEditModal(course)" title="Edit">
                       <span class="material-symbols-outlined">edit</span>
                     </button>
-                    <button class="icon-btn" (click)="viewStudents(course)" title="View Students">
-                      <span class="material-symbols-outlined">people</span>
-                    </button>
-                    <button class="icon-btn" (click)="duplicateCourse(course)" title="Duplicate">
-                      <span class="material-symbols-outlined">content_copy</span>
-                    </button>
-                    <button class="icon-btn danger" (click)="cancelCourse(course)" title="Cancel">
-                      <span class="material-symbols-outlined">close</span>
+                    <button class="icon-btn danger" (click)="deleteCourse(course)" title="Delete">
+                      <span class="material-symbols-outlined">delete</span>
                     </button>
                   </div>
                 </td>
               </tr>
+              <tr *ngIf="filteredCourses.length === 0">
+                 <td colspan="6" style="text-align: center; padding: 20px;">No courses found.</td>
+              </tr>
               </tbody>
             </table>
           </div>
+
           <div class="pagination">
             <span class="pagination-info">Showing <span class="font-semibold">{{ (pagination.currentPage - 1) * pagination.pageSize + 1 }}-{{ Math.min(pagination.currentPage * pagination.pageSize, pagination.totalItems) }}</span> of <span class="font-semibold">{{ pagination.totalItems }}</span></span>
             <div class="pagination-buttons">
               <a class="page-link first" (click)="previousPage()" href="javascript:void(0)">Previous</a>
-              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 1}" (click)="goToPage(1)" href="javascript:void(0)">1</a>
-              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 2}" (click)="goToPage(2)" href="javascript:void(0)">2</a>
-              <a class="page-link" [ngClass]="{'active': pagination.currentPage === 3}" (click)="goToPage(3)" href="javascript:void(0)">3</a>
+              <a class="page-link" href="javascript:void(0)">{{ pagination.currentPage }}</a>
               <a class="page-link last" (click)="nextPage()" href="javascript:void(0)">Next</a>
             </div>
           </div>
-          <button class="btn btn-secondary" (click)="exportCourseList()" style="margin-top: 24px;">
-            <span class="material-symbols-outlined">download</span>
-            <span>Export Course List</span>
-          </button>
         </div>
       </div>
     </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">{{ isEditMode ? 'Edit Course' : 'Add New Course' }}</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Course Code</label>
+        <input type="text" class="form-input" [(ngModel)]="currentCourse.courseCode" placeholder="e.g. CS101">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Course Name</label>
+        <input type="text" class="form-input" [(ngModel)]="currentCourse.name" placeholder="e.g. Intro to CS">
+      </div>
+      <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+           <div class="form-group">
+            <label class="form-label">Credit Hours</label>
+            <input type="number" class="form-input" [(ngModel)]="currentCourse.creditHours">
+          </div>
+           <div class="form-group">
+            <label class="form-label">Capacity</label>
+            <input type="number" class="form-input" [(ngModel)]="currentCourse.capacity">
+          </div>
+      </div>
+       <div class="form-group">
+        <label class="form-label">Semester</label>
+         <select class="form-select" [(ngModel)]="currentCourse.semester">
+             <option *ngFor="let sem of semesters">{{ sem }}</option>
+        </select>
+      </div>
+       <div class="form-group">
+        <label class="form-label">Department</label>
+         <select class="form-select" [(ngModel)]="currentCourse.departmentName">
+             <option *ngFor="let dept of departments">{{ dept }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+      <button class="btn-primary" (click)="saveCourse()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    </div>
   </div>
 </div>
