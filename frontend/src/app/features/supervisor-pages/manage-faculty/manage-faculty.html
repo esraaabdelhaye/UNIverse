@@ -48,19 +48,21 @@
       <div class="content-wrapper">
         <div class="card">
           <div class="toolbar">
-            <div class="search-wrapper">
+            <div class="search-wrapper" style="width: 70%;">
               <span class="material-symbols-outlined search-icon">search</span>
-              <input class="search-input" placeholder="Search by name or ID..." type="text" [(ngModel)]="searchTerm"
-                (input)="onSearchChange()" />
+              <input class="search-input" placeholder="Search by name, ID, or email..." type="text"
+                [(ngModel)]="searchTerm" (input)="onSearchChange()" />
             </div>
-            <div class="filters">
-              <select class="filter-select" [(ngModel)]="selectedDepartment" (change)="onFilterChange()">
+            <div class="filters" style="width: 70%;">
+              <select class="filter-select" [(ngModel)]="selectedDepartment" (change)="onFilterChange()"
+                style="width: 35%;">
                 <option *ngFor="let dept of departments">{{ dept }}</option>
               </select>
-              <select class="filter-select" [(ngModel)]="selectedPosition" (change)="onFilterChange()">
+              <select class="filter-select" [(ngModel)]="selectedPosition" (change)="onFilterChange()"
+                style="width: 35%;">
                 <option *ngFor="let pos of positions">{{ pos }}</option>
               </select>
-              <button class="btn-primary" (click)="openAddModal()">
+              <button class="btn-primary" (click)="openAddModal()" style="width: 25%;">
                 <span class="material-symbols-outlined">person_add</span>
                 <span>Add Faculty</span>
               </button>
@@ -126,19 +128,19 @@
         <div class="card quick-actions-card">
           <h2 class="card-title">Quick Actions</h2>
           <div class="actions-grid">
-            <a class="action-card blue" (click)="editFacultyDetails(facultyMembers[0])" href="javascript:void(0)">
+            <a class="action-card blue" (click)="openFacultySelector('edit')" href="javascript:void(0)">
               <span class="material-symbols-outlined">edit_note</span>
               <p>Edit Faculty Details</p>
             </a>
-            <a class="action-card blue" (click)="assignCourses(facultyMembers[0])" href="javascript:void(0)">
+            <a class="action-card blue" (click)="openFacultySelector('assign')" href="javascript:void(0)">
               <span class="material-symbols-outlined">assignment_ind</span>
               <p>Assign Courses</p>
             </a>
-            <a class="action-card blue" (click)="viewPerformance(facultyMembers[0])" href="javascript:void(0)">
+            <a class="action-card blue" (click)="openFacultySelector('performance')" href="javascript:void(0)">
               <span class="material-symbols-outlined">summarize</span>
               <p>View Performance</p>
             </a>
-            <a class="action-card red" (click)="deactivateAccount(facultyMembers[0])" href="javascript:void(0)">
+            <a class="action-card red" (click)="openFacultySelector('deactivate')" href="javascript:void(0)">
               <span class="material-symbols-outlined">person_off</span>
               <p>Deactivate Account</p>
             </a>
@@ -170,8 +172,8 @@
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-input" [(ngModel)]="currentFaculty.phoneNumber" placeholder="+1234567890">
+          <label class="form-label">Employee ID</label>
+          <input type="text" class="form-input" [(ngModel)]="currentFaculty.phoneNumber" placeholder="e.g. 369369">
         </div>
         <div class="form-group">
           <label class="form-label">Department</label>
@@ -187,9 +189,7 @@
         <div class="form-group">
           <label class="form-label">Position</label>
           <select class="form-select" [(ngModel)]="currentFaculty.specialization">
-            <option value="Professor">Professor</option>
-            <option value="Associate Professor">Associate Professor</option>
-            <option value="Lecturer">Lecturer</option>
+            <option *ngFor="let pos of positionOptions" [value]="pos">{{ pos }}</option>
           </select>
         </div>
         <div class="form-group">
@@ -211,6 +211,41 @@
     <div class="modal-footer">
       <button class="btn-secondary" (click)="closeModal()">Cancel</button>
       <button class="btn-primary" (click)="saveFaculty()">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- Faculty Selection Modal -->
+<div class="modal-overlay" *ngIf="isFacultySelectorOpen" (click)="closeFacultySelector()">
+  <div class="modal-content" (click)="$event.stopPropagation()" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Select Faculty Member</h3>
+      <button class="close-btn" (click)="closeFacultySelector()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Search Box -->
+      <div class="search-wrapper" style="max-width: 100%; margin-bottom: 16px;">
+        <span class="material-symbols-outlined search-icon">search</span>
+        <input class="search-input" placeholder="Search by name, email, or ID..." type="text"
+          [(ngModel)]="facultySelectorSearchTerm" />
+      </div>
+
+
+      <div class="faculty-list">
+        <div *ngFor="let faculty of searchedFaculty" class="faculty-item" (click)="selectFaculty(faculty)"
+          style="padding: 12px; border-bottom: 1px solid #e0e0e0; cursor: pointer; display: flex; align-items: center; gap: 12px;">
+          <div class="faculty-avatar" [style.background-image]="'url(' + faculty.avatar + ')'"
+            style="width: 40px; height: 40px; border-radius: 50%; background-size: cover;"></div>
+          <div style="flex: 1;">
+            <p style="margin: 0; font-weight: 600; color: #333;">{{ faculty.name }}</p>
+            <p style="margin: 0; font-size: 0.875rem; color: #666;">ID: {{ faculty.employeeId }} • {{ faculty.email }}
+            </p>
+          </div>
+          <span class="material-symbols-outlined" style="color: #666;">chevron_right</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -94,12 +94,13 @@ public class DoctorService {
             doctor.setTitle(request.getSpecialization());
             doctor.setExpertise(request.getQualifications());
             
-            // Set password (TODO: Should be hashed in production!)
-            if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-                doctor.setHashedPassword(request.getPassword()); // In production, hash this!
-            } else {
-                doctor.setHashedPassword("defaultPassword123"); // Fallback
+            // CRITICAL: Set password - MUST NOT BE NULL
+            String password = request.getPassword();
+            if (password == null || password.trim().isEmpty()) {
+                System.err.println("WARNING: Password is null/empty! Using default password.");
+                password = "Change@123"; // Default password if not provided
             }
+            doctor.setHashedPassword(password); // TODO: Hash this in production!
             
             // Set status to Active
             doctor.setStatus("Active");

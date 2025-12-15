@@ -157,7 +157,7 @@ public class DataInitializer implements CommandLineRunner {
         Department department;
         if (departmentRepo.findAll().isEmpty()) {
             department = new Department();
-            department.setName("Computer Science Department");
+            department.setName("Computer Science");
             department.setCoordinator(supervisor);
             department = departmentRepo.save(department);
 

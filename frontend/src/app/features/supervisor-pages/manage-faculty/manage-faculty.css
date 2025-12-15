@@ -232,6 +232,7 @@
 .btn-primary {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 8px 16px;
   background-color: #2563EB;
@@ -574,13 +575,17 @@
 .form-input,
 .form-select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border: 1px solid #E2E8F0;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 15px;
   transition: border-color 0.2s, box-shadow 0.2s;
   background-color: #fff;
   font-family: inherit;
+}
+
+.form-select {
+  padding-right: 40px;
 }
 
 .form-input:focus,

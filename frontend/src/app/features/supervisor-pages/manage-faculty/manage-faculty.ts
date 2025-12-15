@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +28,7 @@ export class ManageFaculty implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   private doctorService = inject(DoctorService);
+  private cdr = inject(ChangeDetectorRef);
 
   // Data
   facultyMembers: FacultyDisplayItem[] = [];
@@ -38,9 +39,19 @@ export class ManageFaculty implements OnInit {
   selectedDepartment: string = 'All Departments';
   selectedPosition: string = 'All Positions';
 
-  // Dropdown Options
-  departments: string[] = ['All Departments', 'Computer Science', 'Mathematics', 'Physics', 'History'];
-  positions: string[] = ['All Positions', 'Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer'];
+  // Dynamic Dropdown Options - computed from actual data
+  get departments(): string[] {
+    const uniqueDepts = new Set(this.facultyMembers.map(f => f.department).filter(d => d));
+    return ['All Departments', ...Array.from(uniqueDepts).sort()];
+  }
+
+  get positions(): string[] {
+    const uniquePositions = new Set(this.facultyMembers.map(f => f.position).filter(p => p));
+    return ['All Positions', ...Array.from(uniquePositions).sort()];
+  }
+
+  // Static options for Add/Edit Modal (allows adding new values)
+  positionOptions: string[] = ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer', 'Teaching Assistant'];
 
   // Pagination
   pagination = {
@@ -53,6 +64,11 @@ export class ManageFaculty implements OnInit {
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
   currentFaculty: any = this.getEmptyFaculty();
+
+  // Faculty Selector Modal
+  isFacultySelectorOpen: boolean = false;
+  selectedAction: string = '';
+  facultySelectorSearchTerm: string = '';
 
   isLoading: boolean = false;
 
@@ -80,13 +96,14 @@ export class ManageFaculty implements OnInit {
         }
 
         console.log('👥 Doctors array:', doctors); // DEBUG
+        console.table(doctors); // Show in table format
 
         // Map DTO to display model
         this.facultyMembers = doctors.map((dto: FacultyItem) => ({
           id: dto.doctorId,
           name: dto.fullName,
           email: dto.email,
-          employeeId: dto.doctorId,
+          employeeId: dto.doctorId,  // Display employee ID in the table
           department: dto.department || 'Not Assigned',
           position: dto.specialization || 'Faculty',
           courseCount: dto.courseCount || 0,
@@ -95,6 +112,7 @@ export class ManageFaculty implements OnInit {
         }));
 
         console.log('✅ Faculty Members:', this.facultyMembers); // DEBUG
+        console.table(this.facultyMembers); // Show in table format
 
         this.applyFilters();
       },
@@ -109,11 +127,12 @@ export class ManageFaculty implements OnInit {
     this.filteredFaculty = this.facultyMembers.filter((faculty) => {
       const matchesSearch =
         (faculty.name || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        (faculty.employeeId || '').toLowerCase().includes(this.searchTerm.toLowerCase());
+        (faculty.employeeId || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (faculty.email || '').toLowerCase().includes(this.searchTerm.toLowerCase());
 
       const matchesDepartment =
         this.selectedDepartment === 'All Departments' ||
-        faculty.department === this.selectedDepartment;
+        (faculty.department || '').includes(this.selectedDepartment);
 
       const matchesPosition =
         this.selectedPosition === 'All Positions' ||
@@ -121,8 +140,10 @@ export class ManageFaculty implements OnInit {
 
       return matchesSearch && matchesDepartment && matchesPosition;
     });
-    
+
     console.log('🔍 Filtered Faculty Count:', this.filteredFaculty.length); // DEBUG
+    console.table(this.filteredFaculty); // Show filtered results in table
+    this.cdr.detectChanges(); // Force Angular to update the view
   }
 
   onSearchChange(): void {
@@ -219,7 +240,7 @@ export class ManageFaculty implements OnInit {
       this.doctorService.updateDoctor(id, payload).subscribe({
         next: () => {
           alert('Faculty member updated successfully');
-          
+
           // Update the faculty in the local arrays (frontend only)
           const updatedFaculty: FacultyDisplayItem = {
             id: this.currentFaculty.doctorId,
@@ -232,16 +253,16 @@ export class ManageFaculty implements OnInit {
             status: 'Active',
             avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(this.currentFaculty.fullName) + '&background=random'
           };
-          
+
           // Update in main facultyMembers array
           const facultyIndex = this.facultyMembers.findIndex(f => f.id === this.currentFaculty.doctorId);
           if (facultyIndex !== -1) {
             this.facultyMembers[facultyIndex] = { ...this.facultyMembers[facultyIndex], ...updatedFaculty };
           }
-          
+
           // Re-apply filters to update filtered view
           this.applyFilters();
-          
+
           this.closeModal();
         },
         error: (err: any) => alert('Failed to update: ' + (err.error?.message || err.message))
@@ -275,14 +296,14 @@ export class ManageFaculty implements OnInit {
       this.doctorService.deleteDoctor(id).subscribe({
         next: () => {
           alert('Faculty member deleted successfully');
-          
+
           // Remove from local arrays immediately
           const facultyIndex = this.facultyMembers.findIndex(f => f.id === faculty.id);
           if (facultyIndex !== -1) {
             this.facultyMembers.splice(facultyIndex, 1);
             this.pagination.totalItems--;
           }
-          
+
           // Re-apply filters to update filtered view
           this.applyFilters();
         },
@@ -294,6 +315,61 @@ export class ManageFaculty implements OnInit {
   // Quick Actions (kept for backward compatibility)
   viewMore(faculty: FacultyDisplayItem): void {
     this.openEditModal(faculty);
+  }
+
+  // Faculty Selection Modal
+  openFacultySelector(action: string): void {
+    this.selectedAction = action;
+    this.isFacultySelectorOpen = true;
+  }
+
+  closeFacultySelector(): void {
+    this.isFacultySelectorOpen = false;
+    this.selectedAction = '';
+    this.facultySelectorSearchTerm = ''; // Reset search
+  }
+
+  get searchedFaculty(): FacultyDisplayItem[] {
+    if (!this.facultySelectorSearchTerm) {
+      return this.filteredFaculty;
+    }
+
+    const searchLower = this.facultySelectorSearchTerm.toLowerCase();
+    return this.filteredFaculty.filter(faculty =>
+      faculty.name.toLowerCase().includes(searchLower) ||
+      faculty.email.toLowerCase().includes(searchLower) ||
+      faculty.employeeId.toLowerCase().includes(searchLower)
+    );
+  }
+
+  selectFaculty(faculty: FacultyDisplayItem): void {
+    console.log('Selected faculty:', faculty);
+    console.log('Selected action:', this.selectedAction);
+
+    // Save action before closing modal (which resets selectedAction)
+    const action = this.selectedAction;
+    this.closeFacultySelector();
+
+    switch (action) {
+      case 'edit':
+        console.log('Calling editFacultyDetails');
+        this.editFacultyDetails(faculty);
+        break;
+      case 'assign':
+        console.log('Calling assignCourses');
+        this.assignCourses(faculty);
+        break;
+      case 'performance':
+        console.log('Calling viewPerformance');
+        this.viewPerformance(faculty);
+        break;
+      case 'deactivate':
+        console.log('Calling deactivateAccount');
+        this.deactivateAccount(faculty);
+        break;
+      default:
+        console.log('Unknown action:', action);
+    }
   }
 
   editFacultyDetails(faculty: FacultyDisplayItem): void {
