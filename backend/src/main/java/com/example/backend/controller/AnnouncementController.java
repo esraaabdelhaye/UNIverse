@@ -6,6 +6,8 @@ import com.example.backend.dto.request.CreateAnnouncementRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,22 +24,40 @@ public class AnnouncementController {
     }
 
     @PostMapping("/create")
-    ApiResponse<AnnouncementDTO> createAnnouncement(@AuthenticationPrincipal AnnouncementAuthor author , @RequestBody CreateAnnouncementRequest request) {
-        return announcementService.createAnnouncement(author,request);
+    public ResponseEntity<ApiResponse<AnnouncementDTO>> createAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestBody CreateAnnouncementRequest request) {
+        ApiResponse<AnnouncementDTO> response = announcementService.createAnnouncement(author, request);
+        if (response.isSuccess()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     @PostMapping("/update/{announcementId}")
-    ApiResponse<AnnouncementDTO> updateAnnouncement(@AuthenticationPrincipal AnnouncementAuthor author , @PathVariable String announcementId, @RequestBody AnnouncementDTO dto) {
+    public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @PathVariable String announcementId,
+            @RequestBody AnnouncementDTO dto) {
         dto.setAnnouncementId(announcementId);
-        return announcementService.updateAnnouncement(author,dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.updateAnnouncement(author, dto);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
-    // The same as Post will fixed depending on time
     @DeleteMapping("/{announcementId}")
-    ApiResponse<AnnouncementDTO> deleteAnnouncement(@AuthenticationPrincipal AnnouncementAuthor author , @PathVariable String announcementId) {
-        AnnouncementDTO dto = new AnnouncementDTO() ;
+    public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @PathVariable String announcementId) {
+        AnnouncementDTO dto = new AnnouncementDTO();
         dto.setAnnouncementId(announcementId);
-        return announcementService.deleteAnnouncement(author,dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement(author, dto);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     /**
@@ -45,33 +65,55 @@ public class AnnouncementController {
      */
 
     @GetMapping("/get/{announcementId}")
-    ApiResponse<AnnouncementDTO> getAnnouncement(@AuthenticationPrincipal AnnouncementAuthor author , @PathVariable String announcementId) {
-        return announcementService.getAnnouncement(announcementId);
+    public ResponseEntity<ApiResponse<AnnouncementDTO>> getAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @PathVariable String announcementId) {
+        ApiResponse<AnnouncementDTO> response = announcementService.getAnnouncement(announcementId);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @GetMapping("/get/all")
-    ApiResponse<List<AnnouncementDTO>> getAllAnnouncement(@AuthenticationPrincipal AnnouncementAuthor author , @RequestParam int page , @RequestParam int pageSize ) {
-        return announcementService.getAllAnnouncements(page,pageSize);
+    public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAllAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestParam int page,
+            @RequestParam int pageSize) {
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAllAnnouncements(page, pageSize);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/author")
-    ApiResponse<List<AnnouncementDTO>> getAnnouncementsByAuthor(@AuthenticationPrincipal AnnouncementAuthor author , @RequestParam int page , @RequestParam int pageSize ) {
-        return announcementService.getAnnouncementsByAuthor(author,page,pageSize);
+    public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByAuthor(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestParam int page,
+            @RequestParam int pageSize) {
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByAuthor(author, page, pageSize);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/status")
-    ApiResponse<List<AnnouncementDTO>> getAnnouncementsByStatus(@AuthenticationPrincipal AnnouncementAuthor author ,  @RequestParam String status ) {
-        return announcementService.getAnnouncementsByStatus(status);
+    public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByStatus(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestParam String status) {
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByStatus(status);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/course")
-    ApiResponse<List<AnnouncementDTO>> getAnnouncementsByCourse(@AuthenticationPrincipal AnnouncementAuthor author , @RequestParam String courseCode ) {
-        return announcementService.getAnnouncementsByCourse(courseCode);
+    public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByCourse(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestParam String courseCode) {
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByCourse(courseCode);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    ApiResponse<List<AnnouncementDTO>> searchAnnouncements(@AuthenticationPrincipal AnnouncementAuthor author , @RequestParam String keyword ) {
-        return announcementService.searchAnnouncements(keyword);
+    public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> searchAnnouncements(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestParam String keyword) {
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.searchAnnouncements(keyword);
+        return ResponseEntity.ok(response);
     }
-
 }

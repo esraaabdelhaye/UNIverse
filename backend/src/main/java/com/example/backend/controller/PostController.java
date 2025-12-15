@@ -1,13 +1,12 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.DoctorDTO;
 import com.example.backend.dto.PostAuthor;
 import com.example.backend.dto.PostDTO;
 import com.example.backend.dto.request.CreatePostRequest;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.service.PostService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,31 +23,53 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    ApiResponse<?> createPost(@AuthenticationPrincipal PostAuthor postAuthorDTO , @RequestBody CreatePostRequest createPostRequest, HttpServletRequest request , HttpServletResponse response ){
-        return postService.createPost(postAuthorDTO,createPostRequest) ;
+    public ResponseEntity<ApiResponse<?>> createPost(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @RequestBody CreatePostRequest createPostRequest) {
+        ApiResponse<?> response = postService.createPost(postAuthorDTO, createPostRequest);
+        if (response.isSuccess()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
-    //Post modification end points
+    // Post modification end points
 
     @PostMapping("/modifyPost")
-    ApiResponse<PostDTO> modifyPost(@AuthenticationPrincipal PostAuthor postAuthorDTO, @RequestBody PostDTO postDTO, HttpServletRequest request , HttpServletResponse response ){
-        return postService.updatePost(postAuthorDTO,postDTO) ;
+    public ResponseEntity<ApiResponse<PostDTO>> modifyPost(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @RequestBody PostDTO postDTO) {
+        ApiResponse<PostDTO> response = postService.updatePost(postAuthorDTO, postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
-    // Currently i will keep the service methods using
-    // PostDto but the end point will depend on postId
     @PostMapping("/{postId}/likes/add")
-    ApiResponse<PostDTO> addLike(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId, HttpServletRequest request , HttpServletResponse response ) {
+    public ResponseEntity<ApiResponse<PostDTO>> addLike(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        return postService.addLike(postDTO) ;
+        ApiResponse<PostDTO> response = postService.addLike(postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     @PostMapping("/{postId}/likes/remove")
-    ApiResponse<PostDTO> removeLike(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId, HttpServletRequest request , HttpServletResponse response ) {
+    public ResponseEntity<ApiResponse<PostDTO>> removeLike(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        return postService.removeLike(postDTO) ;
+        ApiResponse<PostDTO> response = postService.removeLike(postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     /**
@@ -56,24 +77,44 @@ public class PostController {
      * now we will use it until we have enough time
      */
     @PostMapping("/{postId}/comments/add")
-    ApiResponse<PostDTO> addComment(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId , @RequestParam String comment ) {
+    public ResponseEntity<ApiResponse<PostDTO>> addComment(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId,
+            @RequestParam String comment) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        return postService.addComment(comment,postDTO) ;
+        ApiResponse<PostDTO> response = postService.addComment(comment, postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     @PostMapping("/{postId}/comments/remove")
-    ApiResponse<PostDTO> removeComment(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId , @RequestParam String comment ) {
+    public ResponseEntity<ApiResponse<PostDTO>> removeComment(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId,
+            @RequestParam String comment) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        return postService.removeComment(comment,postDTO) ;
+        ApiResponse<PostDTO> response = postService.removeComment(comment, postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
-    @PostMapping("/{postId}/delete")
-    ApiResponse<PostDTO> deletePost(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId ) {
+    @DeleteMapping("/{postId}/delete")
+    public ResponseEntity<ApiResponse<PostDTO>> deletePost(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        return postService.deletePost(postAuthorDTO,postDTO) ;
+        ApiResponse<PostDTO> response = postService.deletePost(postAuthorDTO, postDTO);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     /**
@@ -81,30 +122,47 @@ public class PostController {
      */
 
     @GetMapping("/{postId}/get")
-    ApiResponse<PostDTO> getPost(@AuthenticationPrincipal PostAuthor postAuthorDTO, @PathVariable String postId ) {
-        return postService.getPost(postId) ;
+    public ResponseEntity<ApiResponse<PostDTO>> getPost(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @PathVariable String postId) {
+        ApiResponse<PostDTO> response = postService.getPost(postId);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @GetMapping("/getAll")
-    ApiResponse<List<PostDTO>> getAllPosts(@AuthenticationPrincipal PostAuthor postAuthorDTO, @RequestParam Integer page , @RequestParam Integer pageSize  ) {
-        return postService.getAllPosts(page,pageSize) ;
+    public ResponseEntity<ApiResponse<List<PostDTO>>> getAllPosts(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @RequestParam Integer page,
+            @RequestParam Integer pageSize) {
+        ApiResponse<List<PostDTO>> response = postService.getAllPosts(page, pageSize);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getAuthor")
-    ApiResponse<List<PostDTO>> getPostsByAuthor(@AuthenticationPrincipal PostAuthor postAuthorDTO, @RequestParam Integer page , @RequestParam Integer pageSize  ) {
-        return postService.getPostsByAuthor(postAuthorDTO,page,pageSize) ;
+    public ResponseEntity<ApiResponse<List<PostDTO>>> getPostsByAuthor(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @RequestParam Integer page,
+            @RequestParam Integer pageSize) {
+        ApiResponse<List<PostDTO>> response = postService.getPostsByAuthor(postAuthorDTO, page, pageSize);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getPostsStatus")
-    ApiResponse<List<PostDTO>> getPostsByStatus(@AuthenticationPrincipal PostAuthor postAuthorDTO, @RequestParam String status  ) {
-        return postService.getPostsByStatus(status) ;
+    public ResponseEntity<ApiResponse<List<PostDTO>>> getPostsByStatus(
+            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @RequestParam String status) {
+        ApiResponse<List<PostDTO>> response = postService.getPostsByStatus(status);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
-    ApiResponse<List<PostDTO>> searchPosts(@RequestParam String keyword, @AuthenticationPrincipal PostAuthor postAuthorDTO) {
-        return postService.searchPosts(keyword) ;
+    public ResponseEntity<ApiResponse<List<PostDTO>>> searchPosts(
+            @RequestParam String keyword,
+            @AuthenticationPrincipal PostAuthor postAuthorDTO) {
+        ApiResponse<List<PostDTO>> response = postService.searchPosts(keyword);
+        return ResponseEntity.ok(response);
     }
-
-
-
 }

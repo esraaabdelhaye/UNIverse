@@ -287,6 +287,7 @@ public class AuthService {
         dto.setOfficeLocation( doc.getOfficeLocation());
         dto.setPhoneNumber(doc.getPhoneNumber());
         dto.setQualifications(doc.getExpertise());
+        dto.setRole("doctor");
         return dto;
     }
 
@@ -298,6 +299,7 @@ public class AuthService {
         dto.setEmployeeId(String.valueOf(supervisor.getId()));
         dto.setOfficeLocation( supervisor.getOfficeLocation());
         dto.setPositionTitle(supervisor.getTitle());
+        dto.setRole("supervisor");
         return dto;
     }
 

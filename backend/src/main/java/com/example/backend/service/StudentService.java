@@ -13,8 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -38,6 +40,7 @@ public class StudentService {
     private final CourseEnrollmentRepo enrollmentRepo;
     private final AssignmentSubmissionRepo submissionRepo;
     private final SecurityContextRepository securityContextRepository ;
+    private final PasswordEncoder passwordEncoder ;
 
 
     @Autowired
@@ -45,20 +48,22 @@ public class StudentService {
             StudentRepo studentRepo,
             CourseRepo courseRepo,
             CourseEnrollmentRepo enrollmentRepo,
-            AssignmentSubmissionRepo submissionRepo, SecurityContextRepository securityContextRepository
+            AssignmentSubmissionRepo submissionRepo, SecurityContextRepository securityContextRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.studentRepo = studentRepo;
         this.courseRepo = courseRepo;
         this.enrollmentRepo = enrollmentRepo;
         this.submissionRepo = submissionRepo;
         this.securityContextRepository = securityContextRepository;
+        this.passwordEncoder = passwordEncoder ;
     }
 
 
     public ApiResponse<StudentDTO> registerStudent(RegisterStudentRequest request , HttpServletRequest req , HttpServletResponse response) {
         try {
             // Check if student already exists by email
-            if (studentRepo.findByEmail(request.getStudentEmail()).isPresent()) {
+            if (studentRepo.findByEmail(request.getEmail()).isPresent()) {
                 return ApiResponse.conflict("Student with this email already exists");
             }
 
@@ -70,8 +75,11 @@ public class StudentService {
             // Create new student
             Student student = new Student();
             student.setName(request.getFullName());
-            student.setEmail(request.getStudentEmail());
+            student.setEmail(request.getEmail());
             student.setAcademicId(Long.parseLong(request.getStudentId()));
+            student.setDateOfBirth(request.getDateOfBirth());
+            student.setPhoneNumber(request.getPhoneNumber());
+            student.setHashedPassword(passwordEncoder.encode(request.getPassword()));
 
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_STUDENT")) ;
             // We set the password to null since we don't want to store password in the session

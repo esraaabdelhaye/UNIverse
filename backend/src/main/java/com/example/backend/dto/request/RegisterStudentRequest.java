@@ -4,17 +4,18 @@ import java.time.LocalDate;
 
 public class RegisterStudentRequest {
     private String fullName;
-    private String studentEmail;
+    private String email;
     private String studentId;
     private LocalDate dateOfBirth;
     private String phoneNumber;
+    private String password ;
 
     public RegisterStudentRequest() {}
 
-    public RegisterStudentRequest(String fullName, String studentEmail, String studentId,
+    public RegisterStudentRequest(String fullName, String email, String studentId,
                                   LocalDate dateOfBirth, String phoneNumber) {
         this.fullName = fullName;
-        this.studentEmail = studentEmail;
+        this.email = email;
         this.studentId = studentId;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
@@ -23,8 +24,13 @@ public class RegisterStudentRequest {
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getStudentEmail() { return studentEmail; }
-    public void setStudentEmail(String studentEmail) { this.studentEmail = studentEmail; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getStudentId() { return studentId; }
     public void setStudentId(String studentId) { this.studentId = studentId; }
@@ -34,4 +40,6 @@ public class RegisterStudentRequest {
 
     public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
