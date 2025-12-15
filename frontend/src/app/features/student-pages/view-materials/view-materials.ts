@@ -99,6 +99,10 @@ export class ViewMaterials implements OnInit {
     });
   }
 
+  /**
+   * Process materials from backend and group by course
+   * All icon and size data now comes from the backend
+   */
   private processMaterials(materials: any[], courseId?: number) {
     const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
     const grouped = new Map<string, Material[]>();
@@ -114,9 +118,11 @@ export class ViewMaterials implements OnInit {
         id: material.materialId || material.id,
         title: material.materialTitle || material.title,
         type: material.materialType || 'PDF',
-        size: '1 MB',
-        icon: this.getIconForType(material.materialType),
-        iconColor: this.getColorForType(material.materialType),
+        // Use formatted size from backend, or fallback to raw size
+        size: material.formattedFileSize || material.fileSize || 'Unknown',
+        // Use icon and color from backend
+        icon: material.iconName || this.getDefaultIcon(material.materialType),
+        iconColor: material.iconColor || this.getDefaultColor(material.materialType),
         courseCode: courseCode,
         url: material.downloadUrl || material.url || '',
       };
@@ -134,7 +140,10 @@ export class ViewMaterials implements OnInit {
     this.filterMaterials();
   }
 
-  private getIconForType(type: string): string {
+  /**
+   * Fallback icon mapping (used only if backend doesn't provide icon)
+   */
+  private getDefaultIcon(type: string): string {
     if (type?.includes('PDF')) return 'picture_as_pdf';
     if (type?.includes('VIDEO')) return 'play_circle';
     if (type?.includes('RECORDING')) return 'mic';
@@ -142,7 +151,10 @@ export class ViewMaterials implements OnInit {
     return 'description';
   }
 
-  private getColorForType(type: string): string {
+  /**
+   * Fallback color mapping (used only if backend doesn't provide color)
+   */
+  private getDefaultColor(type: string): string {
     if (type?.includes('PDF')) return 'primary-icon';
     if (type?.includes('VIDEO')) return 'red-icon';
     if (type?.includes('RECORDING')) return 'amber-icon';

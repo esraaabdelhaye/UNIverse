@@ -1,19 +1,23 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.TeachingAssistantDTO;
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.TeachingAssistantDTO;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.TeachingAssistant;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
+import com.example.backend.repository.TeachingAssistantRepo;
 
 @Service
 @Transactional
@@ -212,7 +216,7 @@ public class TeachingAssistantService {
         dto.setEnrolled(course.getEnrollments().size());
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
-        dto.setCourseId(String.valueOf(course.getId()));
+        dto.setId(course.getId());
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
         }

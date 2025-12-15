@@ -1,11 +1,22 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Department {
 
     @Id
@@ -16,16 +27,19 @@ public class Department {
     private String name;
 
     // Relation with Supervisor
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coordinator_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"coordinatedDepartment", "department"})
     private Supervisor coordinator;
 
     // Relation between students and department
     @OneToMany(mappedBy = "department")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Student> students = new HashSet<>();
 
     // Relation with doctors
     @OneToMany(mappedBy = "department")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<Doctor> doctors = new HashSet<>();
 
     public Department(Long id, String name, Supervisor coordinator)

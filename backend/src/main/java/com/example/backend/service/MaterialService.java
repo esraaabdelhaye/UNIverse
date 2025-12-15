@@ -70,6 +70,9 @@ public class MaterialService {
             material.setUploadDate(LocalDateTime.now());
             material.setCourse(courseOpt.get());
 
+            // Set icon and color based on material type
+            setIconAndColor(material, materialDTO.getMaterialType());
+
             Material saved = materialRepo.save(material);
             return ApiResponse.created("Material uploaded successfully", convertToDTO(saved));
         } catch (Exception e) {
@@ -91,6 +94,15 @@ public class MaterialService {
             }
             if (materialDTO.getDownloadUrl() != null) {
                 material.setUrl(materialDTO.getDownloadUrl());
+            }
+            if (materialDTO.getFormattedFileSize() != null) {
+                // Extract bytes from formatted string if needed
+                material.setFileSize(parseFileSize(materialDTO.getFormattedFileSize()));
+            }
+
+            // Update icon and color if type changed
+            if (materialDTO.getMaterialType() != null) {
+                setIconAndColor(material, materialDTO.getMaterialType());
             }
 
             Material updated = materialRepo.save(material);
@@ -127,16 +139,91 @@ public class MaterialService {
         }
     }
 
+    /**
+     * Set icon and color based on material type
+     */
+    private void setIconAndColor(Material material, String materialType) {
+        if (materialType == null || material.getType() == null) {
+            material.setIconName("description");
+            material.setIconColor("green-icon");
+            return;
+        }
+
+        switch (material.getType()) {
+            case PDF:
+                material.setIconName("picture_as_pdf");
+                material.setIconColor("primary-icon");
+                break;
+            case VIDEO:
+                material.setIconName("play_circle");
+                material.setIconColor("red-icon");
+                break;
+            case RECORDING:
+                material.setIconName("mic");
+                material.setIconColor("amber-icon");
+                break;
+            case TEXTBOOK:
+                material.setIconName("menu_book");
+                material.setIconColor("primary-icon");
+                break;
+            case OTHER:
+            default:
+                material.setIconName("description");
+                material.setIconColor("green-icon");
+                break;
+        }
+    }
+
+    /**
+     * Parse formatted file size string back to bytes
+     */
+    private Long parseFileSize(String formattedSize) {
+        try {
+            if (formattedSize == null || formattedSize.isEmpty()) {
+                return 0L;
+            }
+
+            String[] parts = formattedSize.trim().split("\\s+");
+            if (parts.length < 2) {
+                return 0L;
+            }
+
+            double value = Double.parseDouble(parts[0]);
+            String unit = parts[1].toUpperCase();
+
+            long multiplier = switch (unit.charAt(0)) {
+                case 'B' -> 1L;
+                case 'K' -> 1024L;
+                case 'M' -> 1024L * 1024L;
+                case 'G' -> 1024L * 1024L * 1024L;
+                case 'T' -> 1024L * 1024L * 1024L * 1024L;
+                default -> 1L;
+            };
+
+            return (long) (value * multiplier);
+        } catch (Exception e) {
+            return 0L;
+        }
+    }
+
     private MaterialDTO convertToDTO(Material material) {
         MaterialDTO dto = new MaterialDTO();
         dto.setMaterialId(String.valueOf(material.getId()));
         dto.setMaterialTitle(material.getTitle());
-        dto.setMaterialType(material.getType() != null ? material.getType().toString() : "");
+        dto.setMaterialType(material.getType() != null ? material.getType().toString() : "OTHER");
         dto.setUploadDate(material.getUploadDate());
         dto.setDownloadUrl(material.getUrl());
+        dto.setIconName(material.getIconName());
+        dto.setIconColor(material.getIconColor());
+
+        // Set formatted file size
+        dto.setFormattedFileSize(material.getFormattedFileSize());
+
         if (material.getCourse() != null) {
             dto.setCourseCode(material.getCourse().getCourseCode());
+            dto.setCourseName(material.getCourse().getName());
         }
+
         return dto;
     }
 }

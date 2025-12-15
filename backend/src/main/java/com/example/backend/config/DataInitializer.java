@@ -1,16 +1,56 @@
 package com.example.backend.config;
 
-import com.example.backend.Utils.MaterialType;
-import com.example.backend.Utils.NotificationType;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
-import jakarta.transaction.Transactional;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import com.example.backend.Utils.MaterialType;
+import com.example.backend.Utils.NotificationType;
+import com.example.backend.entity.Announcement;
+import com.example.backend.entity.Assignment;
+import com.example.backend.entity.AssignmentSubmission;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.CourseEnrollment;
+import com.example.backend.entity.Department;
+import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Event;
+import com.example.backend.entity.Material;
+import com.example.backend.entity.Notification;
+import com.example.backend.entity.Poll;
+import com.example.backend.entity.PollOption;
+import com.example.backend.entity.Post;
+import com.example.backend.entity.Question;
+import com.example.backend.entity.Semester;
+import com.example.backend.entity.Student;
+import com.example.backend.entity.StudentGroup;
+import com.example.backend.entity.StudentRepresentative;
+import com.example.backend.entity.Supervisor;
+import com.example.backend.entity.TeachingAssistant;
+import com.example.backend.repository.AnnouncementRepo;
+import com.example.backend.repository.AssignmentRepo;
+import com.example.backend.repository.AssignmentSubmissionRepo;
+import com.example.backend.repository.CourseEnrollmentRepo;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
+import com.example.backend.repository.DoctorRepo;
+import com.example.backend.repository.EventRepo;
+import com.example.backend.repository.MaterialRepo;
+import com.example.backend.repository.NotificationRepo;
+import com.example.backend.repository.PollOptionRepo;
+import com.example.backend.repository.PollRepo;
+import com.example.backend.repository.PostRepo;
+import com.example.backend.repository.QuestionRepo;
+import com.example.backend.repository.SemesterRepo;
+import com.example.backend.repository.StudentGroupRepo;
+import com.example.backend.repository.StudentRepo;
+import com.example.backend.repository.StudentRepresentativeRepo;
+import com.example.backend.repository.SupervisorRepo;
+import com.example.backend.repository.TeachingAssistantRepo;
+
+import jakarta.transaction.Transactional;
 
 /**
  * For development purpose this class will be used to fill
@@ -117,7 +157,7 @@ public class DataInitializer implements CommandLineRunner {
         Department department;
         if (departmentRepo.findAll().isEmpty()) {
             department = new Department();
-            department.setName("Computer Science Department");
+            department.setName("Computer Science");
             department.setCoordinator(supervisor);
             department = departmentRepo.save(department);
 
@@ -703,13 +743,15 @@ public class DataInitializer implements CommandLineRunner {
             submissionRepo.save(s4);
         }
 
-        // ==================== MATERIALS ====================
         if (materialRepo.findAll().isEmpty()) {
             Material material1 = new Material();
             material1.setTitle("Week 1 - Introduction to Java");
             material1.setUrl("/materials/cs101/week1_intro.pdf");
             material1.setUploadDate(LocalDateTime.of(2025, 9, 2, 10, 0));
             material1.setType(MaterialType.PDF);
+            material1.setFileSize(2048000L); // ~2 MB
+            material1.setIconName("picture_as_pdf");
+            material1.setIconColor("primary-icon");
             material1.setCourse(course1);
             material1.setDoctorUploader(doctor1);
             materialRepo.save(material1);
@@ -719,6 +761,9 @@ public class DataInitializer implements CommandLineRunner {
             material2.setUrl("/materials/cs101/week2_variables.pdf");
             material2.setUploadDate(LocalDateTime.of(2025, 9, 9, 10, 0));
             material2.setType(MaterialType.PDF);
+            material2.setFileSize(1536000L); // ~1.5 MB
+            material2.setIconName("picture_as_pdf");
+            material2.setIconColor("primary-icon");
             material2.setCourse(course1);
             material2.setDoctorUploader(doctor1);
             materialRepo.save(material2);
@@ -728,8 +773,10 @@ public class DataInitializer implements CommandLineRunner {
             material3.setUrl("/materials/cs101/lab1_tutorial.mp4");
             material3.setUploadDate(LocalDateTime.of(2025, 9, 5, 14, 0));
             material3.setType(MaterialType.VIDEO);
+            material3.setFileSize(314572800L); // ~300 MB
+            material3.setIconName("play_circle");
+            material3.setIconColor("red-icon");
             material3.setCourse(course1);
-            material3.setTaUploader(ta1);
             materialRepo.save(material3);
 
             Material material4 = new Material();
@@ -737,6 +784,9 @@ public class DataInitializer implements CommandLineRunner {
             material4.setUrl("/materials/cs201/textbook.pdf");
             material4.setUploadDate(LocalDateTime.of(2025, 9, 1, 9, 0));
             material4.setType(MaterialType.TEXTBOOK);
+            material4.setFileSize(5242880L); // ~5 MB
+            material4.setIconName("menu_book");
+            material4.setIconColor("primary-icon");
             material4.setCourse(course2);
             material4.setDoctorUploader(doctor1);
             materialRepo.save(material4);
@@ -746,9 +796,48 @@ public class DataInitializer implements CommandLineRunner {
             material5.setUrl("/materials/cs301/sql_tutorial.pdf");
             material5.setUploadDate(LocalDateTime.of(2025, 9, 3, 11, 0));
             material5.setType(MaterialType.PDF);
+            material5.setFileSize(1048576L); // ~1 MB
+            material5.setIconName("picture_as_pdf");
+            material5.setIconColor("primary-icon");
             material5.setCourse(course3);
             material5.setDoctorUploader(doctor2);
             materialRepo.save(material5);
+
+            Material material6 = new Material();
+            material6.setTitle("CS229 Lecture Recording - Week 1");
+            material6.setUrl("/materials/cs229/lecture_recording_week1.mp4");
+            material6.setUploadDate(LocalDateTime.of(2025, 9, 2, 15, 0));
+            material6.setType(MaterialType.RECORDING);
+            material6.setFileSize(524288000L); // ~500 MB
+            material6.setIconName("mic");
+            material6.setIconColor("amber-icon");
+            material6.setCourse(courseML);
+            material6.setDoctorUploader(andrewNg);
+            materialRepo.save(material6);
+
+            Material material7 = new Material();
+            material7.setTitle("CS229 Lecture Slides - Linear Regression");
+            material7.setUrl("/materials/cs229/slides_linear_regression.pdf");
+            material7.setUploadDate(LocalDateTime.of(2025, 9, 4, 10, 0));
+            material7.setType(MaterialType.PDF);
+            material7.setFileSize(3145728L); // ~3 MB
+            material7.setIconName("picture_as_pdf");
+            material7.setIconColor("primary-icon");
+            material7.setCourse(courseML);
+            material7.setDoctorUploader(andrewNg);
+            materialRepo.save(material7);
+
+            Material material8 = new Material();
+            material8.setTitle("CS320 Algorithm Complexity Textbook");
+            material8.setUrl("/materials/cs320/complexity_textbook.pdf");
+            material8.setUploadDate(LocalDateTime.of(2025, 9, 1, 8, 0));
+            material8.setType(MaterialType.TEXTBOOK);
+            material8.setFileSize(6291456L); // ~6 MB
+            material8.setIconName("menu_book");
+            material8.setIconColor("primary-icon");
+            material8.setCourse(courseAlgo);
+            material8.setDoctorUploader(algoDoctor);
+            materialRepo.save(material8);
 
             System.out.println("Inserted materials");
         }

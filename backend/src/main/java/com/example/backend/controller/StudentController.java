@@ -1,6 +1,9 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.StudentDTO;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.AssignmentDTO;
+import com.example.backend.dto.GradeDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.dto.request.RegisterStudentRequest;
 import com.example.backend.service.StudentService;
@@ -12,9 +15,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -44,10 +49,66 @@ public class StudentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@RequestBody RegisterStudentRequest registerStudentRequest , HttpServletRequest request, HttpServletResponse res) {
+    /**
+     * Get all courses for a specific student (enrolled courses only)
+     */
+    @GetMapping("/{studentId}/courses")
+    @PreAuthorize("hasAnyRole('STUDENT', 'DOC', 'SUPERVISOR')")
+    public ResponseEntity<ApiResponse<List<CourseDTO>>> getStudentCourses(@PathVariable Long studentId) {
+        ApiResponse<List<CourseDTO>> response = studentService.getStudentCourses(studentId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-        ApiResponse<StudentDTO> response = studentService.registerStudent(registerStudentRequest,request,res);
+    /**
+     * Get all assignments for a student (from enrolled courses)
+     */
+    @GetMapping("/{studentId}/assignments")
+    @PreAuthorize("hasAnyRole('STUDENT', 'DOC', 'SUPERVISOR')")
+    public ResponseEntity<ApiResponse<List<AssignmentDTO>>> getStudentAssignments(@PathVariable Long studentId) {
+        ApiResponse<List<AssignmentDTO>> response = studentService.getStudentAssignments(studentId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Get all grades for a student
+     */
+    @GetMapping("/{studentId}/grades")
+    @PreAuthorize("hasAnyRole('STUDENT', 'DOC', 'SUPERVISOR')")
+    public ResponseEntity<ApiResponse<List<GradeDTO>>> getStudentGrades(@PathVariable Long studentId) {
+        ApiResponse<List<GradeDTO>> response = studentService.getStudentGrades(studentId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Enroll a student in a course
+     */
+    @PostMapping("/{studentId}/enroll/{courseId}")
+    @PreAuthorize("hasAnyRole('STUDENT', 'DOC', 'SUPERVISOR')")
+    public ResponseEntity<ApiResponse<String>> enrollInCourse(
+            @PathVariable Long studentId,
+            @PathVariable Long courseId) {
+        ApiResponse<String> response = studentService.enrollInCourse(studentId, courseId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * Unenroll a student from a course
+     */
+    @PostMapping("/{studentId}/unenroll/{courseId}")
+    @PreAuthorize("hasAnyRole('STUDENT', 'DOC', 'SUPERVISOR')")
+    public ResponseEntity<ApiResponse<String>> unenrollFromCourse(
+            @PathVariable Long studentId,
+            @PathVariable Long courseId) {
+        ApiResponse<String> response = studentService.unenrollFromCourse(studentId, courseId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(
+            @RequestBody RegisterStudentRequest registerStudentRequest,
+            HttpServletRequest request,
+            HttpServletResponse res) {
+        ApiResponse<StudentDTO> response = studentService.registerStudent(registerStudentRequest, request, res);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

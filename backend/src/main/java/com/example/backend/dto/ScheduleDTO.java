@@ -10,11 +10,12 @@ public class ScheduleDTO {
     private String location;
     private String courseCode;
     private String eventType;
+    private String academicYear;
 
     public ScheduleDTO() {}
 
     public ScheduleDTO(String eventId, String eventTitle, LocalDateTime startTime,
-                       LocalDateTime endTime, String location, String courseCode, String eventType) {
+                       LocalDateTime endTime, String location, String courseCode, String eventType, String academicYear) {
         this.eventId = eventId;
         this.eventTitle = eventTitle;
         this.startTime = startTime;
@@ -22,6 +23,7 @@ public class ScheduleDTO {
         this.location = location;
         this.courseCode = courseCode;
         this.eventType = eventType;
+        this.academicYear = academicYear;
     }
 
     public String getEventId() { return eventId; }
@@ -44,4 +46,7 @@ public class ScheduleDTO {
 
     public String getEventType() { return eventType; }
     public void setEventType(String eventType) { this.eventType = eventType; }
+
+    public String getAcademicYear() { return academicYear; }
+    public void setAcademicYear(String academicYear) { this.academicYear = academicYear; }
 }

@@ -1,19 +1,21 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.DoctorDTO;
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.DoctorDTO;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Course;
+import com.example.backend.entity.Doctor;
+import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DoctorRepo;
 
 @Service
 @Transactional
@@ -91,6 +93,17 @@ public class DoctorService {
             doctor.setOfficeLocation(request.getOfficeLocation());
             doctor.setTitle(request.getSpecialization());
             doctor.setExpertise(request.getQualifications());
+            
+            // CRITICAL: Set password - MUST NOT BE NULL
+            String password = request.getPassword();
+            if (password == null || password.trim().isEmpty()) {
+                System.err.println("WARNING: Password is null/empty! Using default password.");
+                password = "Change@123"; // Default password if not provided
+            }
+            doctor.setHashedPassword(password); // TODO: Hash this in production!
+            
+            // Set status to Active
+            doctor.setStatus("Active");
 
             Doctor savedDoctor = doctorRepo.save(doctor);
 
@@ -138,15 +151,19 @@ public class DoctorService {
         }
     }
 
-    // Delete doctor
+    // Delete doctor (soft delete - sets status to Inactive)
     public ApiResponse<Void> deleteDoctor(Long id) {
         try {
-            if (!doctorRepo.existsById(id)) {
+            Optional<Doctor> doctorOpt = doctorRepo.findById(id);
+            if (doctorOpt.isEmpty()) {
                 return ApiResponse.notFound("Doctor not found with ID: " + id);
             }
 
-            doctorRepo.deleteById(id);
-            return ApiResponse.success("Doctor deleted successfully", null);
+            Doctor doctor = doctorOpt.get();
+            doctor.setStatus("Inactive");
+            doctorRepo.save(doctor);
+
+            return ApiResponse.success("Doctor deactivated successfully", null);
 
         } catch (Exception e) {
             return ApiResponse.internalServerError("Error deleting doctor: " + e.getMessage());
@@ -209,7 +226,14 @@ public class DoctorService {
         dto.setSpecialization(doctor.getTitle());
         dto.setOfficeLocation(doctor.getOfficeLocation());
         dto.setQualifications(doctor.getExpertise());
+        if (doctor.getDepartment() != null) {
+            dto.setDepartment(doctor.getDepartment().getName());
+        }
+        if (doctor.getCourses() != null) {
+            dto.setCourseCount(doctor.getCourses().size());
+        }
         dto.setAvailableForConsultation(true);
+        dto.setActive(true);
         return dto;
     }
 
@@ -222,7 +246,7 @@ public class DoctorService {
         dto.setEnrolled(course.getEnrollments().size());
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
-        dto.setCourseId(String.valueOf(course.getId()));
+        dto.setId(course.getId());
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
         }

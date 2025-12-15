@@ -1,12 +1,8 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.*;
-import com.example.backend.dto.request.LoginRequest;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.entity.*;
-import com.example.backend.repository.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,12 +11,29 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.backend.dto.DoctorDTO;
+import com.example.backend.dto.StudentDTO;
+import com.example.backend.dto.StudentRepresentativeDTO;
+import com.example.backend.dto.SupervisorDTO;
+import com.example.backend.dto.TeachingAssistantDTO;
+import com.example.backend.dto.request.LoginRequest;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Student;
+import com.example.backend.entity.StudentRepresentative;
+import com.example.backend.entity.Supervisor;
+import com.example.backend.entity.TeachingAssistant;
+import com.example.backend.repository.DoctorRepo;
+import com.example.backend.repository.StudentRepo;
+import com.example.backend.repository.StudentRepresentativeRepo;
+import com.example.backend.repository.SupervisorRepo;
+import com.example.backend.repository.TeachingAssistantRepo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class AuthService {
@@ -170,12 +183,21 @@ public class AuthService {
     private ApiResponse<SupervisorDTO> loginSupervisor(LoginRequest loginRequest,HttpServletRequest request , HttpServletResponse response) {
         try {
 
+
+            System.out.println("Attempting Supervisor login for: " + loginRequest.getEmail());
             Optional<Supervisor> supervisorOpt = supervisorRepo.findByEmail(loginRequest.getEmail());
-            if (supervisorOpt.isEmpty())
+            if (supervisorOpt.isEmpty()) {
+                System.out.println("Supervisor NOT FOUND in DB: " + loginRequest.getEmail());
                 return ApiResponse.unauthorized("Invalid email or password");
+            }
             Supervisor supervisor = supervisorOpt.get();
-            if (!passwordEncoder.matches(loginRequest.getPassword(), supervisor.getHashedPassword()))
+            System.out.println("Supervisor FOUND: " + supervisor.getEmail() + ", ID: " + supervisor.getId());
+            
+            if (!passwordEncoder.matches(loginRequest.getPassword(), supervisor.getHashedPassword())) {
+                System.out.println("Password MISMATCH for: " + loginRequest.getEmail());
                 return ApiResponse.unauthorized("Invalid email or password");
+            }
+
 
             //Assigning Authorities to the user such that we can control their access to different services
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_SUPERVISOR")) ;
@@ -310,6 +332,7 @@ public class AuthService {
         dto.setPhoneNumber(teachingAssistant.getPhoneNumber());
         // Department has to be presented
         dto.setDepartment(teachingAssistant.getDepartment().getName());
+        dto.setRole("ta");
         return dto;
     }
 

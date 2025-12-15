@@ -1,5 +1,7 @@
 package com.example.backend.dto;
 
+import java.util.List;
+
 public class PerformanceMetricsDTO {
     private Double avgStudentFeedback;
     private Double courseSuccessRate;
@@ -9,11 +11,20 @@ public class PerformanceMetricsDTO {
     private Double resourceConflictPercentage;
     private Double systemUptimePercentage;
 
+    // Dashboard Stats
+    private Integer totalStudents;
+    private Integer totalFaculty;
+    private Integer activeCourses;
+    private Integer pendingApprovals;
+    private Integer totalDepartments;
+    private List<String> systemAlerts;
+
     public PerformanceMetricsDTO() {}
 
     public PerformanceMetricsDTO(Double avgStudentFeedback, Double courseSuccessRate, Integer publicationsCount,
                                  String timetableGenerationTime, Double courseApprovalRate, Double resourceConflictPercentage,
-                                 Double systemUptimePercentage) {
+                                 Double systemUptimePercentage, Integer totalStudents, Integer totalFaculty, 
+                                 Integer activeCourses, Integer pendingApprovals, Integer totalDepartments, List<String> systemAlerts) {
         this.avgStudentFeedback = avgStudentFeedback;
         this.courseSuccessRate = courseSuccessRate;
         this.publicationsCount = publicationsCount;
@@ -21,8 +32,15 @@ public class PerformanceMetricsDTO {
         this.courseApprovalRate = courseApprovalRate;
         this.resourceConflictPercentage = resourceConflictPercentage;
         this.systemUptimePercentage = systemUptimePercentage;
+        this.totalStudents = totalStudents;
+        this.totalFaculty = totalFaculty;
+        this.activeCourses = activeCourses;
+        this.pendingApprovals = pendingApprovals;
+        this.totalDepartments = totalDepartments;
+        this.systemAlerts = systemAlerts;
     }
-
+    
+    // ... Existing Getters/Setters ...
     public Double getAvgStudentFeedback() { return avgStudentFeedback; }
     public void setAvgStudentFeedback(Double avgStudentFeedback) { this.avgStudentFeedback = avgStudentFeedback; }
 
@@ -43,4 +61,23 @@ public class PerformanceMetricsDTO {
 
     public Double getSystemUptimePercentage() { return systemUptimePercentage; }
     public void setSystemUptimePercentage(Double systemUptimePercentage) { this.systemUptimePercentage = systemUptimePercentage; }
+
+    // New Getters/Setters
+    public Integer getTotalStudents() { return totalStudents; }
+    public void setTotalStudents(Integer totalStudents) { this.totalStudents = totalStudents; }
+
+    public Integer getTotalFaculty() { return totalFaculty; }
+    public void setTotalFaculty(Integer totalFaculty) { this.totalFaculty = totalFaculty; }
+
+    public Integer getActiveCourses() { return activeCourses; }
+    public void setActiveCourses(Integer activeCourses) { this.activeCourses = activeCourses; }
+
+    public Integer getPendingApprovals() { return pendingApprovals; }
+    public void setPendingApprovals(Integer pendingApprovals) { this.pendingApprovals = pendingApprovals; }
+
+    public Integer getTotalDepartments() { return totalDepartments; }
+    public void setTotalDepartments(Integer totalDepartments) { this.totalDepartments = totalDepartments; }
+
+    public List<String> getSystemAlerts() { return systemAlerts; }
+    public void setSystemAlerts(List<String> systemAlerts) { this.systemAlerts = systemAlerts; }
 }
