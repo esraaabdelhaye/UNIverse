@@ -34,38 +34,12 @@ export class StudentService {
     return this.api.delete<ApiResponse<void>>(`/students/${id}`);
   }
 
-  getStudentCourses(studentId: number): Observable<{
-    statusCode: number;
-    message: string;
-    data: {
-      id: number;
-      courseId: number | undefined;
-      courseCode: string;
-      courseTitle: string;
-      credits: number;
-      semester: string;
-      description: string;
-      department?: string;
-      professor?: string;
-      progress?: number
-    }[] | undefined;
-    success: boolean
-  }> {
-    return this.api.get<ApiResponse<Course[]>>(`/courses`).pipe(
-      map(response => ({
-        ...response,
-        data: Array.isArray(response.data)
-          ? response.data.map(course => ({
-              ...course,
-              courseId: course.courseId ? parseInt(String(course.courseId), 10) : undefined
-            }))
-          : response.data
-      }))
-    );
+  getStudentCourses(studentId: number): Observable<ApiResponse<Course[]>> {
+    return this.api.get<ApiResponse<Course[]>>(`/students/${studentId}/courses`);
   }
 
   getStudentAssignments(studentId: number): Observable<ApiResponse<Assignment[]>> {
-    return this.api.get<ApiResponse<Assignment[]>>(`/api/assignments`);
+    return this.api.get<ApiResponse<Assignment[]>>(`/students/${studentId}/assignments`);
   }
 
   getStudentGrades(studentId: number): Observable<ApiResponse<Grade[]>> {

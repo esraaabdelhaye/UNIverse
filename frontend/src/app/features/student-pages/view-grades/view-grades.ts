@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { GradeService } from '../../../core/services/grade.service';
@@ -66,50 +66,54 @@ export class ViewGrades implements OnInit {
   loadGrades() {
     const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
 
+    // First get all courses for the student
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (courses) => {
-        if (courses.success && courses.data ) {
-          const  data = courses.data ;
+        if (courses.success && courses.data) {
+          const data = courses.data;
           const coursesArray = Array.isArray(data)
             ? data
             : data
               ? [data]
               : [];
 
-          let loadedCount = 0;
-          const coursesData = coursesArray;
-
-          if (coursesData.length === 0) {
+          // Get grades for each course
+          if (coursesArray.length === 0) {
             this.isLoading = false;
             return;
           }
 
-          coursesData.forEach((course: any) => {
-            const courseId = course.courseId || course.id;
-            const numericCourseId = parseInt(String(courseId).trim(), 10);
+          let loadedCount = 0;
 
-            if (isNaN(numericCourseId)) {
-              console.error('Invalid course ID:', course);
+          coursesArray.forEach((course: any) => {
+            const courseId = course.id; // Use 'id' instead of 'courseId'
+
+            // Validate courseId
+            if (!courseId || isNaN(courseId)) {
+              console.warn('Invalid course ID:', course);
               loadedCount++;
-              if (loadedCount === coursesData.length) {
+              if (loadedCount === coursesArray.length) {
                 this.filterGrades();
                 this.isLoading = false;
               }
               return;
             }
-            this.gradeService.getCourseGrades(studentId, Number(course.courseId)).subscribe({
+
+            // Get grades for this specific course
+            this.gradeService.getCourseGrades(studentId, courseId).subscribe({
               next: (gradesResponse) => {
-                if (gradesResponse.success && gradesResponse.data ) {
-                  const  gradeData = gradesResponse.data ;
+                if (gradesResponse.success && gradesResponse.data) {
+                  const gradeData = gradesResponse.data;
                   const gradesArray = Array.isArray(gradeData)
                     ? gradeData
                     : gradeData
                       ? [gradeData]
                       : [];
+
                   const courseGrade: CourseGrade = {
-                    id: Number(course.courseId),
-                    code: course.courseCode,
-                    name: course.courseTitle,
+                    id: courseId,
+                    code: course.courseCode || 'N/A',
+                    name: course.courseTitle || 'Unknown Course',
                     professor: course.professor || 'TBA',
                     overallGrade: this.calculateOverallGrade(gradesArray),
                     completion: 50,
@@ -119,10 +123,12 @@ export class ViewGrades implements OnInit {
                       feedback: g.feedback || '',
                     })),
                   };
+
                   this.courseGrades.push(courseGrade);
                 }
+
                 loadedCount++;
-                if (loadedCount === coursesData.length) {
+                if (loadedCount === coursesArray.length) {
                   this.filterGrades();
                   this.isLoading = false;
                 }
@@ -130,7 +136,7 @@ export class ViewGrades implements OnInit {
               error: (err) => {
                 console.error('Error loading course grades:', err);
                 loadedCount++;
-                if (loadedCount === coursesData.length) {
+                if (loadedCount === coursesArray.length) {
                   this.filterGrades();
                   this.isLoading = false;
                 }

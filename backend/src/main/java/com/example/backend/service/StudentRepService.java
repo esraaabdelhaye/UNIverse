@@ -42,6 +42,7 @@ import com.example.backend.repository.StudentRepresentativeRepo;
 // Note that Rep is at the end just a Student
 // so we can easily reuse student methods with
 public class StudentRepService {
+    /*
     private final StudentRepresentativeRepo repo;
     private final CourseRepo courseRepo;
     private final CourseEnrollmentRepo enrollmentRepo;
@@ -419,6 +420,8 @@ public class StudentRepService {
     private boolean passwordMatches(String rawPassword, String hashedPassword) {
         return passwordEncoder.matches(rawPassword, hashedPassword);
     }
+
+     */
 }
 
 
