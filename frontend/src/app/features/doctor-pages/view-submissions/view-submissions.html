@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -17,7 +22,11 @@
         <span class="material-symbols-outlined">grade</span>
         <span>Grade Students</span>
       </a>
-      <a class="nav-link active" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard/view-submissions"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
@@ -41,7 +50,7 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
+        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User" />
         <div class="user-info">
           <p class="user-name">John Doe</p>
           <p class="user-role">Professor</p>
@@ -60,10 +69,14 @@
           <div class="filter-section">
             <div class="form-group">
               <label class="form-label">Select Assignment</label>
-              <select class="form-select" [(ngModel)]="selectedAssignment" (change)="onAssignmentChange()">
+              <select
+                class="form-select"
+                [(ngModel)]="selectedAssignment"
+                (change)="onAssignmentChange()"
+              >
                 <option value="">All Assignments</option>
-                <option *ngFor="let assignment of assignments" [value]="assignment.id">
-                  {{ assignment.code }}: {{ assignment.name }}
+                <option *ngFor="let assignment of assignments" [ngValue]="assignment.id">
+                  {{ assignment.courseCode }}: {{ assignment.assignmentTitle }}
                 </option>
               </select>
             </div>
@@ -72,34 +85,44 @@
           <div class="table-wrapper">
             <table class="submissions-table">
               <thead>
-              <tr>
-                <th>Student</th>
-                <th>Submitted Date</th>
-                <th>Assignment</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
+                <tr>
+                  <th>Student</th>
+                  <th>Submitted Date</th>
+                  <th>Assignment</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let submission of filteredSubmissions">
-                <td class="student-cell">
-                  <img [src]="submission.studentAvatar" class="student-avatar" alt=""/>
-                  <span>{{ submission.studentName }}</span>
-                </td>
-                <td>{{ submission.submittedDate }}</td>
-                <td>{{ submission.assignmentName }}</td>
-                <td>
+                <tr *ngFor="let submission of filteredSubmissions">
+                  <td class="student-cell">
+                    <!-- <img [src]="submission.studentAvatar" class="student-avatar" alt="" /> -->
+                    <span>{{ submission.studentName }}</span>
+                  </td>
+                  <td>{{ submission.submissionDate }}</td>
+                  <td>{{ submission.assignmentId }}</td>
+                  <td>
                     <span class="badge" [ngClass]="'badge-' + submission.status">
-                      {{ submission.status === 'submitted' ? 'Submitted' : submission.status === 'reviewed' ? 'Reviewed' : 'Late' | titlecase }}
+                      {{
+                        submission.status === 'submitted'
+                          ? 'Submitted'
+                          : submission.status === 'graded'
+                          ? 'Reviewed'
+                          : ('Late' | titlecase)
+                      }}
                     </span>
-                </td>
-                <td class="action-cell">
-                  <button class="btn-view" (click)="viewSubmission(submission)">View</button>
-                  <button class="btn-action" (click)="markAsReviewed(submission)" *ngIf="submission.status !== 'reviewed'">
-                    Review
-                  </button>
-                </td>
-              </tr>
+                  </td>
+                  <td class="action-cell">
+                    <button class="btn-view" (click)="viewSubmission(submission)">View</button>
+                    <button
+                      class="btn-action"
+                      (click)="markAsReviewed(submission)"
+                      *ngIf="submission.status !== 'graded'"
+                    >
+                      Review
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

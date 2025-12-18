@@ -1,9 +1,11 @@
 export interface Submission {
   id: number;
   studentId: number;
-  assignmentId: number;
+  assignmentId: string;
   courseId: number;
-  submissionDate: string;
+  studentName?: string;
+  // studentAvatar?: string;
+  submissionDate: number;
   status: 'submitted' | 'graded' | 'pending';
   grade?: string;
   feedback?: string;

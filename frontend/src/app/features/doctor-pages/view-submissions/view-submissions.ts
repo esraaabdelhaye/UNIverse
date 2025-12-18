@@ -3,22 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-
-interface Submission {
-  id: number;
-  studentName: string;
-  studentAvatar: string;
-  submittedDate: string;
-  status: 'submitted' | 'reviewed' | 'late';
-  assignmentId: number;
-  assignmentName: string;
-}
-
-interface Assignment {
-  id: number;
-  code: string;
-  name: string;
-}
+import { DoctorService } from '../../../core/services/doctor.service';
+import { Course } from '../../../core/models/course.model';
+import { AssignmentService } from '../../../core/services/assignment.service';
+import { Assignment } from '../../../core/models/assignment.model';
+import { SubmissionService } from '../../../core/services/submission.service';
+import { Submission } from '../../../core/models/submission.model';
 
 @Component({
   selector: 'app-view-submissions',
@@ -30,105 +20,114 @@ interface Assignment {
 export class ViewSubmissions implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
+  private doctorService = inject(DoctorService);
+  private assignmentService = inject(AssignmentService);
+  private submissionService = inject(SubmissionService);
+
+  // data
+  currentDoctor: any;
 
   assignments: Assignment[] = [];
   submissions: Submission[] = [];
+  courses: Course[] = [];
   filteredSubmissions: Submission[] = [];
-  selectedAssignment = '';
+  // selectedAssignment can be a numeric id or empty string when no selection
+  selectedAssignment: number | '' = '';
+
+  // Loading
+  isLoading = true;
 
   ngOnInit() {
+    this.currentDoctor = this.authService.getCurrentUser();
+    this.loadCourses();
     this.loadAssignments();
-    this.loadSubmissions();
+    // this.loadSubmissions();
+  }
+
+  loadCourses() {
+    this.doctorService.getDoctorCourses(this.currentDoctor.doctorId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const courses = response.data;
+          this.courses = Array.isArray(courses) ? courses : courses ? [courses] : [];
+          console.log(courses);
+        }
+      },
+      error: (err) => {
+        console.error('Sorry: Could not load courses:', err);
+      },
+    });
   }
 
   loadAssignments() {
-    this.assignments = [
-      { id: 1, code: 'PHIL-301', name: 'Essay 2 - The Absurd Hero' },
-      { id: 2, code: 'HIST-212', name: 'Art History Paper' },
-      { id: 3, code: 'LIT-405', name: 'Critique of Modernism' },
-      { id: 4, code: 'PHIL-101', name: 'Problem Set 5' },
-    ];
-  }
+    this.assignmentService.getAllAssignments().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          // Normalize assignments so `id` is always a numeric id (some APIs return `assignmentId` as a string)
+          this.assignments = response.data.map((a: any) => ({
+            ...a,
+            id: a.id ?? (a.assignmentId ? parseInt(a.assignmentId, 10) : undefined),
+          })) as Assignment[];
+          console.log('Loaded assignments:', this.assignments);
 
-  loadSubmissions() {
-    this.submissions = [
-      {
-        id: 1,
-        studentName: 'Benjamin Carter',
-        studentAvatar: 'https://i.pravatar.cc/32?img=1',
-        submittedDate: 'Oct 28, 2023 10:15 PM',
-        status: 'submitted',
-        assignmentId: 1,
-        assignmentName: 'Essay 2 - The Absurd Hero',
+          // load submissions for all assignments (skip those that lack a numeric id)
+          for (const assignment of this.assignments) {
+            const assignmentId = assignment.id;
+            if (typeof assignmentId !== 'number' || isNaN(assignmentId)) {
+              console.warn('Skipping submissions fetch: assignment has no numeric id', assignment);
+              continue;
+            }
+
+            this.submissionService.getAssignmentSubmissions(assignmentId).subscribe({
+              next: (response) => {
+                if (response.success && response.data) {
+                  this.submissions = this.submissions.concat(response.data);
+                  this.filteredSubmissions = [...this.submissions];
+                  console.log('submissions: ', this.submissions);
+                }
+              },
+              error: (err) => {
+                console.error('Error loading submissions:', err);
+              },
+            });
+          }
+
+          this.isLoading = false;
+        }
       },
-      {
-        id: 2,
-        studentName: 'Olivia Chen',
-        studentAvatar: 'https://i.pravatar.cc/32?img=2',
-        submittedDate: 'Oct 26, 2023 8:45 PM',
-        status: 'reviewed',
-        assignmentId: 1,
-        assignmentName: 'Essay 2 - The Absurd Hero',
+      error: (err) => {
+        console.error('Error loading assignments:', err);
+        this.isLoading = false;
       },
-      {
-        id: 3,
-        studentName: 'Sophia Rodriguez',
-        studentAvatar: 'https://i.pravatar.cc/32?img=3',
-        submittedDate: 'Oct 27, 2023 11:58 PM',
-        status: 'submitted',
-        assignmentId: 2,
-        assignmentName: 'Art History Paper',
-      },
-      {
-        id: 4,
-        studentName: 'Liam Goldberg',
-        studentAvatar: 'https://i.pravatar.cc/32?img=4',
-        submittedDate: 'Oct 25, 2023 9:00 AM',
-        status: 'reviewed',
-        assignmentId: 1,
-        assignmentName: 'Essay 2 - The Absurd Hero',
-      },
-      {
-        id: 5,
-        studentName: 'Ava Miller',
-        studentAvatar: 'https://i.pravatar.cc/32?img=5',
-        submittedDate: 'Oct 29, 2023 1:20 AM',
-        status: 'late',
-        assignmentId: 3,
-        assignmentName: 'Critique of Modernism',
-      },
-      {
-        id: 6,
-        studentName: 'Noah Davis',
-        studentAvatar: 'https://i.pravatar.cc/32?img=6',
-        submittedDate: 'Oct 30, 2023 2:45 PM',
-        status: 'submitted',
-        assignmentId: 4,
-        assignmentName: 'Problem Set 5',
-      },
-    ];
-    this.filteredSubmissions = [...this.submissions];
+    });
   }
 
   onAssignmentChange() {
-    if (this.selectedAssignment) {
+    // Handle numeric selection explicitly (covers cases like id=0) or empty selection
+    if (this.selectedAssignment !== '' && this.selectedAssignment != null) {
+      if (isNaN(this.selectedAssignment as number)) {
+        console.warn('selectedAssignment is not a number:', this.selectedAssignment);
+        this.filteredSubmissions = [];
+        return;
+      }
       this.filteredSubmissions = this.submissions.filter(
-        sub => sub.assignmentId === parseInt(this.selectedAssignment)
+        (sub) => sub.assignmentId === this.selectedAssignment
       );
     } else {
+      console.log('No submissions match this assignment');
+
       this.filteredSubmissions = [...this.submissions];
     }
   }
 
   viewSubmission(submission: Submission) {
-    console.log('Viewing submission:', submission);
-    alert(`Viewing submission from ${submission.studentName} for ${submission.assignmentName}`);
+    alert(`Viewing submission from ${submission.studentId} for ${submission.assignmentId}`);
   }
 
   markAsReviewed(submission: Submission) {
-    submission.status = 'reviewed';
-    console.log(`Marked ${submission.studentName}'s submission as reviewed`);
-    alert(`Marked as reviewed for ${submission.studentName}`);
+    submission.status = 'graded';
+    console.log(`Marked ${submission.studentId}'s submission as reviewed`);
+    alert(`Marked as reviewed for ${submission.studentId}`);
   }
 
   logout() {
