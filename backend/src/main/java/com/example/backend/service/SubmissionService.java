@@ -182,6 +182,7 @@ public class SubmissionService {
 
     private SubmissionDTO convertToDTO(AssignmentSubmission submission) {
         return new SubmissionDTO(
+                submission.getAssignment().getId(),
                 String.valueOf(submission.getId()),
                 String.valueOf(submission.getStudent().getId()),
                 submission.getStudent().getName(),
