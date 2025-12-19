@@ -61,10 +61,10 @@ export class DoctorDashboard implements OnInit {
 
   loadStats() {
     this.stats = [
-      { label: 'Pending Submissions',
+      { label: 'Submitted',
           value: this.submissions.filter(s => s.status === 'submitted').length,
           icon: 'assignment' },
-      { label: 'To Grade', 
+      { label: 'Grading', 
          value: this.submissions.filter(s => s.status === 'grading').length, 
         icon: 'pending_actions' },
       { label: 'Total Students', value: this.totalStudents, icon: 'people' },
