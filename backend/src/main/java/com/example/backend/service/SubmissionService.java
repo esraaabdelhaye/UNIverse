@@ -21,12 +21,14 @@ public class SubmissionService {
     private final AssignmentSubmissionRepo submissionRepo;
     private final StudentRepo studentRepo;
     private final AssignmentRepo assignmentRepo;
+    private final AssignmentSubmissionRepo assignmentSubmissionRepo;
 
     public SubmissionService(AssignmentSubmissionRepo submissionRepo, StudentRepo studentRepo,
-                             AssignmentRepo assignmentRepo) {
+                             AssignmentRepo assignmentRepo, AssignmentSubmissionRepo assignmentSubmissionRepo) {
         this.submissionRepo = submissionRepo;
         this.studentRepo = studentRepo;
         this.assignmentRepo = assignmentRepo;
+        this.assignmentSubmissionRepo = assignmentSubmissionRepo;
     }
 
     // Submit assignment
@@ -138,7 +140,7 @@ public class SubmissionService {
                 return ApiResponse.notFound("Assignment not found");
             }
 
-            List<SubmissionDTO> submissions = submissionRepo.findByAssignment(assignmentOpt.get()).stream()
+            List<SubmissionDTO> submissions = assignmentSubmissionRepo.findByAssignment(assignmentOpt.get()).stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
 
@@ -180,6 +182,41 @@ public class SubmissionService {
         }
     }
 
+    public ApiResponse<SubmissionDTO> updateSubmissionStatus(Long submissionId, String status) {
+        try {
+            Optional<AssignmentSubmission> submissionOpt = submissionRepo.findById(submissionId);
+            if (submissionOpt.isEmpty()) {
+                return ApiResponse.notFound("Submission not found");
+            }
+
+            AssignmentSubmission submission = submissionOpt.get();
+            submission.setStatus(status);
+
+            AssignmentSubmission updated = submissionRepo.save(submission);
+            return ApiResponse.success("Submission updated successfully", convertToDTO(updated));
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error updating submission: " + e.getMessage());
+        }
+    }
+
+    public ApiResponse<SubmissionDTO> updateSubmissionGrade(Long submissionId, String status, String grade) {
+        try {
+            Optional<AssignmentSubmission> submissionOpt = submissionRepo.findById(submissionId);
+            if (submissionOpt.isEmpty()) {
+                return ApiResponse.notFound("Submission not found");
+            }
+
+            AssignmentSubmission submission = submissionOpt.get();
+            submission.setStatus(status);
+            submission.setGrade(grade);
+
+            AssignmentSubmission updated = submissionRepo.save(submission);
+            return ApiResponse.success("Submission updated successfully", convertToDTO(updated));
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error updating submission: " + e.getMessage());
+        }
+    }
+
     private SubmissionDTO convertToDTO(AssignmentSubmission submission) {
         return new SubmissionDTO(
                 submission.getAssignment().getId(),
@@ -192,4 +229,6 @@ public class SubmissionService {
                 submission.getGrade() != null ? Double.parseDouble(submission.getGrade()) : null
         );
     }
+
+
 }

@@ -2,8 +2,12 @@ package com.example.backend.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.backend.dto.CourseEnrollmentDTO;
+import com.example.backend.entity.CourseEnrollment;
+import com.example.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,11 +17,6 @@ import com.example.backend.dto.CourseDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Course;
 import com.example.backend.entity.Department;
-import com.example.backend.repository.AnnouncementRepo;
-import com.example.backend.repository.CourseRepo;
-import com.example.backend.repository.DepartmentRepo;
-import com.example.backend.repository.DoctorRepo;
-import com.example.backend.repository.ScheduleRepo;
 
 @Service
 @Transactional
@@ -29,14 +28,15 @@ public class CourseService {
     private final ScheduleRepo scheduleRepo;
     private final AnnouncementRepo announcementRepo;
 
+
     @Autowired
     public CourseService(
             CourseRepo courseRepo,
             DepartmentRepo departmentRepo,
             DoctorRepo doctorRepo,
             ScheduleRepo scheduleRepo,
-            AnnouncementRepo announcementRepo
-    ) {
+            AnnouncementRepo announcementRepo,
+            CourseEnrollmentRepo courseEnrollmentRepo) {
         this.courseRepo = courseRepo;
         this.departmentRepo = departmentRepo;
         this.doctorRepo = doctorRepo;
@@ -93,6 +93,8 @@ public class CourseService {
             return ApiResponse.internalServerError("Error fetching courses: " + e.getMessage());
         }
     }
+
+
 
     public ApiResponse<List<CourseDTO>> getCoursesByDepartment(Long departmentId) {
         try {
@@ -285,6 +287,21 @@ public class CourseService {
         }
     }
 
+    public ApiResponse<List<CourseEnrollmentDTO>> getCourseEnrollments(Long courseId) {
+        Optional<Course> courseOpt = courseRepo.findById(courseId);
+        if (courseOpt.isEmpty()) {
+            return ApiResponse.notFound("Course not found with ID: " + courseId);
+        }
+
+        Set<CourseEnrollment> enrollments = courseOpt.get().getEnrollments();
+
+        List<CourseEnrollmentDTO> enrollmentDTOs = enrollments.stream()
+                .map(e -> toCourseEnrollmentDTO(e, courseOpt.get()))
+                .collect(Collectors.toList());
+
+        return ApiResponse.success(enrollmentDTOs);
+    }
+
     private CourseDTO convertToDTO(Course course) {
         CourseDTO dto = new CourseDTO();
         dto.setId(course.getId());
@@ -303,4 +320,15 @@ public class CourseService {
         }
         return dto;
     }
+
+    private CourseEnrollmentDTO toCourseEnrollmentDTO(CourseEnrollment courseEnrollment, Course course) {
+        CourseEnrollmentDTO dto = new CourseEnrollmentDTO();
+        dto.setCourseId(course.getId());
+        dto.setCourse(convertToDTO(course));
+
+        dto.setEnrolledStudents(course.getEnrollments() != null ? course.getEnrollments().size() : 0);
+        dto.setGrade(courseEnrollment.getGrade());
+        return dto;
+    }
 }
+
