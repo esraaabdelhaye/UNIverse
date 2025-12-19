@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import java.util.List;
 
+import com.example.backend.dto.CourseEnrollmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -95,5 +96,13 @@ public class CourseController {
             @RequestParam String status) {
         ApiResponse<CourseDTO> response = courseService.updateCourseStatus(id, status);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/enrollments")
+    public ResponseEntity<ApiResponse<List<CourseEnrollmentDTO>>> getCourseEnrollments(@PathVariable Long id) {
+        ApiResponse<List<CourseEnrollmentDTO>> response = courseService.getCourseEnrollments(id);
+
+        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+        return new ResponseEntity<>(response, status);
     }
 }

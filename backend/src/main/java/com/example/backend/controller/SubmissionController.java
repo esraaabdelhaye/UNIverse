@@ -71,6 +71,25 @@ public class SubmissionController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+    @PutMapping("/status/{submissionId}")
+    @PreAuthorize("hasAnyRole('DOC')")
+    public ResponseEntity<ApiResponse<SubmissionDTO>> updateSubmissionStatus(
+            @PathVariable Long submissionId,
+            @RequestParam String status) {
+        ApiResponse<SubmissionDTO> response = submissionService.updateSubmissionStatus(submissionId, status);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
+    @PutMapping("/grade/{submissionId}")
+    @PreAuthorize("hasAnyRole('DOC')")
+    public ResponseEntity<ApiResponse<SubmissionDTO>> updateSubmissionGrade(
+            @PathVariable Long submissionId,
+            @RequestParam String status,
+            @RequestParam String grade) {
+        ApiResponse<SubmissionDTO> response = submissionService.updateSubmissionGrade(submissionId, status, grade);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
+
     @GetMapping("/status/{status}")
     @PreAuthorize("hasAnyRole('DOC', 'SUPERVISOR')")
     public ResponseEntity<ApiResponse<List<SubmissionDTO>>> getSubmissionsByStatus(@PathVariable String status) {
