@@ -27,51 +27,7 @@ public class DoctorDTO implements  PostAuthor, AnnouncementAuthor, PollAuthor, E
     private int courseCount;
     private boolean active;
 
-    // Getters and Setters
 
-    public String getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public String getOfficeLocation() {
-        return officeLocation;
-    }
 
     public void setOfficeLocation(String officeLocation) {
         this.officeLocation = officeLocation;

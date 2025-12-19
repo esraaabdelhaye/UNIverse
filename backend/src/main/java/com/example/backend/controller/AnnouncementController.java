@@ -34,6 +34,18 @@ public class AnnouncementController {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
+            @AuthenticationPrincipal AnnouncementAuthor author,
+            @RequestBody AnnouncementDTO target) {
+        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement(author, target);
+        if (response.isSuccess()) {
+            // Use HttpStatus.OK because you are returning a body (the response object)
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.badRequest().body(response);
+    }
+
     @PostMapping("/update/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
             @AuthenticationPrincipal AnnouncementAuthor author,
