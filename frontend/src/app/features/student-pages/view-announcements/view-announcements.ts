@@ -45,31 +45,24 @@ export class ViewAnnouncements implements OnInit {
     this.loadAnnouncements();
   }
 
-
-
   loadAnnouncements() {
-
     // Currently this approach loade all announcements for all courses the student is enrolled in
     // This is not the most efficient way but works for now
     // for future updates use pagination or lazy loading
     // for better performance
     const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
-    // Loading course first 
+    // Loading course first
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (response) => {
         const courses = response.data;
-        const coursesArray = Array.isArray(courses) ?
-          courses :
-          courses ? [courses] : [];
+        const coursesArray = Array.isArray(courses) ? courses : courses ? [courses] : [];
         // Now load announcements for each course
-        coursesArray.forEach(course => {
-          this.announcementService.getAnnouncementsByCoures(course).subscribe({
+        coursesArray.forEach((course) => {
+          this.announcementService.getAnnouncementsByCourse(course).subscribe({
             next: (annResponse) => {
               if (annResponse.success && annResponse.data) {
                 const annData = annResponse.data;
-                const annArray = Array.isArray(annData) ?
-                  annData :
-                  annData ? [annData] : [];
+                const annArray = Array.isArray(annData) ? annData : annData ? [annData] : [];
                 annArray.forEach((ann: any) => {
                   this.announcements.push({
                     id: ann.announcementId,
@@ -85,10 +78,10 @@ export class ViewAnnouncements implements OnInit {
                 this.updateUniqueCourses();
                 this.filteredAnnouncements = [...this.announcements];
               }
-            }
+            },
           });
         });
-      }
+      },
     });
   }
 
@@ -96,7 +89,7 @@ export class ViewAnnouncements implements OnInit {
     const courses = new Map();
     console.log('Updating unique courses from announcements');
     console.log(this.announcements);
-    this.announcements.forEach(announcement => {
+    this.announcements.forEach((announcement) => {
       if (!courses.has(announcement.courseCode)) {
         courses.set(announcement.courseCode, {
           courseCode: announcement.courseCode,
@@ -108,18 +101,18 @@ export class ViewAnnouncements implements OnInit {
   }
 
   filterAnnouncements() {
-    this.filteredAnnouncements = this.announcements.filter(announcement => {
+    this.filteredAnnouncements = this.announcements.filter((announcement) => {
       const matchesSearch =
         announcement.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         announcement.message.toLowerCase().includes(this.searchTerm.toLowerCase());
 
-      const matchesCourse = !this.selectedCourseFilter || announcement.course === this.selectedCourseFilter;
+      const matchesCourse =
+        !this.selectedCourseFilter || announcement.course === this.selectedCourseFilter;
       const matchesDate = this.matchesDateFilter(announcement.createdDate);
 
       return matchesSearch && matchesCourse && matchesDate;
     });
   }
-
 
   matchesDateFilter(createdDate: string): boolean {
     if (!this.selectedDateFilter) return true;
@@ -173,7 +166,3 @@ export class ViewAnnouncements implements OnInit {
     this.router.navigate(['/']);
   }
 }
-
-
-
-

@@ -74,7 +74,7 @@
             <select class="form-select" [(ngModel)]="selectedCourse">
               <option value="">Choose a course</option>
               <option *ngFor="let course of courses" [value]="course.id">
-                {{ course.code }}: {{ course.name }}
+                {{ course.courseCode }}: {{ course.courseTitle }}
               </option>
             </select>
           </div>
@@ -100,9 +100,9 @@
           </div>
 
           <div class="form-actions">
-            <button class="btn btn-secondary" (click)="saveDraft()" type="button">
+            <!-- <button class="btn btn-secondary" (click)="saveDraft()" type="button">
               Save Draft
-            </button>
+            </button> -->
             <button
               class="btn btn-primary"
               (click)="publishAnnouncement()"
@@ -124,14 +124,14 @@
               <div class="announcement-header">
                 <div>
                   <h4 class="announcement-title">{{ announcement.title }}</h4>
-                  <span class="announcement-course">{{ getCourseCode(announcement.course) }}</span>
+                  <span class="announcement-course">{{ announcement.courseCode }}</span>
                 </div>
                 <span class="badge" [ngClass]="'badge-' + announcement.status">
                   {{ announcement.status | titlecase }}
                 </span>
               </div>
 
-              <p class="announcement-text">{{ announcement.message }}</p>
+              <p class="announcement-text">{{ announcement.content }}</p>
 
               <div class="announcement-meta">
                 <span class="announcement-date">{{ announcement.createdDate }}</span>

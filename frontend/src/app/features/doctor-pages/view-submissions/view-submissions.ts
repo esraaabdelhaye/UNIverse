@@ -157,9 +157,9 @@ export class ViewSubmissions implements OnInit {
   }
 
   viewSubmission(submission: Submission) {
-    submission.status = submission.grade ? 'graded' : 'grading';
     console.log('id: ', submission.submissionId);
-
+    if (submission.status === 'graded') return;
+    submission.status = 'grading';
     console.log(`Marked ${submission.studentId}'s submission as reviewed`);
     alert(`Marked as grading for ${submission.studentName}`);
     this.submissionService.updateSubmissionStatus(submission.submissionId, 'grading').subscribe({
