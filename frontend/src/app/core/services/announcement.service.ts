@@ -18,6 +18,6 @@ export class AnnouncementService {
   }
 
   deleteAnnouncement(announcement: Announcement): Observable<ApiResponse<void>> {
-    return this.api.post<ApiResponse<void>>(`/announcement/delete`, announcement);
+    return this.api.delete<ApiResponse<void>>(`/announcement/${announcement.announcementId}`);
   }
 }
