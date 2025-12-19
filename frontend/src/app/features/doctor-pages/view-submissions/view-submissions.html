@@ -91,6 +91,7 @@
                   <th>Assignment</th>
                   <th>Status</th>
                   <th>Action</th>
+                  <th>Grade</th>
                 </tr>
               </thead>
               <tbody>
@@ -100,27 +101,22 @@
                     <span>{{ submission.studentName }}</span>
                   </td>
                   <td>{{ submission.submissionDate }}</td>
-                  <td>{{ submission.assignmentId }}</td>
+                  <td>{{ submission.assignmentTitle }}</td>
                   <td>
                     <span class="badge" [ngClass]="'badge-' + submission.status">
-                      {{
-                        submission.status === 'submitted'
-                          ? 'Submitted'
-                          : submission.status === 'graded'
-                          ? 'Reviewed'
-                          : ('Late' | titlecase)
-                      }}
+                      {{ submission.status }}
                     </span>
                   </td>
                   <td class="action-cell">
                     <button class="btn-view" (click)="viewSubmission(submission)">View</button>
-                    <button
-                      class="btn-action"
-                      (click)="markAsReviewed(submission)"
-                      *ngIf="submission.status !== 'graded'"
-                    >
-                      Review
+                    <button class="btn-action btn-grade" (click)="gradeSubmission(submission)">
+                      {{ submission.status === 'graded' ? 'Edit Grade' : 'Grade' }}
                     </button>
+                  </td>
+                  <td>
+                    <span *ngIf="submission.status === 'graded'" class="grade graded">
+                      {{ submission.grade }}
+                    </span>
                   </td>
                 </tr>
               </tbody>

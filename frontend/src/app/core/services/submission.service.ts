@@ -2,15 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Submission } from '../models/submission.model';
-import {ApiResponse} from '../models/api-response.model';
+import { ApiResponse } from '../models/api-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubmissionService {
   constructor(private api: ApiService) {}
 
-  submitAssignment(studentId: number, assignmentId: number, submissionFile: string): Observable<ApiResponse<Submission>> {
+  submitAssignment(
+    studentId: number,
+    assignmentId: number,
+    submissionFile: string
+  ): Observable<ApiResponse<Submission>> {
     return this.api.post<ApiResponse<Submission>>(
       `/api/submissions/student/${studentId}/assignment/${assignmentId}`,
       { submissionFile }
@@ -35,11 +39,30 @@ export class SubmissionService {
     return this.api.get<ApiResponse<Submission[]>>(`/api/submissions/assignment/${assignmentId}`);
   }
 
-  updateSubmission(submissionId: number, submissionFile: string): Observable<ApiResponse<Submission>> {
-    return this.api.put<ApiResponse<Submission>>(`/api/submissions/${submissionId}`, { submissionFile });
+  updateSubmission(
+    submissionId: number,
+    submissionFile: string
+  ): Observable<ApiResponse<Submission>> {
+    return this.api.put<ApiResponse<Submission>>(`/api/submissions/${submissionId}`, {
+      submissionFile,
+    });
   }
 
   getSubmissionsByStatus(status: string): Observable<ApiResponse<Submission[]>> {
     return this.api.get<ApiResponse<Submission[]>>(`/api/submissions/status/${status}`);
+  }
+
+  updateSubmissionStatus(
+    submissionId: number,
+    status: string
+  ): Observable<ApiResponse<Submission>> {
+    return this.api.put<ApiResponse<Submission>>(`/api/submissions/status/${submissionId}?status=${status}`, {});
+  }
+  updateSubmissionGrade(
+    submissionId: number,
+    status: string,
+    grade: string
+  ): Observable<ApiResponse<Submission>> {
+    return this.api.put<ApiResponse<Submission>>(`/api/submissions/grade/${submissionId}?status=${status}&grade=${grade}`, {});
   }
 }

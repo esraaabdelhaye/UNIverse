@@ -40,8 +40,6 @@ export class ViewSubmissions implements OnInit {
   ngOnInit() {
     this.currentDoctor = this.authService.getCurrentUser();
     this.loadCourses();
-    this.loadAssignments();
-    // this.loadSubmissions();
   }
 
   loadCourses() {
@@ -51,6 +49,8 @@ export class ViewSubmissions implements OnInit {
           const courses = response.data;
           this.courses = Array.isArray(courses) ? courses : courses ? [courses] : [];
           console.log(courses);
+
+          for (const course of this.courses) this.loadAssignment(course.id);
         }
       },
       error: (err) => {
@@ -59,44 +59,80 @@ export class ViewSubmissions implements OnInit {
     });
   }
 
-  loadAssignments() {
-    this.assignmentService.getAllAssignments().subscribe({
+  loadAssignment(courseId: number) {
+    this.assignmentService.getAssignmentsByCourse(courseId).subscribe({
       next: (response) => {
         if (response.success && response.data) {
-          // Normalize assignments so `id` is always a numeric id (some APIs return `assignmentId` as a string)
-          this.assignments = response.data.map((a: any) => ({
-            ...a,
-            id: a.id ?? (a.assignmentId ? parseInt(a.assignmentId, 10) : undefined),
-          })) as Assignment[];
-          console.log('Loaded assignments:', this.assignments);
+          const data = Array.isArray(response.data) ? response.data : [response.data];
 
-          // load submissions for all assignments (skip those that lack a numeric id)
-          for (const assignment of this.assignments) {
-            const assignmentId = assignment.id;
-            if (typeof assignmentId !== 'number' || isNaN(assignmentId)) {
-              console.warn('Skipping submissions fetch: assignment has no numeric id', assignment);
+          // Track newly added assignment ids so we only fetch submissions for those
+          const newlyAddedIds: number[] = [];
+
+          for (const raw of data) {
+            const id = raw.id ?? (raw.assignmentId ? parseInt(raw.assignmentId, 10) : undefined);
+            if (typeof id !== 'number' || isNaN(id)) {
+              console.warn('Skipping assignment with invalid id', raw);
               continue;
             }
 
-            this.submissionService.getAssignmentSubmissions(assignmentId).subscribe({
-              next: (response) => {
-                if (response.success && response.data) {
-                  this.submissions = this.submissions.concat(response.data);
-                  this.filteredSubmissions = [...this.submissions];
-                  console.log('submissions: ', this.submissions);
-                }
-              },
-              error: (err) => {
-                console.error('Error loading submissions:', err);
-              },
-            });
+            // Normalize and preserve all useful fields
+            const normalized: Assignment = {
+              ...raw,
+              id,
+              assignmentTitle: raw.assignmentTitle ?? raw.title ?? '',
+              courseCode: raw.courseCode ?? raw.course ?? '',
+              courseId: raw.courseId ?? courseId,
+            } as Assignment;
+
+            // Avoid duplicates
+            const exists = this.assignments.some((a) => a.id === id);
+            if (!exists) {
+              this.assignments.push(normalized);
+              newlyAddedIds.push(id);
+            }
           }
 
-          this.isLoading = false;
+          console.log('Loaded assignments:', this.assignments);
+
+          // Fetch submissions only for the newly added assignments
+          for (const aId of newlyAddedIds) {
+            this.loadSubmissions(aId);
+          }
+
+          // If there were no assignments, ensure loading flag is cleared
+          if (newlyAddedIds.length === 0) {
+            this.isLoading = false;
+          }
         }
       },
       error: (err) => {
         console.error('Error loading assignments:', err);
+        this.isLoading = false;
+      },
+    });
+  }
+
+  loadSubmissions(assignmentId: number) {
+    this.submissionService.getAssignmentSubmissions(assignmentId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const data = Array.isArray(response.data) ? response.data : [response.data];
+
+          // Avoid adding duplicate submissions
+          for (const raw of data) {
+            const exists = this.submissions.some((s) => s.submissionId === raw.submissionId);
+            if (!exists) this.submissions.push(raw);
+          }
+
+          this.filteredSubmissions = [...this.submissions];
+          console.log('submissions: ', this.submissions);
+
+          // Clear loading indicator once we have submissions
+          this.isLoading = false;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading submissions:', err);
         this.isLoading = false;
       },
     });
@@ -121,13 +157,46 @@ export class ViewSubmissions implements OnInit {
   }
 
   viewSubmission(submission: Submission) {
-    alert(`Viewing submission from ${submission.studentId} for ${submission.assignmentId}`);
+    submission.status = submission.grade ? 'graded' : 'grading';
+    console.log('id: ', submission.submissionId);
+
+    console.log(`Marked ${submission.studentId}'s submission as reviewed`);
+    alert(`Marked as grading for ${submission.studentName}`);
+    this.submissionService.updateSubmissionStatus(submission.submissionId, 'grading').subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          console.log('Submission status updated on server:', response.data);
+        } else {
+          console.error('Failed to update submission status on server');
+        }
+      },
+      error: (err) => {
+        console.error('Error updating submission status on server:', err);
+      },
+    });
   }
 
-  markAsReviewed(submission: Submission) {
-    submission.status = 'graded';
-    console.log(`Marked ${submission.studentId}'s submission as reviewed`);
-    alert(`Marked as reviewed for ${submission.studentId}`);
+  gradeSubmission(submission: Submission) {
+    const grade = prompt(`Enter grade for ${submission.studentName}:`, submission.grade || '');
+    if (grade !== null && grade.trim() !== '') {
+      submission.status = 'graded';
+      submission.grade = grade.trim();
+      this.submissionService
+        .updateSubmissionGrade(submission.submissionId, 'graded', submission.grade)
+        .subscribe({
+          next: (response) => {
+            if (response.success && response.data) {
+              console.log('Submission grade updated on server:', response.data);
+              alert(`Grade saved for ${submission.studentName}`);
+            } else {
+              console.error('Failed to update submission grade on server');
+            }
+          },
+          error: (err) => {
+            console.error('Error updating submission grade on server:', err);
+          },
+        });
+    }
   }
 
   logout() {

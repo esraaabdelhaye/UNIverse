@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -13,7 +18,11 @@
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
-      <a class="nav-link active" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard/grade-students"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">grade</span>
         <span>Grade Students</span>
       </a>
@@ -41,7 +50,7 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
+        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User" />
         <div class="user-info">
           <p class="user-name">John Doe</p>
           <p class="user-role">Professor</p>
@@ -62,8 +71,8 @@
               <label class="form-label">Select Course</label>
               <select class="form-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
                 <option value="">All Courses</option>
-                <option *ngFor="let course of courses" [value]="course.code">
-                  {{ course.code }}
+                <option *ngFor="let course of courses" [value]="course.courseId">
+                  {{ course.courseTitle }}
                 </option>
               </select>
             </div>
@@ -81,36 +90,48 @@
           <div class="table-wrapper">
             <table class="grades-table">
               <thead>
-              <tr>
-                <th>Student</th>
-                <th>Assignment</th>
-                <th>Submitted</th>
-                <th>Status</th>
-                <th>Score</th>
-                <th>Action</th>
-              </tr>
+                <tr>
+                  <th>Student</th>
+                  <th>Assignment</th>
+                  <th>Submitted</th>
+                  <th>Status</th>
+                  <th>Score</th>
+                  <th>Action</th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let student of filteredStudents">
-                <td class="student-cell">
-                  <img [src]="student.avatar" class="student-avatar" alt=""/>
-                  <span class="student-name">{{ student.name }}</span>
-                </td>
-                <td>{{ student.assignment }}</td>
-                <td>{{ student.submittedDate }}</td>
-                <td>
+                <tr *ngFor="let student of filteredStudents">
+                  <td class="student-cell">
+                    <!-- <img [src]="student.avatar" class="student-avatar" alt="" />
+                    <span class="student-name">{{ student.name }}</span>
+                  </td>
+                  <td>{{ student.assignment }}</td>
+                  <td>{{ student.submittedDate }}</td> -->
+                  </td>
+
+                  <td>
                     <span class="badge" [ngClass]="'badge-' + student.status">
-                      {{ status === 'pending' ? 'Needs Grading' : status === 'late' ? 'Late' : 'Graded' | titlecase }}
+                      {{
+                        status === 'pending'
+                          ? 'Needs Grading'
+                          : status === 'late'
+                          ? 'Late'
+                          : ('Graded' | titlecase)
+                      }}
                       {{ student.status | titlecase }}
                     </span>
-                </td>
-                <td>{{ student.score ? student.score + '%' : '-' }}</td>
-                <td>
-                  <button class="btn-action btn-grade" (click)="gradeStudent(student)" [disabled]="student.status === 'graded'">
-                    {{ student.status === 'graded' ? 'Graded' : 'Grade' }}
-                  </button>
-                </td>
-              </tr>
+                  </td>
+                  <!-- <td>{{ student.score ? student.score + '%' : '-' }}</td> -->
+                  <td>
+                    <button
+                      class="btn-action btn-grade"
+                      (click)="gradeStudent(student)"
+                      [disabled]="student.status === 'graded'"
+                    >
+                      {{ student.status === 'graded' ? 'Graded' : 'Grade' }}
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
