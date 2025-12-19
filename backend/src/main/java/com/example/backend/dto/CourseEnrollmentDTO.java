@@ -6,14 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseEnrollmentDTO {
-    private long courseId;         // new: to get all course enrollments from course then get grades
+
     private String grade;     // new
     private CourseDTO course;
+    private StudentDTO student;  // new
+    private Date enrollmentDate;
     private String professorName;
     private Integer enrolledStudents;
     private Integer totalCapacity;

@@ -293,7 +293,7 @@ public class StudentService {
     }
 
     // Helper methods
-    private StudentDTO convertToDTO(Student student) {
+    public StudentDTO convertToDTO(Student student) {
         StudentDTO dto = new StudentDTO();
         dto.setStudentId(String.valueOf(student.getId()));
         dto.setFullName(student.getName());

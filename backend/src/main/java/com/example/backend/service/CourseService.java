@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.example.backend.service.StudentService;
 import com.example.backend.dto.CourseDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Course;
@@ -27,6 +27,8 @@ public class CourseService {
     private final DoctorRepo doctorRepo;
     private final ScheduleRepo scheduleRepo;
     private final AnnouncementRepo announcementRepo;
+    @Autowired
+    private StudentService studentService;
 
 
     @Autowired
@@ -332,7 +334,8 @@ public class CourseService {
 
     private CourseEnrollmentDTO toCourseEnrollmentDTO(CourseEnrollment courseEnrollment, Course course) {
         CourseEnrollmentDTO dto = new CourseEnrollmentDTO();
-        dto.setCourseId(course.getId());
+
+        dto.setStudent(studentService.convertToDTO(courseEnrollment.getStudent()));
         dto.setCourse(convertToDTO(course));
 
         dto.setEnrolledStudents(course.getEnrollments() != null ? course.getEnrollments().size() : 0);

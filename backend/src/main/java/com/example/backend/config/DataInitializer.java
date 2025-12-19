@@ -713,7 +713,9 @@ public class DataInitializer implements CommandLineRunner {
                 submission3.setCourse(course2);
                 submission3.setAssignment(assignment2);
                 submission3.setSubmissionDate(LocalDate.of(2025, 10, 30));
-                submission3.setStatus("submitted");
+                submission3.setStatus("graded");
+                submission3.setGrade("91");
+                submission3.setFeedback("Great job on data structures. Minor improvements needed on edge cases.");
                 submission3.setSubmissionFile("/uploads/student1_assignment2.zip");
                 submissionRepo.save(submission3);
             }
@@ -728,7 +730,9 @@ public class DataInitializer implements CommandLineRunner {
             s3.setCourse(courseML);
             s3.setAssignment(mlHw1);
             s3.setSubmissionDate(LocalDate.of(2025, 10, 9));
-            s3.setStatus("submitted");
+            s3.setStatus("graded");
+            s3.setGrade("87");
+            s3.setFeedback("Solid implementation of logistic regression; consider tuning learning rate.");
             s3.setSubmissionFile("/uploads/student4_cs229_hw1.zip");
             submissionRepo.save(s3);
         }
@@ -738,7 +742,9 @@ public class DataInitializer implements CommandLineRunner {
             s4.setCourse(courseML);
             s4.setAssignment(mlHw2);
             s4.setSubmissionDate(LocalDate.of(2025, 11, 4));
-            s4.setStatus("submitted");
+            s4.setStatus("graded");
+            s4.setGrade("93");
+            s4.setFeedback("Excellent neural network design and clear documentation.");
             s4.setSubmissionFile("/uploads/student5_cs229_hw2.zip");
             submissionRepo.save(s4);
         }
