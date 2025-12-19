@@ -111,7 +111,7 @@ export class StudentDashboard implements OnInit {
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,
-            professor: course.professor || 'TBA',
+            professor: course.instructorName || 'TBA',
             progress: Math.floor(Math.random() * 100),
           }));
         }

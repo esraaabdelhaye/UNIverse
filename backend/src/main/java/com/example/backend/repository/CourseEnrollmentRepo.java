@@ -4,6 +4,8 @@ import com.example.backend.entity.CourseEnrollment;
 import com.example.backend.entity.Student;
 import com.example.backend.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.List;
@@ -20,4 +22,8 @@ public interface CourseEnrollmentRepo extends JpaRepository<CourseEnrollment, Lo
     List<CourseEnrollment> findByCourse(Course course);
 
     long countByCourse(Course course);
+
+    // JOIN FETCH to eagerly load course with doctors
+    @Query("SELECT e FROM CourseEnrollment e LEFT JOIN FETCH e.course c LEFT JOIN FETCH c.doctors WHERE e.student = :student")
+    List<CourseEnrollment> findByStudentWithCourseDoctors(@Param("student") Student student);
 }
