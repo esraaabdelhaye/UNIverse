@@ -62,7 +62,7 @@
             <select class="form-select" [(ngModel)]="selectedCourse">
               <option value="">Choose a course</option>
               <option *ngFor="let course of courses" [value]="course.id">
-                {{ course.code }}: {{ course.name }}
+                {{ course.courseCode }}: {{ course.courseTitle }}
               </option>
             </select>
           </div>
@@ -106,10 +106,7 @@
           </div>
 
           <div class="action-buttons">
-            <button class="btn btn-secondary" (click)="saveDraft()" type="button">
-              <span class="material-symbols-outlined">save</span>
-              Save Draft
-            </button>
+            
             <button class="btn btn-primary" (click)="uploadMaterials()" [disabled]="isUploading" type="button">
               <span class="material-symbols-outlined" *ngIf="!isUploading">upload</span>
               <span *ngIf="!isUploading">Upload Materials</span>
