@@ -60,8 +60,13 @@
           <p class="page-subtitle">Stay updated with course announcements and important information</p>
         </div>
 
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading announcements...</p>
+        </div>
+
         <!-- Filters Section -->
-        <div class="card filters-card">
+        <div *ngIf="!isLoading" class="filters-card">
           <div class="filters-header">
             <div>
               <p class="filters-title">Filters</p>
@@ -108,7 +113,7 @@
         </div>
 
         <!-- Announcements List -->
-        <div class="announcements-container">
+        <div *ngIf="!isLoading" class="announcements-container">
           <div *ngIf="filteredAnnouncements.length > 0" class="announcement-list">
             <div class="announcement-card" *ngFor="let announcement of filteredAnnouncements">
               <div class="announcement-header">
