@@ -55,4 +55,21 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
     @Transactional
     @Query(value = "DELETE FROM semester_courses WHERE course_id = :courseId", nativeQuery = true)
     void deleteSemesterCoursesByCourseId(@Param("courseId") Long courseId);
+
+    // ===== JOIN FETCH methods to avoid LazyInitializationException =====
+    
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors WHERE c.id = :id")
+    Optional<Course> findByIdWithDoctors(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors")
+    List<Course> findAllWithDoctors();
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors WHERE c.courseCode = :courseCode")
+    Optional<Course> findByCourseCodeWithDoctors(@Param("courseCode") String courseCode);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors WHERE c.department.id = :departmentId")
+    List<Course> findByDepartmentIdWithDoctors(@Param("departmentId") Long departmentId);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors WHERE c.semester = :semester")
+    List<Course> findBySemesterWithDoctors(@Param("semester") String semester);
 }

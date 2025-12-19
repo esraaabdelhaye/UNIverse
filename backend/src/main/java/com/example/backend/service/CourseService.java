@@ -46,7 +46,7 @@ public class CourseService {
 
     public ApiResponse<List<CourseDTO>> getAllCourses(Pageable pageable) {
         try {
-            List<Course> courses = courseRepo.findAll();
+            List<Course> courses = courseRepo.findAllWithDoctors();
             List<CourseDTO> courseDTOs = courses.stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class CourseService {
 
     public ApiResponse<CourseDTO> getCourseById(Long id) {
         try {
-            Optional<Course> courseOpt = courseRepo.findById(id);
+            Optional<Course> courseOpt = courseRepo.findByIdWithDoctors(id);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with ID: " + id);
             }
@@ -71,7 +71,7 @@ public class CourseService {
 
     public ApiResponse<CourseDTO> getCourseByCode(String courseCode) {
         try {
-            Optional<Course> courseOpt = courseRepo.findByCourseCode(courseCode);
+            Optional<Course> courseOpt = courseRepo.findByCourseCodeWithDoctors(courseCode);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with code: " + courseCode);
             }
@@ -84,7 +84,7 @@ public class CourseService {
 
     public ApiResponse<List<CourseDTO>> getCoursesBySemester(String semester) {
         try {
-            List<Course> courses = courseRepo.findBySemester(semester);
+            List<Course> courses = courseRepo.findBySemesterWithDoctors(semester);
             List<CourseDTO> dtos = courses.stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
@@ -98,7 +98,7 @@ public class CourseService {
 
     public ApiResponse<List<CourseDTO>> getCoursesByDepartment(Long departmentId) {
         try {
-            List<Course> courses = courseRepo.findByDepartmentId(departmentId);
+            List<Course> courses = courseRepo.findByDepartmentIdWithDoctors(departmentId);
             List<CourseDTO> dtos = courses.stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
@@ -170,7 +170,7 @@ public class CourseService {
 
     public ApiResponse<CourseDTO> updateCourse(Long id, CourseDTO courseDTO) {
         try {
-            Optional<Course> courseOpt = courseRepo.findById(id);
+            Optional<Course> courseOpt = courseRepo.findByIdWithDoctors(id);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with ID: " + id);
             }
@@ -230,7 +230,7 @@ public class CourseService {
     @Transactional
     public ApiResponse<Void> deleteCourse(Long id) {
         try {
-            Optional<Course> courseOpt = courseRepo.findById(id);
+            Optional<Course> courseOpt = courseRepo.findByIdWithDoctors(id);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with ID: " + id);
             }
@@ -274,7 +274,7 @@ public class CourseService {
 
     public ApiResponse<CourseDTO> updateCourseStatus(Long id, String status) {
         try {
-            Optional<Course> courseOpt = courseRepo.findById(id);
+            Optional<Course> courseOpt = courseRepo.findByIdWithDoctors(id);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found with ID: " + id);
             }
@@ -313,10 +313,19 @@ public class CourseService {
         dto.setCredits(course.getCredits());
         dto.setSemester(course.getSemester());
         dto.setStatus(course.getStatus() != null ? course.getStatus() : "Open");
-        dto.setId(course.getId());
+        
+        // Handle instructor - check if doctors exist
+        if (course.getDoctors() != null && !course.getDoctors().isEmpty()) {
+            var doctor = course.getDoctors().iterator().next();
+            dto.setInstructorId(String.valueOf(doctor.getId()));
+            dto.setInstructorName(doctor.getName());
+        } else {
+            dto.setInstructorId(null);
+            dto.setInstructorName(null);
+        }
+        
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
-            dto.setInstructorId(String.valueOf(course.getDepartment().getId()));
         }
         return dto;
     }

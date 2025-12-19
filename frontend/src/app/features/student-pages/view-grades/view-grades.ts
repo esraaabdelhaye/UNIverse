@@ -110,11 +110,13 @@ export class ViewGrades implements OnInit {
                       ? [gradeData]
                       : [];
 
+                  console.log(`Grades for course ID ${courseId}:`, gradesArray);
+                  console.log('Course details:', course);
                   const courseGrade: CourseGrade = {
                     id: courseId,
                     code: course.courseCode || 'N/A',
                     name: course.courseTitle || 'Unknown Course',
-                    professor: course.professor || 'TBA',
+                    professor: course.instructorName || 'TBA',
                     overallGrade: this.calculateOverallGrade(gradesArray),
                     completion: 50,
                     assignments: gradesArray.map((g: any) => ({
