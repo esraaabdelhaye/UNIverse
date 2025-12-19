@@ -103,7 +103,8 @@ export class CourseAvailability implements OnInit {
           capacity: dto.capacity,
           status: dto.status || 'Open',
           enrolled: dto.enrolled,
-          description: dto.description
+          description: dto.description,
+          instructorName: dto.instructorName || 'TBA'
         }));
 
         console.log("Loaded Courses:", this.courses);

@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -13,15 +18,19 @@
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
-        <span class="material-symbols-outlined">grade</span>
-        <span>Grade Students</span>
+      <a class="nav-link" routerLink="/doctor-dashboard/course-students" routerLinkActive="active">
+        <span class="material-symbols-outlined">group</span>
+        <span>Course Students</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a class="nav-link active" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard/course-announcements"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -41,10 +50,10 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
+        <img class="user-avatar" src="../../../../assets/user.png" alt="User" />
         <div class="user-info">
-          <p class="user-name">John Doe</p>
-          <p class="user-role">Professor</p>
+          <p class="user-name">{{ currentDoctor.fullName }}</p>
+          <p class="user-role">{{ currentDoctor.role }}</p>
         </div>
       </div>
     </header>
@@ -72,17 +81,34 @@
 
           <div class="form-group">
             <label class="form-label">Title *</label>
-            <input class="form-input" type="text" [(ngModel)]="newTitle" placeholder="Announcement title"/>
+            <input
+              class="form-input"
+              type="text"
+              [(ngModel)]="newTitle"
+              placeholder="Announcement title"
+            />
           </div>
 
           <div class="form-group">
             <label class="form-label">Message *</label>
-            <textarea class="form-textarea" rows="4" [(ngModel)]="newMessage" placeholder="Write your announcement..."></textarea>
+            <textarea
+              class="form-textarea"
+              rows="4"
+              [(ngModel)]="newMessage"
+              placeholder="Write your announcement..."
+            ></textarea>
           </div>
 
           <div class="form-actions">
-            <button class="btn btn-secondary" (click)="saveDraft()" type="button">Save Draft</button>
-            <button class="btn btn-primary" (click)="publishAnnouncement()" [disabled]="isPublishing" type="button">
+            <button class="btn btn-secondary" (click)="saveDraft()" type="button">
+              Save Draft
+            </button>
+            <button
+              class="btn btn-primary"
+              (click)="publishAnnouncement()"
+              [disabled]="isPublishing"
+              type="button"
+            >
               <span class="material-symbols-outlined" *ngIf="!isPublishing">send</span>
               {{ isPublishing ? 'Publishing...' : 'Publish' }}
             </button>
@@ -112,10 +138,28 @@
               </div>
 
               <div class="announcement-actions">
-                <button class="btn-small btn-edit" (click)="editAnnouncement(announcement)" type="button">Edit</button>
-                <button class="btn-small btn-delete" (click)="deleteAnnouncement(announcement)" type="button">Delete</button>
-                <button class="btn-small btn-publish" (click)="publishDraft(announcement)"
-                        *ngIf="announcement.status === 'draft'" type="button">Publish</button>
+                <button
+                  class="btn-small btn-edit"
+                  (click)="editAnnouncement(announcement)"
+                  type="button"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn-small btn-delete"
+                  (click)="deleteAnnouncement(announcement)"
+                  type="button"
+                >
+                  Delete
+                </button>
+                <button
+                  class="btn-small btn-publish"
+                  (click)="publishDraft(announcement)"
+                  *ngIf="announcement.status === 'draft'"
+                  type="button"
+                >
+                  Publish
+                </button>
               </div>
             </div>
           </div>

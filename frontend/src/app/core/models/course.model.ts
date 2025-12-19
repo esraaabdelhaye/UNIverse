@@ -8,6 +8,6 @@ export interface Course {
   semester: string;
   description: string;
   department?: string;
-  professor?: string;
+  instructorName?: string;
   progress?: number;
 }

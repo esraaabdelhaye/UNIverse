@@ -65,11 +65,12 @@ export class MyCourses implements OnInit {
               ? [data]
               : [];
 
+          console.log('Fetched Courses:', coursesArray);
           this.courses = coursesArray.map((course: any, index: number) => ({
             id: course.id,
             code: course.courseCode,
             name: course.courseTitle,
-            professor: course.professor || 'TBA',
+            professor: course.instructorName || 'TBA',
             bgColor: `${this.getColorName(index)}-bg`,
             buttonColor: `${this.getColorName(index)}-btn`,
             textColor: this.getColorName(index),

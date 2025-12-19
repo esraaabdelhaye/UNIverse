@@ -146,7 +146,7 @@ public class StudentService {
                 return ApiResponse.notFound("Student not found");
             }
 
-            List<CourseEnrollment> enrollments = enrollmentRepo.findByStudent(studentOpt.get());
+            List<CourseEnrollment> enrollments = enrollmentRepo.findByStudentWithCourseDoctors(studentOpt.get());
             List<CourseDTO> courseDTOs = enrollments.stream()
                     .map(enrollment -> convertCourseToDTO(enrollment.getCourse()))
                     .collect(Collectors.toList());
@@ -167,7 +167,7 @@ public class StudentService {
                 return ApiResponse.notFound("Student not found");
             }
 
-            List<CourseEnrollment> enrollments = enrollmentRepo.findByStudent(studentOpt.get());
+            List<CourseEnrollment> enrollments = enrollmentRepo.findByStudentWithCourseDoctors(studentOpt.get());
             List<AssignmentDTO> assignmentDTOs = enrollments.stream()
                     .flatMap(enrollment -> enrollment.getCourse().getAssignments().stream())
                     .map(this::convertAssignmentToDTO)
@@ -293,7 +293,7 @@ public class StudentService {
     }
 
     // Helper methods
-    private StudentDTO convertToDTO(Student student) {
+    public StudentDTO convertToDTO(Student student) {
         StudentDTO dto = new StudentDTO();
         dto.setStudentId(String.valueOf(student.getId()));
         dto.setFullName(student.getName());
@@ -310,9 +310,19 @@ public class StudentService {
         dto.setSemester(course.getSemester());
         dto.setDescription(course.getDescription());
         dto.setId(course.getId());
+        // Handle instructor - check if doctors exist
+        if (course.getDoctors() != null && !course.getDoctors().isEmpty()) {
+            var doctor = course.getDoctors().iterator().next();
+            dto.setInstructorId(String.valueOf(doctor.getId()));
+            dto.setInstructorName(doctor.getName());
+        } else {
+            dto.setInstructorId(null);
+            dto.setInstructorName(null);
+        }
         if (course.getDepartment() != null) {
             dto.setDepartment(course.getDepartment().getName());
         }
+
         return dto;
     }
 

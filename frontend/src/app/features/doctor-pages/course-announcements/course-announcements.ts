@@ -32,6 +32,7 @@ export class Announcements implements OnInit {
 
   courses: Course[] = [];
   announcements: Announcement[] = [];
+  currentDoctor: any;
 
   selectedCourse = '';
   newTitle = '';
@@ -39,6 +40,7 @@ export class Announcements implements OnInit {
   isPublishing = false;
 
   ngOnInit() {
+    this.currentDoctor = this.authService.getCurrentUser();
     this.loadCourses();
     this.loadAnnouncements();
   }
@@ -65,7 +67,8 @@ export class Announcements implements OnInit {
       {
         id: 2,
         title: 'New Reading Material Available',
-        message: "Check the Materials section for the new supplementary readings on Renaissance Art.",
+        message:
+          'Check the Materials section for the new supplementary readings on Renaissance Art.',
         course: '2',
         status: 'published',
         createdDate: 'Oct 25, 2023',
@@ -73,7 +76,8 @@ export class Announcements implements OnInit {
       {
         id: 3,
         title: 'Office Hours Rescheduled',
-        message: "Office hours this week have been moved to Wednesday 2-4 PM. Join via Zoom link in the course page.",
+        message:
+          'Office hours this week have been moved to Wednesday 2-4 PM. Join via Zoom link in the course page.',
         course: '3',
         status: 'draft',
         createdDate: 'Oct 24, 2023',
@@ -162,7 +166,7 @@ export class Announcements implements OnInit {
   }
 
   getCourseCode(courseId: string): string {
-    const found = this.courses.find(c => c.id.toString() === courseId);
+    const found = this.courses.find((c) => c.id.toString() === courseId);
     return found ? found.code : courseId;
   }
 

@@ -49,7 +49,7 @@ export class DoctorDashboard implements OnInit {
         if (response.success && response.data) {
           const courses = response.data;
           this.courses = Array.isArray(courses) ? courses : courses ? [courses] : [];
-          console.log('courses' , courses);
+          console.log('courses', courses);
           this.getDoctorsSubmissions();
         }
       },
@@ -61,12 +61,16 @@ export class DoctorDashboard implements OnInit {
 
   loadStats() {
     this.stats = [
-      { label: 'Submitted',
-          value: this.submissions.filter(s => s.status === 'submitted').length,
-          icon: 'assignment' },
-      { label: 'Grading', 
-         value: this.submissions.filter(s => s.status === 'grading').length, 
-        icon: 'pending_actions' },
+      {
+        label: 'Submitted',
+        value: this.submissions.filter((s) => s.status === 'submitted').length,
+        icon: 'assignment',
+      },
+      {
+        label: 'Grading',
+        value: this.submissions.filter((s) => s.status === 'grading').length,
+        icon: 'pending_actions',
+      },
       { label: 'Total Students', value: this.totalStudents, icon: 'people' },
     ];
   }
@@ -100,9 +104,10 @@ export class DoctorDashboard implements OnInit {
     }
   }
 
-
   navigateToCourse(courseCode: string) {
-    this.router.navigate(['/grade-students'], { queryParams: { course: courseCode } });
+    this.router.navigate(['/doctor-dashboard/course-students'], {
+      queryParams: { course: courseCode },
+    });
   }
 
   logout() {
