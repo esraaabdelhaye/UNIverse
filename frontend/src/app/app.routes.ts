@@ -96,6 +96,12 @@ export const routes: Routes = [
       import('./features/student-pages/view-materials/view-materials')
         .then(m => m.ViewMaterials),
   },
+  {
+    path: 'student-dashboard/view-announcements',
+    loadComponent: () =>
+      import('./features/student-pages/view-announcements/view-announcements')
+        .then(m => m.ViewAnnouncements),
+  },
 
   // SUPERVISOR Routes
   {

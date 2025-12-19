@@ -94,6 +94,10 @@ public class Course {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private Set<AssignmentSubmission> submissions = new HashSet<>();
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private Set<Announcement> announcements = new HashSet<>();
+
     public Course(Long id, String courseCode, String name, Integer credits,
                   String semester, String description, Department department)
     {

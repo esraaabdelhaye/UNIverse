@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -261,6 +262,22 @@ public class AnnouncementService {
                 .collect(Collectors.toList());
 
         return ApiResponse.success("Search completed", announcementDTOs);
+    }
+
+    private ApiResponse<List<AnnouncementDTO>> getAnnouncementByCourseId(String courseId) {
+        try {
+            Long courseIdLong = Long.parseLong(courseId);
+            Optional<Course> courseOpt = courseRepo.findById(courseIdLong) ;
+            if (courseOpt.isEmpty()) {
+                return ApiResponse.badRequest("Course not found") ;
+            }
+            List<Announcement> announcements = announcementRepo.findByCourseId(courseIdLong) ;
+            List<AnnouncementDTO> announcementsDto = announcements.stream().map(announcement -> convertToDTO(announcement)).collect(Collectors.toList()) ;
+            return ApiResponse.success("announcements retreived successfully",announcementsDto) ;
+        }
+        catch(NumberFormatException e) {
+            return ApiResponse.badRequest("inValid Course ID " + courseId) ;
+        }
     }
 
     /**
