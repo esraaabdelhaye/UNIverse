@@ -57,10 +57,10 @@
         </div>
 
         <div class="courses-grid">
-          <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.code)">
-            <p class="course-code">{{ course.code }}</p>
-            <h3 class="course-name">{{ course.name }}</h3>
-            <p class="course-students">{{ course.students }} Students</p>
+          <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.courseCode)">
+            <p class="course-code">{{ course.courseCode }}</p>
+            <h3 class="course-name">{{ course.courseTitle }}</h3>
+            <p class="course-students">{{ course.capacity }} Students</p>
           </div>
         </div>
 

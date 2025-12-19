@@ -6,7 +6,7 @@ export interface Submission {
   studentName?: string;
   // studentAvatar?: string;
   submissionDate: number;
-  status: 'submitted' | 'graded' | 'pending';
+  status: 'submitted' | 'graded' | 'grading';
   grade?: string;
   feedback?: string;
   submissionFile?: string;

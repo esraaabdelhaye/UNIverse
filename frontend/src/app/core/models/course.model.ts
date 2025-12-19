@@ -2,6 +2,7 @@ export interface Course {
   id: number;
   courseId?: string;
   courseCode: string;
+  capacity: number;
   courseTitle: string;
   credits: number;
   semester: string;
