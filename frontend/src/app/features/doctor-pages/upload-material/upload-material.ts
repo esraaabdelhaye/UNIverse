@@ -35,8 +35,10 @@ export class UploadMaterial implements OnInit {
   materialTitle = '';
   materialDescription = '';
   isUploading = false;
+  currentDoctor: any;
 
   ngOnInit() {
+    this.currentDoctor = this.authService.getCurrentUser();
     this.loadCourses();
   }
 

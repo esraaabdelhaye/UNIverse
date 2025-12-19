@@ -1,0 +1,145 @@
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span>Upload Material</span>
+      </a>
+      <a
+        class="active nav-link"
+        routerLink="/doctor-dashboard/course-students"
+        routerLinkActive="active"
+      >
+        <span class="material-symbols-outlined">group</span>
+        <span>Course Students</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment</span>
+        <span>View Submissions</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Announcements</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link logout-link" (click)="logout()" href="javascript:void(0)">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Log Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="icon-button">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge"></span>
+        </button>
+        <img class="user-avatar" src="../../../../assets/user.png" alt="User" />
+        <div class="user-info">
+          <p class="user-name">{{ currentDoctor.fullName }}</p>
+          <p class="user-role">{{ currentDoctor.role }}</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1 class="page-title">Course Students</h1>
+          <p class="page-subtitle">Manage and view students enrolled in your courses</p>
+        </div>
+
+        <div class="card filter-card">
+          <div class="form-group">
+            <label class="form-label">Select Course</label>
+            <select class="form-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+              <option value="">Choose a course to view students</option>
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.courseCode }}: {{ course.courseTitle }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="loading-state" *ngIf="isLoading">
+          <span class="material-symbols-outlined loading-icon">sync</span>
+          <p>Loading students...</p>
+        </div>
+
+        <div class="students-grid" *ngIf="!isLoading && students.length > 0">
+          <div class="student-card" *ngFor="let student of students">
+            <div class="student-header">
+              <div class="student-avatar-wrapper">
+                <img
+                  src="../../../../assets/user.png"
+                  class="student-avatar"
+                  alt="Student Avatar"
+                />
+              </div>
+              <div class="student-info">
+                <h3 class="student-name">{{ student.fullName }}</h3>
+                <!-- <p class="student-id">ID: #{{ student.phoneNumber }}</p> -->
+              </div>
+            </div>
+
+            <div class="student-details">
+              <div class="detail-item">
+                <span class="material-symbols-outlined detail-icon">mail</span>
+                <span class="detail-text">{{ student.email }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="material-symbols-outlined detail-icon">badge</span>
+                <span class="detail-text">{{ student.department || 'General' }}</span>
+              </div>
+            </div>
+
+            <!-- <div class="student-actions">
+              <button class="btn-action btn-view">
+                <span class="material-symbols-outlined">person</span>
+                View Profile
+              </button>
+              <button
+                class="btn-action btn-grade"
+                [routerLink]="['/doctor-dashboard/grade-students']"
+                [queryParams]="{ course: selectedCourse }"
+              >
+                <span class="material-symbols-outlined">grade</span>
+                Grades
+              </button>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="!isLoading && students.length === 0 && selectedCourse">
+          <span class="material-symbols-outlined empty-icon">group_off</span>
+          <h3 class="empty-title">No Students Found</h3>
+          <p class="empty-subtitle">There are no students currently enrolled in this course.</p>
+        </div>
+
+        <div class="empty-state" *ngIf="!isLoading && !selectedCourse">
+          <span class="material-symbols-outlined empty-icon">arrow_upward</span>
+          <h3 class="empty-title">Start by selecting a course</h3>
+          <p class="empty-subtitle">
+            Choose a course from the dropdown above to see the student list.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

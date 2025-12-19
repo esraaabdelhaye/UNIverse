@@ -5,7 +5,12 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link active" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -13,9 +18,9 @@
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
-        <span class="material-symbols-outlined">grade</span>
-        <span>Grade Students</span>
+      <a class="nav-link" routerLink="/doctor-dashboard/course-students" routerLinkActive="active">
+        <span class="material-symbols-outlined">group</span>
+        <span>Course Students</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
@@ -41,10 +46,10 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
+        <img class="user-avatar" src="../../../../assets/user.png" alt="User" />
         <div class="user-info">
-          <p class="user-name">John Doe</p>
-          <p class="user-role">Professor</p>
+          <p class="user-name">{{ currentDoctor.fullName }}</p>
+          <p class="user-role">{{ currentDoctor.role }}</p>
         </div>
       </div>
     </header>
@@ -57,7 +62,11 @@
         </div>
 
         <div class="courses-grid">
-          <div class="course-card" *ngFor="let course of courses" (click)="navigateToCourse(course.courseCode)">
+          <div
+            class="course-card"
+            *ngFor="let course of courses"
+            (click)="navigateToCourse(course.courseCode)"
+          >
             <p class="course-code">{{ course.courseCode }}</p>
             <h3 class="course-name">{{ course.courseTitle }}</h3>
             <p class="course-students">{{ course.capacity }} Students</p>
