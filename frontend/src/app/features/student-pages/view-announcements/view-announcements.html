@@ -1,0 +1,146 @@
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
+        <span>My Courses</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Submit Assignments</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+      <a class="nav-link active" routerLink="/student-dashboard/view-announcements" routerLinkActive="active">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Announcements</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge accent"></span>
+        </button>
+        <div class="user-avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC-LETa4BflVlQ-Ke4L1wK7jtSz5aP99ABOzLi0704ZljGf5FDMgfp5f-jIvQ1BtVkL0GlLxVHAvU0XTllE38dKcebfTPb7utJ8-cAWaPGS9T27juHXLKrFw1LTJP8NOx59KeIBXL7Qkt-g60iKue6ZC44Wl-FbKOwh7oSGGYVOPzJOoTtEjZhYn3CHNWbHK4tkdoAz4uskjwlIoMIoFoe4B46z1CHJsKKPQIY1gswCW_1j7WoHfNUICaoxhoDT9NlPLKLRsqoo');"></div>
+        <div class="user-info">
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h1 class="page-title">Announcements</h1>
+          <p class="page-subtitle">Stay updated with course announcements and important information</p>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="card filters-card">
+          <div class="filters-header">
+            <div>
+              <p class="filters-title">Filters</p>
+              <p class="filters-subtitle">Search and narrow down by course or timeframe</p>
+            </div>
+            <button class="btn btn-link" type="button" (click)="clearFilters()">
+              <span class="material-symbols-outlined">refresh</span>
+              Reset
+            </button>
+          </div>
+
+          <div class="filters-grid">
+            <div class="search-group">
+              <span class="material-symbols-outlined search-icon">search</span>
+              <input
+                class="search-input"
+                type="text"
+                [(ngModel)]="searchTerm"
+                (input)="onSearchChange()"
+                placeholder="Search announcements..."
+              />
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Course</label>
+              <select class="filter-select" [(ngModel)]="selectedCourseFilter" (change)="onCourseFilterChange()">
+                <option value="">All Courses</option>
+                <option *ngFor="let course of uniqueCourses" [value]="course.course">
+                  {{ course.courseCode }}
+                </option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Date</label>
+              <select class="filter-select" [(ngModel)]="selectedDateFilter" (change)="onDateFilterChange()">
+                <option value="">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Announcements List -->
+        <div class="announcements-container">
+          <div *ngIf="filteredAnnouncements.length > 0" class="announcement-list">
+            <div class="announcement-card" *ngFor="let announcement of filteredAnnouncements">
+              <div class="announcement-header">
+                <div class="announcement-title-section">
+                  <h3 class="announcement-title">{{ announcement.title }}</h3>
+                  <span class="course-badge">{{ announcement.courseCode }}</span>
+                </div>
+                <div class="announcement-author">By {{ announcement.author }}</div>
+              </div>
+
+              <p class="announcement-content">{{ announcement.message }}</p>
+
+              <div class="announcement-footer">
+                <span class="announcement-date">
+                  <span class="material-symbols-outlined">access_time</span>
+                  {{ announcement.createdDate | date:'medium' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="no-announcements" *ngIf="filteredAnnouncements.length === 0">
+            <div class="empty-state">
+              <span class="material-symbols-outlined empty-icon">inbox</span>
+              <p class="empty-text">No announcements found</p>
+              <p class="empty-subtitle">
+                {{ searchTerm || selectedCourseFilter ? 'Try adjusting your filters' : 'Check back later for updates' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
