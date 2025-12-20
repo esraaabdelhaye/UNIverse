@@ -203,4 +203,6 @@ export class ViewSubmissions implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  protected readonly Date = Date;
 }

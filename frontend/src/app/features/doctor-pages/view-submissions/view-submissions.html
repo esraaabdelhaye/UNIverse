@@ -100,7 +100,7 @@
                     <!-- <img [src]="submission.studentAvatar" class="student-avatar" alt="" /> -->
                     <span>{{ submission.studentName }}</span>
                   </td>
-                  <td>{{ submission.submissionDate }}</td>
+                  <td>{{ submission.submissionDate | date:'MMM d, yyyy h:mm a'}}</td>
                   <td>{{ submission.assignmentTitle }}</td>
                   <td>
                     <span class="badge" [ngClass]="'badge-' + submission.status">
