@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.Utils.MaterialType;
 import com.example.backend.dto.MaterialDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.service.MaterialService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,8 +50,12 @@ public class MaterialController {
     @PreAuthorize("hasAnyRole('DOC', 'SUPERVISOR')")
     public ResponseEntity<ApiResponse<MaterialDTO>> uploadMaterial(
             @PathVariable Long courseId,
-            @Valid @RequestBody MaterialDTO materialDTO) {
-        ApiResponse<MaterialDTO> response = materialService.uploadMaterial(courseId, materialDTO);
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("title") String title,
+            @RequestParam("type") MaterialType type,
+            @RequestParam(value = "description", required = false) String description
+    ) {
+        ApiResponse<MaterialDTO> response = materialService.uploadMaterial(courseId, file, title, type, description);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

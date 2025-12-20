@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { Course } from '../../../core/models/course.model';
+import { MaterialService } from '../../../core/services/material.service';
 
 interface UploadFile {
+  file: File;
   name: string;
   size: string;
   type: string;
@@ -25,7 +27,7 @@ export class UploadMaterial implements OnInit {
 
   private router = inject(Router);
   private authService = inject(AuthService);
-
+  private materialService = inject(MaterialService);
   private doctorService = inject(DoctorService);
 
   currentDoctor: any;
@@ -35,7 +37,6 @@ export class UploadMaterial implements OnInit {
   materialTitle = '';
   materialDescription = '';
   isUploading = false;
-  currentDoctor: any;
 
   ngOnInit() {
     this.currentDoctor = this.authService.getCurrentUser();
@@ -82,6 +83,7 @@ export class UploadMaterial implements OnInit {
   handleFiles(files: FileList): void {
     Array.from(files).forEach((file: any) => {
       const uploadFile: UploadFile = {
+        file: file,
         name: file.name,
         size: this.formatFileSize(file.size),
         type: this.getFileType(file.name),
@@ -99,12 +101,11 @@ export class UploadMaterial implements OnInit {
   }
 
   getFileType(filename: string): string {
+    const lower = filename.toLowerCase();
     if (filename.endsWith('.pdf')) return 'PDF';
     if (filename.endsWith('.docx') || filename.endsWith('.doc')) return 'TEXTBOOK';
-    if (filename.endsWith('.pptx') || filename.endsWith('.ppt')) return 'OTHER';
-    if (filename.endsWith('.mp4') || filename.endsWith('.ppt')) return 'VIDEO';
-    if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return 'OTHER';
-    return 'file';
+    if (filename.endsWith('.mp4')) return 'VIDEO';
+    return 'OTHER';
   }
 
   removeFile(index: number): void {
@@ -125,22 +126,27 @@ export class UploadMaterial implements OnInit {
 
     this.uploadedFiles.forEach(file => {
     const formData = new FormData();
-    // formData.append('file', file.file); // REAL FILE
-    // formData.append('title', this.materialTitle);
-    // formData.append('type', this.mapToBackendType(file.type));
+    formData.append('file', file.file); // REAL FILE
+    formData.append('title', this.materialTitle);
+    formData.append('type', file.type);
+    if (this.materialDescription?.trim()) {
+      formData.append('description', this.materialDescription);
+    }
 
-  //   this.doctorService
-  //     .uploadMaterial(Number(this.selectedCourse), formData)
-  //     .subscribe({
-  //       next: () => console.log('Uploaded'),
-  //       error: err => console.error(err)
-  //     });
-  // });
+    console.log(formData);
+
+    this.materialService
+      .uploadMaterial(Number(this.selectedCourse), formData)
+      .subscribe({
+        next: (res) => console.log('Uploaded material: ', res.data),
+        error: err => console.error(err)
+      });
+  });
 
       alert('Materials uploaded successfully!');
       this.resetForm();
       this.isUploading = false;
-    }, 1500);
+    
   }
 
 

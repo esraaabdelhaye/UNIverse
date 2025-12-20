@@ -87,7 +87,7 @@
             <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
               <div class="file-info">
                 <span class="material-symbols-outlined file-icon" [ngClass]="'file-icon-' + file.type">
-                  {{ file.type === 'pdf' ? 'picture_as_pdf' : file.type === 'doc' ? 'description' : file.type === 'ppt' ? 'slideshow' : 'table_chart' }}
+                  {{ file.type === 'PDF' ? 'picture_as_pdf' : file.type === 'DOC' ? 'description' : file.type === 'PPT' ? 'slideshow' : 'table_chart' }}
                 </span>
                 <div class="file-details">
                   <p class="file-name">{{ file.name }}</p>

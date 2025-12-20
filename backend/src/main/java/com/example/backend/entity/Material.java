@@ -14,6 +14,9 @@ public class Material {
     @Column(nullable = false)
     private String title;
 
+
+    private String fileName;
+
     @Column(name = "url")
     private String url;
 
@@ -23,6 +26,10 @@ public class Material {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private MaterialType type;
+
+
+    @Column(length = 1000)
+    private String description;
 
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
@@ -62,6 +69,14 @@ public class Material {
         this.title = title;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -84,6 +99,14 @@ public class Material {
 
     public void setType(MaterialType type) {
         this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getUploadDate() {
