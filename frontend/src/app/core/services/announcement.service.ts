@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
-import { Announcement } from '../models/announcement.model';
+import { Announcement } from '../models/announcment.model';
 import { Course } from '../models/course.model';
 
 @Injectable({
@@ -11,36 +11,9 @@ import { Course } from '../models/course.model';
 export class AnnouncementService {
   constructor(private api: ApiService) {}
 
-  getAnnouncementsByCourse(course: any): Observable<ApiResponse<Announcement[]>> {
-    // Handle both course object and string
-    const courseCode = typeof course === 'string' ? course : course?.courseCode || course?.code;
-
-    if (!courseCode) {
-      throw new Error('Course code is required');
-    }
-
+  getAnnouncementsByCoures(course: Course): Observable<ApiResponse<Announcement[]>> {
     return this.api.get<ApiResponse<Announcement[]>>(
-      `/announcement/get/course?courseCode=${courseCode}`
+      `/announcement/get/course?courseCode=${course.courseCode}`
     );
-  }
-
-  getAllAnnouncements(): Observable<ApiResponse<Announcement[]>> {
-    return this.api.get<ApiResponse<Announcement[]>>('/announcement/get/all?page=0&pageSize=100');
-  }
-
-  getAnnouncementById(announcementId: string): Observable<ApiResponse<Announcement>> {
-    return this.api.get<ApiResponse<Announcement>>(`/announcement/get/${announcementId}`);
-  }
-
-  getAnnouncementsByStatus(status: string): Observable<ApiResponse<Announcement[]>> {
-    return this.api.get<ApiResponse<Announcement[]>>(`/announcement/get/status?status=${status}`);
-  }
-
-  searchAnnouncements(keyword: string): Observable<ApiResponse<Announcement[]>> {
-    return this.api.get<ApiResponse<Announcement[]>>(`/announcement/search?keyword=${keyword}`);
-  }
-
-  deleteAnnouncement(announcement: Announcement): Observable<ApiResponse<void>> {
-    return this.api.delete<ApiResponse<void>>(`/announcement/${announcement.announcementId}`);
   }
 }

@@ -85,6 +85,11 @@
           <p style="color: #64748b">Loading announcements...</p>
         </div>
 
+        <!-- Loading State -->
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+          <p style="color: #64748B;">Loading announcements...</p>
+        </div>
+
         <!-- Filters Section -->
         <div *ngIf="!isLoading" class="filters-card">
           <div class="filters-header">
