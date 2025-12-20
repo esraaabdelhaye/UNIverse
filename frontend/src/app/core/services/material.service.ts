@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Material } from '../models/material.model';
-import {ApiResponse} from '../models/api-response.model';
+import { ApiResponse } from '../models/api-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MaterialService {
   constructor(private api: ApiService) {}
@@ -22,8 +22,11 @@ export class MaterialService {
     return this.api.get<ApiResponse<Material[]>>(`/api/materials`);
   }
 
-  uploadMaterial(courseId: number, material: Material): Observable<ApiResponse<Material>> {
-    return this.api.post<ApiResponse<Material>>(`/api/materials/course/${courseId}`, material);
+  // uploadMaterial(courseId: number, material: Material): Observable<ApiResponse<Material>> {
+  //   return this.api.post<ApiResponse<Material>>(`/api/materials/course/${courseId}`, material);
+  // }
+  uploadMaterial(courseId: number, formData: FormData) {
+    return this.api.post<ApiResponse<Material>>(`/api/materials/course/${courseId}`, formData);
   }
 
   updateMaterial(id: number, material: Material): Observable<ApiResponse<Material>> {

@@ -3,18 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { DoctorService } from '../../../core/services/doctor.service';
+import { Course } from '../../../core/models/course.model';
+import { MaterialService } from '../../../core/services/material.service';
 
 interface UploadFile {
+  file: File;
   name: string;
   size: string;
   type: string;
 }
 
-interface Course {
-  id: number;
-  code: string;
-  name: string;
-}
 
 @Component({
   selector: 'app-upload-material',
@@ -28,27 +27,35 @@ export class UploadMaterial implements OnInit {
 
   private router = inject(Router);
   private authService = inject(AuthService);
+  private materialService = inject(MaterialService);
+  private doctorService = inject(DoctorService);
 
+  currentDoctor: any;
   courses: Course[] = [];
   uploadedFiles: UploadFile[] = [];
   selectedCourse = '';
   materialTitle = '';
   materialDescription = '';
   isUploading = false;
-  currentDoctor: any;
 
   ngOnInit() {
     this.currentDoctor = this.authService.getCurrentUser();
     this.loadCourses();
   }
 
-  loadCourses(): void {
-    this.courses = [
-      { id: 1, code: 'PHIL-301', name: 'Existentialism in Film' },
-      { id: 2, code: 'HIST-212', name: 'Renaissance Art History' },
-      { id: 3, code: 'LIT-405', name: 'Modernist Poetry' },
-      { id: 4, code: 'PHIL-101', name: 'Introduction to Logic' },
-    ];
+  loadCourses() {
+    this.doctorService.getDoctorCourses(this.currentDoctor.doctorId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const courses = response.data;
+          this.courses = Array.isArray(courses) ? courses : courses ? [courses] : [];
+          console.log('courses' , courses);
+        }
+      },
+      error: (err) => {
+        console.error('Sorry: Could not load courses:', err);
+      },
+    });
   }
 
   onDragOver(event: DragEvent): void {
@@ -76,6 +83,7 @@ export class UploadMaterial implements OnInit {
   handleFiles(files: FileList): void {
     Array.from(files).forEach((file: any) => {
       const uploadFile: UploadFile = {
+        file: file,
         name: file.name,
         size: this.formatFileSize(file.size),
         type: this.getFileType(file.name),
@@ -93,11 +101,11 @@ export class UploadMaterial implements OnInit {
   }
 
   getFileType(filename: string): string {
-    if (filename.endsWith('.pdf')) return 'pdf';
-    if (filename.endsWith('.docx') || filename.endsWith('.doc')) return 'doc';
-    if (filename.endsWith('.pptx') || filename.endsWith('.ppt')) return 'ppt';
-    if (filename.endsWith('.xlsx') || filename.endsWith('.xls')) return 'xls';
-    return 'file';
+    const lower = filename.toLowerCase();
+    if (filename.endsWith('.pdf')) return 'PDF';
+    if (filename.endsWith('.docx') || filename.endsWith('.doc')) return 'TEXTBOOK';
+    if (filename.endsWith('.mp4')) return 'VIDEO';
+    return 'OTHER';
   }
 
   removeFile(index: number): void {
@@ -116,36 +124,31 @@ export class UploadMaterial implements OnInit {
 
     this.isUploading = true;
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log('Materials uploaded:', {
-        course: this.selectedCourse,
-        title: this.materialTitle,
-        description: this.materialDescription,
-        files: this.uploadedFiles,
+    this.uploadedFiles.forEach(file => {
+    const formData = new FormData();
+    formData.append('file', file.file); // REAL FILE
+    formData.append('title', this.materialTitle);
+    formData.append('type', file.type);
+    if (this.materialDescription?.trim()) {
+      formData.append('description', this.materialDescription);
+    }
+
+    console.log(formData);
+
+    this.materialService
+      .uploadMaterial(Number(this.selectedCourse), formData)
+      .subscribe({
+        next: (res) => console.log('Uploaded material: ', res.data),
+        error: err => console.error(err)
       });
+  });
 
       alert('Materials uploaded successfully!');
       this.resetForm();
       this.isUploading = false;
-    }, 1500);
+    
   }
 
-  saveDraft(): void {
-    if (!this.selectedCourse || !this.materialTitle || this.uploadedFiles.length === 0) {
-      alert('Please add at least a title and select files');
-      return;
-    }
-
-    console.log('Saved as draft:', {
-      course: this.selectedCourse,
-      title: this.materialTitle,
-      description: this.materialDescription,
-      files: this.uploadedFiles,
-    });
-
-    alert('Draft saved! You can finish uploading later.');
-  }
 
   resetForm(): void {
     this.selectedCourse = '';

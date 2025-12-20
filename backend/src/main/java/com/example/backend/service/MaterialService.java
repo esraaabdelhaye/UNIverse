@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.Utils.MaterialType;
 import com.example.backend.dto.MaterialDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Material;
@@ -8,6 +9,11 @@ import com.example.backend.repository.MaterialRepo;
 import com.example.backend.repository.CourseRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,10 +24,12 @@ public class MaterialService {
 
     private final MaterialRepo materialRepo;
     private final CourseRepo courseRepo;
+    private final FileStorageService fileStorageService;
 
-    public MaterialService(MaterialRepo materialRepo, CourseRepo courseRepo) {
+    public MaterialService(MaterialRepo materialRepo, CourseRepo courseRepo,  FileStorageService fileStorageService) {
         this.materialRepo = materialRepo;
         this.courseRepo = courseRepo;
+        this.fileStorageService = fileStorageService;
     }
 
     // Get all materials for a course
@@ -57,21 +65,30 @@ public class MaterialService {
     }
 
     // Upload material
-    public ApiResponse<MaterialDTO> uploadMaterial(Long courseId, MaterialDTO materialDTO) {
+    public ApiResponse<MaterialDTO> uploadMaterial(Long courseId, MultipartFile file,
+                                                   String title,
+                                                   MaterialType type,
+                                                   String description) {
         try {
             Optional<Course> courseOpt = courseRepo.findById(courseId);
             if (courseOpt.isEmpty()) {
                 return ApiResponse.notFound("Course not found");
             }
 
+            String filePath = fileStorageService.storeMaterial(file, courseId);
+
             Material material = new Material();
-            material.setTitle(materialDTO.getMaterialTitle());
-            material.setUrl(materialDTO.getDownloadUrl());
+            material.setTitle(title);
+            material.setUrl("/" + filePath);
             material.setUploadDate(LocalDateTime.now());
             material.setCourse(courseOpt.get());
+            material.setDescription(description);
+            material.setFileSize(file.getSize());
+            material.setType(type);
+            material.setFileName(file.getOriginalFilename());
 
             // Set icon and color based on material type
-            setIconAndColor(material, materialDTO.getMaterialType());
+            setIconAndColor(material, type);
 
             Material saved = materialRepo.save(material);
             return ApiResponse.created("Material uploaded successfully", convertToDTO(saved));
@@ -89,11 +106,11 @@ public class MaterialService {
             }
 
             Material material = materialOpt.get();
-            if (materialDTO.getMaterialTitle() != null) {
-                material.setTitle(materialDTO.getMaterialTitle());
+            if (materialDTO.getTitle() != null) {
+                material.setTitle(materialDTO.getTitle());
             }
-            if (materialDTO.getDownloadUrl() != null) {
-                material.setUrl(materialDTO.getDownloadUrl());
+            if (materialDTO.getUrl() != null) {
+                material.setUrl(materialDTO.getUrl());
             }
             if (materialDTO.getFormattedFileSize() != null) {
                 // Extract bytes from formatted string if needed
@@ -101,8 +118,8 @@ public class MaterialService {
             }
 
             // Update icon and color if type changed
-            if (materialDTO.getMaterialType() != null) {
-                setIconAndColor(material, materialDTO.getMaterialType());
+            if (materialDTO.getType() != null) {
+                setIconAndColor(material, materialDTO.getType());
             }
 
             Material updated = materialRepo.save(material);
@@ -142,7 +159,7 @@ public class MaterialService {
     /**
      * Set icon and color based on material type
      */
-    private void setIconAndColor(Material material, String materialType) {
+    private void setIconAndColor(Material material, MaterialType materialType) {
         if (materialType == null || material.getType() == null) {
             material.setIconName("description");
             material.setIconColor("green-icon");
@@ -209,12 +226,14 @@ public class MaterialService {
     private MaterialDTO convertToDTO(Material material) {
         MaterialDTO dto = new MaterialDTO();
         dto.setMaterialId(String.valueOf(material.getId()));
-        dto.setMaterialTitle(material.getTitle());
-        dto.setMaterialType(material.getType() != null ? material.getType().toString() : "OTHER");
+        dto.setTitle(material.getTitle());
+        dto.setType(material.getType());
         dto.setUploadDate(material.getUploadDate());
-        dto.setDownloadUrl(material.getUrl());
+        dto.setUrl(material.getUrl());
         dto.setIconName(material.getIconName());
         dto.setIconColor(material.getIconColor());
+        dto.setFileName(material.getFileName());
+        dto.setDescription(material.getDescription());
 
         // Set formatted file size
         dto.setFormattedFileSize(material.getFormattedFileSize());
