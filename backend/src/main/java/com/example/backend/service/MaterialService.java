@@ -26,31 +26,12 @@ public class MaterialService {
     private final CourseRepo courseRepo;
     private final FileStorageService fileStorageService;
 
-    public MaterialService(MaterialRepo materialRepo, CourseRepo courseRepo,  FileStorageService fileStorageService) {
+    public MaterialService(MaterialRepo materialRepo, CourseRepo courseRepo, FileStorageService fileStorageService) {
         this.materialRepo = materialRepo;
         this.courseRepo = courseRepo;
         this.fileStorageService = fileStorageService;
     }
 
-    // Get all materials for a course
-    public ApiResponse<List<MaterialDTO>> getMaterialsByCourse(Long courseId) {
-        try {
-            Optional<Course> courseOpt = courseRepo.findById(courseId);
-            if (courseOpt.isEmpty()) {
-                return ApiResponse.notFound("Course not found");
-            }
-
-            List<MaterialDTO> materials = courseOpt.get().getMaterials().stream()
-                    .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-
-            return ApiResponse.success(materials);
-        } catch (Exception e) {
-            return ApiResponse.internalServerError("Error fetching materials: " + e.getMessage());
-        }
-    }
-
-    // Get material by ID
     public ApiResponse<MaterialDTO> getMaterialById(Long materialId) {
         try {
             Optional<Material> materialOpt = materialRepo.findById(materialId);
@@ -64,7 +45,35 @@ public class MaterialService {
         }
     }
 
-    // Upload material
+    public ApiResponse<List<MaterialDTO>> getMaterialsByCourse(Long courseId) {
+        try {
+            Optional<Course> courseOpt = courseRepo.findById(courseId);
+            if (courseOpt.isEmpty()) {
+                return ApiResponse.notFound("Course not found");
+            }
+
+            List<MaterialDTO> materials = materialRepo.findByCourse(courseOpt.get()).stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+
+            return ApiResponse.success(materials);
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching materials: " + e.getMessage());
+        }
+    }
+
+    public ApiResponse<List<MaterialDTO>> getAllMaterials() {
+        try {
+            List<MaterialDTO> materials = materialRepo.findAll().stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+
+            return ApiResponse.success(materials);
+        } catch (Exception e) {
+            return ApiResponse.internalServerError("Error fetching materials: " + e.getMessage());
+        }
+    }
+
     public ApiResponse<MaterialDTO> uploadMaterial(Long courseId, MultipartFile file,
                                                    String title,
                                                    MaterialType type,
@@ -97,7 +106,6 @@ public class MaterialService {
         }
     }
 
-    // Update material
     public ApiResponse<MaterialDTO> updateMaterial(Long materialId, MaterialDTO materialDTO) {
         try {
             Optional<Material> materialOpt = materialRepo.findById(materialId);
@@ -113,7 +121,6 @@ public class MaterialService {
                 material.setUrl(materialDTO.getUrl());
             }
             if (materialDTO.getFormattedFileSize() != null) {
-                // Extract bytes from formatted string if needed
                 material.setFileSize(parseFileSize(materialDTO.getFormattedFileSize()));
             }
 
@@ -129,7 +136,6 @@ public class MaterialService {
         }
     }
 
-    // Delete material
     public ApiResponse<Void> deleteMaterial(Long materialId) {
         try {
             if (!materialRepo.existsById(materialId)) {
@@ -143,22 +149,6 @@ public class MaterialService {
         }
     }
 
-    // Get all materials (paginated)
-    public ApiResponse<List<MaterialDTO>> getAllMaterials() {
-        try {
-            List<MaterialDTO> materials = materialRepo.findAll().stream()
-                    .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-
-            return ApiResponse.success(materials);
-        } catch (Exception e) {
-            return ApiResponse.internalServerError("Error fetching materials: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Set icon and color based on material type
-     */
     private void setIconAndColor(Material material, MaterialType materialType) {
         if (materialType == null || material.getType() == null) {
             material.setIconName("description");
@@ -191,9 +181,6 @@ public class MaterialService {
         }
     }
 
-    /**
-     * Parse formatted file size string back to bytes
-     */
     private Long parseFileSize(String formattedSize) {
         try {
             if (formattedSize == null || formattedSize.isEmpty()) {
@@ -236,7 +223,7 @@ public class MaterialService {
         dto.setDescription(material.getDescription());
 
         // Set formatted file size
-        dto.setFormattedFileSize(material.getFormattedFileSize());
+        dto.setFormattedFileSize(formatFileSize(material.getFileSize()));
 
         if (material.getCourse() != null) {
             dto.setCourseCode(material.getCourse().getCourseCode());
@@ -244,5 +231,15 @@ public class MaterialService {
         }
 
         return dto;
+    }
+
+    private String formatFileSize(Long bytes) {
+        if (bytes == null || bytes == 0) return "0 B";
+
+        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+        int unitIndex = (int) (Math.log10(bytes) / Math.log10(1024));
+        double displaySize = bytes / Math.pow(1024, unitIndex);
+
+        return String.format("%.1f %s", displaySize, units[unitIndex]);
     }
 }

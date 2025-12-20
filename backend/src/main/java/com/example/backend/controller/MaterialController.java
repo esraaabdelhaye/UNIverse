@@ -53,8 +53,7 @@ public class MaterialController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("title") String title,
             @RequestParam("type") MaterialType type,
-            @RequestParam(value = "description", required = false) String description
-    ) {
+            @RequestParam(value = "description", required = false) String description) {
         ApiResponse<MaterialDTO> response = materialService.uploadMaterial(courseId, file, title, type, description);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
