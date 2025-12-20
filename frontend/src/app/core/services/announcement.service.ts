@@ -11,10 +11,33 @@ import { Course } from '../models/course.model';
 export class AnnouncementService {
   constructor(private api: ApiService) {}
 
-  getAnnouncementsByCourse(course: Course): Observable<ApiResponse<Announcement[]>> {
+  getAnnouncementsByCourse(course: any): Observable<ApiResponse<Announcement[]>> {
+    // Handle both course object and string
+    const courseCode = typeof course === 'string' ? course : course?.courseCode || course?.code;
+
+    if (!courseCode) {
+      throw new Error('Course code is required');
+    }
+
     return this.api.get<ApiResponse<Announcement[]>>(
-      `/announcement/get/course?courseCode=${course.courseCode}`
+      `/announcement/get/course?courseCode=${courseCode}`
     );
+  }
+
+  getAllAnnouncements(): Observable<ApiResponse<Announcement[]>> {
+    return this.api.get<ApiResponse<Announcement[]>>('/announcement/get/all?page=0&pageSize=100');
+  }
+
+  getAnnouncementById(announcementId: string): Observable<ApiResponse<Announcement>> {
+    return this.api.get<ApiResponse<Announcement>>(`/announcement/get/${announcementId}`);
+  }
+
+  getAnnouncementsByStatus(status: string): Observable<ApiResponse<Announcement[]>> {
+    return this.api.get<ApiResponse<Announcement[]>>(`/announcement/get/status?status=${status}`);
+  }
+
+  searchAnnouncements(keyword: string): Observable<ApiResponse<Announcement[]>> {
+    return this.api.get<ApiResponse<Announcement[]>>(`/announcement/search?keyword=${keyword}`);
   }
 
   deleteAnnouncement(announcement: Announcement): Observable<ApiResponse<void>> {
