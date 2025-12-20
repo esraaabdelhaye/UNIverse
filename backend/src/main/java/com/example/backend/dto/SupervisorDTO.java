@@ -1,5 +1,8 @@
 package com.example.backend.dto;
 
+import java.io.Serializable;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupervisorDTO implements PostAuthor , AnnouncementAuthor, PollAuthor,EventAuthor {
+public class SupervisorDTO implements PostAuthor , AnnouncementAuthor, PollAuthor,EventAuthor, Serializable {
     private String employeeId;
     private String fullName;
     private String email;

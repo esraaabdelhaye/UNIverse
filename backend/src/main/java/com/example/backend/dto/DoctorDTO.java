@@ -1,5 +1,6 @@
 package com.example.backend.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorDTO implements  PostAuthor, AnnouncementAuthor, PollAuthor, EventAuthor {
+public class DoctorDTO implements  PostAuthor, AnnouncementAuthor, PollAuthor, EventAuthor, Serializable {
     private String doctorId;
     private String fullName;
     private String email;

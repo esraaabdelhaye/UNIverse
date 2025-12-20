@@ -100,16 +100,19 @@ export class Announcements implements OnInit {
 
   deleteAnnouncement(announcement: Announcement) {
     if (confirm(`Delete announcement "${announcement.title}"?`)) {
-      const index = this.announcements.indexOf(announcement);
-      if (index > -1) {
-        this.announcements.splice(index, 1);
-      }
       this.announcementService.deleteAnnouncement(announcement.announcementId).subscribe({
-        next: () => {
+        next: (response) => {
           console.log('Announcement deleted successfully');
+          const index = this.announcements.indexOf(announcement);
+          if (index > -1) {
+            this.announcements.splice(index, 1);
+          }
         },
         error: (err) => {
           console.error('Error deleting announcement:', err);
+          // Display the error message to the user
+          const errorMessage = err.error?.message || 'Failed to delete announcement';
+          alert(`Error: ${errorMessage}`);
         },
       });
     }

@@ -878,7 +878,7 @@ public class DataInitializer implements CommandLineRunner {
             announcement2.setCreatedAt(LocalDateTime.of(2025, 10, 12, 14, 30));
             announcement2.setVisibility("public");
             announcement2.setStatus("active");
-            announcement2.setTaAuthor(ta1);
+            announcement2.setDoctorAuthor(doctor1);
             announcement2.setCourse(course1);
             announcementRepo.save(announcement2);
 
