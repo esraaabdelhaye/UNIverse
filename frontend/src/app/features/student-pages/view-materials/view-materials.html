@@ -88,7 +88,7 @@
               <h2 class="materials-section-title" [ngClass]="section.borderColor">{{ section.courseCode }}: {{ section.courseName }}</h2>
               <div class="materials-list">
                 <div class="material-item" *ngFor="let material of section.materials">
-                  <div class="material-info">
+                  <div class="material-info" (click)="viewMaterial(material)" style="cursor: pointer;" title="Click to view">
                     <span class="material-symbols-outlined material-icon" [ngClass]="material.iconColor">{{ material.icon }}</span>
                     <div class="material-details">
                       <p class="material-title">{{ material.title }}</p>
@@ -96,10 +96,14 @@
                     </div>
                   </div>
                   <span class="material-size">{{ material.size }}</span>
-                  <button class="btn btn-primary btn-with-icon" (click)="downloadMaterial(material)">
-                    <span class="material-symbols-outlined">download</span>
-                    Download
-                  </button>
+                  <div class="material-actions">
+                    <button class="btn btn-secondary btn-icon-only" (click)="viewMaterial(material)" title="View">
+                      <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                    <button class="btn btn-primary btn-icon-only" (click)="downloadMaterial(material)" title="Download">
+                      <span class="material-symbols-outlined">download</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

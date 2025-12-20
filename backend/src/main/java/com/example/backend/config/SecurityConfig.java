@@ -66,6 +66,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/schedule/**").permitAll()
                         .requestMatchers("/api/files/download/**").authenticated()
                         .requestMatchers("/api/files/view/**").authenticated()
+                        .requestMatchers("/api/files/resources/**").authenticated()
+                        .requestMatchers("/api/files/view-resource/**").authenticated()
                         .requestMatchers("/api/files/upload/**").authenticated()
                         .anyRequest().authenticated()
                 )

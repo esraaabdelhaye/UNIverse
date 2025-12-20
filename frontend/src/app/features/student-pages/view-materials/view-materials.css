@@ -1075,6 +1075,11 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: opacity 0.2s;
+}
+
+.material-info:hover {
+  opacity: 0.7;
 }
 
 .material-icon {
@@ -1132,6 +1137,35 @@
 
 .btn-with-icon .material-symbols-outlined {
   font-size: 16px;
+}
+
+.material-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  min-width: 40px;
+  border-radius: 8px;
+}
+
+.btn-icon-only .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.btn-secondary {
+  background-color: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.btn-secondary:hover {
+  background-color: #E2E8F0;
+  color: #334155;
 }
 
 /* Dark Mode for View Materials */
