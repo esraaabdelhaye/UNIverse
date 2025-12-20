@@ -88,7 +88,7 @@ public class MaterialService {
 
             Material material = new Material();
             material.setTitle(title);
-            material.setUrl("/" + filePath);
+            material.setUrl(filePath);
             material.setUploadDate(LocalDateTime.now());
             material.setCourse(courseOpt.get());
             material.setDescription(description);

@@ -15,6 +15,7 @@ interface Material {
   iconColor: string;
   courseCode: string;
   url: string;
+  fileName?: string;
 }
 
 interface CourseSection {
@@ -195,7 +196,21 @@ export class ViewMaterials implements OnInit {
         grouped.set(courseCode, []);
       }
 
-      grouped.get(courseCode)!.push(material);
+      const mat: Material = {
+        id: material.materialId || material.id,
+        title: material.materialTitle || material.title,
+        type: material.materialType || 'PDF',
+        // Use formatted size from backend, or fallback to raw size
+        size: material.formattedFileSize || material.fileSize || 'Unknown',
+        // Use icon and color from backend
+        icon: material.iconName || this.getDefaultIcon(material.materialType),
+        iconColor: material.iconColor || this.getDefaultColor(material.materialType),
+        courseCode: courseCode,
+        url: material.downloadUrl || material.url || '',
+        fileName: material.fileName,
+      };
+
+      grouped.get(courseCode)!.push(mat);
     });
 
     this.sections = Array.from(grouped.entries()).map((entry, index) => ({
@@ -292,7 +307,7 @@ export class ViewMaterials implements OnInit {
 
   downloadMaterial(material: Material): void {
     if (material.url) {
-      this.materialService.downloadMaterial(material.url);
+      this.materialService.downloadMaterial(material.url, material.fileName);
     } else {
       console.error('No URL available for material:', material.title);
     }
@@ -300,7 +315,7 @@ export class ViewMaterials implements OnInit {
 
   viewMaterial(material: Material): void {
     if (material.url) {
-      this.materialService.viewMaterial(material.url);
+      this.materialService.viewMaterial(material.url, material.fileName);
     } else {
       console.error('No URL available for material:', material.title);
     }

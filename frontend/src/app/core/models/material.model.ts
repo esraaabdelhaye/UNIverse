@@ -3,6 +3,7 @@ export interface Material {
   title: string;
   type: 'TEXTBOOK' | 'PDF' | 'VIDEO' | 'RECORDING' | 'OTHER';
   url: string;
+  fileName?: string;
   uploadDate: string;
   courseCode: string;
   courseName?: string;
