@@ -82,36 +82,68 @@ export class SubmitAssignments implements OnInit {
     this.studentService.getStudentCourses(studentId).subscribe({
       next: (courseResponse) => {
         if (courseResponse.success && courseResponse.data) {
-          const  data = courseResponse.data ;
-          const coursesArray = Array.isArray(data)
-            ? data
-            : data
-              ? [data]
+          const coursesArray = Array.isArray(courseResponse.data)
+            ? courseResponse.data
+            : courseResponse.data
+              ? [courseResponse.data]
               : [];
-          this.courses = coursesArray.map((c: any) => c.courseCode);
-        }
 
-        // Then load assignments
-        this.assignmentService.getAllAssignments().subscribe({
-          next: (response) => {
-            if (response.success && response.data) {
-              this.assignments = response.data.map((a: any) => ({
-                id: a.id || a.assignmentId,
-                title: a.title || a.assignmentTitle,
-                course: a.courseCode,
-                courseId: a.courseId || 0,
-                dueDate: a.dueDate,
-                status: this.getAssignmentStatus(a.dueDate),
-              }));
-            }
+          this.courses = coursesArray.map((c: any) => c.courseCode);
+
+          // Load assignments for each course
+          const allAssignments: Assignment[] = [];
+          let loadedCount = 0;
+
+          if (coursesArray.length === 0) {
+            this.isLoading = false;
             this.filterAssignments();
-            this.isLoading = false;
-          },
-          error: (err) => {
-            console.error('Error loading assignments:', err);
-            this.isLoading = false;
+            return;
           }
-        });
+
+          coursesArray.forEach((course: any) => {
+            this.assignmentService.getAssignmentsByCourse(course.id).subscribe({
+              next: (response) => {
+                if (response.success && response.data) {
+                  const assignmentsData = Array.isArray(response.data)
+                    ? response.data
+                    : response.data
+                      ? [response.data]
+                      : [];
+
+                  assignmentsData.forEach((a: any) => {
+                    allAssignments.push({
+                      id: a.id || parseInt(a.assignmentId || 0),
+                      title: a.title || a.assignmentTitle,
+                      course: a.courseCode || course.courseCode,
+                      courseId: course.id,
+                      dueDate: a.dueDate,
+                      status: this.getAssignmentStatus(a.dueDate),
+                      grade: a.grade ? parseInt(a.grade) : undefined,
+                    });
+                  });
+                }
+
+                loadedCount++;
+                if (loadedCount === coursesArray.length) {
+                  this.assignments = allAssignments;
+                  this.filterAssignments();
+                  this.isLoading = false;
+                }
+              },
+              error: (err) => {
+                console.error('Error loading assignments for course:', err);
+                loadedCount++;
+                if (loadedCount === coursesArray.length) {
+                  this.assignments = allAssignments;
+                  this.filterAssignments();
+                  this.isLoading = false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading = false;
+        }
       },
       error: (err) => {
         console.error('Error loading courses:', err);
