@@ -161,6 +161,7 @@ public class AnnouncementService {
     public ApiResponse<AnnouncementDTO> deleteAnnouncement(AnnouncementAuthor author, AnnouncementDTO announcementDTO) {
         try {
             System.out.println(announcementDTO);
+            System.out.println(author);
             Optional<Announcement> announcementOpt = announcementRepo.findById(Long.parseLong(announcementDTO.getAnnouncementId()));
             if (announcementOpt.isEmpty()) return ApiResponse.badRequest("Announcement not found");
 

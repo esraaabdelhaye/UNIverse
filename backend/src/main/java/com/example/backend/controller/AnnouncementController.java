@@ -50,7 +50,7 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{announcementId}")
-    @PreAuthorize("hasAnyRole('DOC')")
+    @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
             @AuthenticationPrincipal AnnouncementAuthor author,
             @PathVariable String announcementId) {
