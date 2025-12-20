@@ -100,12 +100,7 @@ export class StudentDashboard implements OnInit {
       next: (response: any) => {
         if (response.success && response.data) {
           const data = response.data;
-
-          const coursesArray = Array.isArray(data)
-            ? data
-            : data
-              ? [data]
-              : [];
+          const coursesArray = Array.isArray(data) ? data : data ? [data] : [];
 
           this.courses = coursesArray.map((course: any) => ({
             id: course.id,
@@ -114,11 +109,12 @@ export class StudentDashboard implements OnInit {
             professor: course.instructorName || 'TBA',
             progress: Math.floor(Math.random() * 100),
           }));
+
+          console.log('Loaded courses:', this.courses);
         }
       },
       error: (err: any) => {
         console.error('Error loading courses:', err);
-        this.errorMessage = 'Failed to load courses';
       }
     });
 
@@ -134,8 +130,8 @@ export class StudentDashboard implements OnInit {
 
           // Get recent grades (last 2)
           this.recentGrades = gradesData.slice(0, 2).map((g: any) => ({
-            courseCode: g.courseCode,
-            courseName: g.courseTitle,
+            courseCode: g.courseCode || 'Unknown',
+            courseName: g.courseTitle || 'Unknown Course',
             assignmentTitle: g.assignmentName || 'Assignment',
             score: g.score || 0,
             feedback: g.feedback || '',
@@ -143,8 +139,8 @@ export class StudentDashboard implements OnInit {
 
           // Set old format grades for backward compatibility
           this.grades = gradesData.slice(0, 2).map((grade: any) => ({
-            course: grade.courseCode,
-            assignment: grade.gradingStatus,
+            course: grade.courseCode || 'Unknown',
+            assignment: grade.gradingStatus || 'Assessment',
             score: grade.score || 0,
           }));
 
@@ -153,6 +149,8 @@ export class StudentDashboard implements OnInit {
             const total = gradesData.reduce((sum: number, g: any) => sum + (g.score || 0), 0);
             this.averageGrade = Math.round((total / gradesData.length) * 10) / 10;
           }
+
+          console.log('Loaded grades:', this.recentGrades);
         }
       },
       error: (err: any) => {
@@ -171,26 +169,58 @@ export class StudentDashboard implements OnInit {
               : [];
 
           // Get recent assignments (first 3)
-          this.recentAssignments = assignmentsData.slice(0, 3).map((a: any) => ({
-            id: a.id || parseInt(a.assignmentId || 0),
-            title: a.assignmentTitle || a.title,
-            courseCode: a.courseCode,
-            courseName: a.courseName || 'Course',
-            dueDate: a.dueDate,
-            status: this.getAssignmentStatus(a.dueDate),
-            grade: a.grade ? parseInt(a.grade) : undefined,
-          }));
+          this.recentAssignments = assignmentsData.slice(0, 3).map((a: any) => {
+            const dueDate = new Date(a.dueDate);
+            const today = new Date();
+            const isToday = dueDate.toDateString() === today.toDateString();
+            const isPast = dueDate < today;
+
+            let status: 'pending' | 'submitted' | 'graded' | 'pastdue' = 'pending';
+            if (isPast) status = 'pastdue';
+
+            return {
+              id: a.id || parseInt(a.assignmentId || 0),
+              title: a.assignmentTitle || a.title,
+              courseCode: a.courseCode || 'Unknown',
+              courseName: a.courseName || 'Course',
+              dueDate: a.dueDate,
+              status: status,
+              grade: a.grade ? parseInt(a.grade) : undefined,
+            };
+          });
 
           // Create deadlines from assignments
-          this.deadlines = assignmentsData.slice(0, 3).map((assignment: any, index: number) => ({
-            id: index,
-            title: assignment.assignmentTitle || assignment.title,
-            course: assignment.courseCode,
-            dueDate: assignment.dueDate,
-            urgency: this.getUrgency(assignment.dueDate),
-          }));
+          this.deadlines = assignmentsData.slice(0, 3).map((assignment: any, index: number) => {
+            const dueDate = new Date(assignment.dueDate);
+            const today = new Date();
+            const daysUntil = (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
 
-          this.pendingCount = this.deadlines.filter(d => d.urgency !== 'normal').length;
+            let urgency: 'urgent' | 'warning' | 'normal' = 'normal';
+            if (daysUntil < 0) urgency = 'urgent';
+            else if (daysUntil <= 3) urgency = 'warning';
+
+            return {
+              id: index,
+              title: assignment.assignmentTitle || assignment.title,
+              course: assignment.courseCode || 'Unknown',
+              dueDate: assignment.dueDate,
+              urgency: urgency,
+            };
+          });
+
+          // Count pending = assignments not yet graded
+          this.pendingCount = assignmentsData.filter((a: any) => {
+            const dueDate = new Date(a.dueDate);
+            const today = new Date();
+            const daysUntil = (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+            // Count assignments that are pending (not graded yet) OR due within 7 days
+            return (a.status !== 'graded' && daysUntil >= 0);
+          }).length;
+
+          console.log('Loaded assignments:', this.recentAssignments);
+          console.log('Deadlines:', this.deadlines);
+          console.log('Pending count:', this.pendingCount);
         }
       },
       error: (err: any) => {
@@ -198,11 +228,22 @@ export class StudentDashboard implements OnInit {
       }
     });
 
-    // Load submission count for completed assignments
-    this.submissionService.getSubmissionsByStatus('graded').subscribe({
+    // Load ALL submissions (both submitted and graded) for completed count
+    this.submissionService.getStudentSubmissions(studentId).subscribe({
       next: (response: any) => {
         if (response.success && response.data) {
-          this.completedAssignments = response.data.length;
+          const submissionsData = Array.isArray(response.data)
+            ? response.data
+            : response.data
+              ? [response.data]
+              : [];
+
+          // Count graded submissions
+          this.completedAssignments = submissionsData.filter(
+            (sub: any) => sub.status === 'graded'
+          ).length;
+
+          console.log('Completed assignments:', this.completedAssignments);
         }
         this.isLoading = false;
       },
@@ -213,24 +254,6 @@ export class StudentDashboard implements OnInit {
     });
   }
 
-  private getAssignmentStatus(dueDate: string): 'pending' | 'submitted' | 'graded' | 'pastdue' {
-    const date = new Date(dueDate);
-    const today = new Date();
-
-    if (date < today) return 'pastdue';
-    return 'pending';
-  }
-
-  private getUrgency(dueDate: string): 'urgent' | 'warning' | 'normal' {
-    const date = new Date(dueDate);
-    const today = new Date();
-    const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
-
-    if (daysUntil <= 0) return 'urgent';
-    if (daysUntil <= 3) return 'warning';
-    return 'normal';
-  }
-
   getAssignmentCardStyle(assignment: RecentAssignment) {
     const date = new Date(assignment.dueDate);
     const today = new Date();
@@ -239,12 +262,6 @@ export class StudentDashboard implements OnInit {
     if (daysUntil < 0) {
       return {
         'border-left-color': '#DC2626',
-        'background-color': '#FEE2E2'
-      };
-    }
-    if (daysUntil <= 0) {
-      return {
-        'border-left-color': '#991B1B',
         'background-color': '#FEE2E2'
       };
     }
@@ -265,13 +282,11 @@ export class StudentDashboard implements OnInit {
     const today = new Date();
     const daysUntil = (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
 
-    if (daysUntil < 0) {
-      return 'badge-past-due';
-    }
-    if (daysUntil <= 3) {
-      return 'badge-urgent';
-    }
-    return 'badge-upcoming';
+    if (assignment.status === 'graded') return 'badge-graded';
+    if (assignment.status === 'submitted') return 'badge-submitted';
+    if (daysUntil < 0) return 'badge-pastdue';
+    if (daysUntil <= 3) return 'badge-pending';
+    return 'badge-pending';
   }
 
   getAssignmentStatusText(assignment: RecentAssignment): string {
