@@ -845,6 +845,18 @@ public class DataInitializer implements CommandLineRunner {
             material8.setDoctorUploader(algoDoctor);
             materialRepo.save(material8);
 
+            Material material9 = new Material();
+            material9.setTitle("Lecture 1 notes");
+            material9.setUrl("/materials/ML/cs229-notes1.pdf");
+            material9.setUploadDate(LocalDateTime.of(2025, 9, 6, 10, 0));
+            material9.setType(MaterialType.PDF);
+            material9.setFileSize(2097152L); // ~2 MB
+            material9.setIconName("picture_as_pdf");
+            material9.setIconColor("primary-icon");
+            material9.setCourse(courseML);
+            material9.setDoctorUploader(andrewNg);
+            materialRepo.save(material9);
+
             System.out.println("Inserted materials");
         }
 
