@@ -8,6 +8,7 @@ import com.example.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class AnnouncementController {
         return ResponseEntity.badRequest().body(response);
     }
 
+
     @PostMapping("/update/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
             @AuthenticationPrincipal AnnouncementAuthor author,
@@ -48,6 +50,7 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{announcementId}")
+    @PreAuthorize("hasAnyRole('DOC')")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
             @AuthenticationPrincipal AnnouncementAuthor author,
             @PathVariable String announcementId) {

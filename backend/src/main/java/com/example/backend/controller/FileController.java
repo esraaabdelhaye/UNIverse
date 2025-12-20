@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.FileUploadResponse;
 import com.example.backend.service.FileStorageService;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -175,6 +176,34 @@ public class FileController {
     }
 
     /**
+     * Download a resource file from classpath (e.g., from src/main/resources)
+     * Path format: Materials/ML/filename.pdf
+     */
+    @GetMapping("/resources/**")
+    public ResponseEntity<Resource> downloadResource(@RequestParam("path") String resourcePath) {
+        try {
+            // Remove leading slash if present
+            String cleanPath = resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath;
+            
+            Resource resource = new ClassPathResource(cleanPath);
+            
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            String contentType = fileStorageService.getContentType(resourcePath);
+            String filename = resourcePath.substring(resourcePath.lastIndexOf('/') + 1);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
      * View/preview a file inline (for PDFs, images, etc.)
      */
     @GetMapping("/view")
@@ -186,6 +215,33 @@ public class FileController {
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * View/preview a resource file inline (for PDFs, images, etc. from classpath)
+     */
+    @GetMapping("/view-resource")
+    public ResponseEntity<Resource> viewResource(@RequestParam("path") String resourcePath) {
+        try {
+            // Remove leading slash if present
+            String cleanPath = resourcePath.startsWith("/") ? resourcePath.substring(1) : resourcePath;
+            
+            Resource resource = new ClassPathResource(cleanPath);
+            
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            String contentType = fileStorageService.getContentType(resourcePath);
+            String filename = resourcePath.substring(resourcePath.lastIndexOf('/') + 1);
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
