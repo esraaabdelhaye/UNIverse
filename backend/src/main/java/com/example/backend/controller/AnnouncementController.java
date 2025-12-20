@@ -8,6 +8,7 @@ import com.example.backend.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,17 +35,6 @@ public class AnnouncementController {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
-            @RequestBody AnnouncementDTO target) {
-        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement(author, target);
-        if (response.isSuccess()) {
-            // Use HttpStatus.OK because you are returning a body (the response object)
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        }
-        return ResponseEntity.badRequest().body(response);
-    }
 
     @PostMapping("/update/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
