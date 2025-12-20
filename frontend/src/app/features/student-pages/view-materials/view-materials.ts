@@ -116,6 +116,7 @@ export class ViewMaterials implements OnInit {
                       iconColor: material.iconColor || this.getDefaultColor(material.type),
                       courseCode: material.courseCode || course.courseCode,
                       url: material.url || '',
+                      fileName: material.fileName || material.title || material.materialTitle,
                     });
                   });
                 }
@@ -168,6 +169,7 @@ export class ViewMaterials implements OnInit {
             iconColor: material.iconColor || this.getDefaultColor(material.type),
             courseCode: material.courseCode || 'Unknown',
             url: material.url || '',
+            fileName: material.fileName || material.title || material.materialTitle,
           }));
 
           this.processMaterialsIntoSections(materials);
@@ -197,16 +199,16 @@ export class ViewMaterials implements OnInit {
       }
 
       const mat: Material = {
-        id: material.materialId || material.id,
-        title: material.materialTitle || material.title,
-        type: material.materialType || 'PDF',
+        id:  material.id,
+        title:  material.title,
+        type: material.type || 'PDF',
         // Use formatted size from backend, or fallback to raw size
-        size: material.formattedFileSize || material.fileSize || 'Unknown',
+        size: material.size || 'Unknown',
         // Use icon and color from backend
-        icon: material.iconName || this.getDefaultIcon(material.materialType),
-        iconColor: material.iconColor || this.getDefaultColor(material.materialType),
+        icon: material.icon || this.getDefaultIcon(material.type),
+        iconColor: material.iconColor || this.getDefaultColor(material.type),
         courseCode: courseCode,
-        url: material.downloadUrl || material.url || '',
+        url: material.url || '',
         fileName: material.fileName,
       };
 

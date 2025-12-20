@@ -146,7 +146,7 @@
               <p class="announcement-text">{{ announcement.content }}</p>
 
               <div class="announcement-meta">
-                <span class="announcement-date">{{ announcement.createdDate }}</span>
+                <span class="announcement-date">{{ announcement.createdDate | date: "medium" }}</span>
               </div>
 
               <div class="announcement-actions">
