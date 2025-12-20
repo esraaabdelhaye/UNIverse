@@ -625,7 +625,6 @@ public class DataInitializer implements CommandLineRunner {
             enrollmentRepo.save(e5);
         }
 
-        // ==================== ASSIGNMENTS ====================
         Assignment assignment1 = null;
         Assignment assignment2 = null;
         Assignment mlHw1 = null;
@@ -635,7 +634,7 @@ public class DataInitializer implements CommandLineRunner {
             assignment1 = new Assignment();
             assignment1.setTitle("Java Basics Lab");
             assignment1.setDescription("Complete the exercises on variables, loops, and conditionals.");
-            assignment1.setDueDate(LocalDateTime.of(2025, 10, 15, 23, 59));
+            assignment1.setDueDate(LocalDateTime.of(2025, 12, 27, 23, 59));  // Dec 27
             assignment1.setMaxScore(100);
             assignment1.setCourse(course1);
             assignment1 = assignmentRepo.save(assignment1);
@@ -643,7 +642,7 @@ public class DataInitializer implements CommandLineRunner {
             assignment2 = new Assignment();
             assignment2.setTitle("Linked List Implementation");
             assignment2.setDescription("Implement a doubly linked list with all basic operations.");
-            assignment2.setDueDate(LocalDateTime.of(2025, 11, 1, 23, 59));
+            assignment2.setDueDate(LocalDateTime.of(2026, 1, 10, 23, 59));   // Jan 10
             assignment2.setMaxScore(100);
             assignment2.setCourse(course2);
             assignment2 = assignmentRepo.save(assignment2);
@@ -651,7 +650,7 @@ public class DataInitializer implements CommandLineRunner {
             Assignment assignment3 = new Assignment();
             assignment3.setTitle("SQL Query Practice");
             assignment3.setDescription("Write SQL queries for the given database schema.");
-            assignment3.setDueDate(LocalDateTime.of(2025, 10, 20, 23, 59));
+            assignment3.setDueDate(LocalDateTime.of(2025, 12, 28, 23, 59));  // Dec 28
             assignment3.setMaxScore(50);
             assignment3.setCourse(course3);
             assignmentRepo.save(assignment3);
@@ -661,18 +660,17 @@ public class DataInitializer implements CommandLineRunner {
             mlHw1.setCourse(courseML);
             mlHw1.setTitle("Logistic Regression HW");
             mlHw1.setDescription("Implement logistic regression with gradient descent.");
-            mlHw1.setDueDate(LocalDateTime.of(2025, 10, 10, 23, 59));
+            mlHw1.setDueDate(LocalDateTime.of(2025, 12, 25, 23, 59));  // Dec 25
             mlHw1.setMaxScore(100);
-            mlHw1 = assignmentRepo.save(mlHw1) ;
+            mlHw1 = assignmentRepo.save(mlHw1);
 
             mlHw2 = new Assignment();
             mlHw2.setCourse(courseML);
             mlHw2.setTitle("Neural Networks HW");
             mlHw2.setDescription("Build a simple feedforward neural network.");
-            mlHw2.setDueDate(LocalDateTime.of(2025, 11, 5, 23, 59));
+            mlHw2.setDueDate(LocalDateTime.of(2026, 1, 5, 23, 59));   // Jan 5
             mlHw2.setMaxScore(100);
             mlHw2 = assignmentRepo.save(mlHw2);
-
 
             System.out.println("Inserted assignments");
         } else {

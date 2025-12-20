@@ -27,9 +27,9 @@ public class EventController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<EventDTO>> createEvent(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestBody CreateEventRequest request) {
-        ApiResponse<EventDTO> response = eventService.createEvent(author, request);
+        ApiResponse<EventDTO> response = eventService.createEvent((EventAuthor) author, request);
         if (response.isSuccess()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -38,11 +38,11 @@ public class EventController {
 
     @PostMapping("/update/{eventId}")
     public ResponseEntity<ApiResponse<EventDTO>> updateEvent(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String eventId,
             @RequestBody EventDTO dto) {
         dto.setEventId(eventId);
-        ApiResponse<EventDTO> response = eventService.updateEvent(author, dto);
+        ApiResponse<EventDTO> response = eventService.updateEvent((EventAuthor) author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -51,11 +51,11 @@ public class EventController {
 
     @DeleteMapping("/{eventId}")
     public ResponseEntity<ApiResponse<EventDTO>> deleteEvent(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String eventId) {
         EventDTO dto = new EventDTO();
         dto.setEventId(eventId);
-        ApiResponse<EventDTO> response = eventService.deleteEvent(author, dto);
+        ApiResponse<EventDTO> response = eventService.deleteEvent((EventAuthor) author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -68,7 +68,7 @@ public class EventController {
 
     @GetMapping("/get/{eventId}")
     public ResponseEntity<ApiResponse<EventDTO>> getEvent(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String eventId) {
         ApiResponse<EventDTO> response = eventService.getEvent(eventId);
         if (response.isSuccess()) {
@@ -79,7 +79,7 @@ public class EventController {
 
     @GetMapping("/get/all")
     public ResponseEntity<ApiResponse<List<EventDTO>>> getAllEvents(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam int page,
             @RequestParam int pageSize) {
         ApiResponse<List<EventDTO>> response = eventService.getAllEvents(page, pageSize);
@@ -88,30 +88,30 @@ public class EventController {
 
     @GetMapping("/get/author")
     public ResponseEntity<ApiResponse<List<EventDTO>>> getEventsByAuthor(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam int page,
             @RequestParam int pageSize) {
-        ApiResponse<List<EventDTO>> response = eventService.getEventsByAuthor(author, page, pageSize);
+        ApiResponse<List<EventDTO>> response = eventService.getEventsByAuthor((EventAuthor) author, page, pageSize);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/upcoming")
     public ResponseEntity<ApiResponse<List<EventDTO>>> getUpcomingEvents(
-            @AuthenticationPrincipal EventAuthor author) {
+            @AuthenticationPrincipal Object author) {
         ApiResponse<List<EventDTO>> response = eventService.getUpcomingEvents();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/past")
     public ResponseEntity<ApiResponse<List<EventDTO>>> getPastEvents(
-            @AuthenticationPrincipal EventAuthor author) {
+            @AuthenticationPrincipal Object author) {
         ApiResponse<List<EventDTO>> response = eventService.getPastEvents();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/location")
     public ResponseEntity<ApiResponse<List<EventDTO>>> getEventsByLocation(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam String location) {
         ApiResponse<List<EventDTO>> response = eventService.getEventsByLocation(location);
         return ResponseEntity.ok(response);
@@ -119,7 +119,7 @@ public class EventController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<EventDTO>>> searchEvents(
-            @AuthenticationPrincipal EventAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam String keyword) {
         ApiResponse<List<EventDTO>> response = eventService.searchEvents(keyword);
         return ResponseEntity.ok(response);

@@ -159,16 +159,24 @@ public class FileController {
     /**
      * Download a file by its path.
      * Path format: category/filename (e.g., submissions/file.pdf)
+     * Optional filename parameter to set the download filename
      */
     @GetMapping("/download/**")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String filePath) {
+    public ResponseEntity<Resource> downloadFile(
+            @RequestParam("path") String filePath,
+            @RequestParam(value = "filename", required = false) String filename) {
         try {
             Resource resource = fileStorageService.loadFileAsResource(filePath);
             String contentType = fileStorageService.getContentType(filePath);
             
+            // Use provided filename or fall back to resource filename
+            String downloadFilename = (filename != null && !filename.isEmpty()) 
+                    ? filename 
+                    : resource.getFilename();
+            
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + downloadFilename + "\"")
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -207,14 +215,21 @@ public class FileController {
      * View/preview a file inline (for PDFs, images, etc.)
      */
     @GetMapping("/view")
-    public ResponseEntity<Resource> viewFile(@RequestParam("path") String filePath) {
+    public ResponseEntity<Resource> viewFile(
+            @RequestParam("path") String filePath,
+            @RequestParam(value = "filename", required = false) String filename) {
         try {
             Resource resource = fileStorageService.loadFileAsResource(filePath);
             String contentType = fileStorageService.getContentType(filePath);
             
+            // Use provided filename or fall back to resource filename
+            String viewFilename = (filename != null && !filename.isEmpty()) 
+                    ? filename 
+                    : resource.getFilename();
+            
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + viewFilename + "\"")
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

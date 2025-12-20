@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, Router, ActivatedRoute } from '@angular/r
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { MaterialService } from '../../../core/services/material.service';
+import { StudentService } from '../../../core/services/student.service';
 
 interface Material {
   id: number;
@@ -14,6 +15,7 @@ interface Material {
   iconColor: string;
   courseCode: string;
   url: string;
+  fileName?: string;
 }
 
 interface CourseSection {
@@ -35,6 +37,7 @@ export class ViewMaterials implements OnInit {
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private materialService = inject(MaterialService);
+  private studentService = inject(StudentService);
 
   // User data
   currentUser: any;
@@ -70,15 +73,77 @@ export class ViewMaterials implements OnInit {
   }
 
   loadMaterials() {
-    this.materialService.getAllMaterials().subscribe({
-      next: (response) => {
-        if (response.success && response.data) {
-          this.processMaterials(response.data);
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
+
+    // First load student's courses
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (courseResponse) => {
+        if (courseResponse.success && courseResponse.data) {
+          const coursesArray = Array.isArray(courseResponse.data)
+            ? courseResponse.data
+            : courseResponse.data
+              ? [courseResponse.data]
+              : [];
+
+          if (coursesArray.length === 0) {
+            this.isLoading = false;
+            return;
+          }
+
+          // Load materials for each course
+          const allMaterials: Material[] = [];
+          let loadedCount = 0;
+
+          coursesArray.forEach((course: any) => {
+            const courseId = course.id;
+
+            this.materialService.getMaterialsByCourse(courseId).subscribe({
+              next: (response) => {
+                if (response.success && response.data) {
+                  const materialsData = Array.isArray(response.data)
+                    ? response.data
+                    : response.data
+                      ? [response.data]
+                      : [];
+
+                  materialsData.forEach((material: any) => {
+                    allMaterials.push({
+                      id: material.materialId || material.id,
+                      title: material.title || material.materialTitle,
+                      type: material.type || 'PDF',
+                      size: material.formattedFileSize || material.fileSize || 'Unknown',
+                      icon: material.iconName || this.getDefaultIcon(material.type),
+                      iconColor: material.iconColor || this.getDefaultColor(material.type),
+                      courseCode: material.courseCode || course.courseCode,
+                      url: material.url || '',
+                    });
+                  });
+                }
+
+                loadedCount++;
+                if (loadedCount === coursesArray.length) {
+                  this.processMaterialsIntoSections(allMaterials);
+                  this.filterMaterials();
+                  this.isLoading = false;
+                }
+              },
+              error: (err) => {
+                console.error(`Error loading materials for course ${courseId}:`, err);
+                loadedCount++;
+                if (loadedCount === coursesArray.length) {
+                  this.processMaterialsIntoSections(allMaterials);
+                  this.filterMaterials();
+                  this.isLoading = false;
+                }
+              }
+            });
+          });
+        } else {
+          this.isLoading = false;
         }
-        this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error loading materials:', err);
+        console.error('Error loading student courses:', err);
         this.isLoading = false;
       }
     });
@@ -88,8 +153,26 @@ export class ViewMaterials implements OnInit {
     this.materialService.getMaterialsByCourse(courseId).subscribe({
       next: (response) => {
         if (response.success && response.data) {
-          this.processMaterials(response.data, courseId);
+          const materialsData = Array.isArray(response.data)
+            ? response.data
+            : response.data
+              ? [response.data]
+              : [];
+
+          const materials = materialsData.map((material: any) => ({
+            id: material.materialId || material.id,
+            title: material.title || material.materialTitle,
+            type: material.type || 'PDF',
+            size: material.formattedFileSize || material.fileSize || 'Unknown',
+            icon: material.iconName || this.getDefaultIcon(material.type),
+            iconColor: material.iconColor || this.getDefaultColor(material.type),
+            courseCode: material.courseCode || 'Unknown',
+            url: material.url || '',
+          }));
+
+          this.processMaterialsIntoSections(materials);
         }
+        this.filterMaterials();
         this.isLoading = false;
       },
       error: (err) => {
@@ -100,10 +183,9 @@ export class ViewMaterials implements OnInit {
   }
 
   /**
-   * Process materials from backend and group by course
-   * All icon and size data now comes from the backend
+   * Process materials and group by course
    */
-  private processMaterials(materials: any[], courseId?: number) {
+  private processMaterialsIntoSections(materials: Material[]) {
     const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
     const grouped = new Map<string, Material[]>();
 
@@ -125,6 +207,7 @@ export class ViewMaterials implements OnInit {
         iconColor: material.iconColor || this.getDefaultColor(material.materialType),
         courseCode: courseCode,
         url: material.downloadUrl || material.url || '',
+        fileName: material.fileName,
       };
 
       grouped.get(courseCode)!.push(mat);
@@ -136,8 +219,6 @@ export class ViewMaterials implements OnInit {
       borderColor: colorMap[index % colorMap.length] + '-border',
       materials: entry[1],
     }));
-
-    this.filterMaterials();
   }
 
   /**
@@ -226,7 +307,7 @@ export class ViewMaterials implements OnInit {
 
   downloadMaterial(material: Material): void {
     if (material.url) {
-      this.materialService.downloadMaterial(material.url);
+      this.materialService.downloadMaterial(material.url, material.fileName);
     } else {
       console.error('No URL available for material:', material.title);
     }
@@ -234,7 +315,7 @@ export class ViewMaterials implements OnInit {
 
   viewMaterial(material: Material): void {
     if (material.url) {
-      this.materialService.viewMaterial(material.url);
+      this.materialService.viewMaterial(material.url, material.fileName);
     } else {
       console.error('No URL available for material:', material.title);
     }
