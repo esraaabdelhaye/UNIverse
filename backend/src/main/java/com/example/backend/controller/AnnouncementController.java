@@ -26,9 +26,9 @@ public class AnnouncementController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> createAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestBody CreateAnnouncementRequest request) {
-        ApiResponse<AnnouncementDTO> response = announcementService.createAnnouncement(author, request);
+        ApiResponse<AnnouncementDTO> response = announcementService.createAnnouncement((AnnouncementAuthor) author, request);
         if (response.isSuccess()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -38,11 +38,11 @@ public class AnnouncementController {
 
     @PostMapping("/update/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String announcementId,
             @RequestBody AnnouncementDTO dto) {
         dto.setAnnouncementId(announcementId);
-        ApiResponse<AnnouncementDTO> response = announcementService.updateAnnouncement(author, dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.updateAnnouncement((AnnouncementAuthor)author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -50,7 +50,6 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{announcementId}")
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
             @AuthenticationPrincipal Object author,
             @PathVariable String announcementId) {
