@@ -29,4 +29,8 @@ export class ApiService {
   patch<T>(endpoint: string, body: any): Observable<T> {
     return this.http.patch<T>(`${this.apiUrl}${endpoint}`, body, { withCredentials: true });
   }
+
+  getBaseUrl(): string {
+    return this.apiUrl;
+  }
 }

@@ -226,20 +226,17 @@ export class ViewMaterials implements OnInit {
 
   downloadMaterial(material: Material): void {
     if (material.url) {
-      const link = document.createElement('a');
-      link.href = material.url;
-      link.download = material.title;
-      link.click();
+      this.materialService.downloadMaterial(material.url);
     } else {
-      alert(`Download: ${material.title}`);
+      console.error('No URL available for material:', material.title);
     }
   }
 
   viewMaterial(material: Material): void {
     if (material.url) {
-      window.open(material.url, '_blank');
+      this.materialService.viewMaterial(material.url);
     } else {
-      alert(`Opening: ${material.title}`);
+      console.error('No URL available for material:', material.title);
     }
   }
 
