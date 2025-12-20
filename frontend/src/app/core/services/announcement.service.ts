@@ -40,7 +40,9 @@ export class AnnouncementService {
     return this.api.get<ApiResponse<Announcement[]>>(`/announcement/search?keyword=${keyword}`);
   }
 
-  deleteAnnouncement(announcementId: string): Observable<ApiResponse<null>> {
-    return this.api.delete<ApiResponse<null>>(`/announcement/${announcementId}`);
+  deleteAnnouncement(id: number): Observable<ApiResponse<void>> {
+    return this.api.delete<ApiResponse<void>>(`/announcement/${id}`);
   }
+
+  
 }

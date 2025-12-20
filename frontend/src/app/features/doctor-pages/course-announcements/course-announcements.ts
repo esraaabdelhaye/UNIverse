@@ -104,7 +104,7 @@ export class Announcements implements OnInit {
       if (index > -1) {
         this.announcements.splice(index, 1);
       }
-      this.announcementService.deleteAnnouncement(announcement.announcementId).subscribe({
+      this.announcementService.deleteAnnouncement(Number(announcement.announcementId)).subscribe({
         next: () => {
           console.log('Announcement deleted successfully');
         },
