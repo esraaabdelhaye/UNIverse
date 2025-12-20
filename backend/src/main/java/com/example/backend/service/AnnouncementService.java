@@ -14,6 +14,7 @@ import com.example.backend.repository.AnnouncementRepo;
 import com.example.backend.repository.CourseRepo;
 import com.example.backend.repository.DoctorRepo;
 import com.example.backend.repository.SupervisorRepo;
+import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -319,25 +320,62 @@ public class AnnouncementService {
 
     private ApiResponse<Void> verifyAnnouncementOwnership(AnnouncementAuthor author, Announcement announcement) {
         try {
-            if (author instanceof DoctorDTO doctorDTO) {
-                Long requesterId = Long.parseLong(doctorDTO.getDoctorId());
-                if (announcement.getDoctorAuthor() == null || !requesterId.equals(announcement.getDoctorAuthor().getId())) {
-                    return ApiResponse.serviceUnavailable("Creator id doesn't match");
+            // Check if author is null
+            if (author == null) {
+                return ApiResponse.unauthorized("Authentication required");
+            }
+            
+            // Unwrap Spring AOP proxy to get the actual target object
+            Class<?> targetClass = AopProxyUtils.ultimateTargetClass(author);
+            
+            // Check if the target is a DoctorDTO
+            if (DoctorDTO.class.isAssignableFrom(targetClass)) {
+                // Cast to DoctorDTO - this will work even with proxies
+                try {
+                    var method = targetClass.getMethod("getDoctorId");
+                    String doctorId = (String) method.invoke(author);
+                    Long requesterId = Long.parseLong(doctorId);
+                    if (announcement.getDoctorAuthor() == null || !requesterId.equals(announcement.getDoctorAuthor().getId())) {
+                        return ApiResponse.serviceUnavailable("Creator id doesn't match");
+                    }
+                    return ApiResponse.success(null);
+                } catch (Exception e) {
+                    System.err.println("Error accessing DoctorDTO: " + e.getMessage());
+                    throw e;
                 }
             }
-            else if (author instanceof SupervisorDTO supervisorDTO) {
-                Long requesterId = Long.parseLong(supervisorDTO.getEmployeeId());
-                if (announcement.getSupervisorAuthor() == null || !requesterId.equals(announcement.getSupervisorAuthor().getId())) {
-                    return ApiResponse.serviceUnavailable("Creator id doesn't match");
+            
+            // Check if the target is a SupervisorDTO
+            if (SupervisorDTO.class.isAssignableFrom(targetClass)) {
+                // Cast to SupervisorDTO
+                try {
+                    var method = targetClass.getMethod("getEmployeeId");
+                    String employeeId = (String) method.invoke(author);
+                    Long requesterId = Long.parseLong(employeeId);
+                    if (announcement.getSupervisorAuthor() == null || !requesterId.equals(announcement.getSupervisorAuthor().getId())) {
+                        return ApiResponse.serviceUnavailable("Creator id doesn't match");
+                    }
+                    return ApiResponse.success(null);
+                } catch (Exception e) {
+                    System.err.println("Error accessing SupervisorDTO: " + e.getMessage());
+                    throw e;
                 }
             }
-            else return ApiResponse.unauthorized("Invalid author type");
+            
+            // If we reach here, the author type is not supported
+            System.err.println("Invalid author type: " + targetClass.getName());
+            System.err.println("Author proxy class: " + author.getClass().getName());
+            System.err.println("Author interfaces: " + Arrays.toString(author.getClass().getInterfaces()));
+            return ApiResponse.unauthorized("Invalid author type. Please ensure you're logged in correctly.");
         }
         catch (NumberFormatException e) {
             return ApiResponse.badRequest("Invalid author ID format");
         }
-
-        return ApiResponse.success(null);
+        catch (Exception e) {
+            System.err.println("Error verifying announcement ownership: " + e.getMessage());
+            e.printStackTrace();
+            return ApiResponse.serviceUnavailable("Error verifying ownership");
+        }
     }
 
     private AnnouncementDTO convertToDTO(Announcement announcement) {

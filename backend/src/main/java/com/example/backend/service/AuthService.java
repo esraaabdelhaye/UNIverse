@@ -303,6 +303,7 @@ public class AuthService {
         DoctorDTO dto = new DoctorDTO();
         // Currently no departments exist
 //        dto.setDepartment(doc.getDepartment().getName());
+        dto.setDoctorId(String.valueOf(doc.getId()));
         dto.setEmail(doc.getEmail());
         dto.setFullName(doc.getName());
         dto.setDoctorId(String.valueOf(doc.getId()));

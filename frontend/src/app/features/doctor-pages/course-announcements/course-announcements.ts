@@ -107,9 +107,16 @@ export class Announcements implements OnInit {
       this.announcementService.deleteAnnouncement(Number(announcement.announcementId)).subscribe({
         next: () => {
           console.log('Announcement deleted successfully');
+          const index = this.announcements.indexOf(announcement);
+          if (index > -1) {
+            this.announcements.splice(index, 1);
+          }
         },
         error: (err) => {
           console.error('Error deleting announcement:', err);
+          // Display the error message to the user
+          const errorMessage = err.error?.message || 'Failed to delete announcement';
+          alert(`Error: ${errorMessage}`);
         },
       });
     }

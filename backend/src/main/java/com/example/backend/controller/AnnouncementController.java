@@ -52,11 +52,11 @@ public class AnnouncementController {
     @DeleteMapping("/{announcementId}")
     @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String announcementId) {
         AnnouncementDTO dto = new AnnouncementDTO();
         dto.setAnnouncementId(announcementId);
-        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement(author, dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement((AnnouncementAuthor) author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
