@@ -14,7 +14,7 @@ public class Material {
     @Column(nullable = false)
     private String title;
 
-
+    @Column(name = "file_name")
     private String fileName;
 
     @Column(name = "url")
