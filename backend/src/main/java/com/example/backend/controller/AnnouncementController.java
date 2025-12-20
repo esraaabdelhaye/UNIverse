@@ -26,9 +26,9 @@ public class AnnouncementController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> createAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestBody CreateAnnouncementRequest request) {
-        ApiResponse<AnnouncementDTO> response = announcementService.createAnnouncement(author, request);
+        ApiResponse<AnnouncementDTO> response = announcementService.createAnnouncement((AnnouncementAuthor) author, request);
         if (response.isSuccess()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -38,11 +38,11 @@ public class AnnouncementController {
 
     @PostMapping("/update/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> updateAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String announcementId,
             @RequestBody AnnouncementDTO dto) {
         dto.setAnnouncementId(announcementId);
-        ApiResponse<AnnouncementDTO> response = announcementService.updateAnnouncement(author, dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.updateAnnouncement((AnnouncementAuthor) author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -50,18 +50,19 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{announcementId}")
-    @PreAuthorize("hasAnyRole('DOC')")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> deleteAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String announcementId) {
         AnnouncementDTO dto = new AnnouncementDTO();
         dto.setAnnouncementId(announcementId);
-        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement(author, dto);
+        ApiResponse<AnnouncementDTO> response = announcementService.deleteAnnouncement((AnnouncementAuthor) author, dto);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.badRequest().body(response);
     }
+
+
 
     /**
      * Announcement retrieval endPoints
@@ -69,7 +70,7 @@ public class AnnouncementController {
 
     @GetMapping("/get/{announcementId}")
     public ResponseEntity<ApiResponse<AnnouncementDTO>> getAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @PathVariable String announcementId) {
         ApiResponse<AnnouncementDTO> response = announcementService.getAnnouncement(announcementId);
         if (response.isSuccess()) {
@@ -80,7 +81,7 @@ public class AnnouncementController {
 
     @GetMapping("/get/all")
     public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAllAnnouncement(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam int page,
             @RequestParam int pageSize) {
         ApiResponse<List<AnnouncementDTO>> response = announcementService.getAllAnnouncements(page, pageSize);
@@ -89,16 +90,16 @@ public class AnnouncementController {
 
     @GetMapping("/get/author")
     public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByAuthor(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam int page,
             @RequestParam int pageSize) {
-        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByAuthor(author, page, pageSize);
+        ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByAuthor((AnnouncementAuthor) author, page, pageSize);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get/status")
     public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByStatus(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam String status) {
         ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByStatus(status);
         return ResponseEntity.ok(response);
@@ -106,7 +107,7 @@ public class AnnouncementController {
 
     @GetMapping("/get/course")
     public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> getAnnouncementsByCourse(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam String courseCode) {
         ApiResponse<List<AnnouncementDTO>> response = announcementService.getAnnouncementsByCourse(courseCode);
         return ResponseEntity.ok(response);
@@ -114,7 +115,7 @@ public class AnnouncementController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<AnnouncementDTO>>> searchAnnouncements(
-            @AuthenticationPrincipal AnnouncementAuthor author,
+            @AuthenticationPrincipal Object author,
             @RequestParam String keyword) {
         ApiResponse<List<AnnouncementDTO>> response = announcementService.searchAnnouncements(keyword);
         return ResponseEntity.ok(response);
