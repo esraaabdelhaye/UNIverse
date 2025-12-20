@@ -73,7 +73,7 @@
             <label class="form-label">Select Course *</label>
             <select class="form-select" [(ngModel)]="selectedCourse">
               <option value="">Choose a course</option>
-              <option *ngFor="let course of courses" [value]="course.id">
+              <option *ngFor="let course of courses" [value]="course.courseCode">
                 {{ course.courseCode }}: {{ course.courseTitle }}
               </option>
             </select>
@@ -103,6 +103,7 @@
             <!-- <button class="btn btn-secondary" (click)="saveDraft()" type="button">
               Save Draft
             </button> -->
+            @if(!isEditing){
             <button
               class="btn btn-primary"
               (click)="publishAnnouncement()"
@@ -112,6 +113,17 @@
               <span class="material-symbols-outlined" *ngIf="!isPublishing">send</span>
               {{ isPublishing ? 'Publishing...' : 'Publish' }}
             </button>
+            } @else{
+            <button
+              class="btn btn-primary"
+              (click)="updateAnnouncement()"
+              [disabled]="isUpdating"
+              type="button"
+            >
+              <span class="material-symbols-outlined" *ngIf="!isUpdating">update</span>
+              {{ isUpdating ? 'Updating...' : 'Update' }}
+            </button>
+            }
           </div>
         </div>
 

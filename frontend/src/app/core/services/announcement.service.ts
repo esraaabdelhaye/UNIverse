@@ -4,7 +4,7 @@ import { ApiService } from './api.service';
 import { ApiResponse } from '../models/api-response.model';
 import { Announcement } from '../models/announcement.model';
 import { Course } from '../models/course.model';
-
+import { createAnnouncementRequest } from '../models/createAnnouncementRequest';
 @Injectable({
   providedIn: 'root',
 })
@@ -44,5 +44,16 @@ export class AnnouncementService {
     return this.api.delete<ApiResponse<void>>(`/announcement/${id}`);
   }
 
-  
+  createAnnouncement(
+    announcement: createAnnouncementRequest
+  ): Observable<ApiResponse<Announcement>> {
+    return this.api.post<ApiResponse<Announcement>>('/announcement/create', announcement);
+  }
+
+  updateAnnouncement(
+    id: number,
+    announcement: Announcement
+  ): Observable<ApiResponse<Announcement>> {
+    return this.api.post<ApiResponse<Announcement>>(`/announcement/update/${id}`, announcement);
+  }
 }
