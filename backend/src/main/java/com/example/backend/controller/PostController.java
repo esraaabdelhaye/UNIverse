@@ -24,9 +24,9 @@ public class PostController {
 
     @PostMapping("/createPost")
     public ResponseEntity<ApiResponse<?>> createPost(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @RequestBody CreatePostRequest createPostRequest) {
-        ApiResponse<?> response = postService.createPost(postAuthorDTO, createPostRequest);
+        ApiResponse<?> response = postService.createPost((PostAuthor) postAuthorDTO, createPostRequest);
         if (response.isSuccess()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -37,9 +37,9 @@ public class PostController {
 
     @PostMapping("/modifyPost")
     public ResponseEntity<ApiResponse<PostDTO>> modifyPost(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @RequestBody PostDTO postDTO) {
-        ApiResponse<PostDTO> response = postService.updatePost(postAuthorDTO, postDTO);
+        ApiResponse<PostDTO> response = postService.updatePost((PostAuthor) postAuthorDTO, postDTO);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -48,7 +48,7 @@ public class PostController {
 
     @PostMapping("/{postId}/likes/add")
     public ResponseEntity<ApiResponse<PostDTO>> addLike(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
@@ -61,7 +61,7 @@ public class PostController {
 
     @PostMapping("/{postId}/likes/remove")
     public ResponseEntity<ApiResponse<PostDTO>> removeLike(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
@@ -78,7 +78,7 @@ public class PostController {
      */
     @PostMapping("/{postId}/comments/add")
     public ResponseEntity<ApiResponse<PostDTO>> addComment(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId,
             @RequestParam String comment) {
         PostDTO postDTO = new PostDTO();
@@ -92,7 +92,7 @@ public class PostController {
 
     @PostMapping("/{postId}/comments/remove")
     public ResponseEntity<ApiResponse<PostDTO>> removeComment(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId,
             @RequestParam String comment) {
         PostDTO postDTO = new PostDTO();
@@ -106,11 +106,11 @@ public class PostController {
 
     @DeleteMapping("/{postId}/delete")
     public ResponseEntity<ApiResponse<PostDTO>> deletePost(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setPostId(postId);
-        ApiResponse<PostDTO> response = postService.deletePost(postAuthorDTO, postDTO);
+        ApiResponse<PostDTO> response = postService.deletePost((PostAuthor) postAuthorDTO, postDTO);
         if (response.isSuccess()) {
             return ResponseEntity.ok(response);
         }
@@ -123,7 +123,7 @@ public class PostController {
 
     @GetMapping("/{postId}/get")
     public ResponseEntity<ApiResponse<PostDTO>> getPost(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @PathVariable String postId) {
         ApiResponse<PostDTO> response = postService.getPost(postId);
         if (response.isSuccess()) {
@@ -134,7 +134,7 @@ public class PostController {
 
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse<List<PostDTO>>> getAllPosts(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @RequestParam Integer page,
             @RequestParam Integer pageSize) {
         ApiResponse<List<PostDTO>> response = postService.getAllPosts(page, pageSize);
@@ -143,16 +143,16 @@ public class PostController {
 
     @GetMapping("/getAuthor")
     public ResponseEntity<ApiResponse<List<PostDTO>>> getPostsByAuthor(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @RequestParam Integer page,
             @RequestParam Integer pageSize) {
-        ApiResponse<List<PostDTO>> response = postService.getPostsByAuthor(postAuthorDTO, page, pageSize);
+        ApiResponse<List<PostDTO>> response = postService.getPostsByAuthor((PostAuthor) postAuthorDTO, page, pageSize);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getPostsStatus")
     public ResponseEntity<ApiResponse<List<PostDTO>>> getPostsByStatus(
-            @AuthenticationPrincipal PostAuthor postAuthorDTO,
+            @AuthenticationPrincipal Object postAuthorDTO,
             @RequestParam String status) {
         ApiResponse<List<PostDTO>> response = postService.getPostsByStatus(status);
         return ResponseEntity.ok(response);
@@ -161,7 +161,7 @@ public class PostController {
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<PostDTO>>> searchPosts(
             @RequestParam String keyword,
-            @AuthenticationPrincipal PostAuthor postAuthorDTO) {
+            @AuthenticationPrincipal Object postAuthorDTO) {
         ApiResponse<List<PostDTO>> response = postService.searchPosts(keyword);
         return ResponseEntity.ok(response);
     }
