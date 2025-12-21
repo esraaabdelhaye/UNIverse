@@ -16,6 +16,7 @@ public class QuestionDTO {
     private String priority;
     private String[] tags;
     private Integer upvotes;
+    private String answer;
 
     public QuestionDTO() {}
 
@@ -76,4 +77,7 @@ public class QuestionDTO {
 
     public Integer getUpvotes() { return upvotes; }
     public void setUpvotes(Integer upvotes) { this.upvotes = upvotes; }
+
+    public String getAnswer() { return answer; }
+    public void setAnswer(String answer) { this.answer = answer; }
 }

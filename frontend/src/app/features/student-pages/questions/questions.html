@@ -1,0 +1,219 @@
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link active" routerLink="/student-dashboard" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
+        <span>My Courses</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>My Schedule</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Submit Assignments</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-announcements" routerLinkActive="active">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Announcements</span>
+      </a>
+
+      <a class="nav-link" routerLink="/student-dashboard/questions" routerLinkActive="active">
+        <span class="material-symbols-outlined">help</span>
+        <span>Questions</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge accent"></span>
+        </button>
+        <div class="user-avatar"
+             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC-LETa4BflVlQ-Ke4L1wK7jtSz5aP99ABOzLi0704ZljGf5FDMgfp5f-jIvQ1BtVkL0GlLxVHAvU0XTllE38dKcebfTPb7utJ8-cAWaPGS9T27juHXLKrFw1LTJP8NOx59KeIBXL7Qkt-g60iKue6ZC44Wl-FbKOwh7oSGGYVOPzJOoTtEjZhYn3CHNWbHK4tkdoAz4uskjwlIoMIoFoe4B46z1CHJsKKPQIY1gswCW_1j7WoHfNUICaoxhoDT9NlPLKLRsqoo");'></div>
+        <div class="user-info">
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page">
+      <div class="page-header">
+        <div class="page-title">
+          <p class="eyebrow">Student Q&A</p>
+          <h2>Questions</h2>
+          <p class="lede">Ask, refine, and track answers from your instructors and peers.</p>
+        </div>
+        <nav class="tabs">
+          <button [class.active]="activeTab==='ask'" (click)="activeTab='ask'">Ask</button>
+          <button [class.active]="activeTab==='pending'" (click)="activeTab='pending'">Pending</button>
+          <button [class.active]="activeTab==='answered'" (click)="activeTab='answered'">Answered</button>
+        </nav>
+      </div>
+
+      <div class="alert" *ngIf="statusMessage" [class.success]="statusType==='success'"
+           [class.error]="statusType==='error'">
+        {{ statusMessage }}
+      </div>
+
+      <section *ngIf="activeTab==='ask'" class="card ask-card">
+        <div class="row">
+          <label>Course</label>
+          <select [(ngModel)]="form.courseCode" title="Select course">
+            <option *ngFor="let c of courses" [ngValue]="c.courseCode">{{ c.courseCode }}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>Title</label>
+          <input [(ngModel)]="form.questionTitle" placeholder="e.g., Confusion about gradient descent"/>
+        </div>
+        <div class="row">
+          <label>Content</label>
+          <textarea [(ngModel)]="form.questionContent" rows="6"
+                    placeholder="Describe your question with enough context..."></textarea>
+        </div>
+        <div class="row">
+          <label>Tags</label>
+          <div class="tags">
+            <input [(ngModel)]="tagInput" (keydown.enter)="addTagFromInput(); $event.preventDefault()"
+                   placeholder="Add tag and press Enter"/>
+            <button type="button" (click)="addTagFromInput()">Add</button>
+          </div>
+          <div class="tag-list">
+            <span class="tag" *ngFor="let t of form.tags; let i = index">{{ t }}
+              <button (click)="removeTag(i)">×</button></span>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" [disabled]="submitting" (click)="submitQuestion()">
+            {{ submitting ? 'Publishing...' : 'Publish Question' }}
+          </button>
+        </div>
+      </section>
+
+      <section *ngIf="activeTab==='pending'" class="card list-card">
+        <div class="list-header">
+          <input [(ngModel)]="filterText" placeholder="Filter by keyword, tag, course..."/>
+        </div>
+        <div *ngIf="isLoading" class="muted">Loading your questions...</div>
+        <div *ngIf="!isLoading && filtered(myPending).length===0" class="muted">No pending questions.</div>
+        <div class="q-list">
+          <div class="q-item" *ngFor="let q of filtered(myPending)">
+            <div class="q-meta">
+              <span class="badge pending">Pending</span>
+              <span class="course">{{ q.courseCode }}</span>
+              <span class="views">👁 {{ q.viewCount || 0 }}</span>
+              <span class="answers">💬 {{ q.answerCount || 0 }}</span>
+            </div>
+            <div class="q-title" *ngIf="editingId!==q.questionId">{{ q.questionTitle }}</div>
+            <input class="q-title-input" *ngIf="editingId===q.questionId" [(ngModel)]="editModel.questionTitle"
+                   placeholder="Edit title" title="Edit title"/>
+
+            <div class="q-content" *ngIf="editingId!==q.questionId">{{ q.questionContent }}</div>
+            <textarea class="q-content-input" *ngIf="editingId===q.questionId" rows="4"
+                      [(ngModel)]="editModel.questionContent" placeholder="Edit content"
+                      title="Edit content"></textarea>
+
+            <div class="q-tags" *ngIf="editingId!==q.questionId">
+              <span class="tag" *ngFor="let t of q.tags">#{{ t }}</span>
+            </div>
+
+            <div class="q-actions" *ngIf="editingId!==q.questionId">
+              <button (click)="startEdit(q)">Edit</button>
+              <button class="danger" (click)="delete(q)">Delete</button>
+            </div>
+
+            <div class="q-edit-actions" *ngIf="editingId===q.questionId">
+              <button class="primary" [disabled]="savingEdit"
+                      (click)="saveEdit(q)">{{ savingEdit ? 'Saving...' : 'Save' }}
+              </button>
+              <button (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="activeTab==='answered'" class="card list-card">
+        <div class="list-header">
+          <input [(ngModel)]="filterText" placeholder="Filter by keyword, tag, course..."/>
+        </div>
+        <div *ngIf="isLoading" class="muted">Loading your questions...</div>
+        <div *ngIf="!isLoading && filtered(myAnswered).length===0" class="muted">No answered questions yet.</div>
+        <div class="q-list">
+          <div class="q-item" *ngFor="let q of filtered(myAnswered)">
+            <div class="q-meta">
+              <span class="badge answered">Answered</span>
+              <span class="course">{{ q.courseCode }}</span>
+              <span class="views">👁 {{ q.viewCount || 0 }}</span>
+              <span class="answers">💬 {{ q.answerCount || 0 }}</span>
+            </div>
+            <div class="q-title">{{ q.questionTitle }}</div>
+            <div class="q-content">{{ q.questionContent }}</div>
+            <div class="q-tags">
+              <span class="tag" *ngFor="let t of q.tags">#{{ t }}</span>
+            </div>
+            <div class="q-actions">
+              <button (click)="openAnswerPopUp(q)">View Answer</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- popup window for viewing answer -->
+<div class="modal-backdrop" *ngIf="showAnswerModal" (click)="closeAnswerPopUp()"></div>
+<div class="modal" *ngIf="showAnswerModal">
+  <div class="modal-header">
+    <h3>Answer</h3>
+    <button class="close-btn" (click)="closeAnswerPopUp()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="q-meta">
+      <span class="badge answered">Answered</span>
+      <span class="course">{{ selectedAnswer?.courseCode }}</span>
+      <span class="views">👁 {{ selectedAnswer?.viewCount || 0 }}</span>
+      <span class="answers">💬 {{ selectedAnswer?.answerCount || 0 }}</span>
+    </div>
+    <div class="q-title">{{ selectedAnswer?.questionTitle }}</div>
+    <div class="q-content">{{ selectedAnswer?.questionContent }}</div>
+    <div class="q-tags">
+      <span class="tag" *ngFor="let t of selectedAnswer?.tags">#{{ t }}</span>
+    </div>
+    <div class="answer-section">
+      <!-- Will added prof name later -->
+      <!-- <h3></h3> -->
+      <h4>Answer:</h4>
+      <div class="answer-content">{{ selectedAnswer?.answer }}</div>
+    </div>
+  </div>
+</div>

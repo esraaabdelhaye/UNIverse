@@ -1220,6 +1220,7 @@ public class DataInitializer implements CommandLineRunner {
             question1.setAuthor(student1);
             question1.setDoctorResponder(doctor1);
             question1.setAnswer("A for loop is typically used when you know the number of iterations, while a while loop is used when the iteration count depends on a condition.");
+            question1.setStatus("ANSWERED");
             questionRepo.save(question1);
 
             Question question2 = new Question();
@@ -1228,12 +1229,14 @@ public class DataInitializer implements CommandLineRunner {
             question2.setAuthor(student2);
             question2.setTaResponder(ta1);
             question2.setAnswer("A factorial function can be implemented recursively by returning n * factorial(n-1) with base case factorial(0) = 1.");
+            question2.setStatus("ANSWERED");
             questionRepo.save(question2);
 
             Question question3 = new Question();
             question3.setContent("What are the advantages of using a linked list over an array?");
             question3.setCreatedAt(LocalDateTime.of(2025, 10, 5, 16, 45));
             question3.setAuthor(student3);
+            question3.setStatus("UNANSWERED");
             questionRepo.save(question3);
 
             Question question4 = new Question();
@@ -1242,6 +1245,7 @@ public class DataInitializer implements CommandLineRunner {
             question4.setAuthor(student4);
             question4.setDoctorResponder(andrewNg);
             question4.setAnswer("Supervised learning uses labeled data to train models (e.g., classification, regression), while unsupervised learning finds patterns in unlabeled data (e.g., clustering, dimensionality reduction).");
+            question4.setStatus("ANSWERED");
             questionRepo.save(question4);
 
             Question question5 = new Question();
@@ -1250,6 +1254,7 @@ public class DataInitializer implements CommandLineRunner {
             question5.setAuthor(student5);
             question5.setDoctorResponder(algoDoctor);
             question5.setAnswer("Use BFS when finding shortest paths in unweighted graphs or level-order traversal. Use DFS for detecting cycles, topological sorting, or when memory is a concern.");
+            question5.setStatus("ANSWERED");
             questionRepo.save(question5);
 
             Question question6 = new Question();
@@ -1258,12 +1263,14 @@ public class DataInitializer implements CommandLineRunner {
             question6.setAuthor(student5);
             question6.setDoctorResponder(andrewNg);
             question6.setAnswer("Gradient descent is an optimization algorithm that iteratively adjusts parameters to minimize a cost function. It's the backbone of training most ML models, including neural networks.");
+            question6.setStatus("ANSWERED");
             questionRepo.save(question6);
 
             Question question7 = new Question();
             question7.setContent("What is the time complexity of quicksort in the worst case?");
             question7.setCreatedAt(LocalDateTime.of(2025, 10, 14, 10, 0));
             question7.setAuthor(student4);
+            question7.setStatus("UNANSWERED");
             questionRepo.save(question7);
 
             System.out.println("Inserted questions");

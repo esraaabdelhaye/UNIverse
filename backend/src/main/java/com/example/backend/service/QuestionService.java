@@ -346,6 +346,7 @@ public class QuestionService {
         dto.setViewCount(question.getViewCount());
         dto.setUpvotes(question.getUpvotes());
         dto.setAnswerCount(question.getAnswerCount());
+        dto.setAnswer(question.getAnswer());
 
         // Parse tags back to array
         if (question.getTags() != null && !question.getTags().equals("[]")) {
