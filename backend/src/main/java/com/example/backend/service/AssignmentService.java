@@ -171,6 +171,7 @@ public class AssignmentService {
         dto.setCourseCode(assignment.getCourse().getCourseCode());
         dto.setMaxScore(assignment.getMaxScore());
         dto.setDescription(assignment.getDescription());
+        dto.setFilePaths(assignment.getAssignmentPaths());
         return dto;
     }
 }
