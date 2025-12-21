@@ -9,6 +9,27 @@ import { Student } from '../../../core/models/student.model';
 import { CourseEnrollment } from '../../../core/models/enrollment.model';
 import { CourseService } from '../../../core/services/course.service';
 import { StudentService } from '../../../core/services/student.service';
+import { MaterialService } from '../../../core/services/material.service';
+
+
+interface Material {
+  id: number;
+  title: string;
+  type: string;
+  size: string;
+  icon: string;
+  iconColor: string;
+  courseCode: string;
+  url: string;
+  fileName?: string;
+}
+
+interface CourseSection {
+  courseCode: string;
+  courseName: string;
+  borderColor: string;
+  materials: Material[];
+}
 
 @Component({
   selector: 'app-course-students',
@@ -23,6 +44,7 @@ export class CourseStudents implements OnInit {
   private route = inject(ActivatedRoute);
   private doctorService = inject(DoctorService);
   private courseService = inject(CourseService);
+  private materialService = inject(MaterialService);
 
   // Data
   currentDoctor: any;
@@ -30,10 +52,17 @@ export class CourseStudents implements OnInit {
   enrollments: CourseEnrollment[] = [];
   students: Student[] = [];
 
+  sections: CourseSection[] = [];
+  filteredSections: CourseSection[] = [];
+  
+  selectedType = 'All Types';
+  searchQuery = '';
+
   // If a `course` query param arrives before courses finish loading we'll store it here
   pendingCourseCode: string | null = null;
 
   selectedCourse: number | '' = '';
+  selectedCourseCode = 'All Courses';
   isLoading = false;
 
   ngOnInit() {
@@ -126,6 +155,8 @@ export class CourseStudents implements OnInit {
         } else {
           this.isLoading = false;
         }
+        this.loadMaterialsForCourse(this.selectedCourse as number);
+
       },
       error: (err) => {
         console.error('Error loading enrollments:', err);
@@ -133,6 +164,168 @@ export class CourseStudents implements OnInit {
       },
     });
   }
+
+  private getDefaultIcon(type: string): string {
+    if (type?.includes('PDF')) return 'picture_as_pdf';
+    if (type?.includes('VIDEO')) return 'play_circle';
+    if (type?.includes('RECORDING')) return 'mic';
+    if (type?.includes('TEXTBOOK')) return 'menu_book';
+    return 'description';
+  }
+
+  private getDefaultColor(type: string): string {
+    if (type?.includes('PDF')) return 'primary-icon';
+    if (type?.includes('VIDEO')) return 'red-icon';
+    if (type?.includes('RECORDING')) return 'amber-icon';
+    return 'green-icon';
+  }
+
+  filterMaterials() {
+    let filtered = [...this.sections];
+
+    // Filter by material type
+    if (this.selectedType && this.selectedType !== 'All Types') {
+      filtered = filtered.map(section => ({
+        ...section,
+        materials: section.materials.filter(m => m.type === this.selectedType),
+      }));
+    }
+
+    // Filter by search query
+    if (this.searchQuery && this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase().trim();
+      filtered = filtered.map(section => ({
+        ...section,
+        materials: section.materials.filter(
+          m =>
+            m.title.toLowerCase().includes(query) ||
+            m.type.toLowerCase().includes(query)
+        ),
+      }));
+    }
+
+    // Keep only sections with materials
+    this.filteredSections = filtered.filter(s => s.materials.length > 0);
+  }
+
+  loadMaterialsForCourse(courseId: number) {
+    this.sections = [];
+  this.filteredSections = [];
+    this.materialService.getMaterialsByCourse(courseId).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const materialsData = Array.isArray(response.data)
+            ? response.data
+            : response.data
+              ? [response.data]
+              : [];
+
+          const materials = materialsData.map((material: any) => ({
+            id: material.materialId || material.id,
+            title: material.title || material.materialTitle,
+            type: material.type || 'PDF',
+            size: material.formattedFileSize || material.fileSize || 'Unknown',
+            icon: material.iconName || this.getDefaultIcon(material.type),
+            iconColor: material.iconColor || this.getDefaultColor(material.type),
+            courseCode: material.courseCode || 'Unknown',
+            url: material.url || '',
+            fileName: material.fileName || material.title || material.materialTitle,
+          }));
+
+          this.processMaterialsIntoSections(materials);
+        }
+        this.filterMaterials();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading course materials:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private processMaterialsIntoSections(materials: Material[]) {
+    const colorMap = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    const grouped = new Map<string, Material[]>();
+
+    materials.forEach((material) => {
+      const courseCode = material.courseCode || 'Unknown';
+
+      if (!grouped.has(courseCode)) {
+        grouped.set(courseCode, []);
+      }
+
+      const mat: Material = {
+        id:  material.id,
+        title:  material.title,
+        type: material.type || 'PDF',
+        // Use formatted size from backend, or fallback to raw size
+        size: material.size || 'Unknown',
+        // Use icon and color from backend
+        icon: material.icon || this.getDefaultIcon(material.type),
+        iconColor: material.iconColor || this.getDefaultColor(material.type),
+        courseCode: courseCode,
+        url: material.url || '',
+        fileName: material.fileName,
+      };
+
+      grouped.get(courseCode)!.push(mat);
+    });
+
+    this.sections = Array.from(grouped.entries()).map((entry, index) => ({
+      courseCode: entry[0],
+      courseName: entry[0],
+      borderColor: colorMap[index % colorMap.length] + '-border',
+      materials: entry[1],
+    }));
+  }
+
+  onSearchChange() {
+    this.filterMaterials();
+  }
+
+  onFilterChange() {
+    this.filterMaterials();
+  }
+
+  getCourseOptions(): string[] {
+    const courses = ['All Courses'];
+    this.sections.forEach(section => {
+      if (!courses.includes(section.courseCode)) {
+        courses.push(section.courseCode);
+      }
+    });
+    return courses;
+  }
+
+  getMaterialTypes(): string[] {
+    const types = ['All Types'];
+    this.sections.forEach(section => {
+      section.materials.forEach(material => {
+        if (!types.includes(material.type)) {
+          types.push(material.type);
+        }
+      });
+    });
+    return types;
+  }
+
+  downloadMaterial(material: Material): void {
+    if (material.url) {
+      this.materialService.downloadMaterial(material.url, material.fileName);
+    } else {
+      console.error('No URL available for material:', material.title);
+    }
+  }
+
+  viewMaterial(material: Material): void {
+    if (material.url) {
+      this.materialService.viewMaterial(material.url, material.fileName);
+    } else {
+      console.error('No URL available for material:', material.title);
+    }
+  }
+
 
   logout() {
     this.authService.logout();

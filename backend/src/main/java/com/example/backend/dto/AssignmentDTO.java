@@ -15,6 +15,8 @@ public class AssignmentDTO {
     private String assignmentId;
     private String courseCode;
     private String assignmentTitle;
+    private String description;
+    private Integer maxScore;
     private LocalDateTime dueDate;
     private String status;
     private Double grade;

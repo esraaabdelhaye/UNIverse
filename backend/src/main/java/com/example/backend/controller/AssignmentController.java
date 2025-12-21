@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -56,8 +57,12 @@ public class AssignmentController {
     @PreAuthorize("hasAnyRole('DOC', 'SUPERVISOR')")
     public ResponseEntity<ApiResponse<AssignmentDTO>> createAssignment(
             @PathVariable Long courseId,
-            @Valid @RequestBody AssignmentDTO assignmentDTO) {
-        ApiResponse<AssignmentDTO> response = assignmentService.createAssignment(courseId, assignmentDTO);
+            @RequestParam String title,
+            @RequestParam(required = false) String description,
+            @RequestParam String dueDate,
+            @RequestParam Integer maxScore,
+            @RequestParam(required = false) List<MultipartFile> files) {
+        ApiResponse<AssignmentDTO> response = assignmentService.createAssignment(courseId, title, description, dueDate, maxScore, files);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

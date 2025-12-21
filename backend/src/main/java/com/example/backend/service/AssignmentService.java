@@ -10,6 +10,8 @@ import com.example.backend.repository.CourseRepo;
 import com.example.backend.repository.AssignmentSubmissionRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,12 +23,14 @@ public class AssignmentService {
     private final AssignmentRepo assignmentRepo;
     private final CourseRepo courseRepo;
     private final AssignmentSubmissionRepo submissionRepo;
+    private final FileStorageService fileStorageService;
 
     public AssignmentService(AssignmentRepo assignmentRepo, CourseRepo courseRepo,
-                             AssignmentSubmissionRepo submissionRepo) {
+                             AssignmentSubmissionRepo submissionRepo,  FileStorageService fileStorageService) {
         this.assignmentRepo = assignmentRepo;
         this.courseRepo = courseRepo;
         this.submissionRepo = submissionRepo;
+        this.fileStorageService = fileStorageService;
     }
 
     // Get all assignments for a course
@@ -62,7 +66,7 @@ public class AssignmentService {
     }
 
     // Create assignment
-    public ApiResponse<AssignmentDTO> createAssignment(Long courseId, AssignmentDTO assignmentDTO) {
+    public ApiResponse<AssignmentDTO> createAssignment(Long courseId, String title, String description, String dueDate, Integer maxScore, List<MultipartFile> files) {
         try {
             Optional<Course> courseOpt = courseRepo.findById(courseId);
             if (courseOpt.isEmpty()) {
@@ -70,12 +74,24 @@ public class AssignmentService {
             }
 
             Assignment assignment = new Assignment();
-            assignment.setTitle(assignmentDTO.getAssignmentTitle());
-            assignment.setDescription(assignmentDTO.getAssignmentTitle());
-            assignment.setDueDate(assignmentDTO.getDueDate());
+            assignment.setTitle(title);
+            assignment.setDescription(description);
+            assignment.setDueDate(LocalDateTime.parse(dueDate));
+            assignment.setMaxScore(maxScore);
             assignment.setCourse(courseOpt.get());
 
             Assignment saved = assignmentRepo.save(assignment);
+
+            if (files != null && !files.isEmpty()) {
+                List<String> filePaths = fileStorageService.storeAssignments(
+                        files.toArray(new MultipartFile[0]),
+                        saved.getId()
+                );
+
+                saved.setAssignmentPaths(filePaths);
+                assignmentRepo.save(saved);
+            }
+
             return ApiResponse.created("Assignment created successfully", convertToDTO(saved));
         } catch (Exception e) {
             return ApiResponse.internalServerError("Error creating assignment: " + e.getMessage());
@@ -153,6 +169,8 @@ public class AssignmentService {
         dto.setAssignmentTitle(assignment.getTitle());
         dto.setDueDate(assignment.getDueDate());
         dto.setCourseCode(assignment.getCourse().getCourseCode());
+        dto.setMaxScore(assignment.getMaxScore());
+        dto.setDescription(assignment.getDescription());
         return dto;
     }
 }

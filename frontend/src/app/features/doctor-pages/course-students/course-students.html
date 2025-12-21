@@ -23,14 +23,18 @@
         routerLink="/doctor-dashboard/course-students"
         routerLinkActive="active"
       >
-        <span class="material-symbols-outlined">group</span>
-        <span>Course Students</span>
+        <span class="material-symbols-outlined">book</span>
+        <span>Course Details</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/add-assignment" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>Add Assignment</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -138,6 +142,70 @@
           <p class="empty-subtitle">
             Choose a course from the dropdown above to see the student list.
           </p>
+        </div>
+      </div>
+      <div class="content-container">
+        <div class="page-header">
+          <h1>Course Materials</h1>
+          <p class="page-subtitle">Browse and download materials for your courses.</p>
+        </div>
+
+        <div class="card">
+          <!-- Loading State -->
+          <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+            <p style="color: #64748B;">Loading materials...</p>
+          </div>
+
+          <!-- Filters -->
+          <div *ngIf="!isLoading" class="materials-filters">
+            <div class="materials-search-wrapper">
+              <span class="material-symbols-outlined search-icon">search</span>
+              <input class="materials-search-input" placeholder="Search materials..." type="text" [(ngModel)]="searchQuery" (keyup)="onSearchChange()"/>
+            </div>
+            <div class="materials-selects">
+              <select class="form-select" [(ngModel)]="selectedCourse" (change)="onCourseChange()">
+              <option value="">Choose a course to view material</option>
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.courseCode }}: {{ course.courseTitle }}
+              </option>
+            </select>
+              <select class="materials-select" [(ngModel)]="selectedType" (change)="onFilterChange()">
+                <option *ngFor="let type of getMaterialTypes()">{{ type }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Materials Sections -->
+          <div *ngIf="!isLoading && filteredSections.length > 0" class="materials-sections">
+            <div class="materials-section" *ngFor="let section of filteredSections">
+              <h2 class="materials-section-title" [ngClass]="section.borderColor">{{ section.courseCode }}: {{ section.courseName }}</h2>
+              <div class="materials-list">
+                <div class="material-item" *ngFor="let material of section.materials">
+                  <div class="material-info" (click)="viewMaterial(material)" style="cursor: pointer;" title="Click to view">
+                    <span class="material-symbols-outlined material-icon" [ngClass]="material.iconColor">{{ material.icon }}</span>
+                    <div class="material-details">
+                      <p class="material-title">{{ material.title }}</p>
+                      <p class="material-type">{{ material.type }}</p>
+                    </div>
+                  </div>
+                  <span class="material-size">{{ material.size }}</span>
+                  <div class="material-actions">
+                    <button class="btn btn-secondary btn-icon-only" (click)="viewMaterial(material)" title="View">
+                      <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                    <button class="btn btn-primary btn-icon-only" (click)="downloadMaterial(material)" title="Download">
+                      <span class="material-symbols-outlined">download</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Materials -->
+          <div *ngIf="!isLoading && filteredSections.length === 0" style="text-align: center; padding: 32px; color: #64748B;">
+            <p>No materials found matching your filters</p>
+          </div>
         </div>
       </div>
     </main>

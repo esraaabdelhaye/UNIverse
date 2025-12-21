@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -129,6 +131,35 @@ public class FileStorageService {
             throw new RuntimeException("Failed to store material file", e);
         }
     }
+
+    public List<String> storeAssignments(MultipartFile[] files, Integer assignmentId) {
+        List<String> storedPaths = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
+            String fileExtension = getFileExtension(originalFilename);
+            String customFilename =
+                    "assignment" + assignmentId + "_" + UUID.randomUUID() + fileExtension;
+
+            try {
+                Path assignmentsPath = rootLocation.resolve("assignments");
+                Files.createDirectories(assignmentsPath);
+
+                Path destinationFile = assignmentsPath.resolve(customFilename).normalize();
+
+                try (InputStream inputStream = file.getInputStream()) {
+                    Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                storedPaths.add("assignments/" + customFilename);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to store assignment files", e);
+            }
+        }
+
+        return storedPaths;
+    }
+
 
     /**
      * Store a post attachment

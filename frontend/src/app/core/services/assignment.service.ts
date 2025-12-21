@@ -26,8 +26,8 @@ export class AssignmentService {
     return this.api.get<ApiResponse<number>>(`/api/assignments/${assignmentId}/submissions/count`);
   }
 
-  createAssignment(courseId: number, assignment: Assignment): Observable<ApiResponse<Assignment>> {
-    return this.api.post<ApiResponse<Assignment>>(`/api/assignments/course/${courseId}`, assignment);
+  createAssignment(courseId: number, formData: FormData): Observable<ApiResponse<Assignment>> {
+    return this.api.post<ApiResponse<Assignment>>(`/api/assignments/course/${courseId}`, formData);
   }
 
   updateAssignment(id: number, assignment: Assignment): Observable<ApiResponse<Assignment>> {

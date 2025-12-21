@@ -114,4 +114,23 @@ export class DoctorDashboard implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  getCourseCardColor(index: number): string {
+    const colors = ['course-blue', 'course-green', 'course-pink', 'course-purple', 'course-amber', 'course-red'];
+    return colors[index % colors.length];
+  }
+  getCourseImageColor(index: number): string {
+    const colors = ['blue-bg', 'green-bg', 'pink-bg', 'purple-bg', 'amber-bg', 'red-bg'];
+    return colors[index % colors.length];
+  }
+
+  getCourseCodeColor(index: number): string {
+    const colors = ['blue', 'green', 'pink', 'purple', 'amber', 'red'];
+    return colors[index % colors.length];
+  }
+
+  getCourseButtonColor(index: number): string {
+    const colors = ['blue-btn', 'green-btn', 'pink-btn', 'purple-btn', 'amber-btn', 'red-btn'];
+    return colors[index % colors.length];
+  }
 }

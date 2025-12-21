@@ -19,14 +19,18 @@
         <span>Upload Material</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/course-students" routerLinkActive="active">
-        <span class="material-symbols-outlined">group</span>
-        <span>Course Students</span>
+        <span class="material-symbols-outlined">book</span>
+        <span>Course Details</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/add-assignment" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>Add Assignment</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -61,7 +65,7 @@
           <p class="page-subtitle">Overview of your courses and recent activity</p>
         </div>
 
-        <div class="courses-grid">
+        <!-- <div class="courses-grid">
           <div
             class="course-card"
             *ngFor="let course of courses"
@@ -71,7 +75,30 @@
             <h3 class="course-name">{{ course.courseTitle }}</h3>
             <p class="course-students">{{ course.capacity }} Students</p>
           </div>
-        </div>
+        </div> -->
+
+        <div class="courses-section">
+            <h2 class="section-title-large">My Courses</h2>
+            <div *ngIf="courses.length > 0" class="courses-grid">
+              <div class="course-card" *ngFor="let course of courses; let i = index" (click)="navigateToCourse(course.courseCode)" [ngClass]="getCourseCardColor(i)">
+                <div class="course-image" [ngClass]="getCourseImageColor(i)">
+                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo" alt="course-image"/>
+                </div>
+                <div class="course-content">
+                  <span class="course-code" [ngClass]="getCourseCodeColor(i)">{{ course.courseCode }}</span>
+                  <h3 class="course-title">{{ course.courseTitle }}</h3>
+                  <p class="course-students">{{ course.capacity }} Students</p>
+                  <button class="course-btn" [ngClass]="getCourseButtonColor(i)" (click)="navigateToCourse(course.courseCode)">
+                    <span class="material-symbols-outlined">folder</span>
+                    <span>View Materials</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+              <p>No courses enrolled yet</p>
+            </div>
+          </div>
 
         <div class="stats-grid">
           <div class="stat-card" *ngFor="let stat of stats">

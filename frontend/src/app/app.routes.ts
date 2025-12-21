@@ -63,7 +63,14 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'doctor-dashboard/announcements',
+    path: 'doctor-dashboard/add-assignment',
+    loadComponent: () =>
+      import('./features/doctor-pages/add-assignment/add-assignment').then(
+        (m) => m.AddAssignment
+      ),
+  },
+  {
+    path: 'doctor-dashboard/course-announcements',
     loadComponent: () =>
       import('./features/doctor-pages/course-announcements/course-announcements').then(
         (m) => m.Announcements

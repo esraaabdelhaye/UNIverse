@@ -213,6 +213,196 @@
   color: #64748B;
 }
 
+.courses-section {
+  margin-top: 40px;
+}
+
+.section-title-large {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.course-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.course-image {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.course-image img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.blue-bg {
+  background-color: #DBEAFE;
+}
+
+.green-bg {
+  background-color: #D1FAE5;
+}
+
+.pink-bg {
+  background-color: #FCC2D7;
+}
+
+.purple-bg {
+  background-color: #E9D5FF;
+}
+
+.amber-bg {
+  background-color: #FEF3C7;
+}
+
+.red-bg {
+  background-color: #FEE2E2;
+}
+
+.course-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-code {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.course-code.blue {
+  color: #2563EB;
+}
+
+.course-code.green {
+  color: #059669;
+}
+
+.course-code.pink {
+  color: #EC4899;
+}
+
+.course-code.purple {
+  color: #7C3AED;
+}
+
+.course-code.amber {
+  color: #D97706;
+}
+
+.course-code.red {
+  color: #DC2626;
+}
+
+.course-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #1E293B;
+}
+
+.course-professor {
+  font-size: 14px;
+  color: #64748B;
+  margin-bottom: 16px;
+}
+
+.course-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  margin-top: auto;
+  border: none;
+  cursor: pointer;
+}
+
+.blue-btn {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+}
+
+.blue-btn:hover {
+  background-color: #BFDBFE;
+}
+
+.green-btn {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+.green-btn:hover {
+  background-color: #A7F3D0;
+}
+
+.pink-btn {
+  background-color: #FCC2D7;
+  color: #9F1239;
+}
+
+.pink-btn:hover {
+  background-color: #F8B4CA;
+}
+
+.purple-btn {
+  background-color: #E9D5FF;
+  color: #6B21A8;
+}
+
+.purple-btn:hover {
+  background-color: #D8B4FE;
+}
+
+.amber-btn {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.amber-btn:hover {
+  background-color: #FDE68A;
+}
+
+.red-btn {
+  background-color: #FEE2E2;
+  color: #991B1B;
+}
+
+.red-btn:hover {
+  background-color: #FECACA;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

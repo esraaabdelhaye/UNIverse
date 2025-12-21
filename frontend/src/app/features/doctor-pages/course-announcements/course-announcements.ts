@@ -9,7 +9,7 @@ import { DoctorService } from '../../../core/services/doctor.service';
 import { AnnouncementService } from '../../../core/services/announcement.service';
 import { createAnnouncementRequest } from '../../../core/models/createAnnouncementRequest';
 @Component({
-  selector: 'app-announcements',
+  selector: 'app-course-announcements',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   templateUrl: './course-announcements.html',

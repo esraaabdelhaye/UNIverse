@@ -5,11 +5,20 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-link active" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard/upload-material"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
@@ -25,7 +34,11 @@
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
+      <a
+        class="nav-link"
+        routerLink="/doctor-dashboard/course-announcements"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -45,7 +58,7 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User"/>
+        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User" />
         <div class="user-info">
           <p class="user-name">John Doe</p>
           <p class="user-role">Professor</p>
@@ -56,13 +69,13 @@
     <main class="main-content">
       <div class="content-wrapper">
         <div class="page-header">
-          <h1 class="page-title">Upload Course Material</h1>
-          <p class="page-subtitle">Add resources for your students</p>
+          <h1 class="page-title">Add Assignment</h1>
+          <p class="page-subtitle">Create and publish a new assignment for your course</p>
         </div>
 
         <div class="card">
           <div class="form-group">
-            <label class="form-label">Select Course <span style="color: #EF4444;">*</span></label>
+            <label class="form-label">Select Course <span style="color: #ef4444">*</span></label>
             <select class="form-select" [(ngModel)]="selectedCourse">
               <option value="">Choose a course</option>
               <option *ngFor="let course of courses" [value]="course.id">
@@ -72,17 +85,49 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Material Title <span style="color: #EF4444;">*</span></label>
-            <input class="form-input" type="text" [(ngModel)]="materialTitle" placeholder="e.g., Week 5 Lecture Notes"/>
+            <label class="form-label">Assignment Title <span style="color: #ef4444">*</span></label>
+            <input
+              class="form-input"
+              type="text"
+              [(ngModel)]="assignmentTitle"
+              placeholder="e.g., Assignment 2: Sorting Algorithms"
+            />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Upload Files <span style="color: #EF4444;">*</span></label>
-            <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
+            <label class="form-label">Due Date <span style="color: #ef4444">*</span></label>
+            <input class="form-input" type="datetime-local" [(ngModel)]="dueDate" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Maximum Grade <span style="color: #ef4444">*</span></label>
+            <input
+              class="form-input"
+              type="number"
+              min="1"
+              [(ngModel)]="maxGrade"
+              placeholder="e.g., 100"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assignment Files <span style="color: #ef4444">*</span></label>
+            <div
+              class="drop-zone"
+              (dragover)="onDragOver($event)"
+              (drop)="onDrop($event)"
+              (click)="triggerFileInput()"
+            >
               <span class="material-symbols-outlined upload-icon">cloud_upload</span>
               <p class="upload-text">Click to upload or drag and drop</p>
-              <p class="upload-hint">PDF, DOCX, PPT, XLSX (max 50MB)</p>
-              <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;"/>
+              <p class="upload-hint">PDF, DOCX (max 50MB)</p>
+              <input
+                #fileInput
+                type="file"
+                multiple
+                (change)="onFileSelected($event)"
+                style="display: none"
+              />
             </div>
           </div>
 
@@ -90,8 +135,19 @@
             <h4 class="file-list-title">Selected Files ({{ uploadedFiles.length }})</h4>
             <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
               <div class="file-info">
-                <span class="material-symbols-outlined file-icon" [ngClass]="'file-icon-' + file.type">
-                  {{ file.type === 'PDF' ? 'picture_as_pdf' : file.type === 'DOC' ? 'description' : file.type === 'PPT' ? 'slideshow' : 'table_chart' }}
+                <span
+                  class="material-symbols-outlined file-icon"
+                  [ngClass]="'file-icon-' + file.type"
+                >
+                  {{
+                    file.type === 'PDF'
+                      ? 'picture_as_pdf'
+                      : file.type === 'DOC'
+                      ? 'description'
+                      : file.type === 'PPT'
+                      ? 'slideshow'
+                      : 'table_chart'
+                  }}
                 </span>
                 <div class="file-details">
                   <p class="file-name">{{ file.name }}</p>
@@ -105,16 +161,25 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Description (Optional)</label>
-            <textarea class="form-textarea" rows="3" [(ngModel)]="materialDescription" placeholder="Brief description of the material..."></textarea>
+            <label class="form-label">Assignment Instructions (Optional)</label>
+            <textarea
+              class="form-textarea"
+              rows="3"
+              [(ngModel)]="assignmentDescription"
+              placeholder="Brief description of the material..."
+            ></textarea>
           </div>
 
           <div class="action-buttons">
-            
-            <button class="btn btn-primary" (click)="uploadMaterials()" [disabled]="isUploading" type="button">
+            <button
+              class="btn btn-primary"
+              (click)="createAssignment()"
+              [disabled]="isUploading"
+              type="button"
+            >
               <span class="material-symbols-outlined" *ngIf="!isUploading">upload</span>
-              <span *ngIf="!isUploading">Upload Materials</span>
-              <span *ngIf="isUploading">Uploading...</span>
+              <span *ngIf="!isUploading">Publish Assignment</span>
+              <span *ngIf="isUploading">Publishing...</span>
             </button>
           </div>
         </div>

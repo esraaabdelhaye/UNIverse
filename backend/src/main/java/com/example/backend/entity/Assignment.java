@@ -2,6 +2,7 @@ package com.example.backend.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -43,8 +44,8 @@ public class Assignment {
     @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AssignmentSubmission> submissions = new HashSet<>();
 
-    @Column(name = "assignment_path")
-    private String assignmentPath;
+    @Column(name = "assignment_paths")
+    private List<String> assignmentPaths;
 
     public Assignment(Integer id, String title, String description, LocalDateTime dueDate,
                       Course course, Integer maxScore)
@@ -120,11 +121,11 @@ public class Assignment {
         submissions.remove(submission);
         submission.setAssignment(null);
     }
-    public String getAssignmentPath() {
-        return assignmentPath;
+    public List<String> getAssignmentPaths() {
+        return assignmentPaths;
     }
-    public void setAssignmentPath(String assignmentPath) {
-        this.assignmentPath = assignmentPath;
+    public void setAssignmentPaths(List<String> assignmentPaths) {
+        this.assignmentPaths = assignmentPaths;
     }
 
 }
