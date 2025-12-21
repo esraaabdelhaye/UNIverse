@@ -6,15 +6,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.dto.CourseDTO;
 import com.example.backend.dto.DoctorDTO;
+import com.example.backend.dto.DoctorRegistrationDTO;
 import com.example.backend.dto.response.ApiResponse;
 import com.example.backend.entity.Course;
 import com.example.backend.entity.Doctor;
 import com.example.backend.repository.CourseRepo;
+import com.example.backend.repository.DepartmentRepo;
 import com.example.backend.repository.DoctorRepo;
 
 @Service
@@ -23,13 +26,57 @@ public class DoctorService {
 
     private final DoctorRepo doctorRepo;
     private final CourseRepo courseRepo;
+    private final DepartmentRepo departmentRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public DoctorService(
             DoctorRepo doctorRepo,
-            CourseRepo courseRepo
+            CourseRepo courseRepo,
+            DepartmentRepo departmentRepo,
+            PasswordEncoder passwordEncoder
     ) {
         this.doctorRepo = doctorRepo;
         this.courseRepo = courseRepo;
+        this.departmentRepo = departmentRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    // Register new doctor with password hashing
+    public ApiResponse<DoctorDTO> registerNewDoctor(DoctorRegistrationDTO dto) {
+        try {
+            // Check if email already exists
+            if (doctorRepo.findByEmail(dto.getEmail()).isPresent()) {
+                return ApiResponse.conflict("Email already registered");
+            }
+
+            // Create new doctor entity
+            Doctor doctor = new Doctor();
+            doctor.setName(dto.getName());
+            doctor.setEmail(dto.getEmail());
+            doctor.setHashedPassword(passwordEncoder.encode(dto.getPassword())); // Hash password
+            doctor.setPhoneNumber(dto.getPhoneNumber());
+            doctor.setOfficeLocation(dto.getOfficeLocation());
+            doctor.setTitle(dto.getTitle());
+            doctor.setExpertise(dto.getExpertise());
+            doctor.setStatus("Active");
+           
+            // Set department if provided
+            if (dto.getDepartmentId() != null) {
+                departmentRepo.findById(dto.getDepartmentId()).ifPresent(doctor::setDepartment);
+            }
+
+            Doctor savedDoctor = doctorRepo.save(doctor);
+            return ApiResponse.created("Doctor registered successfully", convertToDTO(savedDoctor));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.internalServerError("Registration failed: " + e.getMessage());
+        }
+    }
+
+    // Check if email is available (not already registered)
+    public boolean isEmailAvailable(String email) {
+        return doctorRepo.findByEmail(email).isEmpty();
     }
 
     // Get all doctors

@@ -1,25 +1,42 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.DoctorDTO;
-import com.example.backend.dto.CourseDTO;
-import com.example.backend.dto.response.ApiResponse;
-import com.example.backend.service.DoctorService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.backend.dto.CourseDTO;
+import com.example.backend.dto.DoctorDTO;
+import com.example.backend.dto.DoctorRegistrationDTO;
+import com.example.backend.dto.response.ApiResponse;
+import com.example.backend.service.DoctorService;
 
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/api/doctors")
 public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+
+    // Registration endpoint
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<DoctorDTO>> registerDoctor(@RequestBody DoctorRegistrationDTO dto) {
+        ApiResponse<DoctorDTO> response = doctorService.registerNewDoctor(dto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<Page<DoctorDTO>>> getAllDoctors(
@@ -41,6 +58,14 @@ public class DoctorController {
         ApiResponse<DoctorDTO> response = doctorService.getDoctorByEmail(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    // Check if email is available (not registered)
+    @GetMapping("/check-email/{email}")
+    public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable String email) {
+        boolean isAvailable = doctorService.isEmailAvailable(email);
+        return ResponseEntity.ok(isAvailable);
+    }
+
 
     @PostMapping
     public ResponseEntity<ApiResponse<DoctorDTO>> createDoctor(@RequestBody DoctorDTO doctorDTO) {

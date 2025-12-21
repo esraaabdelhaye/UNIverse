@@ -2,6 +2,7 @@ package com.example.backend.config;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -134,7 +135,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // ==================== SUPERVISOR ====================
         Supervisor supervisor;
-        if (supervisorRepo.findByEmail("supervisor@university.edu").isEmpty()) {
+        Optional<Supervisor> existingSupervisor = supervisorRepo.findByEmail("supervisor@university.edu");
+        if (existingSupervisor.isEmpty()) {
             supervisor = new Supervisor();
             supervisor.setName("Dr. Ahmed Hassan");
             supervisor.setEmail("supervisor@university.edu");
@@ -150,29 +152,36 @@ public class DataInitializer implements CommandLineRunner {
             supervisor = supervisorRepo.save(supervisor);
             System.out.println("Inserted supervisor: " + supervisor.getEmail());
         } else {
-            supervisor = (Supervisor) supervisorRepo.findByEmail("supervisor@university.edu").get();
+            supervisor = existingSupervisor.get();
         }
 
         // ==================== DEPARTMENT ====================
         Department department;
-        if (departmentRepo.findAll().isEmpty()) {
+        if (departmentRepo.count() == 0) {
             department = new Department();
             department.setName("Computer Science");
             department.setCoordinator(supervisor);
             department = departmentRepo.save(department);
 
-            // Update supervisor with department
-            supervisor.setDepartment(department);
-            supervisorRepo.save(supervisor);
+            // Update supervisor with department (only if supervisor was newly created)
+            if (supervisor.getDepartment() == null) {
+                supervisor.setDepartment(department);
+                supervisorRepo.save(supervisor);
+            }
 
             System.out.println("Inserted department: " + department.getName());
         } else {
             department = departmentRepo.findAll().get(0);
+            // Ensure supervisor has department set if it was loaded from DB
+            if (supervisor.getDepartment() == null && department != null) {
+                supervisor.setDepartment(department);
+                supervisorRepo.save(supervisor);
+            }
         }
 
         // ==================== SEMESTER ====================
         Semester semester;
-        if (semesterRepo.findAll().isEmpty()) {
+        if (semesterRepo.count() == 0) {
             semester = new Semester();
             semester.setName("Fall 2025");
             semester.setStartDate(LocalDate.of(2025, 9, 1));
@@ -186,7 +195,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // ==================== DOCTORS ====================
         Doctor doctor1;
-        if (doctorRepo.findByEmail("doctor@university.edu").isEmpty()) {
+        Optional<Doctor> existingDoctor1 = doctorRepo.findByEmail("doctor@university.edu");
+        if (existingDoctor1.isEmpty()) {
             doctor1 = new Doctor();
             doctor1.setName("Dr. Sara Mohamed");
             doctor1.setEmail("doctor@university.edu");
@@ -199,11 +209,12 @@ public class DataInitializer implements CommandLineRunner {
             doctor1 = doctorRepo.save(doctor1);
             System.out.println("Inserted doctor: " + doctor1.getEmail());
         } else {
-            doctor1 = doctorRepo.findByEmail("doctor@university.edu").get();
+            doctor1 = existingDoctor1.get();
         }
 
         Doctor doctor2;
-        if (doctorRepo.findByEmail("doctor2@university.edu").isEmpty()) {
+        Optional<Doctor> existingDoctor2 = doctorRepo.findByEmail("doctor2@university.edu");
+        if (existingDoctor2.isEmpty()) {
             doctor2 = new Doctor();
             doctor2.setName("Dr. Mohamed Ali");
             doctor2.setEmail("doctor2@university.edu");
@@ -216,12 +227,13 @@ public class DataInitializer implements CommandLineRunner {
             doctor2 = doctorRepo.save(doctor2);
             System.out.println("Inserted doctor: " + doctor2.getEmail());
         } else {
-            doctor2 = doctorRepo.findByEmail("doctor2@university.edu").get();
+            doctor2 = existingDoctor2.get();
         }
 
         // ==================== TEACHING ASSISTANTS ====================
         TeachingAssistant ta1;
-        if (taRepo.findByEmail("ta@university.edu").isEmpty()) {
+        Optional<TeachingAssistant> existingTa1 = taRepo.findByEmail("ta@university.edu");
+        if (existingTa1.isEmpty()) {
             ta1 = new TeachingAssistant();
             ta1.setName("Eng. Fatma Ibrahim");
             ta1.setEmail("ta@university.edu");
@@ -234,11 +246,12 @@ public class DataInitializer implements CommandLineRunner {
             ta1 = taRepo.save(ta1);
             System.out.println("Inserted TA: " + ta1.getEmail());
         } else {
-            ta1 = taRepo.findByEmail("ta@university.edu").get();
+            ta1 = existingTa1.get();
         }
 
         TeachingAssistant ta2;
-        if (taRepo.findByEmail("ta2@university.edu").isEmpty()) {
+        Optional<TeachingAssistant> existingTa2 = taRepo.findByEmail("ta2@university.edu");
+        if (existingTa2.isEmpty()) {
             ta2 = new TeachingAssistant();
             ta2.setName("Eng. Omar Khaled");
             ta2.setEmail("ta2@university.edu");
@@ -251,12 +264,13 @@ public class DataInitializer implements CommandLineRunner {
             ta2 = taRepo.save(ta2);
             System.out.println("Inserted TA: " + ta2.getEmail());
         } else {
-            ta2 = taRepo.findByEmail("ta2@university.edu").get();
+            ta2 = existingTa2.get();
         }
 
         // ==================== ADDITIONAL DOCTOR: Andrew Ng ====================
         Doctor andrewNg;
-        if (doctorRepo.findByEmail("andrew.ng@university.edu").isEmpty()) {
+        Optional<Doctor> existingAndrewNg = doctorRepo.findByEmail("andrew.ng@university.edu");
+        if (existingAndrewNg.isEmpty()) {
             andrewNg = new Doctor();
             andrewNg.setName("Andrew Ng");
             andrewNg.setEmail("andrew.ng@university.edu");
@@ -269,12 +283,13 @@ public class DataInitializer implements CommandLineRunner {
             andrewNg = doctorRepo.save(andrewNg);
             System.out.println("Inserted doctor: " + andrewNg.getEmail());
         } else {
-            andrewNg = doctorRepo.findByEmail("andrew.ng@university.edu").get();
+            andrewNg = existingAndrewNg.get();
         }
 
         // ==================== COURSES ====================
         Course course1;
-        if (courseRepo.findByCourseCode("CS101").isEmpty()) {
+        Optional<Course> existingCourse1 = courseRepo.findByCourseCode("CS101");
+        if (existingCourse1.isEmpty()) {
             course1 = new Course();
             course1.setCourseCode("CS101");
             course1.setName("Introduction to Programming");
@@ -298,11 +313,12 @@ public class DataInitializer implements CommandLineRunner {
 
             System.out.println("Inserted course: " + course1.getCourseCode());
         } else {
-            course1 = courseRepo.findByCourseCode("CS101").get();
+            course1 = existingCourse1.get();
         }
 
         Course course2;
-        if (courseRepo.findByCourseCode("CS201").isEmpty()) {
+        Optional<Course> existingCourse2 = courseRepo.findByCourseCode("CS201");
+        if (existingCourse2.isEmpty()) {
             course2 = new Course();
             course2.setCourseCode("CS201");
             course2.setName("Data Structures");
@@ -329,11 +345,12 @@ public class DataInitializer implements CommandLineRunner {
 
             System.out.println("Inserted course: " + course2.getCourseCode());
         } else {
-            course2 = courseRepo.findByCourseCode("CS201").get();
+            course2 = existingCourse2.get();
         }
 
         Course course3;
-        if (courseRepo.findByCourseCode("CS301").isEmpty()) {
+        Optional<Course> existingCourse3 = courseRepo.findByCourseCode("CS301");
+        if (existingCourse3.isEmpty()) {
             course3 = new Course();
             course3.setCourseCode("CS301");
             course3.setName("Database Systems");
@@ -356,12 +373,13 @@ public class DataInitializer implements CommandLineRunner {
 
             System.out.println("Inserted course: " + course3.getCourseCode());
         } else {
-            course3 = courseRepo.findByCourseCode("CS301").get();
+            course3 = existingCourse3.get();
         }
 
         // ==================== EXTRA COURSE: CS229 Machine Learning ====================
         Course courseML;
-        if (courseRepo.findByCourseCode("CS229").isEmpty()) {
+        Optional<Course> existingCourseML = courseRepo.findByCourseCode("CS229");
+        if (existingCourseML.isEmpty()) {
             courseML = new Course();
             courseML.setCourseCode("CS229");
             courseML.setName("Machine Learning");
@@ -382,7 +400,7 @@ public class DataInitializer implements CommandLineRunner {
             semesterRepo.save(semester);
             System.out.println("Inserted course: " + courseML.getCourseCode());
         } else {
-            courseML = courseRepo.findByCourseCode("CS229").get();
+            courseML = existingCourseML.get();
         }
 
         // Assign Andrew Ng to teach CS229
@@ -393,7 +411,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // ==================== NEW COURSE: CS320 Advanced Algorithms ====================
         Course courseAlgo;
-        if (courseRepo.findByCourseCode("CS320").isEmpty()) {
+        Optional<Course> existingCourseAlgo = courseRepo.findByCourseCode("CS320");
+        if (existingCourseAlgo.isEmpty()) {
             courseAlgo = new Course();
             courseAlgo.setCourseCode("CS320");
             courseAlgo.setName("Advanced Algorithms");
@@ -408,12 +427,13 @@ public class DataInitializer implements CommandLineRunner {
             semesterRepo.save(semester);
             System.out.println("Inserted course: " + courseAlgo.getCourseCode());
         } else {
-            courseAlgo = courseRepo.findByCourseCode("CS320").get();
+            courseAlgo = existingCourseAlgo.get();
         }
 
         // Add a doctor to teach CS320
         Doctor algoDoctor;
-        if (doctorRepo.findByEmail("lina.hassan@university.edu").isEmpty()) {
+        Optional<Doctor> existingAlgoDoctor = doctorRepo.findByEmail("lina.hassan@university.edu");
+        if (existingAlgoDoctor.isEmpty()) {
             algoDoctor = new Doctor();
             algoDoctor.setName("Dr. Lina Hassan");
             algoDoctor.setEmail("lina.hassan@university.edu");
@@ -426,7 +446,7 @@ public class DataInitializer implements CommandLineRunner {
             algoDoctor = doctorRepo.save(algoDoctor);
             System.out.println("Inserted doctor: " + algoDoctor.getEmail());
         } else {
-            algoDoctor = doctorRepo.findByEmail("lina.hassan@university.edu").get();
+            algoDoctor = existingAlgoDoctor.get();
         }
 
         if (!algoDoctor.getCourses().contains(courseAlgo)) {
@@ -436,7 +456,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // ==================== STUDENTS ====================
         Student student1;
-        if (studentRepo.findByEmail("student@university.edu").isEmpty()) {
+        Optional<Student> existingStudent1 = studentRepo.findByEmail("student@university.edu");
+        if (existingStudent1.isEmpty()) {
             student1 = new Student();
             student1.setName("Ali Ahmed");
             student1.setEmail("student@university.edu");
@@ -449,11 +470,12 @@ public class DataInitializer implements CommandLineRunner {
             student1 = studentRepo.save(student1);
             System.out.println("Inserted student: " + student1.getEmail());
         } else {
-            student1 = studentRepo.findByEmail("student@university.edu").get();
+            student1 = existingStudent1.get();
         }
 
         Student student2;
-        if (studentRepo.findByEmail("student2@university.edu").isEmpty()) {
+        Optional<Student> existingStudent2 = studentRepo.findByEmail("student2@university.edu");
+        if (existingStudent2.isEmpty()) {
             student2 = new Student();
             student2.setName("Nour Mahmoud");
             student2.setEmail("student2@university.edu");
@@ -466,11 +488,12 @@ public class DataInitializer implements CommandLineRunner {
             student2 = studentRepo.save(student2);
             System.out.println("Inserted student: " + student2.getEmail());
         } else {
-            student2 = studentRepo.findByEmail("student2@university.edu").get();
+            student2 = existingStudent2.get();
         }
 
         Student student3;
-        if (studentRepo.findByEmail("student3@university.edu").isEmpty()) {
+        Optional<Student> existingStudent3 = studentRepo.findByEmail("student3@university.edu");
+        if (existingStudent3.isEmpty()) {
             student3 = new Student();
             student3.setName("Youssef Tarek");
             student3.setEmail("student3@university.edu");
@@ -483,12 +506,13 @@ public class DataInitializer implements CommandLineRunner {
             student3 = studentRepo.save(student3);
             System.out.println("Inserted student: " + student3.getEmail());
         } else {
-            student3 = studentRepo.findByEmail("student3@university.edu").get();
+            student3 = existingStudent3.get();
         }
 
         // Additional students for ML
         Student student4;
-        if (studentRepo.findByEmail("student4@university.edu").isEmpty()) {
+        Optional<Student> existingStudent4 = studentRepo.findByEmail("student4@university.edu");
+        if (existingStudent4.isEmpty()) {
             student4 = new Student();
             student4.setName("Ali Mostafa");
             student4.setEmail("student4@university.edu");
@@ -501,11 +525,12 @@ public class DataInitializer implements CommandLineRunner {
             student4 = studentRepo.save(student4);
             System.out.println("Inserted student: " + student4.getEmail());
         } else {
-            student4 = studentRepo.findByEmail("student4@university.edu").get();
+            student4 = existingStudent4.get();
         }
 
         Student student5;
-        if (studentRepo.findByEmail("student5@university.edu").isEmpty()) {
+        Optional<Student> existingStudent5 = studentRepo.findByEmail("student5@university.edu");
+        if (existingStudent5.isEmpty()) {
             student5 = new Student();
             student5.setName("Mariam Nasser");
             student5.setEmail("student5@university.edu");
@@ -518,12 +543,13 @@ public class DataInitializer implements CommandLineRunner {
             student5 = studentRepo.save(student5);
             System.out.println("Inserted student: " + student5.getEmail());
         } else {
-            student5 = studentRepo.findByEmail("student5@university.edu").get();
+            student5 = existingStudent5.get();
         }
 
         // ==================== STUDENT REPRESENTATIVE ====================
         StudentRepresentative studentRep;
-        if (studentRepRepo.findByEmail("studentrep@university.edu").isEmpty()) {
+        Optional<StudentRepresentative> existingStudentRep = studentRepRepo.findByEmail("studentrep@university.edu");
+        if (existingStudentRep.isEmpty()) {
             studentRep = new StudentRepresentative();
             studentRep.setName("Mariam Hassan");
             studentRep.setEmail("studentrep@university.edu");
@@ -539,11 +565,11 @@ public class DataInitializer implements CommandLineRunner {
             studentRep = studentRepRepo.save(studentRep);
             System.out.println("Inserted student representative: " + studentRep.getEmail());
         } else {
-            studentRep = studentRepRepo.findByEmail("studentrep@university.edu").get();
+            studentRep = existingStudentRep.get();
         }
 
         // ==================== COURSE ENROLLMENTS ====================
-        if (enrollmentRepo.findAll().isEmpty()) {
+        if (enrollmentRepo.count() == 0) {
             // Enroll student1 in all courses
             CourseEnrollment enrollment1 = new CourseEnrollment();
             enrollment1.setStudent(student1);
@@ -625,16 +651,17 @@ public class DataInitializer implements CommandLineRunner {
             enrollmentRepo.save(e5);
         }
 
+        // ==================== ASSIGNMENTS ====================
         Assignment assignment1 = null;
         Assignment assignment2 = null;
         Assignment mlHw1 = null;
         Assignment mlHw2 = null;
 
-        if (assignmentRepo.findAll().isEmpty()) {
+        if (assignmentRepo.count() == 0) {
             assignment1 = new Assignment();
             assignment1.setTitle("Java Basics Lab");
             assignment1.setDescription("Complete the exercises on variables, loops, and conditionals.");
-            assignment1.setDueDate(LocalDateTime.of(2025, 12, 27, 23, 59));  // Dec 27
+            assignment1.setDueDate(LocalDateTime.of(2025, 12, 27, 23, 59));
             assignment1.setMaxScore(100);
             assignment1.setCourse(course1);
             assignment1 = assignmentRepo.save(assignment1);
@@ -642,7 +669,7 @@ public class DataInitializer implements CommandLineRunner {
             assignment2 = new Assignment();
             assignment2.setTitle("Linked List Implementation");
             assignment2.setDescription("Implement a doubly linked list with all basic operations.");
-            assignment2.setDueDate(LocalDateTime.of(2026, 1, 10, 23, 59));   // Jan 10
+            assignment2.setDueDate(LocalDateTime.of(2026, 1, 10, 23, 59));
             assignment2.setMaxScore(100);
             assignment2.setCourse(course2);
             assignment2 = assignmentRepo.save(assignment2);
@@ -650,7 +677,7 @@ public class DataInitializer implements CommandLineRunner {
             Assignment assignment3 = new Assignment();
             assignment3.setTitle("SQL Query Practice");
             assignment3.setDescription("Write SQL queries for the given database schema.");
-            assignment3.setDueDate(LocalDateTime.of(2025, 12, 28, 23, 59));  // Dec 28
+            assignment3.setDueDate(LocalDateTime.of(2025, 12, 28, 23, 59));
             assignment3.setMaxScore(50);
             assignment3.setCourse(course3);
             assignmentRepo.save(assignment3);
@@ -660,7 +687,7 @@ public class DataInitializer implements CommandLineRunner {
             mlHw1.setCourse(courseML);
             mlHw1.setTitle("Logistic Regression HW");
             mlHw1.setDescription("Implement logistic regression with gradient descent.");
-            mlHw1.setDueDate(LocalDateTime.of(2025, 12, 25, 23, 59));  // Dec 25
+            mlHw1.setDueDate(LocalDateTime.of(2025, 12, 25, 23, 59));
             mlHw1.setMaxScore(100);
             mlHw1 = assignmentRepo.save(mlHw1);
 
@@ -668,21 +695,28 @@ public class DataInitializer implements CommandLineRunner {
             mlHw2.setCourse(courseML);
             mlHw2.setTitle("Neural Networks HW");
             mlHw2.setDescription("Build a simple feedforward neural network.");
-            mlHw2.setDueDate(LocalDateTime.of(2026, 1, 5, 23, 59));   // Jan 5
+            mlHw2.setDueDate(LocalDateTime.of(2026, 1, 5, 23, 59));
             mlHw2.setMaxScore(100);
             mlHw2 = assignmentRepo.save(mlHw2);
 
             System.out.println("Inserted assignments");
         } else {
-            assignment1 = assignmentRepo.findAll().get(0);
-            if (assignmentRepo.findAll().size() > 1) {
+            if (assignmentRepo.count() > 0) {
+                assignment1 = assignmentRepo.findAll().get(0);
+            }
+            if (assignmentRepo.count() > 1) {
                 assignment2 = assignmentRepo.findAll().get(1);
+            }
+            if (assignmentRepo.count() > 3) {
+                mlHw1 = assignmentRepo.findAll().get(3);
+            }
+            if (assignmentRepo.count() > 4) {
+                mlHw2 = assignmentRepo.findAll().get(4);
             }
         }
 
-
         // ==================== ASSIGNMENT SUBMISSIONS ====================
-        if (submissionRepo.findAll().isEmpty() && assignment1 != null) {
+        if (submissionRepo.count() == 0 && assignment1 != null) {
             AssignmentSubmission submission1 = new AssignmentSubmission();
             submission1.setStudent(student1);
             submission1.setCourse(course1);
@@ -722,7 +756,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // Submissions for ML course
-        if (submissionRepo.findByStudentAndAssignment(student4, mlHw1).isEmpty()) {
+        if (mlHw1 != null && submissionRepo.findByStudentAndAssignment(student4, mlHw1).isEmpty()) {
             AssignmentSubmission s3 = new AssignmentSubmission();
             s3.setStudent(student4);
             s3.setCourse(courseML);
@@ -734,7 +768,7 @@ public class DataInitializer implements CommandLineRunner {
             s3.setSubmissionFile("/uploads/student4_cs229_hw1.zip");
             submissionRepo.save(s3);
         }
-        if (submissionRepo.findByStudentAndAssignment(student5, mlHw2).isEmpty()) {
+        if (mlHw2 != null && submissionRepo.findByStudentAndAssignment(student5, mlHw2).isEmpty()) {
             AssignmentSubmission s4 = new AssignmentSubmission();
             s4.setStudent(student5);
             s4.setCourse(courseML);
@@ -747,13 +781,14 @@ public class DataInitializer implements CommandLineRunner {
             submissionRepo.save(s4);
         }
 
-        if (materialRepo.findAll().isEmpty()) {
+        // ==================== MATERIALS ====================
+        if (materialRepo.count() == 0) {
             Material material1 = new Material();
             material1.setTitle("Week 1 - Introduction to Java");
             material1.setUrl("/materials/cs101/week1_intro.pdf");
             material1.setUploadDate(LocalDateTime.of(2025, 9, 2, 10, 0));
             material1.setType(MaterialType.PDF);
-            material1.setFileSize(2048000L); // ~2 MB
+            material1.setFileSize(2048000L);
             material1.setIconName("picture_as_pdf");
             material1.setIconColor("primary-icon");
             material1.setCourse(course1);
@@ -765,7 +800,7 @@ public class DataInitializer implements CommandLineRunner {
             material2.setUrl("/materials/cs101/week2_variables.pdf");
             material2.setUploadDate(LocalDateTime.of(2025, 9, 9, 10, 0));
             material2.setType(MaterialType.PDF);
-            material2.setFileSize(1536000L); // ~1.5 MB
+            material2.setFileSize(1536000L);
             material2.setIconName("picture_as_pdf");
             material2.setIconColor("primary-icon");
             material2.setCourse(course1);
@@ -777,7 +812,7 @@ public class DataInitializer implements CommandLineRunner {
             material3.setUrl("/materials/cs101/lab1_tutorial.mp4");
             material3.setUploadDate(LocalDateTime.of(2025, 9, 5, 14, 0));
             material3.setType(MaterialType.VIDEO);
-            material3.setFileSize(314572800L); // ~300 MB
+            material3.setFileSize(314572800L);
             material3.setIconName("play_circle");
             material3.setIconColor("red-icon");
             material3.setCourse(course1);
@@ -788,7 +823,7 @@ public class DataInitializer implements CommandLineRunner {
             material4.setUrl("/materials/cs201/textbook.pdf");
             material4.setUploadDate(LocalDateTime.of(2025, 9, 1, 9, 0));
             material4.setType(MaterialType.TEXTBOOK);
-            material4.setFileSize(5242880L); // ~5 MB
+            material4.setFileSize(5242880L);
             material4.setIconName("menu_book");
             material4.setIconColor("primary-icon");
             material4.setCourse(course2);
@@ -800,7 +835,7 @@ public class DataInitializer implements CommandLineRunner {
             material5.setUrl("/materials/cs301/sql_tutorial.pdf");
             material5.setUploadDate(LocalDateTime.of(2025, 9, 3, 11, 0));
             material5.setType(MaterialType.PDF);
-            material5.setFileSize(1048576L); // ~1 MB
+            material5.setFileSize(1048576L);
             material5.setIconName("picture_as_pdf");
             material5.setIconColor("primary-icon");
             material5.setCourse(course3);
@@ -812,7 +847,7 @@ public class DataInitializer implements CommandLineRunner {
             material6.setUrl("/materials/cs229/lecture_recording_week1.mp4");
             material6.setUploadDate(LocalDateTime.of(2025, 9, 2, 15, 0));
             material6.setType(MaterialType.RECORDING);
-            material6.setFileSize(524288000L); // ~500 MB
+            material6.setFileSize(524288000L);
             material6.setIconName("mic");
             material6.setIconColor("amber-icon");
             material6.setCourse(courseML);
@@ -824,7 +859,7 @@ public class DataInitializer implements CommandLineRunner {
             material7.setUrl("/materials/cs229/slides_linear_regression.pdf");
             material7.setUploadDate(LocalDateTime.of(2025, 9, 4, 10, 0));
             material7.setType(MaterialType.PDF);
-            material7.setFileSize(3145728L); // ~3 MB
+            material7.setFileSize(3145728L);
             material7.setIconName("picture_as_pdf");
             material7.setIconColor("primary-icon");
             material7.setCourse(courseML);
@@ -836,7 +871,7 @@ public class DataInitializer implements CommandLineRunner {
             material8.setUrl("/materials/cs320/complexity_textbook.pdf");
             material8.setUploadDate(LocalDateTime.of(2025, 9, 1, 8, 0));
             material8.setType(MaterialType.TEXTBOOK);
-            material8.setFileSize(6291456L); // ~6 MB
+            material8.setFileSize(6291456L);
             material8.setIconName("menu_book");
             material8.setIconColor("primary-icon");
             material8.setCourse(courseAlgo);
@@ -848,7 +883,7 @@ public class DataInitializer implements CommandLineRunner {
             material9.setUrl("/materials/ML/cs229-notes1.pdf");
             material9.setUploadDate(LocalDateTime.of(2025, 9, 6, 10, 0));
             material9.setType(MaterialType.PDF);
-            material9.setFileSize(2097152L); // ~2 MB
+            material9.setFileSize(2097152L);
             material9.setIconName("picture_as_pdf");
             material9.setIconColor("primary-icon");
             material9.setCourse(courseML);
@@ -859,7 +894,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== ANNOUNCEMENTS ====================
-        if (announcementRepo.findAll().isEmpty()) {
+        if (announcementRepo.count() == 0) {
             Announcement announcement1 = new Announcement();
             announcement1.setTitle("Welcome to CS101!");
             announcement1.setContent("Welcome to Introduction to Programming. Please review the course syllabus and join our online discussion forum.");
@@ -932,7 +967,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== EVENTS ====================
-        if (eventRepo.findAll().isEmpty()) {
+        if (eventRepo.count() == 0) {
             Event event1 = new Event();
             event1.setTitle("Midterm Exam - CS101");
             event1.setDescription("Midterm examination covering chapters 1-5");
@@ -973,7 +1008,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== POSTS ====================
-        if (postRepo.findAll().isEmpty()) {
+        if (postRepo.count() == 0) {
             Post post1 = new Post();
             post1.setTitle("Tips for Success in Programming");
             post1.setContent("Here are some tips to excel in programming courses: 1. Practice daily 2. Don't be afraid to ask questions 3. Work on projects outside class");
@@ -1032,7 +1067,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== STUDENT GROUPS ====================
-        if (studentGroupRepo.findAll().isEmpty()) {
+        if (studentGroupRepo.count() == 0) {
             StudentGroup group1 = new StudentGroup();
             group1.setName("CS101 Study Group");
             group1.setActivity("Weekly study sessions for CS101");
@@ -1054,7 +1089,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== POLLS ====================
-        if (pollRepo.findAll().isEmpty()) {
+        if (pollRepo.count() == 0) {
             Poll poll1 = new Poll();
             poll1.setTitle("Best time for extra office hours?");
             poll1.setStartTime(LocalDateTime.of(2025, 10, 10, 8, 0));
@@ -1103,8 +1138,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== NOTIFICATIONS ====================
-        if (notificationRepo.findAll().isEmpty()) {
-            // Notification for student1
+        if (notificationRepo.count() == 0) {
             Notification notification1 = new Notification();
             notification1.setTitle("New Assignment Posted");
             notification1.setType(NotificationType.ASSIGNMENT);
@@ -1115,7 +1149,6 @@ public class DataInitializer implements CommandLineRunner {
             notification1.setRead(false);
             notificationRepo.save(notification1);
 
-            // Notification for student2
             Notification notification2 = new Notification();
             notification2.setTitle("New Assignment Posted");
             notification2.setType(NotificationType.ASSIGNMENT);
@@ -1126,7 +1159,6 @@ public class DataInitializer implements CommandLineRunner {
             notification2.setRead(true);
             notificationRepo.save(notification2);
 
-            // Exam reminder for student1
             Notification notification3 = new Notification();
             notification3.setTitle("Upcoming Exam");
             notification3.setType(NotificationType.EXAM);
@@ -1137,7 +1169,6 @@ public class DataInitializer implements CommandLineRunner {
             notification3.setRead(false);
             notificationRepo.save(notification3);
 
-            // Poll notification for student3
             Notification notification4 = new Notification();
             notification4.setTitle("New Poll Available");
             notification4.setType(NotificationType.POLL);
@@ -1148,7 +1179,6 @@ public class DataInitializer implements CommandLineRunner {
             notification4.setRead(false);
             notificationRepo.save(notification4);
 
-            // ML course notification for student4
             Notification notification5 = new Notification();
             notification5.setTitle("Machine Learning Assignment Due");
             notification5.setType(NotificationType.ASSIGNMENT);
@@ -1159,7 +1189,6 @@ public class DataInitializer implements CommandLineRunner {
             notification5.setRead(true);
             notificationRepo.save(notification5);
 
-            // Notification for student5
             Notification notification6 = new Notification();
             notification6.setTitle("Neural Networks Workshop");
             notification6.setType(NotificationType.ANNOUNCEMENT);
@@ -1170,7 +1199,6 @@ public class DataInitializer implements CommandLineRunner {
             notification6.setRead(false);
             notificationRepo.save(notification6);
 
-            // Notification for studentRep
             Notification notification7 = new Notification();
             notification7.setTitle("Department Meeting");
             notification7.setType(NotificationType.ANNOUNCEMENT);
@@ -1185,7 +1213,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // ==================== QUESTIONS ====================
-        if (questionRepo.findAll().isEmpty()) {
+        if (questionRepo.count() == 0) {
             Question question1 = new Question();
             question1.setContent("What is the difference between a while loop and a for loop in Java?");
             question1.setCreatedAt(LocalDateTime.of(2025, 9, 20, 14, 30));
@@ -1206,7 +1234,6 @@ public class DataInitializer implements CommandLineRunner {
             question3.setContent("What are the advantages of using a linked list over an array?");
             question3.setCreatedAt(LocalDateTime.of(2025, 10, 5, 16, 45));
             question3.setAuthor(student3);
-            // No answer yet - pending question
             questionRepo.save(question3);
 
             Question question4 = new Question();
@@ -1237,7 +1264,6 @@ public class DataInitializer implements CommandLineRunner {
             question7.setContent("What is the time complexity of quicksort in the worst case?");
             question7.setCreatedAt(LocalDateTime.of(2025, 10, 14, 10, 0));
             question7.setAuthor(student4);
-            // Pending question - no answer yet
             questionRepo.save(question7);
 
             System.out.println("Inserted questions");

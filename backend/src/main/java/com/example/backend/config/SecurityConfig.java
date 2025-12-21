@@ -61,7 +61,10 @@ public class SecurityConfig {
                         // Allow creating students
                         .requestMatchers("/students").permitAll()
                         .requestMatchers("/api/courses/**").permitAll()
+                        .requestMatchers("/api/doctors/register").permitAll()
+                        .requestMatchers("/api/doctors/check-email/**").permitAll()
                         .requestMatchers("/api/doctors/**").permitAll()
+                        .requestMatchers("/departments/**").permitAll()
                         .requestMatchers("/supervisors/**").permitAll()
                         .requestMatchers("/api/schedule/**").permitAll()
                         .requestMatchers("/api/files/download/**").authenticated()
