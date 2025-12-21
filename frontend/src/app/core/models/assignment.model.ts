@@ -11,4 +11,5 @@ export interface Assignment {
   maxScore?: number;
   status?: 'pending' | 'submitted' | 'graded' | 'pastdue';
   grade?: number;
+  filePaths?: string[];  // Array of file paths for assignment files
 }

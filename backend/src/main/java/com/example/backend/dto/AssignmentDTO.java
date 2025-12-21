@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,4 +22,6 @@ public class AssignmentDTO {
     private String status;
     private Double grade;
     private String feedbackUrl;
+    private String uploadUrl;
+    private List<String> filePaths;  // Array of file paths for assignment files
 }

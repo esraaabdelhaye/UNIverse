@@ -1,11 +1,11 @@
-import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../core/services/auth.service';
-import { AssignmentService } from '../../../core/services/assignment.service';
-import { SubmissionService } from '../../../core/services/submission.service';
-import { StudentService } from '../../../core/services/student.service';
+import {Component, OnInit, inject, ViewChild, ElementRef} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterLink, RouterLinkActive, Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {AuthService} from '../../../core/services/auth.service';
+import {AssignmentService} from '../../../core/services/assignment.service';
+import {SubmissionService} from '../../../core/services/submission.service';
+import {StudentService} from '../../../core/services/student.service';
 
 interface Assignment {
   id: number;
@@ -15,6 +15,7 @@ interface Assignment {
   dueDate: string;
   status: 'pending' | 'submitted' | 'graded' | 'pastdue';
   grade?: number;
+  filePaths?: string[];  // Array of file paths for assignment files
 }
 
 interface UploadFile {
@@ -119,6 +120,7 @@ export class SubmitAssignments implements OnInit {
                       dueDate: a.dueDate,
                       status: this.getAssignmentStatus(a.dueDate),
                       grade: a.grade ? parseInt(a.grade) : undefined,
+                      filePaths: a.filePaths || [],
                     });
                   });
                 }
@@ -195,7 +197,7 @@ export class SubmitAssignments implements OnInit {
   }
 
   getAssignmentRowStyle(assignment: Assignment): any {
-    switch(assignment.status) {
+    switch (assignment.status) {
       case 'pastdue':
         return {
           'background-color': '#FEE2E2',
@@ -222,7 +224,7 @@ export class SubmitAssignments implements OnInit {
   }
 
   getStatusBadgeClass(status: string): string {
-    switch(status) {
+    switch (status) {
       case 'pending':
         return 'badge-pending';
       case 'submitted':
@@ -385,6 +387,55 @@ export class SubmitAssignments implements OnInit {
 
   closePopup(): void {
     this.isPopUp = false;
+  }
+
+  viewAssignment(assignment: Assignment): void {
+    if (!assignment.filePaths || assignment.filePaths.length === 0) {
+      this.statusMessage = 'No files attached to this assignment';
+      this.status = 'Info';
+      this.isPopUp = true;
+      return;
+    }
+
+    // If there's only one file, open it directly
+    if (assignment.filePaths.length === 1) {
+      this.assignmentService.viewFile(assignment.filePaths[0]);
+      return;
+    }
+
+    // If there are multiple files, show a message or open the first one
+    // For now, open all files in new tabs (note currently this won't cause any issue since all files are likely to be PDFs or images)
+    // and also most of the time there will be only one file per assignment
+    assignment.filePaths.forEach(filePath => {
+      this.assignmentService.viewFile(filePath);
+    });
+  }
+
+  downloadAssignment(assignment: Assignment): void {
+    if (!assignment.filePaths || assignment.filePaths.length === 0) {
+      this.statusMessage = 'No files attached to this assignment';
+      this.status = 'Info';
+      this.isPopUp = true;
+      return;
+    }
+
+    // If there's only one file, download it directly
+    if (assignment.filePaths.length === 1) {
+      const filePath = assignment.filePaths[0];
+      const filename = this.assignmentService.getFileName(filePath);
+      this.assignmentService.downloadFile(filePath, filename);
+      return;
+    }
+
+    // If there are multiple files, download all of them
+    assignment.filePaths.forEach(filePath => {
+      const filename = this.assignmentService.getFileName(filePath);
+      this.assignmentService.downloadFile(filePath, filename);
+    });
+  }
+
+  hasFiles(assignment: Assignment): boolean {
+    return !!assignment.filePaths && assignment.filePaths.length > 0;
   }
 
   logout(): void {
