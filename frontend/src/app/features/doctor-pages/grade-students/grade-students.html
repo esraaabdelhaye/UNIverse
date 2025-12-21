@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a
-        class="nav-link"
+        class="nav-link active"
         routerLink="/doctor-dashboard"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -19,19 +19,22 @@
         <span>Upload Material</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/course-students" routerLinkActive="active">
-        <span class="material-symbols-outlined">group</span>
-        <span>Course Students</span>
+        <span class="material-symbols-outlined">book</span>
+        <span>Course Details</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/add-assignment" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>Add Assignment</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
         <span class="material-symbols-outlined">grading</span>
         <span>Grade Students</span>
       </a>
-
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a class="nav-link" routerLink="/doctor-dashboard/announcements" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -51,10 +54,10 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User" />
+        <img class="user-avatar" src="../../../../assets/user.png" alt="User" />
         <div class="user-info">
-          <p class="user-name">John Doe</p>
-          <p class="user-role">Professor</p>
+          <p class="user-name">{{ currentDoctor.fullName }}</p>
+          <p class="user-role">{{ currentDoctor.role }}</p>
         </div>
       </div>
     </header>
