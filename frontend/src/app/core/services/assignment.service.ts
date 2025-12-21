@@ -58,10 +58,16 @@ export class AssignmentService {
   }
 
   /**
-   * Get filename from file path
+   * Get filename from file path (currently not working so we will use assignments title as filename)
    */
   getFileName(filePath: string): string {
     return filePath.split('/').pop() || filePath;
   }
+
+  getFileExtension(filePath: string): string {
+    const fileName = filePath.split('/').pop() || filePath;
+    return fileName.includes('.') ? fileName.split('.').pop()! : '';
+  }
+
 
 }

@@ -422,14 +422,14 @@ export class SubmitAssignments implements OnInit {
     // If there's only one file, download it directly
     if (assignment.filePaths.length === 1) {
       const filePath = assignment.filePaths[0];
-      const filename = this.assignmentService.getFileName(filePath);
+      const filename = assignment.title+"."+this.assignmentService.getFileExtension(filePath);
       this.assignmentService.downloadFile(filePath, filename);
       return;
     }
 
     // If there are multiple files, download all of them
     assignment.filePaths.forEach(filePath => {
-      const filename = this.assignmentService.getFileName(filePath);
+      const filename = assignment.title+"."+this.assignmentService.getFileExtension(filePath);
       this.assignmentService.downloadFile(filePath, filename);
     });
   }
