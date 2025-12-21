@@ -5,11 +5,16 @@
       <h2 class="logo-text">UNIverse</h2>
     </div>
     <nav class="nav">
-      <a class="nav-link" routerLink="/doctor-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a
+        class="nav-link active"
+        routerLink="/doctor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a class="nav-link active" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
+      <a class="nav-link" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
@@ -20,6 +25,10 @@
       <a class="nav-link" routerLink="/doctor-dashboard/add-assignment" routerLinkActive="active">
         <span class="material-symbols-outlined">grade</span>
         <span>Add Assignment</span>
+      </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
+        <span class="material-symbols-outlined">grading</span>
+        <span>Grade Students</span>
       </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
@@ -110,7 +119,7 @@
           </div>
 
           <div class="action-buttons">
-            
+
             <button class="btn btn-primary" (click)="uploadMaterials()" [disabled]="isUploading" type="button">
               <span class="material-symbols-outlined" *ngIf="!isUploading">upload</span>
               <span *ngIf="!isUploading">Upload Materials</span>

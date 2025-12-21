@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a
-        class="nav-link"
+        class="nav-link active"
         routerLink="/doctor-dashboard"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -14,11 +14,7 @@
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
-      <a
-        class="nav-link active"
-        routerLink="/doctor-dashboard/upload-material"
-        routerLinkActive="active"
-      >
+      <a class="nav-link" routerLink="/doctor-dashboard/upload-material" routerLinkActive="active">
         <span class="material-symbols-outlined">upload_file</span>
         <span>Upload Material</span>
       </a>
@@ -30,15 +26,15 @@
         <span class="material-symbols-outlined">grade</span>
         <span>Add Assignment</span>
       </a>
+      <a class="nav-link" routerLink="/doctor-dashboard/grade-students" routerLinkActive="active">
+        <span class="material-symbols-outlined">grading</span>
+        <span>Grade Students</span>
+      </a>
       <a class="nav-link" routerLink="/doctor-dashboard/view-submissions" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment</span>
         <span>View Submissions</span>
       </a>
-      <a
-        class="nav-link"
-        routerLink="/doctor-dashboard/course-announcements"
-        routerLinkActive="active"
-      >
+      <a class="nav-link" routerLink="/doctor-dashboard/course-announcements" routerLinkActive="active">
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -58,10 +54,10 @@
           <span class="material-symbols-outlined">notifications</span>
           <span class="notification-badge"></span>
         </button>
-        <img class="user-avatar" src="https://i.pravatar.cc/40" alt="User" />
+        <img class="user-avatar" src="../../../../assets/user.png" alt="User" />
         <div class="user-info">
-          <p class="user-name">John Doe</p>
-          <p class="user-role">Professor</p>
+          <p class="user-name">{{ currentDoctor.fullName }}</p>
+          <p class="user-role">{{ currentDoctor.role }}</p>
         </div>
       </div>
     </header>
@@ -96,7 +92,7 @@
 
           <div class="form-group">
             <label class="form-label">Due Date <span style="color: #ef4444">*</span></label>
-            <input class="form-input" type="datetime-local" [(ngModel)]="dueDate" />
+            <input class="form-input" type="datetime-local" [(ngModel)]="dueDate"/>
           </div>
 
           <div class="form-group">
@@ -143,10 +139,10 @@
                     file.type === 'PDF'
                       ? 'picture_as_pdf'
                       : file.type === 'DOC'
-                      ? 'description'
-                      : file.type === 'PPT'
-                      ? 'slideshow'
-                      : 'table_chart'
+                        ? 'description'
+                        : file.type === 'PPT'
+                          ? 'slideshow'
+                          : 'table_chart'
                   }}
                 </span>
                 <div class="file-details">

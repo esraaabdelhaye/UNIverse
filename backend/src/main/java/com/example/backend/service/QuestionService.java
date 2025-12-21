@@ -70,7 +70,7 @@ public class QuestionService {
 
     /**
      * Answer a question (Doctors only)
-     * In case of supervision, supervisor will be treated as doctor
+     * In case of supervisor, supervisor will be treated as doctor
      * this is allowed by database schema design
      * since supervisor entity extends doctor entity
      * using Single Table Inheritance strategy
