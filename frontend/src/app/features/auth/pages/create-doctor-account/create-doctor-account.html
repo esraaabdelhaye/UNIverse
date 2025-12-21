@@ -1,0 +1,158 @@
+<div class="registration-container">
+  <div class="registration-layout">
+    <!-- Left Side -->
+    <div class="registration-left staff-gradient">
+      <div class="left-content-bottom">
+        <h1 class="left-title">Join as Professor</h1>
+        <p class="left-subtitle">Teach, research, and inspire excellence</p>
+      </div>
+      <div class="steps-wrapper">
+        <ol class="steps-list">
+          <li class="step-item">
+            <div class="step-circle" [class.completed]="currentStep > 1">
+              <span class="material-symbols-outlined" *ngIf="currentStep > 1">check</span>
+              <span class="step-number" *ngIf="currentStep <= 1">1</span>
+            </div>
+            <span class="step-label" [class.inactive]="currentStep !== 1">Personal Info</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle" [class.completed]="currentStep > 2">
+              <span class="material-symbols-outlined" *ngIf="currentStep > 2">check</span>
+              <span class="step-number" *ngIf="currentStep <= 2">2</span>
+            </div>
+            <span class="step-label" [class.inactive]="currentStep !== 2">Professional Details</span>
+          </li>
+          <li class="step-item">
+            <div class="step-circle" [class.completed]="currentStep > 3">
+              <span class="material-symbols-outlined" *ngIf="currentStep > 3">check</span>
+              <span class="step-number" *ngIf="currentStep <= 3">3</span>
+            </div>
+            <span class="step-label" [class.inactive]="currentStep !== 3">Account Security</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="registration-right">
+      <div class="registration-form-wrapper">
+        <div class="form-header">
+          <div class="header-top">
+            <div class="logo-section">
+              <span class="material-symbols-outlined logo-icon">school</span>
+              <p class="logo-text">UNIverse</p>
+            </div>
+            <a class="back-link" href="/">← Back to Login</a>
+          </div>
+          <div class="header-content">
+            <div class="badge staff-badge">Doctor Registration</div>
+            <h1 class="page-title">Create Doctor Account</h1>
+            <p class="page-description">Join our academic community</p>
+          </div>
+        </div>
+
+        <form class="registration-form" (ngSubmit)="handleSubmit($event)">
+          <!-- Step 1 -->
+          <div class="form-step" [class.active]="currentStep === 1">
+            <h2 class="section-title">Personal Information</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="full-name">Full Name<span class="required">*</span></label>
+                <input [(ngModel)]="formData.name" name="name" class="form-input" id="full-name" placeholder="e.g. Dr. Ahmed Hassan" required type="text"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="faculty-email">Email<span class="required">*</span></label>
+                <input [(ngModel)]="formData.email" name="email" class="form-input" id="faculty-email" placeholder="ahmed.hassan@university.edu" required type="email"/>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="phone-number">Phone Number</label>
+                  <input [(ngModel)]="formData.phoneNumber" name="phoneNumber" class="form-input" id="phone-number" placeholder="010-1234-5678" type="tel"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="office-location">Office Location</label>
+                  <input [(ngModel)]="formData.officeLocation" name="officeLocation" class="form-input" id="office-location" placeholder="Building A, Room 201" type="text"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="form-step" [class.active]="currentStep === 2">
+            <h2 class="section-title">Professional Details</h2>
+            <div class="form-fields">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="title">Title<span class="required">*</span></label>
+                  <select [(ngModel)]="formData.title" name="title" class="form-input" id="title" required>
+                    <option value="">Select Title</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Associate Professor">Associate Professor</option>
+                    <option value="Assistant Professor">Assistant Professor</option>
+                    <option value="Lecturer">Lecturer</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="department">Department<span class="required">*</span></label>
+                  <select [(ngModel)]="formData.departmentId" name="departmentId" class="form-input" id="department" required>
+                    <option value="">Select Department</option>
+                    <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="expertise">Expertise/Specialization<span class="required">*</span></label>
+                <input [(ngModel)]="formData.expertise" name="expertise" class="form-input" id="expertise" placeholder="e.g. Data Structures, Algorithms, Machine Learning" required type="text"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="form-step" [class.active]="currentStep === 3">
+            <h2 class="section-title">Account Security</h2>
+            <div class="form-fields">
+              <div class="form-group">
+                <label class="form-label" for="password">Create Password<span class="required">*</span></label>
+                <input [(ngModel)]="formData.password" name="password" class="form-input" id="password" required type="password"/>
+                <ul class="password-requirements">
+                  <li>At least 8 characters</li>
+                  <li>One uppercase letter</li>
+                  <li>One number</li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="confirm-password">Confirm Password<span class="required">*</span></label>
+                <input [(ngModel)]="confirmPassword" name="confirmPassword" class="form-input" id="confirm-password" required type="password"/>
+              </div>
+              <div class="checkbox-group">
+                <input [(ngModel)]="agreeToTerms" name="terms" class="checkbox-input" id="terms" type="checkbox" required/>
+                <label class="checkbox-label" for="terms">
+                  I agree to the <a class="link" href="#">Terms & Conditions</a> and <a class="link" href="#">Privacy Policy</a><span class="required">*</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="form-navigation">
+            <div class="nav-buttons">
+              <button class="btn btn-secondary" [disabled]="currentStep === 1" (click)="prevStep()" type="button">
+                ← Previous
+              </button>
+              <button class="btn btn-primary" *ngIf="currentStep < totalSteps" (click)="nextStep()" type="button">
+                Next →
+              </button>
+            </div>
+            <button class="btn btn-primary btn-submit" [class.active]="currentStep === totalSteps" [disabled]="isSubmitting" type="submit">
+              {{ isSubmitting ? 'Creating Account...' : 'Create Doctor Account' }}
+            </button>
+            <p class="sign-in-text">
+              <span class="text-muted">Already have an account?</span>
+              <a class="link" href="/">Sign In</a>
+            </p>
+          </div>
+        </ form>
+      </div>
+    </div>
+  </div>
+</div>

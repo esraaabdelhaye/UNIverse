@@ -29,42 +29,42 @@ export class DoctorService {
     size: number = 10
   ): Observable<ApiResponse<PaginatedResponse<FacultyItem>>> {
     return this.api.get<ApiResponse<PaginatedResponse<FacultyItem>>>(
-      `/doctors?page=${page}&size=${size}`,
+      `/api/doctors?page=${page}&size=${size}`,
       { withCredentials: true }
     );
   }
 
   getDoctorById(id: number): Observable<ApiResponse<FacultyItem>> {
-    return this.api.get<ApiResponse<FacultyItem>>(`/doctors/${id}`, { withCredentials: true });
+    return this.api.get<ApiResponse<FacultyItem>>(`/api/doctors/${id}`, { withCredentials: true });
   }
 
   getDoctorByEmail(email: string): Observable<ApiResponse<FacultyItem>> {
-    return this.api.get<ApiResponse<FacultyItem>>(`/doctors/email/${email}`, {
+    return this.api.get<ApiResponse<FacultyItem>>(`/api/doctors/email/${email}`, {
       withCredentials: true,
     });
   }
 
   createDoctor(doctor: any): Observable<ApiResponse<FacultyItem>> {
-    return this.api.post<ApiResponse<FacultyItem>>('/doctors', doctor, { withCredentials: true });
+    return this.api.post<ApiResponse<FacultyItem>>('/api/doctors', doctor, { withCredentials: true });
   }
 
   updateDoctor(id: number, doctor: any): Observable<ApiResponse<FacultyItem>> {
-    return this.api.put<ApiResponse<FacultyItem>>(`/doctors/${id}`, doctor);
+    return this.api.put<ApiResponse<FacultyItem>>(`/api/doctors/${id}`, doctor);
   }
 
   deleteDoctor(id: number): Observable<ApiResponse<void>> {
-    return this.api.delete<ApiResponse<void>>(`/doctors/${id}`);
+    return this.api.delete<ApiResponse<void>>(`/api/doctors/${id}`);
   }
 
   getDoctorCourses(doctorId: number): Observable<ApiResponse<any[]>> {
-    return this.api.get<ApiResponse<any[]>>(`/doctors/${doctorId}/courses`, {
+    return this.api.get<ApiResponse<any[]>>(`/api/doctors/${doctorId}/courses`, {
       withCredentials: true,
     });
   }
 
   assignCourseToDoctor(doctorId: number, courseId: number): Observable<ApiResponse<string>> {
     return this.api.post<ApiResponse<string>>(
-      `/doctors/${doctorId}/courses/${courseId}`,
+      `/api/doctors/${doctorId}/courses/${courseId}`,
       {},
       { withCredentials: true }
     );

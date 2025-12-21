@@ -21,8 +21,15 @@ export const routes: Routes = [
   {
     path: 'create-ta-account',
     loadComponent: () =>
-      import('./features/auth/pages/create-ta-account/create-ta-account').then(
-        (m) => m.CreateTaAccount
+      import('./features/auth/pages/create-doctor-account/create-doctor-account').then(
+        (m) => m.CreateDoctorAccount
+      ),
+  },
+  {
+    path: 'create-doctor-account',
+    loadComponent: () =>
+      import('./features/auth/pages/create-doctor-account/create-doctor-account').then(
+        (m) => m.CreateDoctorAccount
       ),
   },
   {
@@ -53,6 +60,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/doctor-pages/course-students/course-students').then(
         (m) => m.CourseStudents
+      ),
+  },
+  {
+    path: 'doctor-dashboard/grade-students',
+    loadComponent: () =>
+      import('./features/doctor-pages/grade-students/grade-students').then(
+        (m) => m.GradeStudents
       ),
   },
   {
