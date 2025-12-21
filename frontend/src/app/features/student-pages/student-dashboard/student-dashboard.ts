@@ -6,6 +6,7 @@ import { StudentService } from '../../../core/services/student.service';
 import { CourseService } from '../../../core/services/course.service';
 import { GradeService } from '../../../core/services/grade.service';
 import { SubmissionService } from '../../../core/services/submission.service';
+import { AnnouncementService } from '../../../core/services/announcement.service';
 
 interface Deadline {
   id: number;
@@ -47,6 +48,16 @@ interface RecentGrade {
   feedback?: string;
 }
 
+interface RecentAnnouncement {
+  id: number;
+  title: string;
+  content: string;
+  courseCode: string;
+  courseName: string;
+  createdDate: string;
+  author: string;
+}
+
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
@@ -61,6 +72,7 @@ export class StudentDashboard implements OnInit {
   private courseService = inject(CourseService);
   private gradeService = inject(GradeService);
   private submissionService = inject(SubmissionService);
+  private announcementService = inject(AnnouncementService);
 
   // User data
   currentUser: any;
@@ -71,6 +83,7 @@ export class StudentDashboard implements OnInit {
   courses: Course[] = [];
   recentAssignments: RecentAssignment[] = [];
   recentGrades: RecentGrade[] = [];
+  recentAnnouncements: RecentAnnouncement[] = [];
 
   // Stats
   completedAssignments = 0;
@@ -111,6 +124,9 @@ export class StudentDashboard implements OnInit {
           }));
 
           console.log('Loaded courses:', this.courses);
+
+          // Load announcements for the courses
+          this.loadAnnouncements();
         }
       },
       error: (err: any) => {
@@ -254,6 +270,54 @@ export class StudentDashboard implements OnInit {
     });
   }
 
+  loadAnnouncements(): void {
+    const studentId = parseInt(this.currentUser.studentId || this.currentUser.id);
+
+    // Get student courses
+    this.studentService.getStudentCourses(studentId).subscribe({
+      next: (courseResponse: any) => {
+        if (courseResponse.success && courseResponse.data) {
+          const courses = courseResponse.data;
+          const coursesArray = Array.isArray(courses) ? courses : [courses];
+
+          if (coursesArray.length === 0) return;
+
+          // Just get announcements from first course for simplicity
+          const firstCourse = coursesArray[0];
+          const courseCode = firstCourse.courseCode || firstCourse.code;
+          const courseTitle = firstCourse.courseTitle || firstCourse.name || courseCode;
+
+          if (!courseCode) return;
+
+          this.announcementService.getAnnouncementsByCourse({
+            courseCode: courseCode,
+            courseTitle: courseTitle,
+          }).subscribe({
+            next: (annResponse: any) => {
+              if (annResponse.success && annResponse.data) {
+                const annData = annResponse.data;
+                const annArray = Array.isArray(annData) ? annData : [annData];
+
+                // Take first 2 announcements
+                this.recentAnnouncements = annArray.slice(0, 2).map((ann: any) => ({
+                  id: ann.announcementId || ann.id || Math.random(),
+                  title: ann.title || 'Untitled',
+                  content: ann.content || ann.message || '',
+                  courseCode: ann.courseCode || courseCode,
+                  courseName: courseTitle,
+                  createdDate: ann.createdDate || ann.createdAt || new Date().toISOString(),
+                  author: ann.createdBy || 'Unknown',
+                }));
+              }
+            },
+            error: (err: any) => console.error('Error loading announcements:', err)
+          });
+        }
+      },
+      error: (err: any) => console.error('Error loading courses:', err)
+    });
+  }
+
   getAssignmentCardStyle(assignment: RecentAssignment) {
     const date = new Date(assignment.dueDate);
     const today = new Date();
@@ -373,6 +437,10 @@ export class StudentDashboard implements OnInit {
     if (score >= 70) return 'C';
     if (score >= 60) return 'D';
     return 'F';
+  }
+
+  navigateToAnnouncements(): void {
+    this.router.navigate(['/student-dashboard/view-announcements']);
   }
 
   logout() {

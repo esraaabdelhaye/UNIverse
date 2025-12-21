@@ -13,6 +13,10 @@
         <span class="material-symbols-outlined">book</span>
         <span>My Courses</span>
       </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>My Schedule</span>
+      </a>
       <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
         <span class="material-symbols-outlined">assignment_turned_in</span>
         <span>Submit Assignments</span>
@@ -114,9 +118,8 @@
             </div>
           </div>
 
-          <!-- Recent Deadlines and Grades Section -->
-          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px;">
-            <!-- Recent Assignments -->
+          <!-- Recent Deadlines, Announcements, and Grades Section -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 40px;">
             <div style="background-color: #FFFFFF; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); border: 1px solid #E2E8F0;">
               <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #1E293B;">Upcoming Deadlines</h2>
               <div *ngIf="recentAssignments.length > 0" style="display: flex; flex-direction: column; gap: 12px;">
@@ -161,6 +164,32 @@
               <div *ngIf="recentGrades.length === 0" style="text-align: center; padding: 20px; color: #64748B;">
                 <p>No recent grades</p>
               </div>
+            </div>
+
+            <!-- Recent Announcements -->
+            <div style="background-color: #FFFFFF; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+              <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #1E293B;">Recent Announcements</h2>
+              <div *ngIf="recentAnnouncements.length > 0" style="display: flex; flex-direction: column; gap: 16px;">
+                <div *ngFor="let announcement of recentAnnouncements" style="padding: 18px; border-radius: 8px; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px;">
+                    <p style="font-weight: 600; font-size: 15px; margin: 0; color: #1E40AF; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                      {{ announcement.title }}
+                    </p>
+                    <span style="padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; background-color: #2563EB; color: #FFFFFF; white-space: nowrap;">
+                      {{ announcement.courseCode }}
+                    </span>
+                  </div>
+                  <p style="font-size: 13px; color: #1E40AF; margin: 0; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.6;">
+                    {{ announcement.content.length > 120 ? (announcement.content | slice:0:120) + '...' : announcement.content }}
+                  </p>
+                </div>
+              </div>
+              <div *ngIf="recentAnnouncements.length === 0" style="text-align: center; padding: 20px; color: #64748B;">
+                <p>No recent announcements</p>
+              </div>
+              <button (click)="navigateToAnnouncements()" style="width: 100%; margin-top: 16px; padding: 10px 16px; border-radius: 8px; border: none; background-color: #DBEAFE; color: #1E40AF; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.2s" onmouseover="this.style.backgroundColor='#BFDBFE'" onmouseout="this.style.backgroundColor='#DBEAFE'">
+                View All Announcements
+              </button>
             </div>
           </div>
 

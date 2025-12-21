@@ -101,6 +101,11 @@ export const routes: Routes = [
       import('./features/student-pages/view-materials/view-materials').then((m) => m.ViewMaterials),
   },
   {
+    path: 'student-dashboard/view-schedule',
+    loadComponent: () =>
+      import('./features/student-pages/view-schedule/view-schedule').then((m) => m.ViewScheduleComponent),
+  },
+  {
     path: 'student-dashboard/view-announcements',
     loadComponent: () =>
       import('./features/student-pages/view-announcements/view-announcements')

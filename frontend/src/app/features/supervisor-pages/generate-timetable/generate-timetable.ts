@@ -7,6 +7,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ScheduleService, Schedule, TimetableRequest } from '../../../core/services/schedule.service';
 import { CourseService } from '../../../core/services/course.service';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface TimeSlot {
   time: string;
@@ -316,13 +317,32 @@ export class GenerateTimetable implements OnInit {
       logging: false,
       useCORS: true
     }).then(canvas => {
-      // Convert to image and download
-      const link = document.createElement('a');
-      link.download = `timetable-${this.selectedSemester.replace(/\s+/g, '-')}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('landscape', 'mm', 'a4');
+      
+      const imgWidth = 280; 
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // Add header
+      pdf.setFillColor(37, 99, 235);
+      pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), 25, 'F');
+      
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(18);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Class Schedule', 15, 16);
+      
+      pdf.setFontSize(11);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`${this.selectedAcademicYear} - ${this.selectedSemester}`, pdf.internal.pageSize.getWidth() - 15, 16, { align: 'right' });
+      
+      // Add schedule image
+      pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, imgHeight);
+      
+      // Save PDF
+      pdf.save(`timetable-${this.selectedAcademicYear}-${this.selectedSemester}.pdf`);
     }).catch(error => {
-      console.error('Error generating timetable image:', error);
+      console.error('Error generating timetable PDF:', error);
       alert('Failed to download timetable. Please try again.');
     });
   }

@@ -62,19 +62,11 @@
             </div>
 
             <!-- Semester -->
-            <div style="margin-top: 12px; display: flex; gap: 12px;">
-              <div class="form-group" style="flex: 1; margin-top: 0;">
-                <label>Semester</label>
-                <select [(ngModel)]="selectedSemester" (change)="onSemesterChange()" class="form-control">
-                  <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
-                </select>
-              </div>
-              <div class="form-group" style="flex: 0 0 120px; margin-top: 0;">
-                <label>Year</label>
-                <select [(ngModel)]="selectedYear" (change)="onSemesterChange()" class="form-control">
-                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                </select>
-              </div>
+            <div class="form-group" style="margin-top: 12px;">
+              <label>Semester</label>
+              <select [(ngModel)]="selectedSemester" (change)="onSemesterChange()" class="form-control">
+                <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+              </select>
             </div>
 
             <!-- Constraint Form -->

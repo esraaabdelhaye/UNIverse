@@ -1,0 +1,205 @@
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-symbols-outlined logo-icon">school</span>
+      <h2 class="logo-text">UNIverse</h2>
+    </div>
+    <nav class="nav">
+      <a class="nav-link" routerLink="/student-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/my-courses" routerLinkActive="active">
+        <span class="material-symbols-outlined">book</span>
+        <span>My Courses</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-schedule" routerLinkActive="active">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span>My Schedule</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/submit-assignments" routerLinkActive="active">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Submit Assignments</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-grades" routerLinkActive="active">
+        <span class="material-symbols-outlined">grade</span>
+        <span>View Grades</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-materials" routerLinkActive="active">
+        <span class="material-symbols-outlined">folder</span>
+        <span>View Materials</span>
+      </a>
+      <a class="nav-link" routerLink="/student-dashboard/view-announcements" routerLinkActive="active">
+        <span class="material-symbols-outlined">campaign</span>
+        <span>Announcements</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-actions">
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge accent"></span>
+        </button>
+        <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC-LETa4BflVlQ-Ke4L1wK7jtSz5aP99ABOzLi0704ZljGf5FDMgfp5f-jIvQ1BtVkL0GlLxVHAvU0XTllE38dKcebfTPb7utJ8-cAWaPGS9T27juHXLKrFw1LTJP8NOx59KeIBXL7Qkt-g60iKue6ZC44Wl-FbKOwh7oSGGYVOPzJOoTtEjZhYn3CHNWbHK4tkdoAz4uskjwlIoMIoFoe4B46z1CHJsKKPQIY1gswCW_1j7WoHfNUICaoxhoDT9NlPLKLRsqoo");'></div>
+        <div class="user-info">
+          <p class="user-name">{{ currentUser?.fullName || 'Student' }}</p>
+          <p class="user-role">{{ currentUser?.role || 'Student' }}</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="schedule-container">
+        <div class="card">
+          <div class="schedule-controls">
+            <h2 class="card-title">
+              <span class="material-symbols-outlined">calendar_month</span> My Class Schedule
+            </h2>
+            
+            <div class="filters-row">
+              <!-- Academic Year -->
+              <div class="form-group">
+                <label>Academic Year</label>
+                <select [(ngModel)]="selectedAcademicYear" (change)="onYearChange()" class="form-control">
+                  <option *ngFor="let year of academicYears" [value]="year">{{ year }}</option>
+                </select>
+              </div>
+
+              <!-- Semester -->
+              <div class="form-group">
+                <label>Semester</label>
+                <select [(ngModel)]="selectedSemester" (change)="onSemesterChange()" class="form-control">
+                  <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+                </select>
+              </div>
+
+              <button class="btn-download" (click)="downloadTimetable()" *ngIf="isGenerated">
+                <span class="material-symbols-outlined">download</span>
+                <span>Download</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div class="empty-state" *ngIf="isLoading">
+            <div class="spinner-large"></div>
+            <p>Loading your schedule...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" *ngIf="!isLoading && !isGenerated">
+            <span class="material-symbols-outlined" style="font-size: 64px; color: #CBD5E1;">calendar_today</span>
+            <p>No schedule available for this semester.</p>
+            <p style="font-size: 13px; color: #94A3B8;">Try selecting a different semester or academic year.</p>
+          </div>
+
+          <!-- Timetable Grid -->
+          <div class="timetable-view" *ngIf="!isLoading && isGenerated">
+            <div class="color-legend">
+              <div class="legend-item">
+                <div class="legend-color lecture"></div>
+                <span>Lectures</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color lab"></div>
+                <span>Labs</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color section"></div>
+                <span>Sections</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color default"></div>
+                <span>Other</span>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="timetable-table">
+                <thead>
+                  <tr>
+                    <th class="time-cell">Time</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let slot of generatedGrid">
+                    <td class="time-cell">{{ slot.time }}</td>
+                    <td>
+                      <div *ngFor="let course of slot.saturday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let course of slot.sunday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let course of slot.monday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let course of slot.tuesday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let course of slot.wednesday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let course of slot.thursday" 
+                           [ngClass]="'class-slot ' + course.type" 
+                           style="margin-bottom: 4px;">
+                        <p class="class-title">{{ course.courseCode }}</p>
+                        <p class="class-details">{{ course.instructor }}</p>
+                        <p class="class-room">{{ course.room }}</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
