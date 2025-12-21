@@ -254,7 +254,7 @@
 }
 
 .assignments-table thead {
-  border-bottom: 1px solid #E2E8F0;
+  border-top: 1px solid #E2E8F0;
 }
 
 .assignments-table th {
@@ -264,8 +264,8 @@
   color: #64748B;
 }
 
-.assignments-table tbody tr {
-  border-bottom: 1px solid #E2E8F0;
+.assignment-row{
+  border-top: 1px solid #E2E8F0;
   transition: all 0.2s ease;
 }
 
@@ -328,6 +328,95 @@
   background-color: #E5E7EB;
   color: #1F2937;
 }
+
+
+.assignment-row {
+  cursor: pointer;
+}
+
+.assignment-row:hover {
+  background-color: #F8FAFC;
+}
+
+.expand-cell {
+  color: #64748B;
+  text-align: center;
+}
+
+.expanded-row td {
+  border-top: none;
+  padding: 0;
+}
+
+.expanded-content {
+  margin: 0 16px 12px 48px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  animation: expandFade 0.2s ease;
+}
+
+@keyframes expandFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.assignment-description {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+
+.attachments {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.attachments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.attachments-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2563eb;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.link-btn:hover {
+  background-color: #eff6ff;
+}
+
+
 
 /* Buttons */
 .btn {

@@ -38,7 +38,11 @@
         <span class="material-symbols-outlined">folder</span>
         <span>View Materials</span>
       </a>
-      <a class="nav-item" routerLink="/student-dashboard/view-announcements" routerLinkActive="active">
+      <a
+        class="nav-item"
+        routerLink="/student-dashboard/view-announcements"
+        routerLinkActive="active"
+      >
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
@@ -78,8 +82,8 @@
         </div>
 
         <!-- Loading State -->
-        <div *ngIf="isLoading" style="text-align: center; padding: 40px;">
-          <p style="color: #64748B;">Loading assignments...</p>
+        <div *ngIf="isLoading" style="text-align: center; padding: 40px">
+          <p style="color: #64748b">Loading assignments...</p>
         </div>
 
         <!-- Main Content -->
@@ -110,7 +114,7 @@
 
           <div class="table-wrapper">
             <table class="assignments-table">
-              <thead>
+              <!-- <thead>
               <tr>
                 <th>Assignment Title</th>
                 <th>Course</th>
@@ -118,101 +122,127 @@
                 <th>Status</th>
                 <th class="text-right">Action</th>
               </tr>
+              </thead> -->
+
+              <thead>
+                <tr>
+                  <th style="width: 32px"></th>
+                  <th>Assignment Title</th>
+                  <th>Course</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th class="text-right">Action</th>
+                </tr>
               </thead>
+
               <tbody>
-              <tr *ngFor="let assignment of filteredAssignments" [ngStyle]="getAssignmentRowStyle(assignment)">
-                <td class="assignment-title">{{ assignment.title }}</td>
-                <td class="course-code">{{ assignment.course }}</td>
-                <td
-                  class="due-date"
-                  [ngClass]="
-                      assignment.status === 'pending' && assignment.dueDate.includes('Today')
-                        ? 'urgent'
-                        : assignment.status === 'pending'
-                        ? 'warning'
-                        : ''
-                    "
-                >
-                  {{ assignment.dueDate }}
-                </td>
-                <td>
-                    <span class="status-badge" [ngClass]="getStatusBadgeClass(assignment.status)">
-                      <span *ngIf="assignment.status === 'graded'"
-                      >Graded ({{ assignment.grade }}%)</span
+                <ng-container *ngFor="let assignment of filteredAssignments">
+                  <!-- MAIN ROW -->
+                  <tr
+                    class="assignment-row"
+                    (click)="toggleAssignment(assignment)"
+                    [ngStyle]="getAssignmentRowStyle(assignment)"
+                  >
+                    <td class="expand-cell">
+                      <span class="material-symbols-outlined">
+                        {{ assignment.expanded ? 'expand_more' : 'chevron_right' }}
+                      </span>
+                    </td>
+
+                    <td class="assignment-title">{{ assignment.title }}</td>
+                    <td class="course-code">{{ assignment.course }}</td>
+
+                    <td
+                      class="due-date"
+                      [ngClass]="
+                        assignment.status === 'pending' && assignment.dueDate.includes('Today')
+                          ? 'urgent'
+                          : assignment.status === 'pending'
+                          ? 'warning'
+                          : ''
+                      "
+                    >
+                      {{ assignment.dueDate }}
+                    </td>
+
+                    <td>
+                      <span class="status-badge" [ngClass]="getStatusBadgeClass(assignment.status)">
+                        <span *ngIf="assignment.status === 'graded'">
+                          Graded ({{ assignment.grade }}%)
+                        </span>
+                        <span *ngIf="assignment.status === 'pending'">Pending</span>
+                        <span *ngIf="assignment.status === 'submitted'">Submitted</span>
+                        <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
+                      </span>
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="text-right" (click)="$event.stopPropagation()">
+                      <button
+                        *ngIf="assignment.status === 'pending'"
+                        class="btn btn-primary"
+                        (click)="submitAssignment(assignment)"
                       >
-                      <span *ngIf="assignment.status === 'pending'">Pending</span>
-                      <span *ngIf="assignment.status === 'submitted'">Submitted</span>
-                      <span *ngIf="assignment.status === 'pastdue'">Past Due</span>
-                    </span>
-                </td>
-                <td class="text-right">
-                  <div class="btn-group">
-                    <!-- Submit Button -->
-                    <button
-                      *ngIf="assignment.status === 'pending'"
-                      class="btn btn-primary"
-                      (click)="submitAssignment(assignment)"
-                      title="Submit your assignment"
-                    >
-                      <span class="material-symbols-outlined">upload</span>
-                      <span>Submit</span>
-                    </button>
+                        Submit
+                      </button>
 
-                    <!-- View & Download Assignment Files -->
-                    <button
-                      *ngIf="hasFiles(assignment)"
-                      class="btn btn-secondary"
-                      (click)="viewAssignment(assignment)"
-                      title="View assignment files"
-                    >
-                      <span class="material-symbols-outlined">description</span>
-                      <span>View</span>
-                    </button>
-                    <button
-                      *ngIf="hasFiles(assignment)"
-                      class="btn btn-secondary"
-                      (click)="downloadAssignment(assignment)"
-                      title="Download assignment files"
-                    >
-                      <span class="material-symbols-outlined">download</span>
-                      <span>Download</span>
-                    </button>
+                      <button
+                        *ngIf="assignment.status === 'submitted'"
+                        class="btn btn-secondary"
+                        (click)="viewSubmission(assignment)"
+                      >
+                        View
+                      </button>
 
-                    <!-- View Submission -->
-                    <button
-                      *ngIf="assignment.status === 'submitted'"
-                      class="btn btn-secondary"
-                      (click)="viewSubmission(assignment)"
-                      title="View your submission"
-                    >
-                      <span class="material-symbols-outlined">visibility</span>
-                      <span>View</span>
-                    </button>
+                      <button
+                        *ngIf="assignment.status === 'graded'"
+                        class="btn btn-secondary"
+                        (click)="viewGrade(assignment)"
+                      >
+                        Grade
+                      </button>
 
-                    <!-- View Grade -->
-                    <button
-                      *ngIf="assignment.status === 'graded'"
-                      class="btn btn-secondary"
-                      (click)="viewGrade(assignment)"
-                      title="View your grade"
-                    >
-                      <span class="material-symbols-outlined">grade</span>
-                      <span>Grade</span>
-                    </button>
+                      <button
+                        *ngIf="assignment.status === 'pastdue'"
+                        class="btn btn-disabled"
+                        disabled
+                      >
+                        Closed
+                      </button>
+                    </td>
+                  </tr>
 
-                    <!-- Closed Assignment -->
-                    <button
-                      *ngIf="assignment.status === 'pastdue'"
-                      class="btn btn-disabled"
-                      disabled
-                      title="Assignment submission closed"
-                    >
-                      <span class="material-symbols-outlined">lock</span>
-                      <span>Closed</span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                  <!-- EXPANDED ROW -->
+                  <tr
+                    *ngIf="assignment.expanded"
+                    class="expanded-row"
+                    [ngStyle]="getAssignmentRowStyle(assignment)"
+                  >
+                    <td colspan="6">
+                      <div class="expanded-content">
+                        <p class="assignment-description">
+                          {{ assignment.description || 'No description provided.' }}
+                        </p>
+
+                        <div *ngIf="hasFiles(assignment)" class="attachments">
+                          <div class="attachments-header">
+                            <span class="material-symbols-outlined">attach_file</span>
+                            <span>Attachments</span>
+                          </div>
+
+                          <div class="attachments-actions">
+                            <button class="link-btn" (click)="viewAssignment(assignment)">
+                              View
+                            </button>
+                            <button class="link-btn" (click)="downloadAssignment(assignment)">
+                              Download
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
@@ -283,7 +313,7 @@
             margin-bottom: 12px;
             color: #374151;
           "
-        >Upload Files <span style="color: #ef4444">*</span></label
+          >Upload Files <span style="color: #ef4444">*</span></label
         >
         <div
           (dragover)="onDragOver($event)"
@@ -305,7 +335,7 @@
           <span
             class="material-symbols-outlined"
             style="font-size: 40px; color: #9ca3af; margin-bottom: 12px"
-          >cloud_upload</span
+            >cloud_upload</span
           >
           <p style="font-size: 14px; color: #4b5563; margin: 0; margin-bottom: 4px">
             Click to upload or drag and drop
@@ -355,12 +385,12 @@
                 file.type === 'pdf'
                   ? 'picture_as_pdf'
                   : file.type === 'doc'
-                    ? 'description'
-                    : file.type === 'ppt'
-                      ? 'slideshow'
-                      : file.type === 'xls'
-                        ? 'table_chart'
-                        : 'insert_drive_file'
+                  ? 'description'
+                  : file.type === 'ppt'
+                  ? 'slideshow'
+                  : file.type === 'xls'
+                  ? 'table_chart'
+                  : 'insert_drive_file'
               }}
             </span>
             <div>

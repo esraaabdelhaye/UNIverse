@@ -13,9 +13,11 @@ interface Assignment {
   course: string;
   courseId: number;
   dueDate: string;
+  description: string,
   status: 'pending' | 'submitted' | 'graded' | 'pastdue';
   grade?: number;
   filePaths?: string[];  // Array of file paths for assignment files
+  expanded?: boolean;
 }
 
 interface UploadFile {
@@ -118,9 +120,11 @@ export class SubmitAssignments implements OnInit {
                       course: a.courseCode || course.courseCode,
                       courseId: course.id,
                       dueDate: a.dueDate,
+                      description: a.description,
                       status: this.getAssignmentStatus(a.dueDate),
                       grade: a.grade ? parseInt(a.grade) : undefined,
                       filePaths: a.filePaths || [],
+                      expanded: false,
                     });
                   });
                 }
@@ -442,4 +446,14 @@ export class SubmitAssignments implements OnInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  toggleAssignment(assignment: Assignment): void {
+  this.filteredAssignments.forEach(a => {
+    if (a !== assignment) {
+      a.expanded = false;
+    }
+  });
+  assignment.expanded = !assignment.expanded;
+}
+
 }
