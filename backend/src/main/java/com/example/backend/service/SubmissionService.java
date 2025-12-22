@@ -10,6 +10,8 @@ import com.example.backend.repository.StudentRepo;
 import com.example.backend.repository.AssignmentRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,17 +24,20 @@ public class SubmissionService {
     private final StudentRepo studentRepo;
     private final AssignmentRepo assignmentRepo;
     private final AssignmentSubmissionRepo assignmentSubmissionRepo;
+    private final FileStorageService fileStorageService;
 
     public SubmissionService(AssignmentSubmissionRepo submissionRepo, StudentRepo studentRepo,
-                             AssignmentRepo assignmentRepo, AssignmentSubmissionRepo assignmentSubmissionRepo) {
+                             AssignmentRepo assignmentRepo, AssignmentSubmissionRepo assignmentSubmissionRepo,
+                             FileStorageService fileStorageService) {
         this.submissionRepo = submissionRepo;
         this.studentRepo = studentRepo;
         this.assignmentRepo = assignmentRepo;
         this.assignmentSubmissionRepo = assignmentSubmissionRepo;
+        this.fileStorageService = fileStorageService;
     }
 
     // Submit assignment
-    public ApiResponse<SubmissionDTO> submitAssignment(Long studentId, Long assignmentId, String submissionFile) {
+    public ApiResponse<SubmissionDTO> submitAssignment(Long studentId, Long assignmentId, String submissionFile , MultipartFile formData) {
         try {
             Optional<Student> studentOpt = studentRepo.findById(studentId);
             Optional<Assignment> assignmentOpt = assignmentRepo.findById(assignmentId);
@@ -54,8 +59,9 @@ public class SubmissionService {
             submission.setAssignment(assignmentOpt.get());
             submission.setCourse(assignmentOpt.get().getCourse());
             submission.setSubmissionDate(LocalDate.now());
-            submission.setSubmissionFile(submissionFile);
             submission.setStatus("submitted");
+            String storedFilePath = fileStorageService.storeFile(formData, "submissions");
+            submission.setSubmissionFile(storedFilePath);
 
             AssignmentSubmission saved = submissionRepo.save(submission);
             return ApiResponse.created("Assignment submitted successfully", convertToDTO(saved));
@@ -226,7 +232,8 @@ public class SubmissionService {
                 submission.getAssignment().getTitle(),
                 submission.getSubmissionDate().atTime(0, 0),
                 submission.getStatus(),
-                submission.getGrade() != null ? Double.parseDouble(submission.getGrade()) : null
+                submission.getGrade() != null ? Double.parseDouble(submission.getGrade()) : null,
+                submission.getSubmissionFile()
         );
     }
 
