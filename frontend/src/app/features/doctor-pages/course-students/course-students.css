@@ -102,29 +102,6 @@
   gap: 16px;
 }
 
-.icon-button {
-  position: relative;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-.icon-button:hover {
-  background-color: #f1f5f9;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background-color: #f59e0b;
-  border-radius: 50%;
-}
-
 .user-avatar {
   width: 40px;
   height: 40px;
