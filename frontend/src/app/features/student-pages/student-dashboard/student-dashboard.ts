@@ -425,6 +425,21 @@ export class StudentDashboard implements OnInit {
     return '#DC2626';
   }
 
+  getLetterGrade(score: number): string {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    if (score >= 60) return 'D';
+    return 'F';
+  }
+
+  getGradeBoxClass(score: number): string {
+    if (score >= 90) return 'grade-box-excellent';
+    if (score >= 80) return 'grade-box-good';
+    if (score >= 70) return 'grade-box-fair';
+    return 'grade-box-poor';
+  }
+
   navigateToCourse(courseCode: string): void {
     this.router.navigate(['/student-dashboard/my-courses'], {
       queryParams: { course: courseCode }
@@ -437,14 +452,6 @@ export class StudentDashboard implements OnInit {
 
   navigateToGrades(): void {
     this.router.navigate(['/student-dashboard/view-grades']);
-  }
-
-  getLetterGrade(score: number): string {
-    if (score >= 90) return 'A';
-    if (score >= 80) return 'B';
-    if (score >= 70) return 'C';
-    if (score >= 60) return 'D';
-    return 'F';
   }
 
   navigateToAnnouncements(): void {
