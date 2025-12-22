@@ -171,46 +171,61 @@
   font-size: 14px;
 }
 
-.courses-grid {
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
-.course-card {
+.stat-card {
   background-color: #FFFFFF;
   border-radius: 8px;
   padding: 20px;
   border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
 }
 
-.course-card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.stat-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: translateY(-2px);
 }
 
-.course-code {
-  font-size: 12px;
-  font-weight: 600;
-  color: #2563EB;
-  text-transform: uppercase;
-  margin-bottom: 8px;
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2563EB;
+  color: white;
+  font-size: 28px;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
-.course-name {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #1E293B;
+.stat-icon:hover {
+  transform: scale(1.08);
 }
 
-.course-students {
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
   font-size: 14px;
   color: #64748B;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E293B;
 }
 
 .courses-section {
@@ -237,12 +252,13 @@
   border: 1px solid #E2E8F0;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.3s;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .course-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
 
 .course-image {
@@ -320,17 +336,24 @@
   color: #DC2626;
 }
 
-.course-title {
-  font-size: 16px;
+.course-name {
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 4px;
   color: #1E293B;
 }
 
-.course-professor {
+.course-students {
   font-size: 14px;
   color: #64748B;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.course-students .material-symbols-outlined {
+  font-size: 18px;
 }
 
 .course-btn {
@@ -401,43 +424,6 @@
 
 .red-btn:hover {
   background-color: #FECACA;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.stat-card {
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid #E2E8F0;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.stat-icon {
-  font-size: 32px;
-  color: #2563EB;
-}
-
-.stat-content {
-  flex: 1;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #64748B;
-  margin-bottom: 4px;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1E293B;
 }
 
 @media (max-width: 1024px) {

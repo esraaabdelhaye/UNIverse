@@ -66,41 +66,7 @@
           <p class="page-subtitle">Overview of your courses and recent activity</p>
         </div>
 
-        <!-- <div class="courses-grid">
-          <div
-            class="course-card"
-            *ngFor="let course of courses"
-            (click)="navigateToCourse(course.courseCode)"
-          >
-            <p class="course-code">{{ course.courseCode }}</p>
-            <h3 class="course-name">{{ course.courseTitle }}</h3>
-            <p class="course-students">{{ course.capacity }} Students</p>
-          </div>
-        </div> -->
-
-        <div class="courses-section">
-            <h2 class="section-title-large">My Courses</h2>
-            <div *ngIf="courses.length > 0" class="courses-grid">
-              <div class="course-card" *ngFor="let course of courses; let i = index" (click)="navigateToCourse(course.courseCode)" [ngClass]="getCourseCardColor(i)">
-                <div class="course-image" [ngClass]="getCourseImageColor(i)">
-                  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo" alt="course-image"/>
-                </div>
-                <div class="course-content">
-                  <span class="course-code" [ngClass]="getCourseCodeColor(i)">{{ course.courseCode }}</span>
-                  <h3 class="course-title">{{ course.courseTitle }}</h3>
-                  <p class="course-students">{{ course.capacity }} Students</p>
-                  <button class="course-btn" [ngClass]="getCourseButtonColor(i)" (click)="navigateToCourse(course.courseCode)">
-                    <span class="material-symbols-outlined">folder</span>
-                    <span>View Materials</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
-              <p>No courses enrolled yet</p>
-            </div>
-          </div>
-
+        <!-- Stats Grid at Top -->
         <div class="stats-grid">
           <div class="stat-card" *ngFor="let stat of stats">
             <span class="material-symbols-outlined stat-icon">{{ stat.icon }}</span>
@@ -108,6 +74,33 @@
               <p class="stat-label">{{ stat.label }}</p>
               <p class="stat-value">{{ stat.value }}</p>
             </div>
+          </div>
+        </div>
+
+        <!-- Courses Section -->
+        <div class="courses-section">
+          <h2 class="section-title-large">My Courses</h2>
+          <div *ngIf="courses.length > 0" class="courses-grid">
+            <div class="course-card" *ngFor="let course of courses; let i = index" (click)="navigateToCourse(course.courseCode)">
+              <div class="course-image" [ngClass]="getCourseImageColor(i)">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHXeJuJN7E_Oc5z3rb7mBYsiWRhIS0crmW3GUNAyFyRQSioHpPWrQqzv0sFKqOMFUnsr2xSaCWguF2OCWQ23rxQA7iU0OVGI-MaizPOn4TAi_iJGLR-fRgbOwup5brMTH6qgh93aRo7DqlOHyw1JkuZ5JQWyO5_eA8pG0Ttyw8kc1Xl1Nvn8EyAl0lQnYq5VgcUQEC2rp_Kgjpu_WXAT9nvkAHo7Bk2wTl9U6EkkZffHUMBXx0CqwLFvtX798tZDu8rpbImtfW6eo" alt="course-image"/>
+              </div>
+              <div class="course-content">
+                <span class="course-code" [ngClass]="getCourseCodeColor(i)">{{ course.courseCode }}</span>
+                <h3 class="course-name">{{ course.courseTitle }}</h3>
+                <p class="course-students">
+                  <span class="material-symbols-outlined">group</span>
+                  <span>{{ course.capacity }} Students</span>
+                </p>
+                <button class="course-btn" [ngClass]="getCourseButtonColor(i)" (click)="navigateToCourse(course.courseCode)">
+                  <span class="material-symbols-outlined">folder</span>
+                  <span>View Materials</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="courses.length === 0" style="text-align: center; padding: 40px; color: #64748B;">
+            <p>No courses enrolled yet</p>
           </div>
         </div>
       </div>
