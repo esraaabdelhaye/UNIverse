@@ -125,28 +125,28 @@ export class UploadMaterial implements OnInit {
     this.isUploading = true;
 
     this.uploadedFiles.forEach(file => {
-    const formData = new FormData();
-    formData.append('file', file.file); // REAL FILE
-    formData.append('title', this.materialTitle);
-    formData.append('type', file.type);
-    if (this.materialDescription?.trim()) {
-      formData.append('description', this.materialDescription);
-    }
+      const formData = new FormData();
+      formData.append('file', file.file); // REAL FILE
+      formData.append('title', this.materialTitle);
+      formData.append('type', file.type);
+      if (this.materialDescription?.trim()) {
+        formData.append('description', this.materialDescription);
+      }
 
-    console.log(formData);
+      console.log(formData);
 
-    this.materialService
-      .uploadMaterial(Number(this.selectedCourse), formData)
-      .subscribe({
-        next: (res) => console.log('Uploaded material: ', res.data),
-        error: err => console.error(err)
-      });
-  });
+      this.materialService
+        .uploadMaterial(Number(this.selectedCourse), formData)
+        .subscribe({
+          next: (res) => console.log('Uploaded material: ', res.data),
+          error: err => console.error(err)
+        });
+    });
 
-      alert('Materials uploaded successfully!');
-      this.resetForm();
-      this.isUploading = false;
-    
+    alert('Materials uploaded successfully!');
+    this.resetForm();
+    this.isUploading = false;
+
   }
 
 
