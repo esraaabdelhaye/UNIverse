@@ -431,6 +431,14 @@ export class StudentDashboard implements OnInit {
     });
   }
 
+  navigateToSubmitAssignments(assignment: RecentAssignment): void {
+    this.router.navigate(['/student-dashboard/submit-assignments']);
+  }
+
+  navigateToGrades(): void {
+    this.router.navigate(['/student-dashboard/view-grades']);
+  }
+
   getLetterGrade(score: number): string {
     if (score >= 90) return 'A';
     if (score >= 80) return 'B';

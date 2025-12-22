@@ -33,9 +33,14 @@
         <span class="material-symbols-outlined">campaign</span>
         <span>Announcements</span>
       </a>
+
+      <a class="nav-link" routerLink="/student-dashboard/questions" routerLinkActive="active">
+        <span class="material-symbols-outlined">help</span>
+        <span>Questions</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-link" href="javascript:void(0)" (click)="logout()">
+      <a class="nav-item logout-link" href="javascript:void(0)" (click)="logout()">
         <span class="material-symbols-outlined">logout</span>
         <span>Logout</span>
       </a>
@@ -64,7 +69,7 @@
             <h2 class="card-title">
               <span class="material-symbols-outlined">calendar_month</span> My Class Schedule
             </h2>
-            
+
             <div class="filters-row">
               <!-- Academic Year -->
               <div class="form-group">
@@ -126,74 +131,74 @@
             <div class="table-wrapper">
               <table class="timetable-table">
                 <thead>
-                  <tr>
-                    <th class="time-cell">Time</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                  </tr>
+                <tr>
+                  <th class="time-cell">Time</th>
+                  <th>Saturday</th>
+                  <th>Sunday</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let slot of generatedGrid">
-                    <td class="time-cell">{{ slot.time }}</td>
-                    <td>
-                      <div *ngFor="let course of slot.saturday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngFor="let course of slot.sunday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngFor="let course of slot.monday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngFor="let course of slot.tuesday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngFor="let course of slot.wednesday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div *ngFor="let course of slot.thursday" 
-                           [ngClass]="'class-slot ' + course.type" 
-                           style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }}</p>
-                        <p class="class-room">{{ course.room }}</p>
-                      </div>
-                    </td>
-                  </tr>
+                <tr *ngFor="let slot of generatedGrid">
+                  <td class="time-cell">{{ slot.time }}</td>
+                  <td>
+                    <div *ngFor="let course of slot.saturday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let course of slot.sunday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let course of slot.monday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let course of slot.tuesday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let course of slot.wednesday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let course of slot.thursday"
+                         [ngClass]="'class-slot ' + course.type"
+                         style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }}</p>
+                      <p class="class-room">{{ course.room }}</p>
+                    </div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>

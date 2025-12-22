@@ -78,6 +78,17 @@
   margin-top: auto;
 }
 
+.nav-item.logout-link {
+  color: #EF4444 !important;
+  transition: all 0.2s ease;
+}
+
+.nav-item.logout-link:hover {
+  background-color: #FEE2E2 !important;
+  color: #DC2626 !important;
+  font-weight: 600;
+}
+
 /* Main Wrapper */
 .main-wrapper {
   flex: 1;
