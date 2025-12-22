@@ -162,7 +162,7 @@ export class GenerateTimetable implements OnInit {
     // User wants "Add Course" logic. So we should ideally schedule ALL valid courses for this semester/year structure?
     // Or ONLY what user puts in the list?
     // Reverting to "List based": typically implies we build the list of courses to schedule.
-    // So we will use the courses in 'constraints' list as the scope. 
+    // So we will use the courses in 'constraints' list as the scope.
     // If room is 'Any', we send just ID.
 
     // NOTE: Backend needs list of IDs.
@@ -304,10 +304,16 @@ export class GenerateTimetable implements OnInit {
 
   downloadTimetable() {
     const timetableElement = document.querySelector('.timetable-view') as HTMLElement;
+    const downloadButton = document.querySelector('.timetable-actions') as HTMLElement;
 
     if (!timetableElement) {
       alert('Timetable not found. Please generate a timetable first.');
       return;
+    }
+
+    // Hide the download button before capturing
+    if (downloadButton) {
+      downloadButton.style.display = 'none';
     }
 
     // Capture the timetable as image
@@ -317,31 +323,40 @@ export class GenerateTimetable implements OnInit {
       logging: false,
       useCORS: true
     }).then(canvas => {
+      // Show the button again
+      if (downloadButton) {
+        downloadButton.style.display = '';
+      }
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('landscape', 'mm', 'a4');
-      
-      const imgWidth = 280; 
+
+      const imgWidth = 280;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
+
       // Add header
       pdf.setFillColor(37, 99, 235);
       pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), 25, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(18);
       pdf.setFont('helvetica', 'bold');
       pdf.text('Class Schedule', 15, 16);
-      
+
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
       pdf.text(`${this.selectedAcademicYear} - ${this.selectedSemester}`, pdf.internal.pageSize.getWidth() - 15, 16, { align: 'right' });
-      
+
       // Add schedule image
       pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, imgHeight);
-      
+
       // Save PDF
       pdf.save(`timetable-${this.selectedAcademicYear}-${this.selectedSemester}.pdf`);
     }).catch(error => {
+      // Show the button again even if there's an error
+      if (downloadButton) {
+        downloadButton.style.display = '';
+      }
       console.error('Error generating timetable PDF:', error);
       alert('Failed to download timetable. Please try again.');
     });
