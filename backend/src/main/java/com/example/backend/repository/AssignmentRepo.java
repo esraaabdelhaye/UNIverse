@@ -22,4 +22,13 @@ public interface AssignmentRepo extends JpaRepository<Assignment, Long> {
     List<Assignment> findByCourseOrderByDueDateAsc(Course course);
 
     JsonNode findByCourseAndTitle(Course course, String title);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT a FROM Assignment a LEFT JOIN FETCH a.submissions WHERE a.id = :id")
+    Optional<Assignment> findByIdWithSubmissions(@org.springframework.data.repository.query.Param("id") Long id);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT a FROM Assignment a LEFT JOIN FETCH a.submissions")
+    List<Assignment> findAllWithSubmissions();
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT a FROM Assignment a LEFT JOIN FETCH a.submissions WHERE a.course = :course")
+    List<Assignment> findByCourseWithSubmissions(@org.springframework.data.repository.query.Param("course") Course course);
 }
