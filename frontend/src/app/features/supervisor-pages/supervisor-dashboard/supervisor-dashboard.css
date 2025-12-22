@@ -67,6 +67,16 @@
   font-weight: 600;
 }
 
+.nav-link.logout-link {
+  color: #EF4444;
+}
+
+.nav-link.logout-link:hover {
+  background-color: #FEE2E2;
+  color: #DC2626;
+  font-weight: 600;
+}
+
 .sidebar-footer {
   margin-top: auto;
   display: flex;

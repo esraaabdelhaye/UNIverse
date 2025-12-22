@@ -23,7 +23,10 @@
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span class="material-symbols-outlined">logout</span><span>Logout</span></a>
+      <a class="nav-link logout-link" href="javascript:void(0)" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
     </div>
   </aside>
 
@@ -101,7 +104,7 @@
                 </td>
               </tr>
               <tr *ngIf="filteredCourses.length === 0">
-                 <td colspan="6" style="text-align: center; padding: 20px;">No courses found.</td>
+                <td colspan="6" style="text-align: center; padding: 20px;">No courses found.</td>
               </tr>
               </tbody>
             </table>
@@ -140,25 +143,25 @@
         <input type="text" class="form-input" [(ngModel)]="currentCourse.name" placeholder="e.g. Intro to CS">
       </div>
       <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-           <div class="form-group">
-            <label class="form-label">Credit Hours</label>
-            <input type="number" class="form-input" [(ngModel)]="currentCourse.creditHours">
-          </div>
-           <div class="form-group">
-            <label class="form-label">Capacity</label>
-            <input type="number" class="form-input" [(ngModel)]="currentCourse.capacity">
-          </div>
+        <div class="form-group">
+          <label class="form-label">Credit Hours</label>
+          <input type="number" class="form-input" [(ngModel)]="currentCourse.creditHours">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Capacity</label>
+          <input type="number" class="form-input" [(ngModel)]="currentCourse.capacity">
+        </div>
       </div>
-       <div class="form-group">
+      <div class="form-group">
         <label class="form-label">Semester</label>
-         <select class="form-select" [(ngModel)]="currentCourse.semester">
-             <option *ngFor="let sem of semesters">{{ sem }}</option>
+        <select class="form-select" [(ngModel)]="currentCourse.semester">
+          <option *ngFor="let sem of semesters">{{ sem }}</option>
         </select>
       </div>
-       <div class="form-group">
+      <div class="form-group">
         <label class="form-label">Department</label>
-         <select class="form-select" [(ngModel)]="currentCourse.departmentName">
-             <option *ngFor="let dept of departments">{{ dept }}</option>
+        <select class="form-select" [(ngModel)]="currentCourse.departmentName">
+          <option *ngFor="let dept of departments">{{ dept }}</option>
         </select>
       </div>
     </div>

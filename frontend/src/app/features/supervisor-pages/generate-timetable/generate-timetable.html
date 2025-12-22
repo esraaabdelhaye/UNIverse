@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a class="nav-link active" routerLink="/supervisor-dashboard" routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}">
+         [routerLinkActiveOptions]="{exact: true}">
         <span class="material-symbols-outlined">dashboard</span>
         <span>Dashboard</span>
       </a>
@@ -24,8 +24,10 @@
       </a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-link" href="javascript:void(0)" (click)="logout()"><span
-          class="material-symbols-outlined">logout</span><span>Logout</span></a>
+      <a class="nav-link logout-link" href="javascript:void(0)" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </a>
     </div>
   </aside>
   <div class="main-wrapper">
@@ -36,7 +38,7 @@
           <span class="notification-badge"></span>
         </button>
         <div class="user-avatar"
-          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
+             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoY4Wp7qmxX4VDSoT3Vmr2qswqkkPQKnfXBi6UrbCvHMkyQzCjFcbZlORsU-j2DvMuJNYOaqwfZcgTjF_Hg8IDEtySTCcfrtyWohPVSbGWzk_oW6GXLl0Hz6W9aDh3lqrBKeUzDWnMUPNGhawW9SNYnA9mf23sryoHadAYDjt2nOqgr2sbWDfD66OJ8Z0EzkvZS8SELiYlOJitGiAXsYPceto35Ief5jqo9WsQb0JhLm_z4eaJE5XPe2C6hgQEr3qw0BVsIWoEIHM");'>
         </div>
         <div class="user-info">
           <p class="user-name">Alex Hartman</p>
@@ -71,7 +73,7 @@
 
             <!-- Constraint Form -->
             <div class="constraint-form"
-              style="margin-top: 16px; border: 1px solid #E2E8F0; padding: 16px; border-radius: 8px; background: #F8FAFC;">
+                 style="margin-top: 16px; border: 1px solid #E2E8F0; padding: 16px; border-radius: 8px; background: #F8FAFC;">
               <h3 style="font-size: 14px; margin-bottom: 12px;">Add Course to Schedule</h3>
 
               <div class="form-group">
@@ -104,34 +106,34 @@
             <div class="table-wrapper" style="max-height: 400px; overflow-y: auto; margin-top: 24px;">
               <table class="data-table">
                 <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>Room Pref</th>
-                    <th>Actions</th>
-                  </tr>
+                <tr>
+                  <th>Code</th>
+                  <th>Room Pref</th>
+                  <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let c of constraints">
-                    <td class="course-code">{{ c.code }}</td>
-                    <td>{{ c.room }}</td>
-                    <td>
-                      <button class="icon-btn danger" (click)="removeConstraint(c)">
-                        <span class="material-symbols-outlined">delete</span>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr *ngIf="constraints.length === 0">
-                    <td colspan="3" style="text-align: center; color: #64748B; padding: 20px;">
-                      No courses selected. Add courses above.
-                    </td>
-                  </tr>
+                <tr *ngFor="let c of constraints">
+                  <td class="course-code">{{ c.code }}</td>
+                  <td>{{ c.room }}</td>
+                  <td>
+                    <button class="icon-btn danger" (click)="removeConstraint(c)">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="constraints.length === 0">
+                  <td colspan="3" style="text-align: center; color: #64748B; padding: 20px;">
+                    No courses selected. Add courses above.
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
 
             <button class="btn-primary" (click)="generateTimetable()"
-              style="width: 100%; margin-top: 24px; justify-content: center;"
-              [disabled]="isLoading || constraints.length === 0">
+                    style="width: 100%; margin-top: 24px; justify-content: center;"
+                    [disabled]="isLoading || constraints.length === 0">
               <span class="material-symbols-outlined" *ngIf="!isLoading">auto_awesome</span>
               <span class="spinner" *ngIf="isLoading"></span>
               <span>{{ isLoading ? 'Generating...' : 'Generate Timetable' }}</span>
@@ -160,62 +162,62 @@
             <div class="table-wrapper" *ngIf="isGenerated">
               <table class="timetable-table">
                 <thead>
-                  <tr>
-                    <th class="time-cell">Time</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                  </tr>
+                <tr>
+                  <th class="time-cell">Time</th>
+                  <th>Saturday</th>
+                  <th>Sunday</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let slot of generatedGrid">
-                    <td class="time-cell">{{ slot.time }}</td>
-                    <td [class.clickable]="slot.saturday && slot.saturday.length > 0">
-                      <div *ngFor="let course of slot.saturday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td [class.clickable]="slot.sunday && slot.sunday.length > 0">
-                      <div *ngFor="let course of slot.sunday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td [class.clickable]="slot.monday && slot.monday.length > 0">
-                      <div *ngFor="let course of slot.monday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td [class.clickable]="slot.tuesday && slot.tuesday.length > 0">
-                      <div *ngFor="let course of slot.tuesday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td [class.clickable]="slot.wednesday && slot.wednesday.length > 0">
-                      <div *ngFor="let course of slot.wednesday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                    <td [class.clickable]="slot.thursday && slot.thursday.length > 0">
-                      <div *ngFor="let course of slot.thursday" (click)="onCellClick(course)"
-                        [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
-                        <p class="class-title">{{ course.courseCode }}</p>
-                        <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
-                      </div>
-                    </td>
-                  </tr>
+                <tr *ngFor="let slot of generatedGrid">
+                  <td class="time-cell">{{ slot.time }}</td>
+                  <td [class.clickable]="slot.saturday && slot.saturday.length > 0">
+                    <div *ngFor="let course of slot.saturday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td [class.clickable]="slot.sunday && slot.sunday.length > 0">
+                    <div *ngFor="let course of slot.sunday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td [class.clickable]="slot.monday && slot.monday.length > 0">
+                    <div *ngFor="let course of slot.monday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td [class.clickable]="slot.tuesday && slot.tuesday.length > 0">
+                    <div *ngFor="let course of slot.tuesday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td [class.clickable]="slot.wednesday && slot.wednesday.length > 0">
+                    <div *ngFor="let course of slot.wednesday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                  <td [class.clickable]="slot.thursday && slot.thursday.length > 0">
+                    <div *ngFor="let course of slot.thursday" (click)="onCellClick(course)"
+                         [ngClass]="'class-slot ' + course.type" style="margin-bottom: 4px;">
+                      <p class="class-title">{{ course.courseCode }}</p>
+                      <p class="class-details">{{ course.instructor }} / {{ course.room }}</p>
+                    </div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
