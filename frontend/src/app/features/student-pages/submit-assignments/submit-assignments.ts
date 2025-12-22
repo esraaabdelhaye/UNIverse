@@ -55,7 +55,8 @@ export class SubmitAssignments implements OnInit {
   selectedSort = 'duedate';
 
   // File upload
-  uploadedFiles: UploadFile[] = [];
+  uploadedFiles: File[] = [];
+  uploadedFileInfos: UploadFile[] = [];
   isSubmittingAssignment = false;
   selectedAssignmentForSubmit: Assignment | null = null;
 
@@ -277,13 +278,14 @@ export class SubmitAssignments implements OnInit {
   }
 
   handleFiles(files: FileList): void {
-    Array.from(files).forEach((file: any) => {
+    Array.from(files).forEach((file: File) => {
       const uploadFile: UploadFile = {
         name: file.name,
         size: this.formatFileSize(file.size),
         type: this.getFileType(file.name),
       };
-      this.uploadedFiles.push(uploadFile);
+      this.uploadedFiles.push(file);
+      this.uploadedFileInfos.push(uploadFile);
     });
   }
 
@@ -307,6 +309,7 @@ export class SubmitAssignments implements OnInit {
 
   removeFile(index: number): void {
     this.uploadedFiles.splice(index, 1);
+    this.uploadedFileInfos.splice(index, 1);
   }
 
   triggerFileInput(): void {
@@ -333,7 +336,13 @@ export class SubmitAssignments implements OnInit {
 
     this.isSubmittingAssignment = true;
 
-    this.submissionService.submitAssignment(studentId, assignmentId, 'submitted').subscribe({
+    let formData = new FormData();
+
+    formData.append('file', this.uploadedFiles[0]);
+    // If multiple files are to be supported, loop through uploadedFiles and append each
+    // Also backend changes will be needed to handle multiple files
+    console.log(this.uploadedFiles)
+    this.submissionService.submitAssignment(studentId, assignmentId, this.uploadedFiles[0].name,formData).subscribe({
       next: (response) => {
         if (response.success) {
           this.statusMessage = `Assignment "${this.selectedAssignmentForSubmit?.title}" submitted successfully!`;
@@ -361,9 +370,10 @@ export class SubmitAssignments implements OnInit {
   }
 
   resetUploadForm(): void {
-    this.selectedAssignmentForSubmit = null;
-    this.uploadedFiles = [];
-  }
+      this.selectedAssignmentForSubmit = null;
+      this.uploadedFiles = [];
+      this.uploadedFileInfos = [];
+    }
 
   viewSubmission(assignment: Assignment): void {
     this.statusMessage = `Viewing submission for: ${assignment.title}`;

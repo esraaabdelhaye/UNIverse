@@ -72,4 +72,19 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
 
     @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.doctors WHERE c.semester = :semester")
     List<Course> findBySemesterWithDoctors(@Param("semester") String semester);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.submissions WHERE c.id = :id")
+    Optional<Course> findByIdWithSubmissions(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.submissions")
+    List<Course> findAllWithSubmissions();
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.submissions WHERE c.courseCode = :courseCode")
+    Optional<Course> findByCourseCodeWithSubmissions(@Param("courseCode") String courseCode);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.submissions WHERE c.department.id = :departmentId")
+    List<Course> findByDepartmentIdWithSubmissions(@Param("departmentId") Long departmentId);
+
+    @Query("SELECT DISTINCT c FROM Course c LEFT JOIN FETCH c.submissions WHERE c.semester = :semester")
+    List<Course> findBySemesterWithSubmissions(@Param("semester") String semester);
 }

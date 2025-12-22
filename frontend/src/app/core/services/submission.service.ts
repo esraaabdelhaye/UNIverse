@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {booleanAttribute, Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Submission } from '../models/submission.model';
@@ -13,11 +13,17 @@ export class SubmissionService {
   submitAssignment(
     studentId: number,
     assignmentId: number,
-    submissionFile: string
+    submissionFile: string,
+    formData?: FormData
   ): Observable<ApiResponse<Submission>> {
+    let body = new FormData();
+    if (formData && formData.get("file") !== null) {
+      body.append("formData", formData.get("file") as string | Blob);
+    }
+    body.append("submissionFile",submissionFile);
     return this.api.post<ApiResponse<Submission>>(
       `/api/submissions/student/${studentId}/assignment/${assignmentId}`,
-      { submissionFile }
+      body,
     );
   }
 
@@ -64,5 +70,9 @@ export class SubmissionService {
     grade: string
   ): Observable<ApiResponse<Submission>> {
     return this.api.put<ApiResponse<Submission>>(`/api/submissions/grade/${submissionId}?status=${status}&grade=${grade}`, {});
+  }
+
+  viewSubmissionFile(url: string): string {
+    return `${this.api.getBaseUrl()}/api/files/view?path=${encodeURIComponent(url)}`;
   }
 }

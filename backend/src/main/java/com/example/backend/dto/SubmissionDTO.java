@@ -21,4 +21,6 @@ public class SubmissionDTO {
     private String status;
     private Double grade;
 
+    private String submissionFile;
+
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.Map;
@@ -22,13 +24,16 @@ public class SubmissionController {
         this.submissionService = submissionService;
     }
 
-    @PostMapping("/student/{studentId}/assignment/{assignmentId}")
+    @PostMapping(value = "/student/{studentId}/assignment/{assignmentId}",
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     @PreAuthorize("hasAnyRole('STUDENT')")
     public ResponseEntity<ApiResponse<SubmissionDTO>> submitAssignment(
             @PathVariable Long studentId,
             @PathVariable Long assignmentId,
-            @RequestBody String submissionFile) {
-        ApiResponse<SubmissionDTO> response = submissionService.submitAssignment(studentId, assignmentId, submissionFile);
+            @RequestParam String submissionFile,
+            @RequestParam MultipartFile formData) {
+        ApiResponse<SubmissionDTO> response = submissionService.submitAssignment(studentId, assignmentId, submissionFile, formData);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

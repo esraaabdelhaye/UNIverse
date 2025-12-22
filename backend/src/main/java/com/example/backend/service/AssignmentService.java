@@ -151,7 +151,7 @@ public class AssignmentService {
     // Get submissions count for assignment
     public ApiResponse<Long> getSubmissionCount(Long assignmentId) {
         try {
-            Optional<Assignment> assignmentOpt = assignmentRepo.findById(assignmentId);
+            Optional<Assignment> assignmentOpt = assignmentRepo.findByIdWithSubmissions(assignmentId);
             if (assignmentOpt.isEmpty()) {
                 return ApiResponse.notFound("Assignment not found");
             }

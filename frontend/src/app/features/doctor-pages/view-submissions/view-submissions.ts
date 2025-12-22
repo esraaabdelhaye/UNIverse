@@ -158,10 +158,17 @@ export class ViewSubmissions implements OnInit {
 
   viewSubmission(submission: Submission) {
     console.log('id: ', submission.submissionId);
+    console.log(submission.submissionFile);
+    if (submission.submissionFile != null) {
+      const viewURL = this.submissionService.viewSubmissionFile(submission.submissionFile);
+      console.log('Attempting to open:', viewURL);
+      console.log('viewURL: ', viewURL);
+      window.open(viewURL, '_blank');
+    }
     if (submission.status === 'graded') return;
     submission.status = 'grading';
     console.log(`Marked ${submission.studentId}'s submission as reviewed`);
-    alert(`Marked as grading for ${submission.studentName}`);
+    // alert(`Marked as grading for ${submission.studentName}`);
     this.submissionService.updateSubmissionStatus(submission.submissionId, 'grading').subscribe({
       next: (response) => {
         if (response.success && response.data) {
