@@ -2,27 +2,27 @@
 
 A comprehensive University Management System built with Spring Boot and Angular. UNIverse streamlines academic operations by providing a unified platform for students, faculty, and administrators.
 
-## ✨ Features
+## Features
 
 ### For Students
-- 📚 View enrolled courses and materials
-- 📝 Submit assignments and track deadlines
-- 📊 Access grades and academic progress
-- 📢 Receive announcements and event notifications
+- View enrolled courses and materials
+- Submit assignments and track deadlines
+- Access grades and academic progress
+- Receive announcements and event notifications
 
 ### For Faculty (Doctors & TAs)
-- 👨‍🏫 Manage assigned courses
-- 📋 Create and grade assignments
-- 📖 Upload lecture materials
-- 📣 Post announcements
+- Manage assigned courses
+- Create and grade assignments
+- Upload lecture materials
+- Post announcements
 
 ### For Supervisors
-- 🎯 Coordinate courses across departments
-- 👥 Manage faculty assignments
-- 📈 View system performance metrics
-- 🏢 Oversee department operations
+- Coordinate courses across departments
+- Manage faculty assignments
+- View system performance metrics
+- Oversee department operations
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Java 17+** with **Spring Boot 3.x**
@@ -35,7 +35,7 @@ A comprehensive University Management System built with Spring Boot and Angular.
 - **TypeScript**
 - **Responsive design**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Java 17 or higher
@@ -70,7 +70,7 @@ ng serve
 
 The application will be available at `http://localhost:4200`
 
-## 📋 API Endpoints
+## API Endpoints
 
 | Resource | Endpoint | Description |
 |----------|----------|-------------|
@@ -80,11 +80,11 @@ The application will be available at `http://localhost:4200`
 | TAs | `/api/teaching-assistants` | TA management |
 | Supervisors | `/api/supervisors` | Admin operations |
 
-## 📊 Database Console
+## Database Console
 
 Access the H2 database console at: `http://localhost:8080/api/h2-console`
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 UNIverse/
@@ -104,22 +104,10 @@ UNIverse/
 └── README.md
 ```
 
-## 📝 Documentation
+## Documentation
 
 - **[Backend Setup Guide](BACKEND_SETUP.md)** - Detailed backend configuration
 - **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Technical documentation
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ---
 
