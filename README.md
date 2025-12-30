@@ -7,7 +7,11 @@ A comprehensive University Management System built with Spring Boot and Angular.
 
 > **Note**: If the video below does not play, you can [download/watch it directly here](assets/demo_video/Demo_video_UNIverse.mp4).
 
-[Watch Demo Video](assets/demo_video/Demo_video_UNIverse.mp4)
+
+<video width="100%" controls>
+  <source src="assets/demo_video/Demo_video_UNIverse.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Features
 
