@@ -2,6 +2,13 @@
 
 A comprehensive University Management System built with Spring Boot and Angular. UNIverse streamlines academic operations by providing a unified platform for students, faculty, and administrators.
 
+
+## Demo
+
+<div align="center">
+  <video src="assets/ui/demo_video/Demo_video_UNIverse.mp4" width="100%" controls></video>
+</div>
+
 ## Features
 
 ### For Students
